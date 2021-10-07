@@ -132,6 +132,8 @@ class Post {
 
         return false;
     }
+    public function getdetail()
+    {}
 }
 
 ?>
