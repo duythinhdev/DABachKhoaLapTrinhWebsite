@@ -117,6 +117,7 @@ class product
     {
         return $this->id_catergory_product;
     }
+
     public $image;
     public $create_at;
     public $update_at;
@@ -222,9 +223,10 @@ class product
             return false;
         }
     }
+
     public function getdetail()
     {
-        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName. "	WHERE 
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . "	WHERE 
 						id = :id");
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();

@@ -1,8 +1,29 @@
 .navAdmin{
   height: 100vh;
   background-color: #61dafb;
+  width: 16.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  transition: width 2s;
+  //align-content: center;
   &--itemtitle{
     width: 100%;
     height: 70px;
   }
+  .linkNavbar{
+    text-decoration: none;
+    color: black;
+    .iconNavbar{
+      margin-left: 50px;
+    }
+    .nameNavbar{
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  }
+}
+.active{
+  display: none !important;
 }

@@ -1,7 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT');
+header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT,OPTIONS');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 // Định nghĩa hằng Path của file index.php
 define('PATH_ROOT', __DIR__);
@@ -10,7 +10,6 @@ define('PATH_ROOT', __DIR__);
 spl_autoload_register(function (string $class_name) {
     include_once PATH_ROOT . '/' . $class_name . '.php';
 });
-
 
 // load class Route
 $router = new Core\Http\Route();

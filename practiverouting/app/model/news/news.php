@@ -1,6 +1,8 @@
 <?php
 include_once PATH_ROOT . '/config/DBConnect.php';
-class news {
+
+class news
+{
     public $id;
     public $update_post;
     public $is_show;
@@ -13,12 +15,14 @@ class news {
     public $dbconn;
 
 
-    public function  __construct()
+    public function __construct()
     {
         $db = new DbConnect();
         $this->dbconn = $db->connect();
     }
-    public function create(){
+
+    public function create()
+    {
         $query = 'INSERT INTO ' . $this->tableName . ' (id, update_post, is_show, content, created_at, updated_at, user_id, title) VALUES (:id, :update_post, :is_show, :content, :created_at, :updated_at, :user_id, :title)';
         $stmt = $this->dbconn->prepare($query);
         $this->id = htmlspecialchars(strip_tags($this->id));
@@ -47,11 +51,24 @@ class news {
 
         return false;
     }
-    public function   getAll(){
-        $query = 'SELECT * FROM news ' . $this->tableName;
+
+    public function getAll()
+    {
+        $query = 'SELECT * FROM ' . $this->tableName;
         $stmt = $this->dbconn->prepare($query);
-        $news =  $stmt->execute();
+        $stmt->execute();
+        $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $news;
+    }
+
+    public function getDetail()
+    {
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . "	WHERE 
+						id = :id");
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
     }
 }
 

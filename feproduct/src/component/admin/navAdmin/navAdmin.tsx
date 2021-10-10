@@ -1,37 +1,86 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "../navAdmin/navAdmin.scss";
-import { Grid } from "@mui/material";
+import {Grid, Box, Paper} from "@mui/material";
 import {
     Link
 } from "react-router-dom";
 import * as actions from "../../../store/action/index";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {menuLeft} from "./menuLeft/menuLeft";
+import MenuIcon from "@mui/icons-material/Menu";
+
 const NavAdmin = () => {
     let dispatch = useDispatch();
-    const clickProduct = () => {
-        let actionProduct = actions.navIsAdminProduct(true);
-        dispatch(actionProduct);
+    let isMenuleft: boolean = useSelector((state:any) =>state.main.isMenu);
+    useEffect(()=>{
+        let tab = document.getElementsByClassName('tabmenu-left') as HTMLCollectionOf<any>;
+        tab[0].style.background = "#FFFFFF";
+        tab[0].style.width = "100%";
+        tab[0].style.height = "3rem";
+        tab[0].style.cursor = "pointer";
+    },[])
+    const clickTab = (index: number) => {
+        let action;
+        let tab = document.getElementsByClassName('tabmenu-left') as HTMLCollectionOf<any>;
+        switchTab(action, index)
+        clickTabColor(tab,index)
     }
-    const clickUser = () => {
-        let actionUser = actions.navIsAdminUser(true);
-        dispatch(actionUser);
+    const switchTab = (action:any, index: number) => {
+        switch (index) {
+            case 0:
+                action = actions.navIsAdminUser(true);
+                dispatch(action);
+                break;
+            case 1:
+                action = actions.navIsAdminProduct(true);
+                dispatch(action);
+                break;
+        }
     }
-
+    const clickTabColor = (tab: HTMLCollectionOf<any>,index:number) => {
+        for (let i = 0; i < tab.length; i++) {
+            tab[i].style.background = "";
+            tab[i].style.width = "";
+            tab[i].style.height = "";
+            tab[i].style.cursor = "";
+        }
+        tab[index].style.background = "#FFFFFF";
+        tab[index].style.width = "100%";
+        tab[index].style.height = "3rem";
+        tab[index].style.cursor = "pointer";
+    }
+    const clickHideMenu  =  () => {
+        let action = actions.isMenuAdmin(true);
+        dispatch(action);
+    }
     return (
-        <Grid item className="navAdmin" lg={2} xs={2} sx={{ display: 'flex',flexDirection: 'column', justifyContent: 'flex-start'}} container>
-            <Grid item className="navAdmin--itemtitle" sx={{ display: 'flex', justifyContent: 'flex-start', alignContent: 'center' }} container>
-                   <h3>Admin Woocommerce</h3>
+        <div className={"navAdmin " + (isMenuleft && "active")}
+              >
+            <Grid container item className="navAdmin--itemtitle"
+                  sx={{display: 'flex', justifyContent: 'center', alignContent: 'center'}} >
+                <h3>Admin Woocommerce</h3>
+                <MenuIcon  style={{ fontSize: '35px',cursor: 'pointer' }} onClick={()=>clickHideMenu()} />
             </Grid>
-            <Grid item >
-                <Link to="/body/user" onClick={()=>clickUser()} >user</Link>
-            </Grid>
-            <Grid item >
-                <Link to="/body/product"  onClick={()=>clickProduct()}>products</Link>
-            </Grid>
-            <Grid item>
-                products
-            </Grid>
-        </Grid>
+            {
+                menuLeft.map((res:any, index:number) => {
+                    return <Link className="linkNavbar" to={res.link}> <Grid item sx={{
+                        display: 'flex',
+                        justifyContent: 'inherit',
+                        alignContent: 'center',
+                        width: '100%',
+                        height: '70px',
+                        cursor: 'pointer'
+                    }} key={index}
+                                 container className="tabmenu-left"
+
+                                 onClick={() => clickTab(index)}
+                    >
+                        <div className="iconNavbar" >{res.icon}</div>
+                        <div className="nameNavbar">{res.name}</div>
+                    </Grid>    </Link>
+                })
+            }
+        </div>
     );
 }
 

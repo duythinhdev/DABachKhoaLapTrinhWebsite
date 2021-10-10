@@ -35,7 +35,7 @@ class UserController
             'userId' => $user['id']
         ];
         $data = \JWT::encode($payload,SECRETE_KEY);
-        $token = ['token'    => $data];
+        $token = ['token' => $data];
         $rest = new \Rest();
         $rest->returnResponse(SUCCESS_RESPONSE,$token);
     }

@@ -40,10 +40,10 @@ class Route
         $this->__request($url, 'GET', $action);
     }
 
-     /*
-     *
-     * Phương thức POST
-     */
+    /*
+    *
+    * Phương thức POST
+    */
     public function post(string $url, $action)
     {
         // Xử lý phương thức POST
@@ -61,6 +61,7 @@ class Route
         // Xử lý phương thức PUT
         $this->__request($url, 'PUT', $action);
     }
+
     /**
      *
      * Xử lý phương thức

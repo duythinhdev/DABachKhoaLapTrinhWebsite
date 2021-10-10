@@ -1,4 +1,5 @@
 export {
     navIsAdminUser,
-    navIsAdminProduct
+    navIsAdminProduct,
+    isMenuAdmin
 } from "../action/admin";

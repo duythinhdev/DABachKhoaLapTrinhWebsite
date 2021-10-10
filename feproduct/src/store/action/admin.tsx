@@ -12,4 +12,10 @@ export const navIsAdminProduct = (isNavAdminProduct:boolean) => {
         isNavAdminProduct:isNavAdminProduct
     }
 }
-
+export const isMenuAdmin = (menuLeft:boolean) => {
+    console.log(menuLeft);
+    return {
+        type: action.IS_NAV_MENU_LEFT,
+        menuLeft:menuLeft
+    }
+}

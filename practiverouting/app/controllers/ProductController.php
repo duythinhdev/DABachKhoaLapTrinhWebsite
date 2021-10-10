@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Controllers;
 //define('PATH_ROOT', __DIR__);
 include_once PATH_ROOT . '/app/model/product/product.php';
 include_once PATH_ROOT . '/config/DBConnect.php';
 include_once PATH_ROOT . '/core/middleware/Rest.php';
 include_once PATH_ROOT . '/config/constants.php';
+
 class ProductController
 {
     public function __construct()
@@ -14,19 +16,22 @@ class ProductController
         $rest = new \Rest();
         $rest->validateToken();
     }
+
     public function get($request)
     {
+//        var_dump($request['query']['pagenumber'],$request['query']['pagesize']);
         $product = new \product();
         $data = $product->getAllProduct();
         $rest = new \Rest();
+        $countData = count($data);
+//        var_dump($countData);
         try {
-            $rest->returnResponse(SUCCESS_RESPONSE,$data);
-        }
-        catch (Exception $e)
-        {
-            $rest->throwError(NOT_FOUND,$e);
+            $rest->returnResponse(SUCCESS_RESPONSE, $data, $countData);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
         }
     }
+
     public function post()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -40,17 +45,19 @@ class ProductController
         $product->id_catergory_product = $data['id_catergory_product'];
         $product->create();
     }
+
     public function delete($request)
     {
         $product = new \product();
-        $product->id = $request['params']['id'];
+        $product->id = $request['params'][1];
         $product->delete();
     }
+
     public function put($request)
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $product = new \product();
-        $product->setId($request['params'][0]);
+        $product->setId($request['params'][1]);
         $product->setCreateAt($data['create_at']);
         $product->setDescription($data['description']);
         $product->setUpdateAt($data['update_at']);
@@ -59,6 +66,7 @@ class ProductController
         $product->setIdCatergoryProduct($data['id_catergory_product']);
         $product->update();
     }
+
     public function getdetail($request)
     {
         $product = new \product();
