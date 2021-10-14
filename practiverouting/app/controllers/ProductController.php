@@ -13,30 +13,49 @@ class ProductController
     {
         $db = new \DbConnect();
         $db->connect();
-        $rest = new \Rest();
-        $rest->validateToken();
+//        $rest = new \Rest();
+//        $rest->validateToken();
     }
 
-    public function get($request)
+    public function getPagination($request)
     {
-//        var_dump($request['query']['pagenumber'],$request['query']['pagesize']);
+        $pageNumber = $request['query']['pagenumber'];
+        $pageSize = $request['query']['pagesize'];
+        if($request['query']['pagenumber'] === null)
+        {
+            $pageSize  = 10;
+        }
         $product = new \product();
-        $data = $product->getAllProduct();
+        $start = ( $pageNumber - 1) * $pageSize;
+        $product->pagenumber = $start;
+        $product->pageSize = $pageSize;
+        $data = $product->getProductPagination();
+        $countdata['totalpage'][0] = $product->countAllProduct();
         $rest = new \Rest();
-        $countData = count($data);
-//        var_dump($countData);
         try {
-            $rest->returnResponse(SUCCESS_RESPONSE, $data, $countData);
+            $rest->returnResponse(SUCCESS_RESPONSE, $data,  $countdata['totalpage'][0] ,$pageNumber,$pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
+    }
+    public function  getAll()
+    {
+        $product = new \product();
+        $data = $product->getAll();
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE, $data);
         } catch (Exception $e) {
             $rest->throwError(NOT_FOUND, $e);
         }
     }
 
+
     public function post()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $product = new \product();
-        $product->id = $data['id'];
+//        $product->id = $data['id'];
         $product->product_name = $data['product_name'];
         $product->image = $data['image'];
         $product->create_at = $data['create_at'];

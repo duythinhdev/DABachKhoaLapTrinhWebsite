@@ -120,10 +120,10 @@ class Rest
         exit;
     }
 
-    public function returnResponse($code, $data, $totalpage = null)
+    public function returnResponse($code, $data, $totalpage = null,$pagenumber = null ,$pagesize = null)
     {
-        if ($totalpage !== null) {
-            $response = json_encode(['resonse' => ['status' => $code, 'totalpage' => $totalpage, "data" => $data]]);
+        if ($totalpage !== null|| $pagenumber !== null || $pagesize ) {
+            $response = json_encode(['response' => ['status' => $code,'pagenumber' => $pagenumber, 'pagesize'  => $pagesize , $totalpage, "data" => $data]]);
             echo $response;
             exit;
         }

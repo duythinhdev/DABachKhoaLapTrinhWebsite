@@ -124,6 +124,8 @@ class product
     public $description;
     public $id_catergory_product;
     public $tableName = 'product';
+    public $pagenumber;
+    public $pageSize;
     public $dbConn;
 
     public function __construct()
@@ -132,10 +134,23 @@ class product
         $this->dbConn = $db->connect();
     }
 
-    public function getAllProduct()
+    public function getAll(){
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+    public function countAllProduct()
+    {
+        $stmt = $this->dbConn->prepare("SELECT COUNT(*)  as total FROM " . $this->tableName);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+    public function getProductPagination()
     {
 
-        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName);
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName  ." LIMIT " . $this->pagenumber . ','. $this->pageSize);
         $stmt->execute();
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
@@ -143,13 +158,12 @@ class product
 
     public function create()
     {
-        $query = 'INSERT INTO ' . $this->tableName . ' (id, product_name, image, create_at, update_at, description, id_catergory_product) VALUES(:id, :product_name, :image, :create_at, :update_at, :description, :id_catergory_product)';
+        $query = 'INSERT INTO ' . $this->tableName . ' (product_name, image, create_at, update_at, description, id_catergory_product) VALUES ( :product_name, :image, :create_at, :update_at, :description, :id_catergory_product)';
 
         // Prepare statement
         $stmt = $this->dbConn->prepare($query);
 
         // Clean data
-        $this->id = htmlspecialchars(strip_tags($this->id));
         $this->product_name = htmlspecialchars(strip_tags($this->product_name));
         $this->image = htmlspecialchars(strip_tags($this->image));
         $this->create_at = htmlspecialchars(strip_tags($this->create_at));
@@ -158,7 +172,6 @@ class product
         $this->id_catergory_product = htmlspecialchars(strip_tags($this->id_catergory_product));
 
         // Bind data
-        $stmt->bindParam(':id', $this->id);
         $stmt->bindParam(':product_name', $this->product_name);
         $stmt->bindParam(':image', $this->image);
         $stmt->bindParam(':create_at', $this->create_at);

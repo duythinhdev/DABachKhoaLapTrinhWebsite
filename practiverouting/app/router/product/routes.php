@@ -1,8 +1,9 @@
 <?php
 
 // action là callback
+$router->get('/product/getall', 'ProductController@getAll');
 
-$router->get('/product/get', 'ProductController@get');
+$router->get('/product/get', 'ProductController@getPagination');
 
 $router->get('/product/getdetail', 'ProductController@getdetail');
 

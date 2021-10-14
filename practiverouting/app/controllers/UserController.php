@@ -31,7 +31,7 @@ class UserController
         $payload = [
             'iat' => time(),
             'iss' => 'localhost',
-            'exp' => time() + (15*60),
+            'exp' => time() + (86400 * 30 ),
             'userId' => $user['id']
         ];
         $data = \JWT::encode($payload,SECRETE_KEY);
