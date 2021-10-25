@@ -1,4 +1,4 @@
 
 export const enviroment = {
-    local: "http://localhost:91/DoAnLapTrinhWeb/practiverouting/",
+    local: "http://localhost:99/DoAnLapTrinhWeb/practiverouting/",
 }

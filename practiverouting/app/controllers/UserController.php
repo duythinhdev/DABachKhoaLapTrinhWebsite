@@ -31,11 +31,11 @@ class UserController
         $payload = [
             'iat' => time(),
             'iss' => 'localhost',
-            'exp' => time() + (86400 * 30 ),
+            'exp' => time() + (86400 * 10),
             'userId' => $user['id']
         ];
         $data = \JWT::encode($payload,SECRETE_KEY);
-        $token = ['token' => $data];
+        $token = ['token' => $data, 'exp'=> time() + (86400 * 10) ];
         $rest = new \Rest();
         $rest->returnResponse(SUCCESS_RESPONSE,$token);
     }

@@ -4,7 +4,6 @@ include_once PATH_ROOT . '/core/jwt/jwt.php';
 
 class Rest
 {
-    protected $request;
     protected $serviceName;
     protected $param;
     protected $dbConn;
@@ -24,56 +23,6 @@ class Rest
 //        if( 'generatetoken' != strtolower( $this->serviceName) ) {
 //            $this->validateToken();
 //        }
-    }
-
-    public function validateRequest()
-    {
-        if ($_SERVER['CONTENT_TYPE'] !== 'application/json') {
-            $this->throwError(REQUEST_CONTENTTYPE_NOT_VALID, 'Request content type is not valid');
-        }
-        $data = json_decode($this->request, true);
-        if (!isset($data['name'])) {
-            $this->throwError(API_NAME_REQUIRED, "API name is required.");
-        }
-        $this->serviceName = $data['name'];
-
-        if (!is_array($data['param'])) {
-            $this->throwError(API_PARAM_REQUIRED, "API PARAM is required.");
-        }
-        $this->param = $data['param'];
-    }
-
-    public function validateParameter($fieldName, $value, $dataType, $required = true)
-    {
-        if ($required == true && empty($value) == true) {
-            $this->throwError(VALIDATE_PARAMETER_REQUIRED, $fieldName . " parameter is required.");
-        }
-
-        switch ($dataType) {
-            case BOOLEAN:
-                if (!is_bool($value)) {
-                    $this->throwError(VALIDATE_PARAMETER_DATATYPE, "Datatype is not valid for " . $fieldName . '. It should be boolean.');
-                }
-                break;
-            case INTEGER:
-                if (!is_numeric($value)) {
-                    $this->throwError(VALIDATE_PARAMETER_DATATYPE, "Datatype is not valid for " . $fieldName . '. It should be numeric.');
-                }
-                break;
-
-            case STRING:
-                if (!is_string($value)) {
-                    $this->throwError(VALIDATE_PARAMETER_DATATYPE, "Datatype is not valid for " . $fieldName . '. It should be string.');
-                }
-                break;
-
-            default:
-                $this->throwError(VALIDATE_PARAMETER_DATATYPE, "Datatype is not valid for " . $fieldName);
-                break;
-        }
-
-        return $value;
-
     }
 
     public function validateToken()
@@ -122,12 +71,12 @@ class Rest
 
     public function returnResponse($code, $data, $totalpage = null,$pagenumber = null ,$pagesize = null)
     {
-        if ($totalpage !== null|| $pagenumber !== null || $pagesize ) {
-            $response = json_encode(['response' => ['status' => $code,'pagenumber' => $pagenumber, 'pagesize'  => $pagesize , $totalpage, "data" => $data]]);
+        if ($totalpage !== null|| $pagenumber !== null || $pagesize !== null ) {
+            $response = json_encode(['response' => ['status' => $code,'pagenumber' => $pagenumber, 'pagesize'  => $pagesize , 'totalpage'  => $totalpage, "data" => $data]]);
             echo $response;
             exit;
         }
-        $response = json_encode(['resonse' => ['status' => $code, "data" => $data]]);
+        $response = json_encode(['response' => ['status' => $code, "data" => $data]]);
         echo $response;
         exit;
     }

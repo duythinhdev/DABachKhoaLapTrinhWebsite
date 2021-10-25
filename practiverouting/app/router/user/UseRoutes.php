@@ -2,6 +2,6 @@
 
 // action là callback
 
-$router->post('/user/login', 'UserController@login');
+$router->post('/v1/user/login', 'UserController@login');
 
-$router->post('/user/signup', 'UserController@signup');
+$router->post('/v1/user/signup', 'UserController@signup');

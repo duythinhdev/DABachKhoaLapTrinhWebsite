@@ -6,8 +6,9 @@ include_once PATH_ROOT . '/app/model/product/product.php';
 include_once PATH_ROOT . '/config/DBConnect.php';
 include_once PATH_ROOT . '/core/middleware/Rest.php';
 include_once PATH_ROOT . '/config/constants.php';
+include_once PATH_ROOT . '/app/model/review/review.php';
 
-class ProductController
+class ReviewController
 {
     public $data;
     public function __construct()
@@ -20,7 +21,7 @@ class ProductController
 
     public function getPagination($request)
     {
-        $product = new \product();
+        $review = new \review();
         if(isset($request['query']['pagenumber']) && isset($request['query']['pagesize']))
         {
             $pageNumber = $request['query']['pagenumber'];
@@ -32,17 +33,17 @@ class ProductController
         }
         if($pageNumber === null && $pageSize === null)
         {
-            $this->data = $product->getAll();
-            $count = $product->countAllProduct();
+            $this->data = $review->getAll();
+            $count = $review->countAllProduct();
             $pageNumber = 0;
             $pageSize = 0;
         }
         else{
             $start = ( $pageNumber - 1) * $pageSize;
-            $product->pagenumber = $start;
-            $product->pageSize = $pageSize;
-            $this->data = $product->getProductPagination();
-            $count = $product->countAllProduct();
+            $review->pagenumber = $start;
+            $review->pageSize = $pageSize;
+            $this->data = $review->getProductPagination();
+            $count = $review->countAllProduct();
         }
         $rest = new \Rest();
         try {
@@ -56,43 +57,50 @@ class ProductController
     public function post()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $product = new \product();
+        $review = new \review();
 //        $product->id = $data['id'];
-        $product->product_name = $data['product_name'];
-        $product->image = $data['image'];
-        $product->create_at = $data['create_at'];
-        $product->update_at = $data['update_at'];
-        $product->description = $data['description'];
-        $product->id_catergory_product = $data['id_catergory_product'];
-        $product->create();
+        $review->count_start = $data['count_start'];
+        $review->create_at = $data['create_at'];
+        $review->update_at = $data['update_at'];
+        $review->product_id = $data['product_id'];
+        $review->content = $data['content'];
+        $review->user_id = $data['user_id'];
+        $review->create();
     }
 
     public function delete($request)
     {
-        $product = new \product();
-        $product->id = $request['params'][1];
-        $product->delete();
+        $review = new \review();
+        $review->id = $request['params'][1];
+        $review->delete();
     }
 
     public function put($request)
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $product = new \product();
-        $product->setId($request['params'][1]);
-        $product->setCreateAt($data['create_at']);
-        $product->setDescription($data['description']);
-        $product->setUpdateAt($data['update_at']);
-        $product->setImage($data['image']);
-        $product->setProductName($data['product_name']);
-        $product->setIdCatergoryProduct($data['id_catergory_product']);
-        $product->update();
+        $review = new \review();
+        $review->setId($request['params'][1]);
+        $review->setCountStart($data['count_start']);
+        $review->setCreateAt($data['create_at']);
+        $review->setUpdateAt($data['update_at']);
+        $review->setProductId($data['product_id']);
+        $review->setContent($data['content']);
+        $review->setUserId($data['user_id']);
+        $review->update();
     }
 
     public function getdetail($request)
     {
-        $product = new \product();
-        $product->setId($request['query']['id']);
-        $data = $product->getdetail();
-        echo json_encode($data);
+        $review = new \product();
+        $review->setId($request['query']['id']);
+        $data = $review->getdetail();
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$data);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
     }
 }
+
+?>

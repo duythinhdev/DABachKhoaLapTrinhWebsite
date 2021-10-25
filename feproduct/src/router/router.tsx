@@ -30,7 +30,6 @@ export const routing = <Router>
     <div>
         <Switch>
             {routes.map((route, index) => {
-                console.log(route);
                 return  <Route
                     key={index}
                     path={route.path}

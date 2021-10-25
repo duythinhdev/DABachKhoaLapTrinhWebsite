@@ -1,79 +1,35 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 import "./tableProduct.scss";
-import {useEffect} from "react";
-import axios from "axios";
+import {useEffect, useState} from "react";
+import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
+import {Button,TextField,Box,Modal,TableRow,TableHead,TableContainer,TableCell,TableBody,Table,Paper} from '@mui/material';
+import {columns} from "./columns";
 
-const columns: any = [
-    {
-        id: 'name',
-        label: 'Name',
-        minWidth: 170
-    },
-
-    {
-        id: 'code',
-        label: 'ISO\u00a0Code',
-        minWidth: 100
-    },
-    {
-        id: 'population',
-        label: 'Population',
-        minWidth: 170,
-        align: 'right',
-        format: (value: any) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'size',
-        label: 'Size\u00a0(km\u00b2)',
-        minWidth: 170,
-        align: 'right',
-        format: (value: any) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'density',
-        label: 'Density',
-        minWidth: 170,
-        align: 'right',
-        format: (value: any) => value.toFixed(2),
-    },
-];
-
-function createData(name: any, code: any, population: any, size: any) {
-    const density = population / size;
-    return {name, code, population, size, density};
-}
-
-const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
-];
+let style:any = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+};
 
 export default function TableProduct() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+    const [page, setPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [dataPagination, setDataPagination] = useState([]) as any;
+    const [totalpage, setTotalPage] = useState(0 as any);
+    const [open, setOpen] = React.useState(false);
+    const [clickValue, setClickValue] = useState(false);
+    const [clickValueProductName, setclickValueProductName] = useState(false);
+    const [indexs, setIndexsChange] = useState() as any;
+    const [indexsProductName, setIndexsChangeProductName] = useState() as any;
     const handleChangePage = (event: any, newPage: any) => {
         setPage(newPage);
     };
@@ -82,11 +38,38 @@ export default function TableProduct() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    useEffect(()=>{
-        axios.get(enviroment.local + 'product/get').then(res=>{
-            console.log(res);
-        })
-    },[])
+    let fetchDataProduct = async () => {
+        let apiPagination = `product/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
+        axios.get(enviroment.local + apiPagination)
+            .then((res: AxiosResponse<any>) => {
+                setTotalPage(res.data.response.totalpage[0].total)
+                setRowsPerPage(rowsPerPage);
+                setDataPagination(res.data.response.data);
+            }).catch(err => console.log(err));
+    }
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleClickValue = (index:number) => {
+        setClickValue(true);
+        setIndexsChange(index);
+    };
+    const handleCloseClickValue = () => {
+        setClickValue(false);
+    };
+    const handleClickValueProductName = (index:number) => {
+        setclickValueProductName(true);
+        setIndexsChangeProductName(index);
+    };
+    const handleClickProductClose = () => {
+        setclickValueProductName(false);
+    };
+    useEffect(() => {
+        fetchDataProduct();
+    }, [])
     return (
         <div className="TableProduct">
             <Paper sx={{width: '100%'}}>
@@ -96,6 +79,34 @@ export default function TableProduct() {
                             <TableRow>
                                 <TableCell align="center" colSpan={12}>
                                     <h3>Control Product</h3>
+                                </TableCell>
+                                <TableCell align="right" colSpan={12}>
+                                    <Button onClick={handleOpen}>Thêm Phần Tử</Button>
+                                    <Modal
+                                        open={open}
+                                        onClose={handleClose}
+                                        aria-labelledby="parent-modal-title"
+                                        aria-describedby="parent-modal-description"
+                                    >
+                                        <Box sx={{...style}}>
+                                            <h2 id="parent-modal-title">Add Product</h2>
+                                            <Box
+                                                component="form"
+                                                sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
+                                                noValidate
+                                                autoComplete="off"
+                                            >
+                                                <TextField id="filled-basic" label="id" variant="outlined" />
+                                                <TextField id="filled-basic" label="Product Name" variant="outlined" />
+                                                <TextField id="filled-basic" label="Image" variant="outlined" />
+                                                <TextField id="filled-basic" label="description" variant="outlined" />
+                                                <TextField id="filled-basic" label="id_category" variant="outlined" />
+                                                <TextField id="filled-basic" label="create_at" variant="outlined" />
+                                                <TextField id="filled-basic" label="update_at" variant="outlined" />
+                                                <Button variant="contained">Add</Button>
+                                            </Box>
+                                        </Box>
+                                    </Modal>
                                 </TableCell>
                             </TableRow>
                             <TableRow>
@@ -111,36 +122,46 @@ export default function TableProduct() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row: any) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                            {columns.map((column: any) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })}
+                            {
+                                dataPagination.map((res: any, index: number) => {
+                                    return <TableRow hover role="checkbox" tabIndex={-1} key={res.id}>
+                                        <TableCell key={index} align={res.align} onClick={()=>handleClickValue(index)} >
+                                            {clickValue && indexs === index ? <TextField id="filled-basic" label="create_at" variant="filled" onClick={()=>handleCloseClickValue()} value={res.id}  /> : res.id}
+                                        </TableCell>
+                                        <TableCell key={index} align={res.align}  onClick={()=>handleClickValueProductName(index)}>
+                                            {clickValueProductName && indexsProductName === index ? <TextField id="filled-basic" label="create_at" variant="filled" onClick={()=>handleClickProductClose()} value={res.description}  /> : res.description}
+                                        </TableCell>
+                                        <TableCell key={index} align={res.align}>
+                                            {res.create_at}
+                                        </TableCell>
+                                        <TableCell key={index} align={res.align}>
+                                            {res.id_catergory_product}
+                                        </TableCell>
+                                        <TableCell key={index} align={res.align}>
+                                            {res.image}
+                                        </TableCell>
+                                        <TableCell key={index} align={res.align}>
+                                            {res.product_name}
+                                        </TableCell>
+                                        <TableCell key={index} align={res.align}>
+                                            {res.update_at}
+                                        </TableCell>
+
+                                    </TableRow>
+                                })
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                {/*<TablePagination*/}
+                {/*    rowsPerPageOptions={[10, 25, 100]}*/}
+                {/*    component="div"*/}
+                {/*    count={totalpage.length}*/}
+                {/*    rowsPerPage={rowsPerPage}*/}
+                {/*    page={page}*/}
+                {/*    onPageChange={handleChangePage}*/}
+                {/*    onRowsPerPageChange={handleChangeRowsPerPage}*/}
+                {/*/>*/}
             </Paper>
         </div>
     );

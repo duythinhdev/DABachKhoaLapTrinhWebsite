@@ -83,7 +83,6 @@ class Route
         // Thay thế tất cả các kí tự / bằng ký tự \/ (regex) trong URL.
         $url = str_replace('/', '\/', $url);
         // Tạo một route mới
-
         $route = [
             'url' => $url,
             'method' => $method,

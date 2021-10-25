@@ -1,7 +1,6 @@
 <?php
 
 // action là callback
-$router->get('/product/getall', 'ProductController@getAll');
 
 $router->get('/product/get', 'ProductController@getPagination');
 
@@ -12,4 +11,6 @@ $router->post('/product/post', 'ProductController@post');
 $router->delete('/product/delete/{id}', 'ProductController@delete');
 
 $router->put('/product/put/{id}', 'ProductController@put');
+
+?>
 
