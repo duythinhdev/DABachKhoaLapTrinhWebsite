@@ -2,7 +2,7 @@ export const columns: any = [
     {
         id: 'id',
         label: 'id',
-        minWidth: 170
+        minWidth: 100
     },
 
     {
@@ -13,36 +13,31 @@ export const columns: any = [
     {
         id: 'image',
         label: 'image',
-        minWidth: 170,
-        align: 'right',
+        minWidth: 100,
         format: (value: any) => value.toLocaleString('en-US'),
     },
     {
         id: 'description',
         label: 'description',
-        minWidth: 170,
-        align: 'right',
+        minWidth: 100,
         format: (value: any) => value.toLocaleString('en-US'),
     },
     {
         id: 'create_at',
         label: 'create_at',
-        minWidth: 170,
-        align: 'right',
+        minWidth: 100,
         format: (value: any) => value.toFixed(2),
     },
     {
         id: 'update_at',
         label: 'update_at',
-        minWidth: 170,
-        align: 'right',
+        minWidth: 100,
         format: (value: any) => value.toFixed(2),
     },
     {
         id: 'id_catergory_product',
         label: 'id_catergory_product',
-        minWidth: 170,
-        align: 'right',
+        minWidth: 100,
         format: (value: any) => value.toFixed(2),
     },
 ];

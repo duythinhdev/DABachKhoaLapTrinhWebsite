@@ -8,8 +8,6 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import "./TableUser.scss";
-import {useEffect} from "react";
-import axios from "axios";
 
 const columns:any = [
     { id: 'name', label: 'Name', minWidth: 170 },

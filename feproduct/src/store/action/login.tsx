@@ -10,7 +10,7 @@ export const loginAppAdmin = (username:string,password:string) => {
 }
 
 export const loginAppSuccess = (isLogin: boolean) => {
-    console.log("isLogin",isLogin)
+    console.log("isLoginAction",isLogin)
     return {
         type: action.IS_LOGIN_APP_ADMIN,
         isLogin: isLogin,

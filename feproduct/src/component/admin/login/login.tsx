@@ -10,23 +10,24 @@ const Login = ()  => {
     }) as any;
     let dispatch = useDispatch();
     let history = useHistory();
-    let isLoginAdmin:any = useSelector((state:any) =>{ return state.login.isLoginAdmin});
-    const clickValue = (event: any) => {
+    let isLoginAdmin:boolean = useSelector((state:any) =>{ return state.login.isLoginAdmin});
+    const clickValue = async (event: any) => {
         event.preventDefault();
         let action: any = actions.loginAppAdmin(value.username, value.password);
-        dispatch(action);
-        let token = JSON.parse(localStorage.getItem("token") || '{}');
+        await dispatch(action);
+        let token = await JSON.parse(localStorage.getItem("token") || '{}');
+        console.log("token",token);
+        if(isLoginAdmin)
+        {
+            await history.push("/admin")
+        }
+        else{
+            await history.push("/loginadmin")
+        }
     }
     const changeValue = (event: any) => {
         setValue({...value,[event.target.name]: event.target.value});
     }
-    useEffect(()=>{
-        if(isLoginAdmin)
-        {
-            console.log("isLoginAdmin",isLoginAdmin)
-            history.push("/body");
-        }
-    }, [])
     return (
         <div className="backgroundLogin">
             <form className="formlogin" onSubmit={(event)=>clickValue(event)}>

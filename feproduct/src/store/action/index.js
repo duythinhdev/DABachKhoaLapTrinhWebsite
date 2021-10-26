@@ -1,7 +1,11 @@
 export {
     navIsAdminUser,
     navIsAdminProduct,
-    isMenuAdmin
+    navIsAdminReview,
+    navIsAdminOption,
+    isMenuAdmin,
+    dataProduct,
+    PostProduct
 } from "../action/admin";
 export {
     loginAppAdmin,

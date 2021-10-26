@@ -60,11 +60,15 @@ class ProductController
 //        $product->id = $data['id'];
         $product->product_name = $data['product_name'];
         $product->image = $data['image'];
-        $product->create_at = $data['create_at'];
-        $product->update_at = $data['update_at'];
         $product->description = $data['description'];
         $product->id_catergory_product = $data['id_catergory_product'];
-        $product->create();
+        $data =  $product->create();
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE, $data);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
     }
 
     public function delete($request)

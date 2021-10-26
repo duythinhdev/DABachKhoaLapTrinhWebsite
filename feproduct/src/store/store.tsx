@@ -5,7 +5,7 @@ import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import createSagaMiddleware from "redux-saga";
 import mainReducer from "./redux/body";
 import LoginReducer from "./redux/login";
-import { watchLogin } from "../store/saga/index";
+import { watchLogin,watchProduct } from "../store/saga/index";
 const sagaMiddleware: any = createSagaMiddleware();
 declare global {
     interface Window {
@@ -23,7 +23,7 @@ const store = createStore(
     rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 sagaMiddleware.run(watchLogin);
-// sagaMiddleware.run(watchTodoTask);
+sagaMiddleware.run(watchProduct);
 export const app = (
     <Provider store={store}>
         <App/>

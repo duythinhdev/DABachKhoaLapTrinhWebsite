@@ -2,15 +2,15 @@
 
 // action là callback
 
-$router->get('/product/get', 'ProductController@getPagination');
+$router->get('/v1/product/get', 'ProductController@getPagination');
 
-$router->get('/product/getdetail', 'ProductController@getdetail');
+$router->get('/v1/product/getdetail', 'ProductController@getdetail');
 
-$router->post('/product/post', 'ProductController@post');
+$router->post('/v1/product/post', 'ProductController@post');
 
-$router->delete('/product/delete/{id}', 'ProductController@delete');
+$router->delete('/v1/product/delete/{id}', 'ProductController@delete');
 
-$router->put('/product/put/{id}', 'ProductController@put');
+$router->put('/v1/product/put/{id}', 'ProductController@put');
 
 ?>
 

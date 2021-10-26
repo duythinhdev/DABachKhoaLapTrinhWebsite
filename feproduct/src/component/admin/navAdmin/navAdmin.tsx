@@ -35,6 +35,14 @@ const NavAdmin = () => {
                 action = actions.navIsAdminProduct(true);
                 dispatch(action);
                 break;
+            case 2:
+                action = actions.navIsAdminReview(true);
+                dispatch(action);
+                break;
+            case 3:
+                action = actions.navIsAdminOption(true);
+                dispatch(action);
+                break;
         }
     }
     const clickTabColor = (tab: HTMLCollectionOf<any>,index:number) => {

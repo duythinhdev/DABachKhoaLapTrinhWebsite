@@ -11,7 +11,8 @@ const initialState: tsInitialState = {
 
 }
 const setIsLoginAdmin = (action:any,state:any) => {
-    return updateObject(state,{isLoginAdmin: action.isLogin})
+    console.log("redux actionLogin",action.isLogin)
+    return updateObject(state,{ isLoginAdmin: action.isLogin})
 }
 const LoginReducer = (state = initialState,action:any) => {
     switch (action.type)

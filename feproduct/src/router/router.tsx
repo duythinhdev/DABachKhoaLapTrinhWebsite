@@ -1,27 +1,39 @@
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch,Redirect } from "react-router-dom";
 import React from "react";
 import ContainerAdmin from "../component/admin/body/containerAdmin";
 import Login from "../component/admin/login/login";
-import BodyAdmin from "../component/admin/bodyAdmin/bodyAdmin";
+import BodyAdmin from "../component/admin/bodyAdminUser/bodyAdmin";
 import BodyAdminProduct from "../component/admin/bodyAdminProduct/bodyAdminProduct";
+import BodyAdminReview from "../component/admin/bodyAdminReview/bodyAdminReview";
+import BodyAdminOption from "../component/admin/bodyAdminOption/bodyAdminOption";
+import {useSelector} from "react-redux";
 
+
+let token = localStorage.getItem("token")
 const routes: Array<any> = [
     {
-        path: "/",
+        path: "/loginadmin",
         component: Login,
-        exact: true,
     },
     {
-        path: "/body",
+        path: "/admin",
         component: ContainerAdmin,
         routes: [
             {
-                path: "/body/user",
+                path: "/admin/user",
                 component: BodyAdmin
             },
             {
-                path: "/body/product",
+                path: "/admin/product",
                 component: BodyAdminProduct
+            },
+            {
+                path: "/admin/review",
+                component: BodyAdminReview
+            },
+            {
+                path: "/admin/option",
+                component: BodyAdminOption
             }
         ]
     },
@@ -35,9 +47,9 @@ export const routing = <Router>
                     path={route.path}
                     exact={route.exact}
                     component={route.component}
-                    render={props => (
-                        <route.component {...props} routes={route.routes} />
-                    )}
+                    render={props => {return token ?  <route.component {...props} routes={route.routes} /> : <Redirect to="/loginadmin" />}
+
+                    }
                 />}
             )}
         </Switch>

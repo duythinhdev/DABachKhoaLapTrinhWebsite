@@ -171,6 +171,10 @@ class product
         $this->description = htmlspecialchars(strip_tags($this->description));
         $this->id_catergory_product = htmlspecialchars(strip_tags($this->id_catergory_product));
 
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->create_at = $date;
+        $this->update_at = $date;
         // Bind data
         $stmt->bindParam(':product_name', $this->product_name);
         $stmt->bindParam(':image', $this->image);
