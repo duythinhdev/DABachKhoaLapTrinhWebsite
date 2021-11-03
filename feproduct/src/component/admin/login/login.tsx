@@ -15,8 +15,6 @@ const Login = ()  => {
         event.preventDefault();
         let action: any = actions.loginAppAdmin(value.username, value.password);
         await dispatch(action);
-        let token = await JSON.parse(localStorage.getItem("token") || '{}');
-        console.log("token",token);
         if(isLoginAdmin)
         {
             await history.push("/admin")

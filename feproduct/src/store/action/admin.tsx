@@ -24,6 +24,36 @@ export const navIsAdminOption = (isNavAdminOption:boolean) => {
         isNavAdminOption: isNavAdminOption
     }
 }
+export const navIsAdminOptionOrder = (isNavAdminOptionOrder:boolean) => {
+    return {
+        type: action.IS_NAV_ADMIN_OPTION_ORDER,
+        isNavAdminOptionOrder: isNavAdminOptionOrder
+    }
+}
+export const navIsAdminOrder = (isNavAdminOrder:boolean) => {
+    return {
+        type: action.IS_NAV_ADMIN_BODY_ORDER,
+        isNavAdminOrder: isNavAdminOrder
+    }
+}
+export const navIsAdminNews = (isNavAdminNews:boolean) => {
+    return {
+        type: action.IS_NAV_ADMIN_NEWS,
+        isNavAdminNews: isNavAdminNews
+    }
+}
+export const navIsAdminComment = (isNavAdminComments:boolean) => {
+    return {
+        type: action.IS_NAV_ADMIN_COMMENTS,
+        isNavAdminComments: isNavAdminComments
+    }
+}
+export const navIsAdminCategory = (isNavAdminCategoryProduct:boolean) => {
+    return {
+        type: action.IS_NAV_ADMIN_CATEGORY_PRODUCT,
+        isNavAdminCategoryProduct: isNavAdminCategoryProduct
+    }
+}
 export const isMenuAdmin = (menuLeft:boolean) => {
     return {
         type: action.IS_NAV_MENU_LEFT,
