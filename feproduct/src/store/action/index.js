@@ -3,6 +3,11 @@ export {
     navIsAdminProduct,
     navIsAdminReview,
     navIsAdminOption,
+    navIsAdminOptionOrder,
+    navIsAdminOrder,
+    navIsAdminComment,
+    navIsAdminCategory,
+    navIsAdminNews,
     isMenuAdmin,
     dataProduct,
     PostProduct

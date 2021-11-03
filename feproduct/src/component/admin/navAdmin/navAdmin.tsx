@@ -43,6 +43,26 @@ const NavAdmin = () => {
                 action = actions.navIsAdminOption(true);
                 dispatch(action);
                 break;
+            case 4:
+                action = actions.navIsAdminOptionOrder(true);
+                dispatch(action);
+                break;
+            case 5:
+                action = actions.navIsAdminOrder(true);
+                dispatch(action);
+                break;
+            case 6:
+                action = actions.navIsAdminComment(true);
+                dispatch(action);
+                break;
+            case 7:
+                action = actions.navIsAdminNews(true);
+                dispatch(action);
+                break;
+            case 8:
+                action = actions.navIsAdminCategory(true);
+                dispatch(action);
+                break;
         }
     }
     const clickTabColor = (tab: HTMLCollectionOf<any>,index:number) => {
@@ -67,7 +87,7 @@ const NavAdmin = () => {
             <Grid container item className="navAdmin--itemtitle"
                   sx={{display: 'flex', justifyContent: 'center', alignContent: 'center'}} >
                 <h3>Admin Woocommerce</h3>
-                <MenuIcon  style={{ fontSize: '35px',cursor: 'pointer' }} onClick={()=>clickHideMenu()} />
+                <MenuIcon  style={{ fontSize: '35px',cursor: 'pointer',margin: '15px' }} onClick={()=>clickHideMenu()} />
             </Grid>
             {
                 menuLeft.map((res:any, index:number) => {

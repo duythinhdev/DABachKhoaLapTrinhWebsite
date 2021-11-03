@@ -7,10 +7,15 @@ interface tsInitialState {
     isNavAdminProduct: boolean,
     isNavAdminReview: boolean,
     isNavAdminOption: boolean,
-    isMenu:boolean
+    isNavAdminOptionOrder: false,
+    isNavAdminOder: boolean,
+    isNavAdminNews: boolean,
+    isNavAdminComments: boolean,
+    isNavAdminCategoryProduct: false,
+    isMenu: boolean
     isLoginAdmin: boolean,
     titleProductPost: string,
-    status:boolean
+    status: boolean
 }
 
 const initialState: tsInitialState = {
@@ -18,46 +23,74 @@ const initialState: tsInitialState = {
     isNavAdminProduct: false,
     isNavAdminReview: false,
     isNavAdminOption: false,
-    isMenu:false,
+    isNavAdminOptionOrder: false,
+    isNavAdminOder: false,
+    isNavAdminNews: false,
+    isNavAdminComments: false,
+    isNavAdminCategoryProduct: false,
+    isMenu: false,
     isLoginAdmin: false,
     titleProductPost: "",
     status: false
 
 }
-const setIsNavAdminUser  = (action:any,state:any) => {
-    return updateObject(state,{isNavAdminUser: action.isNavAdminUser})
+const setIsNavAdminUser = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminUser: action.isNavAdminUser})
 }
-const setIsNavAdminProduct  = (action:any,state:any) => {
-    return updateObject(state,{isNavAdminProduct: action.isNavAdminProduct})
+const setIsNavAdminProduct = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminProduct: action.isNavAdminProduct})
 }
-const setIsMenuLeft = (action:any,state:any) => {
-    return updateObject(state,{isMenu: action.menuLeft})
+const setIsMenuLeft = (action: any, state: any) => {
+    return updateObject(state, {isMenu: action.menuLeft})
 }
-const setIsNavAdminReview = (action:any,state:any) => {
-    return updateObject(state,{isNavAdminReview: action.isNavAdminReview})
+const setIsNavAdminReview = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminReview: action.isNavAdminReview})
 }
-const setIsNavAdminOption = (action:any,state:any) => {
-    return updateObject(state,{isNavAdminOption: action.isNavAdminOption})
+const setIsNavAdminOption = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminOption: action.isNavAdminOption})
 }
-const titleProductPost = (action:any,state:any) => {
-    console.log("status",action.status,"title",action.title)
-    return updateObject(state,{ titleProductPost: action.title , status: action.status} )
+const setIsNavAdminOptionOrder = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminOptionOrder: action.isNavAdminOptionOrder})
 }
-const mainReducer = (state = initialState,action:any) => {
-    switch (action.type)
-    {
+const setIsNavAdminOrder = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminOder: action.isNavAdminOrder})
+}
+const setIsNavAdminNews = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminNews: action.isNavAdminNews})
+}
+const setIsNavAdminCategoryProduct = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminCategoryProduct: action.isNavAdminCategoryProduct})
+}
+const setIsNavAdminCategoryComment = (action: any, state: any) => {
+    return updateObject(state, {isNavAdminComments : action.isNavAdminComments})
+}
+const titleProductPost = (action: any, state: any) => {
+    return updateObject(state, {titleProductPost: action.title, status: action.status})
+}
+const mainReducer = (state = initialState, action: any) => {
+    switch (action.type) {
         case actionTypes.IS_NAV_ADMIN_BODY_USER:
-            return setIsNavAdminUser(action,state);
+            return setIsNavAdminUser(action, state);
         case actionTypes.IS_NAV_ADMIN_BODY_PRODUCT:
-            return setIsNavAdminProduct(action,state);
+            return setIsNavAdminProduct(action, state);
         case actionTypes.IS_NAV_ADMIN_BODY_REVIEW:
-            return setIsNavAdminReview(action,state);
+            return setIsNavAdminReview(action, state);
         case actionTypes.IS_NAV_ADMIN_BODY_OPTION:
-            return setIsNavAdminOption(action,state);
+            return setIsNavAdminOption(action, state);
+        case actionTypes.IS_NAV_ADMIN_BODY_ORDER:
+            return setIsNavAdminOrder(action, state);
+        case actionTypes.IS_NAV_ADMIN_OPTION_ORDER:
+            return setIsNavAdminOptionOrder(action, state);
+        case actionTypes.IS_NAV_ADMIN_NEWS:
+            return setIsNavAdminNews(action, state);
+        case actionTypes.IS_NAV_ADMIN_CATEGORY_PRODUCT:
+            return setIsNavAdminCategoryProduct(action, state);
+        case actionTypes.IS_NAV_ADMIN_COMMENTS:
+            return setIsNavAdminCategoryComment(action, state);
         case actionTypes.STATUS_SUCCESS_POST_PRODUCT:
-            return titleProductPost(action,state);
+            return titleProductPost(action, state);
         case actionTypes.IS_NAV_MENU_LEFT:
-            return setIsMenuLeft(action,state);
+            return setIsMenuLeft(action, state);
         default :
             return state;
     }

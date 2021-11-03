@@ -4,6 +4,7 @@ import * as action from "../../../../store/action/index";
 import {useDispatch, useSelector} from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 let style: any = {
     position: 'absolute',
     top: '50%',
@@ -48,6 +49,11 @@ const ModalAddProduct = () => {
         const newValue = event.target.value;
         setPostProduct({...postProduct, [event.target.name]: newValue});
     }
+    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    const handleChange = (newValue:any) => {
+        setValue(newValue);
+    };
     return (
         <TableCell align="right" colSpan={12}>
             <Button onClick={handleOpen}>Thêm Phần Tử</Button>
@@ -74,7 +80,7 @@ const ModalAddProduct = () => {
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="id_category" label="id_category" variant="outlined"
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="create_at" label="create_at" variant="outlined"/>
+                        <TextField id="filled-basic" name="cteated_at" label="cteated_at" variant="outlined"/>
                         <TextField id="filled-basic" name="update_at" label="update_at" variant="outlined"/>
                         <Button variant="contained" onClick={(event) => ClickValue(event)}>Add</Button>
                     </Box>
