@@ -138,7 +138,7 @@ class review
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
     }
-    public function countAllProduct()
+    public function countAll()
     {
         $stmt = $this->dbConn->prepare("SELECT COUNT(*)  as total FROM " . $this->tableName);
         $stmt->execute();
@@ -156,7 +156,7 @@ class review
 
     public function create()
     {
-        $query = 'INSERT INTO ' . $this->tableName . ' (count_start, create_at, update_at, product_id, content, user_id) VALUES ( :count_start, :create_at, :update_at, :product_id, :content, :user_id)';
+        $query = 'INSERT INTO ' . $this->tableName . ' (count_start, created_at, updated_at, product_id, content, user_id) VALUES ( :count_start, :created_at, :updated_at, :product_id, :content, :user_id)';
 
         // Prepare statement
         $stmt = $this->dbConn->prepare($query);
@@ -168,12 +168,15 @@ class review
         $this->update_at = htmlspecialchars(strip_tags($this->update_at));
         $this->product_id = htmlspecialchars(strip_tags($this->product_id));
         $this->user_id = htmlspecialchars(strip_tags($this->user_id));
-
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->create_at = $date;
+        $this->update_at = $date;
         // Bind data
         $stmt->bindParam(':count_start', $this->count_start);
         $stmt->bindParam(':product_id', $this->product_id );
-        $stmt->bindParam(':create_at', $this->create_at);
-        $stmt->bindParam(':update_at', $this->update_at);
+        $stmt->bindParam(':created_at', $this->create_at);
+        $stmt->bindParam(':updated_at', $this->update_at);
         $stmt->bindParam(':content', $this->content);
         $stmt->bindParam(':user_id', $this->user_id);
 
@@ -223,7 +226,10 @@ class review
 					  update_at = :update_at
 					WHERE 
 						id = :id";
-
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->create_at = $date;
+        $this->update_at = $date;
         $stmt = $this->dbConn->prepare($sql);
         $stmt->bindParam(':id', $this->id);
         $stmt->bindParam(':create_at', $this->create_at);

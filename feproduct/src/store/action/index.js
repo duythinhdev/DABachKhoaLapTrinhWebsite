@@ -17,3 +17,22 @@ export {
     loginAppSuccess
 } from "../action/login";
 
+export {
+    postOption,
+    getOption,
+    putOption,
+    deleteOption,
+    dataOption,
+    statusOption
+} from "../action/optionAdmin";
+export {
+    postReview,
+} from "../action/reviewAdmin";
+export {
+    postComment,
+} from "../action/commentAdmin";
+export {
+    postCategory,
+    putCategory,
+    deleteCategory
+} from "../action/categoryproduct";

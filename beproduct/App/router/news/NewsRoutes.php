@@ -1,7 +1,9 @@
 <?php
 
-$router->post('/news/post', 'NewsController@create');
-$router->get('/news/get', 'NewsController@get');
-
+$router->get('/v1/news/get', 'NewsController@getPagination');
+$router->post('/v1/news/post', 'NewsController@post');
+$router->put('/v1/news/put', 'NewsController@put');
+$router->delete('/v1/news/delete', 'NewsController@delete');
+$router->get('/v1/news/getdetail', 'NewsController@getdetail');
 
 ?>

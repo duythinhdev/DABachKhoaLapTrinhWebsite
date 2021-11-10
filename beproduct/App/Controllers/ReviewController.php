@@ -15,8 +15,6 @@ class ReviewController
     {
         $db = new \DbConnect();
         $db->connect();
-        $rest = new \Rest();
-        $rest->validateToken();
     }
 
     public function getPagination($request)
@@ -34,7 +32,7 @@ class ReviewController
         if($pageNumber === null && $pageSize === null)
         {
             $this->data = $review->getAll();
-            $count = $review->countAllProduct();
+            $count = $review->countAll();
             $pageNumber = 0;
             $pageSize = 0;
         }
@@ -43,7 +41,7 @@ class ReviewController
             $review->pagenumber = $start;
             $review->pageSize = $pageSize;
             $this->data = $review->getProductPagination();
-            $count = $review->countAllProduct();
+            $count = $review->countAll();
         }
         $rest = new \Rest();
         try {
@@ -60,8 +58,6 @@ class ReviewController
         $review = new \review();
 //        $product->id = $data['id'];
         $review->count_start = $data['count_start'];
-        $review->create_at = $data['create_at'];
-        $review->update_at = $data['update_at'];
         $review->product_id = $data['product_id'];
         $review->content = $data['content'];
         $review->user_id = $data['user_id'];

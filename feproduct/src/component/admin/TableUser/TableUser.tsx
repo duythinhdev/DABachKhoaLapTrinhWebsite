@@ -8,60 +8,18 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import "./TableUser.scss";
-
-const columns:any = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-    {
-        id: 'population',
-        label: 'Population',
-        minWidth: 170,
-        align: 'right',
-        format: (value:any) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'size',
-        label: 'Size\u00a0(km\u00b2)',
-        minWidth: 170,
-        align: 'right',
-        format: (value:any) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'density',
-        label: 'Density',
-        minWidth: 170,
-        align: 'right',
-        format: (value:any) => value.toFixed(2),
-    },
-];
-
-function createData(name:any, code:any, population:any, size:any) {
-    const density = population / size;
-    return { name, code, population, size, density };
-}
-
-const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
-];
-
+import ModalAddUser from "../TableUser/modalUser/modalUser";
+import { columnsTableUser } from "../NameColumsTable/NameColumnsTable";
+import {useEffect, useState} from "react";
+import axios, {AxiosResponse} from "axios";
+import {enviroment} from "../../../enviroment/enviroment";
 export default function TableUser() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+    const [page, setPage] = useState(1) as any | undefined;
+    const [rowsPerPage, setRowsPerPage] = useState(10) as any | undefined;
+    const [totalpage, setTotalPage] =  useState(1) as any | undefined;
+    const [dataPagination, setDataPagination] = useState([]as Array<any>);
+    const [modalUpdate, setModalUpdate] = useState(false as boolean);
+    const [dataModalUpdate, setDataModalUpdate] = useState([]) as Array<any>;
     const handleChangePage = (event:any, newPage:any) => {
         setPage(newPage);
     };
@@ -70,9 +28,29 @@ export default function TableUser() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+    let fetchDataCategoryProduct = async () => {
+        let apiPagination = `v1/user/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
+        await axios.get(enviroment.local + apiPagination)
+            .then((res: AxiosResponse<any>) => {
+                setTotalPage(res.data.response.totalpage[0].total)
+                setRowsPerPage(rowsPerPage);
+                setDataPagination(res.data.response.data);
+                console.log("res", res)
+            }).catch(err => console.log(err));
+    }
+    useEffect(() => {
+        fetchDataCategoryProduct();
+    }, [])
+    const updateData = async (res: any) => {
+        await setModalUpdate(true);
+        await setDataModalUpdate(res);
+    }
+    const closeUpdateData = () => {
+        setModalUpdate(false);
+    }
     return (
         <div className="TableProduct">
-            <Paper sx={{ width: '100%' }}>
+            <Paper sx={{ width: '90%' }} >
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -81,8 +59,9 @@ export default function TableUser() {
                                     <h3>Control user</h3>
                                 </TableCell>
                             </TableRow>
+                            <ModalAddUser />
                             <TableRow>
-                                {columns.map((column:any) => (
+                                {columnsTableUser?.map((column:any) => (
                                     <TableCell
                                         key={column.id}
                                         align={column.align}
@@ -94,31 +73,49 @@ export default function TableUser() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row:any) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                            {columns.map((column:any) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })}
+                            {
+                                dataPagination?.map((res:any,index: number)=> {
+                                  return  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.permission === 3 ? "Admin" : 'User' }
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.full_name}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.address}
+                                        </TableCell>
+                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                              {res.name}
+                                          </TableCell>
+                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                              {res.phone}
+                                          </TableCell>
+                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                              {res.username}
+                                          </TableCell>
+                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                              {res.password}
+                                          </TableCell>
+                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                              {res.created_at}
+                                          </TableCell>
+                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                              {res.updated_at}
+                                          </TableCell>
+                                    </TableRow>
+                                })
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={rows.length}
+                    count={totalpage}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

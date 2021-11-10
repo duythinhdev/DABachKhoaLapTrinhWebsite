@@ -64,6 +64,31 @@ class user
 
         return false;
     }
+
+    public function getAll()
+    {
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
+    public function countAll()
+    {
+        $stmt = $this->dbConn->prepare("SELECT COUNT(*)  as total FROM " . $this->tableName);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
+    public function getPagination()
+    {
+
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . " LIMIT " . $this->pagenumber . ',' . $this->pageSize);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
 }
 
 ?>

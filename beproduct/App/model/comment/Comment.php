@@ -2,7 +2,7 @@
 include_once PATH_ROOT . '/config/DBConnect.php';
 include_once PATH_ROOT . '/core/middleware/ModelInterFace.php';
 
-class Comment implements ModelInterFace
+class Comment
 {
     public $id;
     public $user_id;
@@ -12,6 +12,8 @@ class Comment implements ModelInterFace
     public $new_id;
     public $tableName = 'comment';
     public $dbcon;
+    public $pagenumber;
+    public $pageSize;
     /**
      * @return mixed
      */
@@ -62,17 +64,30 @@ class Comment implements ModelInterFace
 
     public function __construct()
     {
-        $dbcon = new DbConnect();
-        $this->dbcon = $dbcon->connect();
+        $dbconn = new DbConnect();
+        $this->dbcon = $dbconn->connect();
     }
 
-    public function get()
-    {
-        $query = 'SELECT * FROM ' . $this->tableName;
-        $stmt = $this->dbcon->prepare($query);
+    public function getAll(){
+        $stmt = $this->dbcon->prepare("SELECT * FROM " . $this->tableName);
         $stmt->execute();
-        $comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $comment;
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+    public function countAll()
+    {
+        $stmt = $this->dbcon->prepare("SELECT COUNT(*)  as total FROM " . $this->tableName);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+    public function getProductPagination()
+    {
+
+        $stmt = $this->dbcon->prepare("SELECT * FROM " . $this->tableName  ." LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
     }
 
     public function create()
@@ -134,14 +149,17 @@ class Comment implements ModelInterFace
         }
 
 
-        $sql .= " created_at = :create_at, 
+        $sql .= " created_at = :created_at, 
 					  updated_at = :updated_at
 					WHERE 
 						id = :id";
-
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->created_at = $date;
+        $this->updated_at = $date;
         $stmt = $this->dbcon->prepare($sql);
         $stmt->bindParam(':id', $this->id);
-        $stmt->bindParam(':create_at', $this->created_at);
+        $stmt->bindParam(':created_at', $this->created_at);
         $stmt->bindParam(':updated_at', $this->updated_at);
         if ($stmt->execute()) {
             return true;
@@ -151,7 +169,11 @@ class Comment implements ModelInterFace
     }
     public function getDetail()
     {
-        // TODO: Implement getDetail() method.
+        $stmt = $this->dbcon->prepare("SELECT * FROM " . $this->tableName . "WHERE id = :id" );
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
     }
 
 }

@@ -1,3 +1,32 @@
+@media screen and (max-width: 480px) {
+  .navAdmin{
+    height: 100%;
+    background-color: #61dafb;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+    transition: width 2s;
+    overflow-y:auto;
+    //align-content: center;
+    &--itemtitle{
+      width: 100%;
+      height: 70px;
+    }
+    .linkNavbar{
+      text-decoration: none;
+      color: black;
+      .iconNavbar{
+        margin-left: 50px;
+      }
+      .nameNavbar{
+        font-size: 16px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
 .navAdmin{
   height: 100vh;
   background-color: #61dafb;

@@ -1,47 +1,135 @@
 <?php
-include_once PATH_ROOT . '/config/DBConnect.php';
 
-class news
+class News
 {
-    public $id;
-    public $update_post;
-    public $is_show;
-    public $content;
     public $created_at;
     public $updated_at;
-    public $user_id;
+    public $is_show;
     public $title;
-    public $tableName = 'news';
-    public $dbconn;
+    public $user_id;
 
+    /**
+     * @return mixed
+     */
+    public function getIsShow()
+    {
+        return $this->is_show;
+    }
+
+    /**
+     * @param mixed $is_show
+     */
+    public function setIsShow($is_show)
+    {
+        $this->is_show = $is_show;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param mixed $user_id
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    public $tableName = 'news';
+    public $pagenumber;
+    public $pageSize;
+    public $id;
+    public $dbConn;
 
     public function __construct()
     {
         $db = new DbConnect();
-        $this->dbconn = $db->connect();
+        $this->dbConn = $db->connect();
+    }
+
+    public function getAll(){
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName);
+        $stmt->execute();
+        $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $news;
+    }
+    public function countAll()
+    {
+        $stmt = $this->dbConn->prepare("SELECT COUNT(*)  as total FROM " . $this->tableName);
+        $stmt->execute();
+        $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $news;
+    }
+    public function getProductPagination()
+    {
+
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName  ." LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        $stmt->execute();
+        $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $news;
     }
 
     public function create()
     {
-        $query = 'INSERT INTO ' . $this->tableName . ' (id, update_post, is_show, content, created_at, updated_at, user_id, title) VALUES (:id, :update_post, :is_show, :content, :created_at, :updated_at, :user_id, :title)';
-        $stmt = $this->dbconn->prepare($query);
-        $this->id = htmlspecialchars(strip_tags($this->id));
-        $this->update_post = htmlspecialchars(strip_tags($this->update_post));
-        $this->is_show = htmlspecialchars(strip_tags($this->is_show));
-        $this->content = htmlspecialchars(strip_tags($this->content));
+        $query = 'INSERT INTO ' . $this->tableName . ' (title, created_at, updated_at, is_show, user_id) VALUES ( :title,:created_at, :updated_at, :is_show, :user_id)';
+
+        // Prepare statement
+        $stmt = $this->dbConn->prepare($query);
+
+        // Clean data
+        $this->title = htmlspecialchars(strip_tags($this->title));
         $this->created_at = htmlspecialchars(strip_tags($this->created_at));
         $this->updated_at = htmlspecialchars(strip_tags($this->updated_at));
+        $this->is_show = htmlspecialchars(strip_tags($this->is_show));
         $this->user_id = htmlspecialchars(strip_tags($this->user_id));
 
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->created_at = $date;
+        $this->updated_at = $date;
         // Bind data
-        $stmt->bindParam(':id', $this->id);
-        $stmt->bindParam(':update_post', $this->update_post);
-        $stmt->bindParam(':is_show', $this->is_show);
-        $stmt->bindParam(':content', $this->content);
+        $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':created_at', $this->created_at);
         $stmt->bindParam(':updated_at', $this->updated_at);
+        $stmt->bindParam(':is_show', $this->is_show);
         $stmt->bindParam(':user_id', $this->user_id);
-        $stmt->bindParam(':title', $this->title);
+
         // Execute query
         if ($stmt->execute()) {
             return true;
@@ -52,23 +140,62 @@ class news
         return false;
     }
 
-    public function getAll()
+    public function delete()
     {
-        $query = 'SELECT * FROM ' . $this->tableName;
-        $stmt = $this->dbconn->prepare($query);
-        $stmt->execute();
-        $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $news;
+        $stmt = $this->dbConn->prepare('DELETE FROM ' . $this->tableName . ' WHERE id = :id');
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bindParam(':id', $this->id);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function getDetail()
+    public function update()
+    {
+        $sql = "UPDATE $this->tableName SET";
+        if (null != $this->getTitle()) {
+            $sql .= " title = '" . $this->getTitle() . "',";
+        }
+
+        if (null != $this->getUserId()) {
+            $sql .= " user_id = " . $this->getUserId() . ",";
+        }
+
+        if (null != $this->getIsShow()) {
+            $sql .= " is_show = '" . $this->getIsShow() . "',";
+        }
+
+        $sql .= " created_at = :created_at, 
+					  updated_at = :updated_at
+					WHERE 
+						id = :id";
+
+        $stmt = $this->dbConn->prepare($sql);
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->created_at = $date;
+        $this->updated_at = $date;
+        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':created_at', $this->created_at);
+        $stmt->bindParam(':updated_at', $this->updated_at);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getdetail()
     {
         $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . "	WHERE 
 						id = :id");
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();
-        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $product;
+        $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $news;
     }
 }
 

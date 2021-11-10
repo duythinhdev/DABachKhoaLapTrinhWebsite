@@ -1,7 +1,8 @@
 <?php
 
-$router->get('/comment/getall', 'CommentController@getAll');
-$router->post('/comment/post','CommentController@create');
-$router->delete('/comment/delete/{id}','CommentController@delete');
-$router->put('/comment/update/{id}','CommentController@update');
+$router->get('/v1/comment/getall', 'CommentController@getAll');
+$router->post('/v1/comment/post','CommentController@create');
+$router->delete('/v1/comment/delete/{id}','CommentController@delete');
+$router->put('/v1/comment/update/{id}','CommentController@update');
+$router->put('/v1/comment/getdetail/{id}','CommentController@getdetail');
 ?>

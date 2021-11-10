@@ -1,65 +1,94 @@
 <?php
-
 namespace App\Controllers;
-//define('PATH_ROOT', __DIR__);
-include_once PATH_ROOT . '/App/model/news/news.php';
+include_once PATH_ROOT . '/app/model/option/option.php';
 include_once PATH_ROOT . '/config/DBConnect.php';
 include_once PATH_ROOT . '/core/middleware/Rest.php';
 include_once PATH_ROOT . '/config/constants.php';
+include_once PATH_ROOT . '/app/model/news/news.php';
 
-class NewsController
-{
-    public $dbcon;
+class NewsController {
 
+    public $dbConn;
+    public $data;
     public function __construct()
     {
-        $dbconn = new \DbConnect();
-        $this->dbcon = $dbconn->connect();
+        $dbcon = new \DbConnect();
+        $this->dbConn = $dbcon->connect();
+    }
+    public function getPagination($request)
+    {
+        $news = new \News();
+        if(isset($request['query']['pagenumber']) && isset($request['query']['pagesize']))
+        {
+            $pageNumber = $request['query']['pagenumber'];
+            $pageSize = $request['query']['pagesize'];
+        }
+        else {
+            $pageNumber = null;
+            $pageSize = null;
+        }
+        if($pageNumber == null && $pageSize === null)
+        {
+            $this->data = $news->getAll();
+            $count = $news->countAll();
+            $pageNumber = 0;
+            $pageSize = 0;
+        }
+        else{
+            $start = ( $pageNumber - 1) * $pageSize;
+            $news->pagenumber = $start;
+            $news->pageSize = $pageSize;
+            $this->data = $news->getProductPagination();
+            $count = $news->countAll();
+        }
         $rest = new \Rest();
-        $rest->validateToken();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$this->data , $count ,$pageNumber,$pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
     }
 
-    public function rest()
-    {
-        $rest = new \Rest();
-        return $rest;
-    }
 
-    public function create()
+    public function post()
     {
-        $news = new \news();
         $data = json_decode(file_get_contents('php://input'), true);
-        $news->id = $data['id'];
-        $news->update_post = $data['update_post'];
-        $news->is_show = $data['is_show'];
-        $news->content = $data['content'];
-        $news->created_at = $data['created_at'];
-        $news->updated_at = $data['updated_at'];
-        $news->user_id = $data['user_id'];
-        $news->title = $data['title'];
-        $data = $news->create();
-        try {
-            $this->rest()->returnResponse(SUCCESS_RESPONSE, ['data' => 'post success']);
-        } catch (\Exception $exception) {
-            $rest->returnResponse(NOT_FOUND, $exception);
-        }
+        $option = new \News();
+        $option->user_id = $data['user_id'];
+        $option->is_show = $data['is_show'];
+        $option->title = $data['title'];
+        $option->create();
     }
 
-    public function get()
+    public function delete($request)
     {
         $news = new \news();
-        $data = $news->getAll();
-        try {
-            $this->rest()->returnResponse(SUCCESS_RESPONSE, $data);
-        } catch (\Exception $exception) {
-            $this->rest()->returnResponse(NOT_FOUND, ['message' => $exception]);
-        }
+        $news->id = $request['params'][1];
+        $news->delete();
     }
 
-    public function getdetail($quey)
+    public function put($request)
     {
-        $new = new \news();
+        $data = json_decode(file_get_contents('php://input'), true);
+        $news = new \News();
+        $news->setId($request['params'][1]);
+        $news->setUserId($data['user_id']);
+        $news->setIsShow($data['is_show']);
+        $news->setTitle($data['title']);
+        $news->update();
+    }
 
+    public function getdetail($request)
+    {
+        $news = new \News();
+        $news->setId($request['query']['id']);
+        $data = $news->getdetail();
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$data);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
     }
 }
 
