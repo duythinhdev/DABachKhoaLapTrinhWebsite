@@ -32,7 +32,7 @@ function BodyAdmin() {
         switchTab()
     }, [])
     return (
-        <Grid item className="bodyAdmin" lg={isMenuleft ? 12 : 10} xs={isMenuleft ? 12 : 10}
+        <Grid item className="bodyAdmin" lg={isMenuleft ? 12 : 10} xs={isMenuleft ? 6 : 10} sm={3}
               sx={{display: 'flex', flexDirection: 'column'}} container>
             <NavBodyAdmin />
             <TableUser />

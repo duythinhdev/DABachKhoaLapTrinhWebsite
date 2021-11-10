@@ -26,7 +26,7 @@ class OptionController {
             $pageNumber = null;
             $pageSize = null;
         }
-        if($pageNumber === null && $pageSize === null)
+        if($pageNumber == null && $pageSize === null)
         {
             $this->data = $option->getAll();
             $count = $option->countAllProduct();

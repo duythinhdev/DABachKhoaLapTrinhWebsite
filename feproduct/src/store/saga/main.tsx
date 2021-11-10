@@ -6,7 +6,7 @@ import * as Actions from "../action/index";
 export function* postProduct(actions: any) {
     const { product_name, image,description,id_catergory_product } = actions;
     let body = {
-        product_name: product_name,
+        Product_name: product_name,
         image: image,
         description: description,
         id_catergory_product: id_catergory_product,

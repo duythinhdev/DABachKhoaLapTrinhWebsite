@@ -141,7 +141,7 @@ class option
 
     public function create()
     {
-        $query = 'INSERT INTO ' . $this->tableName . ' (size, type, price, quantity, product_id, create_at,update_at) VALUES ( :size, :type, :price, :quantity, :product_id, :create_at, :update_at)';
+        $query = 'INSERT INTO ' . $this->tableName . ' (size, type, price, quantity, product_id, created_at,updated_at) VALUES ( :size, :type, :price, :quantity, :product_id, :created_at, :updated_at)';
 
         // Prepare statement
         $stmt = $this->dbConn->prepare($query);
@@ -165,8 +165,8 @@ class option
         $stmt->bindParam(':price', $this->price);
         $stmt->bindParam(':quantity', $this->quantity);
         $stmt->bindParam(':product_id', $this->product_id);
-        $stmt->bindParam(':create_at', $this->create_at);
-        $stmt->bindParam(':update_at', $this->update_at);
+        $stmt->bindParam(':created_at', $this->create_at);
+        $stmt->bindParam(':updated_at', $this->update_at);
 
         // Execute query
         if ($stmt->execute()) {
@@ -193,7 +193,7 @@ class option
 
     public function update()
     {
-        $sql = "UPDATE $this->tableName SET";
+        $sql = "UPDATE  $this->tableName SET";
         if (null != $this->getSize()) {
             $sql .= " size = '" . $this->getSize() . "',";
         }
@@ -212,18 +212,17 @@ class option
             $sql .= " product_id = '" . $this->getProductId() . "',";
         }
 
-        $sql .= " create_at = :create_at, 
-					  update_at = :update_at
-					WHERE 
-						id = :id";
+        $sql .= " created_at = :created_at, 
+					  updated_at = :updated_at
+					WHERE id = :id";
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $date = date('Y-m-d', time());
         $this->create_at = $date;
         $this->update_at = $date;
         $stmt = $this->dbConn->prepare($sql);
         $stmt->bindParam(':id', $this->id);
-        $stmt->bindParam(':create_at', $this->create_at);
-        $stmt->bindParam(':update_at', $this->update_at);
+        $stmt->bindParam(':created_at', $this->create_at);
+        $stmt->bindParam(':updated_at', $this->update_at);
         if ($stmt->execute()) {
             return true;
         } else {

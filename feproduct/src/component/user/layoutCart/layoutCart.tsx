@@ -13,6 +13,7 @@ function LayoutCart() {
             <Navbar />
             <Announcement />
             <ProductDetail />
+            <ProductDetail />
             <Footer />
         </>
     );

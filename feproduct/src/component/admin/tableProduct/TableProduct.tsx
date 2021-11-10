@@ -21,14 +21,13 @@ import {
     TablePagination
 } from '@mui/material';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import {columns} from "./columns";
 import ModalAddProduct from "./modalAddProduct/modalAddProduct";
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { columnsNamesTableProducts } from "../NameColumsTable/NameColumnsTable";
 
 
 
@@ -96,9 +95,9 @@ const TableProduct = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [dataPagination, setDataPagination] = useState([]) as any;
     const [totalpage, setTotalPage] = useState(1) as any;
-    const handleChangePage = (event: any, newPage: any) => {
-        setPage(newPage);
-        fetchDataProduct();
+    const handleChangePage =  async (event: any, newPage: any) => {
+        await setPage(newPage);
+        await fetchDataProduct();
     };
 
     const handleChangeRowsPerPage = (event: any) => {
@@ -107,16 +106,15 @@ const TableProduct = () => {
     };
     let fetchDataProduct = async () => {
         let apiPagination = `v1/product/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        axios.get(enviroment.local + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                  setTotalPage(res.data.response.totalpage[0].total)
-                 setRowsPerPage(rowsPerPage);
                  setDataPagination(res.data.response.data);
             }).catch(err => console.log(err));
     }
     useEffect(() => {
         fetchDataProduct();
-    }, [])
+    }, [page && rowsPerPage])
 
     const ClickImage = (indexKey: number) => {
         setClickValue({...clickValue, image: true, indexImage: indexKey});
@@ -182,7 +180,7 @@ const TableProduct = () => {
                             </TableRow>
                             <ModalAddProduct />
                             <TableRow>
-                                {columns.map((column: any) => (
+                                {columnsNamesTableProducts.map((column: any) => (
                                     <TableCell
                                         key={column.id}
                                         align={column.align}
@@ -195,7 +193,7 @@ const TableProduct = () => {
                         </TableHead>
                         <TableBody>
                             {
-                                dataPagination.map((res: any, index: number) => {
+                                dataPagination?.map((res: any, index: number) => {
                                     return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                         <TableCell  align={res.align}>
                                             {res.id}
@@ -209,7 +207,7 @@ const TableProduct = () => {
                                                            onChange={(event: any) => ChangeValueProduct(event)}
                                                     // onClick={() => handleClickProductClose(index)}
                                                            onKeyDown={() => submitChange(res.id)}
-                                                           defaultValue={res.product_name}/> : res.product_name}
+                                                           defaultValue={res.Product_name}/> : res.Product_name}
                                         </TableCell>
                                         <TableCell  align={res.align}  onClick={() => handleClickValueImage(index)}>
                                             {clickValue.image && clickValue.indexImage === index ?
@@ -266,10 +264,10 @@ const TableProduct = () => {
                                                     value={res.create_at}
                                                     onChange={(event: any) => ChangeValueProduct(event)}
                                                     renderInput={(params) => <TextField {...params} />}
-                                                /> : res.create_at}
+                                                /> : res.created_at}
                                         </TableCell>
                                         <TableCell key={index} align={res.align}>
-                                            {res.update_at}
+                                            {res.updated_at}
                                         </TableCell>
                                         <TableCell key={index} align={res.align}>
                                             {res.id_catergory_product}

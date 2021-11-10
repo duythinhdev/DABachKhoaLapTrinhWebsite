@@ -18,9 +18,35 @@ class CommentController
     public function getAll()
     {
         $comment = new \Comment();
+        if(isset($request['query']['pagenumber']) && isset($request['query']['pagesize']))
+        {
+            $pageNumber = $request['query']['pagenumber'];
+            $pageSize = $request['query']['pagesize'];
+        }
+        else {
+            $pageNumber = null;
+            $pageSize = null;
+        }
+        if($pageNumber === null && $pageSize === null)
+        {
+            $this->data = $comment->getAll();
+            $count = $comment->countAll();
+            $pageNumber = 0;
+            $pageSize = 0;
+        }
+        else{
+            $start = ( $pageNumber - 1) * $pageSize;
+            $comment->pagenumber = $start;
+            $comment->pageSize = $pageSize;
+            $this->data = $comment->getProductPagination();
+            $count = $comment->countAll();
+        }
         $rest = new \Rest();
-        $data = $comment->getAll();
-        $rest->returnResponse(SUCCESS_RESPONSE, $data);
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$this->data , $count ,$pageNumber,$pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
     }
 
     public function create()
@@ -29,8 +55,6 @@ class CommentController
         $data = json_decode(file_get_contents('php://input'), true);
         $rest = new \Rest();
         $comment->user_id = $data['user_id'];
-        $comment->created_at = $data['created_at'];
-        $comment->updated_at = $data['updated_at'];
         $comment->content = $data['content'];
         $comment->new_id = $data['new_id'];
         $response = $comment->create();
@@ -47,7 +71,12 @@ class CommentController
         $id = $request['params'][1];
         $rest = new \Rest();
         $comment->id = $id;
-        $comment->delete();
+        $data =  $comment->delete();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE, $data);
+        } catch (\Exception $exception) {
+            $rest->returnResponse(REQUEST_METHOD_NOT_VALID, $exception);
+        }
     }
     public function update($request)
     {

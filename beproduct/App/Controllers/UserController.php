@@ -5,9 +5,11 @@ include_once PATH_ROOT . '/config/DBConnect.php';
 include_once PATH_ROOT . '/core/jwt/jwt.php';
 include_once PATH_ROOT . '/core/middleware/Rest.php';
 include_once PATH_ROOT . '/config/constants.php';
+include_once PATH_ROOT . '/core/middleware/Rest.php';
 class UserController
 {
     public $dbConn;
+    public $data;
     public function __construct()
     {
         $db = new \DbConnect();
@@ -21,12 +23,13 @@ class UserController
         $stmt->bindParam(":password", $data['password']);
         $stmt->execute();
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $rest = new  \Rest();
         if(!is_array($user)) {
-            $this->returnResponse(INVALID_USER_PASS, "Email or Password is incorrect.");
+            $rest->returnResponse(INVALID_USER_PASS, "Email or Password is incorrect.");
         }
 
         if( $user['permission'] == 0 ) {
-            $this->returnResponse(USER_NOT_ACTIVE, "User is not activated. Please contact to admin.");
+            $rest->returnResponse(USER_NOT_ACTIVE, "User is not activated. Please contact to admin.");
         }
         $payload = [
             'iat' => time(),
@@ -35,8 +38,7 @@ class UserController
             'userId' => $user['id']
         ];
         $data = \JWT::encode($payload,SECRETE_KEY);
-        $token = ['token' => $data, 'exp'=> time() + (86400 * 10) ];
-        $rest = new \Rest();
+        $token = ['token' => $data ];
         try{
             $rest->returnResponse(SUCCESS_RESPONSE,$token);
         }
@@ -56,6 +58,39 @@ class UserController
         $user->username = $data['username'];
         $user->password = $data['password'];
         $user->createUser();
+    }
+
+    public function getAllUser(){
+        $user = new \user();
+        if(isset($request['query']['pagenumber']) && isset($request['query']['pagesize']))
+        {
+            $pageNumber = $request['query']['pagenumber'];
+            $pageSize = $request['query']['pagesize'];
+        }
+        else {
+            $pageNumber = null;
+            $pageSize = null;
+        }
+        if($pageNumber === null && $pageSize === null)
+        {
+            $this->data = $user->getAll();
+            $count = $user->countAll();
+            $pageNumber = 0;
+            $pageSize = 0;
+        }
+        else{
+            $start = ( $pageNumber - 1) * $pageSize;
+            $user->pagenumber = $start;
+            $user->pageSize = $pageSize;
+            $this->data = $user->getPagination();
+            $count = $user->countAll();
+        }
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$this->data , $count ,$pageNumber,$pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
     }
 }
 
