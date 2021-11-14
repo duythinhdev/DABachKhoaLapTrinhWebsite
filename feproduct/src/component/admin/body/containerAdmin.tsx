@@ -24,7 +24,7 @@ const ContainerAdmin = () => {
     let IsAdminComments = useSelector((state:any) => state.main.isNavAdminComments) as boolean;
     let IsAdminCategoryProduct = useSelector((state:any) => state.main.isNavAdminCategoryProduct) as boolean;
     return (
-        <Grid className="bodyAdmin" lg={12} xs={12}  container >
+        <Grid className="bodyAdmin" lg={12} xs={12} md={12} container >
             <NavAdmin />
             { IsAdminUser  && <BodyAdmin /> }
             { IsAdminProduct  &&  <BodyAdminProduct /> }

@@ -87,7 +87,7 @@ const NavAdmin = () => {
             <Grid container item className="navAdmin--itemtitle"
                   sx={{display: 'flex', justifyContent: 'center', alignContent: 'center'}} >
                 <h3>Admin Woocommerce</h3>
-                <MenuIcon  style={{ fontSize: '35px',cursor: 'pointer',margin: '15px' }} onClick={()=>clickHideMenu()} />
+                <MenuIcon className="menuIcon"  style={{ fontSize: '35px',cursor: 'pointer',margin: '15px' }} onClick={()=>clickHideMenu()} />
             </Grid>
             {
                 menuLeft.map((res:any, index:number) => {
