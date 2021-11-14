@@ -13,6 +13,7 @@ function LayoutUser() {
         <>
             <Navbar />
             <Announcement />
+            <Slider />
             <Categories />
             <Products  />
             <Newsletter />

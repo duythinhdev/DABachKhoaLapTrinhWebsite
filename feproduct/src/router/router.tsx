@@ -58,12 +58,6 @@ const routes: Array<any> = [
     {
         path: "/user",
         component: layoutUser,
-        // routes: [
-        //     {
-        //         path: "/register",
-        //         component: Register
-        //     },
-        // ]
     },
     {
         path: "/login",
