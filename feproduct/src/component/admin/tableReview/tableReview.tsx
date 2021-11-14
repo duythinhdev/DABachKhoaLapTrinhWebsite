@@ -11,12 +11,13 @@ import "./TableReview.scss";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
-import ModalAddReview from "../TableReview/modalAddReview/modalAddReview";
-import ModalUpdateReview from "./modalUpdateReview/ModalUpdateReview";
+import ModalAddReview from "../tableReview/modalAddReview/modalAddReview";
+import ModalUpdateReview from "../tableReview/modalUpdateReview/ModalUpdateReview";
 import Checkbox from '@mui/material/Checkbox';
 import {columnsReview} from "../NameColumsTable/NameColumnsTable";
-import ListTableReview from "./listTableReview/ListTableReview";
-import ListColumnNames from "./ListColumnNames/ListColumnNames";
+import ListTableReview from "../tableReview/listTableReview/ListTableReview";
+import ListColumnNames from "../tableReview/ListColumnNames/ListColumnNames";
+
 
 export default function TableReview() {
     const [page, setPage] = React.useState(1);
@@ -27,7 +28,7 @@ export default function TableReview() {
     const [dataModalUpdate, setDataModalUpdate] = useState([]) as Array<any>;
     let fetchDataReview = async () => {
         let apiPagination = `v1/review/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.local + apiPagination)
+        await axios.get(enviroment.locals + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);

@@ -36,3 +36,10 @@ export {
     putCategory,
     deleteCategory
 } from "../action/categoryproduct";
+
+
+export {
+    postUser,
+    putUser,
+    deleteUser
+} from "../action/userAdmin";

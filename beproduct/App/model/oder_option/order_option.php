@@ -17,7 +17,7 @@ class order_option {
         $this->dbConn = $db->connect();
     }
     public function getAll(){
-        $sql = 'SELECT option_order.total, option_order.quantity, option.size, option.type,option.price,order.address,order.phone,order.name FROM ' .$this->tableName. ' INNER JOIN option  option ON   option.id = option_order.option_id    INNER JOIN  order  order ON order.id = option_order.order_id';
+        $sql = 'SELECT *' .$this->tableName ;
         $stmt = $this->dbConn->prepare($sql);
         $stmt->execute();
         $option_order = $stmt->fetchAll(PDO::FETCH_ASSOC);

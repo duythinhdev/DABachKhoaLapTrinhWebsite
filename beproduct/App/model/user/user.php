@@ -3,6 +3,118 @@
 class user
 {
     public $id;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * @param mixed $permission
+     */
+    public function setPermission($permission)
+    {
+        $this->permission = $permission;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->Name;
+    }
+
+    /**
+     * @param mixed $Name
+     */
+    public function setName($Name)
+    {
+        $this->Name = $Name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * @param mixed $first_name
+     */
+    public function setFirstName($first_name)
+    {
+        $this->first_name = $first_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
     public $permission;
     public $Name;
     public $first_name;
@@ -89,6 +201,17 @@ class user
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
     }
+    
+    public function getPermissionUser()
+    {
+        $stmt = $this->dbConn->prepare("SELECT permission FROM " . $this->tableName. "where id = :id");
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
+
 }
 
 ?>

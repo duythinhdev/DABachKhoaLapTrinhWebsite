@@ -13,7 +13,7 @@ export function* postProduct(actions: any) {
     }
     let urlLogin = 'v1/product/post';
     try {
-        const response:Promise<any> =  yield axios.post(enviroment.local + urlLogin, body);
+        const response:Promise<any> =  yield axios.post(enviroment.locals + urlLogin, body);
         yield put(Actions.PostProduct("post success",true))
     }
     catch (error) {

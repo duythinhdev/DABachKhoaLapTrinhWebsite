@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import { columnsNameTableComment } from "../NameColumsTable/NameColumnsTable";
 import Checkbox from "@mui/material/Checkbox";
 import ModalAddComment from "./ModalAddComment/modalAddComment";
-import ModalUpdateComment from "../TableReview/modalUpdateReview/ModalUpdateReview";
+import ModalUpdateComment from "../TableComment/ModalUpdateComment/ModalUpdateComment";
 import ListTableComment from "./ListTableComment/ListTableComment";
 
 export default function TableComment() {
@@ -28,7 +28,7 @@ export default function TableComment() {
     };
     let fetchDataComment = async () => {
         let apiPagination = `v1/comment/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.local + apiPagination)
+        await axios.get(enviroment.locals + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);

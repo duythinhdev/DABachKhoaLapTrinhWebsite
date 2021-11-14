@@ -1,4 +1,4 @@
-export const columnsNameTableOption: any = [
+export const columnsNameTableOption:Array<any>= [
     {
         id: 'id',
         label: 'id',
@@ -40,7 +40,7 @@ export const columnsNameTableOption: any = [
         minWidth: 100,
     },
 ];
-export const columnsNamesTableProducts: any = [
+export const columnsNamesTableProducts:Array<any>= [
     {
         id: 'id',
         label: 'id',
@@ -83,7 +83,7 @@ export const columnsNamesTableProducts: any = [
         format: (value: any) => value.toFixed(2),
     },
 ];
-export const columnsReview: any = [
+export const columnsReview:Array<any> = [
     {id: '', label: '', minWidth: 100},
     {id: 'id', label: 'id', minWidth: 100},
     {id: 'count_start', label: 'count_start', minWidth: 100},
@@ -93,7 +93,7 @@ export const columnsReview: any = [
     {id: 'created_at', label: 'created_at', minWidth: 100},
     {id: 'updated_at', label: 'updated_at', minWidth: 100},
 ];
-export const columnsNameTableComment:any = [
+export const columnsNameTableComment:Array<any> = [
     {
         id: '',
         label: '',
@@ -130,7 +130,7 @@ export const columnsNameTableComment:any = [
         minWidth: 100,
     },
 ];
-export const columnsTableNews:any = [
+export const columnsTableNews:Array<any> = [
     {
         id: '',
         label: '',
@@ -167,55 +167,110 @@ export const columnsTableNews:any = [
         minWidth: 100,
     },
 ];
-export const columnsTableUser:any = [
+export const columnsTableUser:Array<any> = [
     {
         id: 'id',
         label: 'id',
-        minWidth: 100,
+        minWidth: 80,
     },
     {
         id: 'permission',
         label: 'permission',
-        minWidth: 100,
+        minWidth: 80,
     },
     {
         id: 'full_name',
         label: 'full_name',
-        minWidth: 100,
+        minWidth: 80,
     },
     {
         id: 'address',
         label: 'address',
-        minWidth: 100,
+        minWidth: 80,
     },
     {
         id: 'name',
         label: 'name',
-        minWidth: 100,
+        minWidth: 80,
     },
     {
         id: 'phone',
         label: 'phone',
-        minWidth: 100,
+        minWidth: 80,
     },
     {
         id: 'username',
         label: 'username',
-        minWidth: 100,
+        minWidth: 80,
     },
     {
         id: 'password',
         label: 'password',
-        minWidth: 100,
+        minWidth: 80,
+    },
+    {
+        id: 'Active',
+        label: 'Active',
+        minWidth: 80,
+    },
+    {
+        id: 'created_at',
+        label: 'created_at',
+        minWidth: 80,
+    },
+    {
+        id: 'updated_at',
+        label: 'updated_at',
+        minWidth: 80,
+    },
+];
+export const columnsCategoryProduct:Array<any> = [
+    {
+        id: 'id',
+        label: 'id',
+        minWidth: 100
+    },
+    {
+        id: 'Name',
+        label: 'Name',
+        minWidth: 100
+    },
+    {
+        id: 'created_at',
+        label: 'created_at',
+        minWidth: 100
     },
     {
         id: 'created_at',
         label: 'created_at',
         minWidth: 100,
     },
+];
+export const columnsOptionOrder:Array<any> = [
     {
-        id: 'updated_at',
-        label: 'updated_at',
+        id: 'id',
+        label: 'id',
+        minWidth: 100
+    },
+
+    {
+        id: 'Product_name',
+        label: 'Product_name',
+        minWidth: 100
+    },
+    {
+        id: 'population',
+        label: 'Population',
+        minWidth: 100,
+    },
+    {
+        id: 'size',
+        label: 'Size\u00a0(km\u00b2)',
+        minWidth: 100,
+    },
+    {
+        id: 'density',
+        label: 'Density',
         minWidth: 100,
     },
 ];

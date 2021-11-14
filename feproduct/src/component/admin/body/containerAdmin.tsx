@@ -12,6 +12,7 @@ import BodyAdminNews from '../bodyAdminNews/bodyAdminNews';
 import BodyAdminComment from '../bodyAdminComment/bodyAdminComment';
 import BodyAdminCategoryProduct from '../bodyAdminCategoryProduct/bodyAdminCategoryProduct';
 import BodyAdminOrder from '../bodyAdminOptionOrder/bodyAdminOptionOrder';
+import {useHistory, Redirect, Switch, Route, BrowserRouter as Router} from "react-router-dom";
 
 const ContainerAdmin = () => {
     let IsAdminUser = useSelector((state:any) => state.main.isNavAdminUser) as boolean;

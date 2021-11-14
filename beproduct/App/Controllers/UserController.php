@@ -3,7 +3,6 @@ namespace App\Controllers;
 include_once PATH_ROOT . '/App/model/user/user.php';
 include_once PATH_ROOT . '/config/DBConnect.php';
 include_once PATH_ROOT . '/core/jwt/jwt.php';
-include_once PATH_ROOT . '/core/middleware/Rest.php';
 include_once PATH_ROOT . '/config/constants.php';
 include_once PATH_ROOT . '/core/middleware/Rest.php';
 class UserController
@@ -27,8 +26,7 @@ class UserController
         if(!is_array($user)) {
             $rest->returnResponse(INVALID_USER_PASS, "Email or Password is incorrect.");
         }
-
-        if( $user['permission'] == 0 ) {
+        if( $user['is_active'] == 0 ) {
             $rest->returnResponse(USER_NOT_ACTIVE, "User is not activated. Please contact to admin.");
         }
         $payload = [
@@ -45,6 +43,42 @@ class UserController
         catch (\Exception $exception)
         {
             $rest->returnResponse(NOT_FOUND,$exception);
+        }
+    }
+    public function loginAdmin()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $stmt = $this->dbConn->prepare("SELECT * FROM user WHERE username = :email AND password = :password");
+        $stmt->bindParam(":email", $data['email']);
+        $stmt->bindParam(":password", $data['password']);
+        $stmt->execute();
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $rest = new  \Rest();
+        if(!is_array($user)) {
+            $rest->returnResponse(INVALID_USER_PASS, "Email or Password is incorrect.");
+        }
+        if( $user['is_active'] == 0 ) {
+            $rest->returnResponse(USER_NOT_ACTIVE, "User is not activated. Please contact to admin.");
+        }
+        if( $user['permission'] != 1 ) {
+            $rest->returnResponse(API_DOST_NOT_EXIST, "User is not Admin");
+        }
+        else {
+            $payload = [
+                'iat' => time(),
+                'iss' => 'localhost',
+                'exp' => time() + (86400 * 10),
+                'userId' => $user['id']
+            ];
+            $data = \JWT::encode($payload,SECRETE_KEY);
+            $token = ['token' => $data ];
+            try{
+                $rest->returnResponse(SUCCESS_RESPONSE,$token);
+            }
+            catch (\Exception $exception)
+            {
+                $rest->returnResponse(NOT_FOUND,$exception);
+            }
         }
     }
     public function signup()
@@ -93,5 +127,4 @@ class UserController
         }
     }
 }
-
 ?>
