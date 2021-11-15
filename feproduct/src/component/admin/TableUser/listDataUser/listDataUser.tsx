@@ -1,14 +1,16 @@
 import React from 'react';
-import {TableCell, TableRow} from "@mui/material";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 
-interface props{
-    res: any
-    index: number,
-    updateData: (res: Array<any>) => void
+
+interface propsTableReview {
+    indexs: number,
+    res: any,
+    updateData: (res: Array<any>) => void,
 }
-const ListDataUser:React.FC<props> = ({res,index,updateData}) => {
+const ListTableUser:React.FC<propsTableReview> = ({indexs,res,updateData}) => {
     return (
-        <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+        <TableRow hover role="checkbox" tabIndex={-1} key={indexs}>
             <TableCell align={res.align} onClick={() => updateData(res)}>
                 {res.id}
             </TableCell>
@@ -42,5 +44,4 @@ const ListDataUser:React.FC<props> = ({res,index,updateData}) => {
         </TableRow>
     );
 }
-
 export default ListDataUser;

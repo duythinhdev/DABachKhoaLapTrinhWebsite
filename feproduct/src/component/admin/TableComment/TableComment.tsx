@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import { columnsNameTableComment } from "../NameColumsTable/NameColumnsTable";
 import Checkbox from "@mui/material/Checkbox";
 import ModalAddComment from "./ModalAddComment/modalAddComment";
-import ModalUpdateComment from "../TableReview/modalUpdateReview/ModalUpdateReview";
+import ModalUpdateComment from "../TableComment/ModalUpdateComment/ModalUpdateComment";
 import ListTableComment from "./ListTableComment/ListTableComment";
 
 export default function TableComment() {

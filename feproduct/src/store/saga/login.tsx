@@ -9,15 +9,15 @@ export function* loginApp(actions: any) : any {
         email: username,
         password: password
     }
-    let urlLogin = 'v1/user/login';
+    let urlLogin = 'v1/user/loginadmin';
     try {
         const response:any =  yield axios.post(enviroment.local + urlLogin, body);
         yield localStorage.setItem("token",JSON.stringify(response.data.response.data.token));
-        yield localStorage.setItem("exp",JSON.stringify(response.data.response.data.exp));
-        yield put(Actions.loginAppSuccess(true))
+        // yield put(Actions.loginAppSuccess(true))
     }
     catch (e) {
         yield alert('Username, password are wrong');
+        yield put(Actions.loginAppSuccess(false))
         yield localStorage.clear();
     }
 }

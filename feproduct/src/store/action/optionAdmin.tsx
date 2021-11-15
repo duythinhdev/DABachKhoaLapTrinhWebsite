@@ -27,12 +27,6 @@ export const deleteOption = (id: number) => {
     }
 }
 export const putOption = (id: number,size: string,Types: string,price: number,quantity: number,product_id: number) => {
-    console.log("id",id);
-    console.log("size",size);
-    console.log("Types",Types);
-    console.log("price",price);
-    console.log("quantity",quantity);
-    console.log("product_id",product_id);
     return {
         type: action.PUT_DATA_OPTION_ADMIN,
         id: id,

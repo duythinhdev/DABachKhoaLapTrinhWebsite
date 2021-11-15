@@ -1,6 +1,5 @@
 import React from 'react';
 import TableCell from "@mui/material/TableCell";
-import Checkbox from "@mui/material/Checkbox";
 import TableRow from "@mui/material/TableRow";
 
 
@@ -9,7 +8,7 @@ interface propsTableReview {
     res: any,
     updateData: (res: Array<any>) => void,
 }
-const ListTableReview: React.FC<propsTableReview> = ({indexs,res,updateData}) => {
+const ListTableUser:React.FC<propsTableReview> = ({indexs,res,updateData}) => {
     return (
         <TableRow hover role="checkbox" tabIndex={-1} key={indexs}>
             <TableCell align={res.align} onClick={() => updateData(res)}>
@@ -46,4 +45,4 @@ const ListTableReview: React.FC<propsTableReview> = ({indexs,res,updateData}) =>
     );
 }
 
-export default ListTableReview;
+export default ListTableUser;

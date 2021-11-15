@@ -1,5 +1,6 @@
 import React, {ChangeEventHandler, useState} from 'react';
-import {Box, Button, Modal, TableCell, TableRow, TextField} from "@mui/material";
+
+import { Box, Button, Modal, TableCell, TableRow, TextField,Select,MenuItem,InputLabel } from "@mui/material";
 import * as action from "../../../../store/action/index";
 import {useDispatch, useSelector} from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
@@ -18,42 +19,60 @@ let style: any = {
     px: 4,
     pb: 3,
 };
-
-const ModalAddUser = () => {
+interface props {
+    fetchDataUser: () => void
+}
+const ModalAddUser:React.FC<props> = ({fetchDataUser}) => {
     let ditpatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const [postProduct, setPostProduct] = useState({
-        product_name: '' as string,
-        image: '' as string,
-        description: '' as string,
-        id_category: '' as any,
+    const [permission,setPermission] = useState( "" as any);
+    const [postUser, setPostUser] = useState({
+        id: 1 as number,
+        full_name: "" as string,
+        address: "" as string,
+        name: "" as string,
+        phone: 0 as number,
+        username: "" as string,
+        password: "" as string,
+        created_at: "" as any,
+        updated_at: "" as any,
     });
     let statusPost:boolean = useSelector((state:any) =>  state.main.status);
     let titlePost:string = useSelector((state:any) => state.main.titleProductPost);
-    const handleOpen = () => {
+    const handleOpen = () : void => {
         setOpen(true);
     };
-    const handleClose = () => {
+    const handleClose = (): void => {
         setOpen(false);
     };
 
-    const ClickValue = (event:any) => {
+    const ClickValue = (event:any): void => {
         event.preventDefault();
-        let actions = action.dataProduct(postProduct.product_name,postProduct.image,postProduct.description,postProduct.id_category);
+        let actions = action.postUser(
+            permission,
+            postUser.full_name,
+            postUser.address,
+            postUser.name,
+            postUser.phone,
+            postUser.username,
+            postUser.password,
+            postUser.created_at,
+            postUser.updated_at,
+        );
         ditpatch(actions);
         notify(titlePost)
+        fetchDataUser();
         console.log("statusPost,",statusPost,titlePost);
     }
     const notify = (titlePost:String) => toast(titlePost);
-    const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const changeValue = (event: React.ChangeEvent<any>): void => {
         const newValue = event.target.value;
-        setPostProduct({...postProduct, [event.target.name]: newValue});
+        setPostUser({...postUser, [event.target.name]: newValue});
     }
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+    const changePermission = (event: any): void => {
+        setPermission(event.target.value);
+    }
 
-    const handleChange = (newValue:any) => {
-        setValue(newValue);
-    };
     return (
         <TableCell align="right" colSpan={12}>
             <Button onClick={handleOpen}>Thêm Phần Tử</Button>
@@ -71,17 +90,34 @@ const ModalAddUser = () => {
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField id="filled-basic" name="" label="id" variant="outlined"/>
-                        <TextField id="filled-basic" name="product_name" label="Product Name" variant="outlined"
+                        <TextField id="filled-basic" name="full_name" label="full_name" variant="outlined"
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}
+                        />
+                        <TextField id="filled-basic" name="address" label="address" variant="outlined"
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} />
+                        <TextField id="filled-basic" name="name" label="name" variant="outlined"
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} />
+                        <TextField id="filled-basic" name="phone" label="phone" variant="outlined"
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} />
+                        <TextField id="filled-basic" name="username" label="username" variant="outlined"
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="image" label="Image" variant="outlined"
+                        <TextField id="filled-basic" name="password" label="password" variant="outlined"
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="description" label="description" variant="outlined"
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="id_category" label="id_category" variant="outlined"
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="cteated_at" label="cteated_at" variant="outlined"/>
+                        <TextField id="filled-basic" name="created_at" label="created_at" variant="outlined"/>
                         <TextField id="filled-basic" name="update_at" label="update_at" variant="outlined"/>
+                        <InputLabel id="demo-simple-select-label">Permission</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={permission}
+                            name="permission"
+                            label="Age"
+                            onChange={changePermission}
+                        >
+                            <MenuItem value={1}>User</MenuItem>
+                            <MenuItem value={2}>Leader</MenuItem>
+                            <MenuItem value={3}>Admin</MenuItem>
+                        </Select>
                         <Button variant="contained" onClick={(event) => ClickValue(event)}>Add</Button>
                     </Box>
                 </Box>

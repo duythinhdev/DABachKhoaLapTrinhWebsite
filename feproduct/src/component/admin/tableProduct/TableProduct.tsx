@@ -3,8 +3,7 @@ import "./tableProduct.scss";
 import {useEffect, useState, useReducer} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
-import { makeStyles, createStyles, createMuiTheme } from '@material-ui/core/styles';
-
+import {makeStyles, createMuiTheme} from '@material-ui/core/styles';
 import {
     Button,
     TextField,
@@ -18,18 +17,17 @@ import {
     Table,
     Paper,
     FormControl,
-    TablePagination
+    TablePagination,
+    CardActionArea,
+    CardContent,
+    CardMedia,
+    Typography,
+    Card
 } from '@mui/material';
-import DateTimePicker from '@mui/lab/DateTimePicker';
 import ModalAddProduct from "./modalAddProduct/modalAddProduct";
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import { columnsNamesTableProducts } from "../NameColumsTable/NameColumnsTable";
-
-
+import {columnsNamesTableProducts} from "../NameColumsTable/NameColumnsTable";
+import ModalUpdateComment from "../TableComment/ModalUpdateComment/ModalUpdateComment";
+import ListDataProduct from "./lisdataproduct/listData";
 
 
 const theme = createMuiTheme({
@@ -44,14 +42,13 @@ const useStyles = makeStyles({
         top: 'calc(50% - 240px)',
         left: 'calc(40% - 160px)',
     },
-    formImage : {
-        boxShadow: '0 0 10px' ,
+    formImage: {
+        boxShadow: '0 0 10px',
         backgroundColor: 'white',
         width: '500px',
         height: '500px',
         display: 'flex',
         flexWrap: 'wrap',
-        // border-radius:'15px 15px 15px 15px',
     },
     textField: {
         marginLeft: theme.spacing(1),
@@ -72,99 +69,44 @@ const useStyles = makeStyles({
 
 });
 const TableProduct = () => {
-    const [clickValue, setClickValue] = useReducer((state: any, newState: any) => ({...state, ...newState}), {
-        image: false as boolean,
-        product_name: false as boolean,
-        description: false as boolean,
-        id_category: false as boolean,
-        created_at: false as boolean,
-        indexImage: 1 as number,
-        indexProduct_name: 1 as number,
-        indexDescription: 1 as number,
-        indexId_category: 1 as number,
-        indexCreated_at: 1 as number,
-        product_nameValue: '' as string,
-        imageValue: '' as string,
-        descriptionValue: '' as string,
-        id_categoryValue: '' as any,
-        create_atValue: '',
-        update_atValue: '',
-        file: '' as string
+    const [state, setState] = useReducer((state: any, newState: any) => ({...state, ...newState}), {
+        page: 1 as any,
+        rowsPerPage: 10 as any,
+        dataPagination: [] as any,
+        totalpage: 1 as any,
+        file: '' as any,
+        ModalUpdate: false as boolean,
+        DataModalUpdate: [] as any,
     });
-    const [page, setPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [dataPagination, setDataPagination] = useState([]) as any;
-    const [totalpage, setTotalPage] = useState(1) as any;
-    const handleChangePage =  async (event: any, newPage: any) => {
-        await setPage(newPage);
+    const handleChangePage = async (event: any, newPage: any) => {
+        await setState({...state, page: newPage});
         await fetchDataProduct();
     };
 
     const handleChangeRowsPerPage = (event: any) => {
-        setRowsPerPage(+event.target.value);
-        setPage(1);
+        setState({...state, rowsPerPage: +event.target.value});
+        setState({...state, page: 1});
     };
     let fetchDataProduct = async () => {
-        let apiPagination = `v1/product/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
+        let apiPagination = `v1/product/get?pagenumber=${state.page}&pagesize=${state.rowsPerPage}`;
         await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
-                 setTotalPage(res.data.response.totalpage[0].total)
-                 setDataPagination(res.data.response.data);
+                setState({...state, totalpage: res.data.response.totalpage[0].total})
+                setState({...state, dataPagination: res.data.response.data});
             }).catch(err => console.log(err));
+        console.log("123",state.dataPagination);
     }
     useEffect(() => {
         fetchDataProduct();
-    }, [page && rowsPerPage])
+    }, [])
 
-    const ClickImage = (indexKey: number) => {
-        setClickValue({...clickValue, image: true, indexImage: indexKey});
-    };
-    const CloseClickImage = () => {
-        setClickValue({...clickValue, image: false});
-    };
-    const ClickCreated = (indexKey: number) => {
-        setClickValue({...clickValue, created_at: true, indexCreated_at: indexKey});
-    };
-    const CloseClickCreated = () => {
-        setClickValue({...clickValue, created_at: false});
-    };
-    const handleClickValueProductName = (indexKey: number) => {
-        setClickValue({...clickValue, product_name: true, indexProduct_name: indexKey});
-    };
-    const handleClickValueDescription = (indexKey: number) => {
-        setClickValue({...clickValue, description: true, indexDescription: indexKey});
-    };
-    const handleClickProductClose = (indexKey: number) => {
-        setClickValue({...clickValue, product_name: false, indexDescription: indexKey});
-    };
-    const handleClickValueImage = (indexKey: number) => {
-        setClickValue({...clickValue, image: true, indexImage: indexKey});
-    };
-    const ChangeValueProduct = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setClickValue({...clickValue, [event.target.name]: event.target.value})
-    }
-    const submitChange = async (index: number) => {
-        let id = index;
-        let body = {
-            product_name: clickValue.product_nameValue,
-            image: clickValue.imageValue,
-            description: clickValue.descriptionValue,
-            id_category: clickValue.id_categoryValue,
-            create_at: clickValue.create_atValue,
-            update_at: clickValue.update_atValue,
-        }
-        try {
-            const data = await axios.put(enviroment.local + 'v1/product/put/' + `${id}`, body);
-            console.log("data",data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
-    function handleChange(e:any) {
-        let url:any = URL.createObjectURL(e.target.files[0]);
-        setClickValue({...clickValue, file: url});
-        console.log(url)
+    const updateData = async (res: any) => {
+        await setState({...state,ModalUpdate:true});
+        await setState({...state,DataModalUpdate: res});
+    }
+    const closeUpdateData = () => {
+        setState({...state,ModalUpdate:false});
     }
     const classes = useStyles();
     return (
@@ -178,7 +120,7 @@ const TableProduct = () => {
                                     <h3>Control Product</h3>
                                 </TableCell>
                             </TableRow>
-                            <ModalAddProduct />
+                            <ModalAddProduct fetchDataProduct={fetchDataProduct} />
                             <TableRow>
                                 {columnsNamesTableProducts.map((column: any) => (
                                     <TableCell
@@ -193,80 +135,27 @@ const TableProduct = () => {
                         </TableHead>
                         <TableBody>
                             {
-                                dataPagination?.map((res: any, index: number) => {
-                                    return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                        <TableCell  align={res.align}>
+                                state.dataPagination?.map((res: any, index: number) => {
+                                  return  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
                                             {res.id}
                                         </TableCell>
-                                        <TableCell  align={res.align}
-                                                   onClick={() => handleClickValueProductName(index)}>
-                                            {clickValue.product_name && clickValue.indexProduct_name === index ?
-                                                <TextField id="filled-basic" label="product_name"
-                                                           name='product_nameValue'
-                                                           variant="filled"
-                                                           onChange={(event: any) => ChangeValueProduct(event)}
-                                                    // onClick={() => handleClickProductClose(index)}
-                                                           onKeyDown={() => submitChange(res.id)}
-                                                           defaultValue={res.Product_name}/> : res.Product_name}
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.Product_name}
                                         </TableCell>
-                                        <TableCell  align={res.align}  onClick={() => handleClickValueImage(index)}>
-                                            {clickValue.image && clickValue.indexImage === index ?
-                                                <TextField
-                                                    id="outlined-full-width"
-                                                    label="Image Upload"
-                                                    style={{ margin: 8 }}
-                                                    name="upload-photo"
-                                                    type="file"
-                                                    fullWidth
-                                                    margin="normal"
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    variant="outlined"
-                                                    onChange={ handleChange}
-                                                /> : res.image}
-                                            {
-                                                clickValue.file.length > 0 && clickValue.image && clickValue.indexImage === index  ?
-
-                                                <Card className={classes.paperRoot}>
-                                                    <CardActionArea>
-                                                        <CardMedia
-                                                            component="img"
-                                                            alt="Contemplative Reptile"
-                                                            height="140"
-                                                            image={clickValue.file}
-                                                            title="Contemplative Reptile"
-                                                        />
-                                                    </CardActionArea>
-                                                    <CardContent>
-                                                        <Typography gutterBottom variant="h5" component="h2">
-                                                            {/*{text}*/}
-                                                        </Typography>
-                                                    </CardContent>
-                                                </Card> : ''
-                                            }
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.image}
                                         </TableCell>
-                                        <TableCell  align={res.align}
-                                                   onClick={() => handleClickValueDescription(index)}>
-                                            {clickValue.description && clickValue.indexDescription === index ?
-                                                <TextField id="filled-basic" label="description" name='descriptionValue'
-                                                           variant="filled"
-                                                           onChange={(event: any) => ChangeValueProduct(event)}
-                                                           onClick={() => handleClickProductClose(index)}
-                                                           onKeyDown={() => submitChange(res.id)}
-                                                           defaultValue={res.description}/> : res.description}
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.description}
                                         </TableCell>
-                                        <TableCell align={res.align}
-                                                   onClick={() => ClickCreated(index)}>
-                                            {clickValue.created_at && clickValue.indexCreated_at === index ?
-                                                <DateTimePicker
-                                                    label="Date&Time picker"
-                                                    value={res.create_at}
-                                                    onChange={(event: any) => ChangeValueProduct(event)}
-                                                    renderInput={(params) => <TextField {...params} />}
-                                                /> : res.created_at}
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.created_at}
                                         </TableCell>
-                                        <TableCell key={index} align={res.align}>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.updated_at}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
                                             {res.updated_at}
                                         </TableCell>
                                         <TableCell key={index} align={res.align}>
@@ -279,14 +168,20 @@ const TableProduct = () => {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[1,10, 25, 100]}
+                    rowsPerPageOptions={[1, 10, 25, 100]}
                     component="div"
-                    count={totalpage}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
+                    count={state.totalpage}
+                    rowsPerPage={state.rowsPerPage}
+                    page={state.page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                {
+                    state.ModalUpdate && <ModalUpdateComment dataModalUpdate={state.dataModalUpdate}
+                                                       modalUpdate={state.ModalUpdate}
+                                                       closeUpdateDatas={closeUpdateData}
+                    />
+                }
             </Paper>
         </div>
     );

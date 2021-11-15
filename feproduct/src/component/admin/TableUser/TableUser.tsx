@@ -6,36 +6,36 @@ import { columnsTableUser } from "../NameColumsTable/NameColumnsTable";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
-import ListDataUser from "./listDataUser/listDataUser";
 import ModalUpdateUser from "./modalUpdateUser/ModalUpdateUser";
 
-export default function TableUser() {
+
+const TableUser = () =>  {
     const [page, setPage] = useState(1) as any | undefined;
     const [rowsPerPage, setRowsPerPage] = useState(10) as any | undefined;
     const [totalpage, setTotalPage] =  useState(1) as any | undefined;
     const [dataPagination, setDataPagination] = useState([]as Array<any>);
-    const [modalUpdate, setModalUpdate] = useState(false as boolean);
+    const [modalUpdate, setModalUpdate] = useState(false) as any;
     const [dataModalUpdate, setDataModalUpdate] = useState([]) as Array<any>;
     const handleChangePage = (event:any, newPage:any) => {
         setPage(newPage);
+        fetchDataUser();
     };
 
     const handleChangeRowsPerPage = (event:any) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    let fetchDataCategoryProduct = async () => {
+    let fetchDataUser = async () => {
         let apiPagination = `v1/user/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
         await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
-                setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);
                 setDataPagination(res.data.response.data);
-                console.log("res", res)
+                setTotalPage(res.data.response.totalpage[0].total)
             }).catch(err => console.log(err));
     }
     useEffect(() => {
-        fetchDataCategoryProduct();
+        fetchDataUser();
     }, [])
     const updateData = async (res: Array<any>) => {
         await setModalUpdate(true);
@@ -55,7 +55,7 @@ export default function TableUser() {
                                     <h3>Control user</h3>
                                 </TableCell>
                             </TableRow>
-                            <ModalAddUser />
+                            <ModalAddUser  fetchDataUser={fetchDataUser} />
                             <TableRow>
                                 {columnsTableUser?.map((column:any) => (
                                     <TableCell
@@ -71,7 +71,41 @@ export default function TableUser() {
                         <TableBody>
                             {
                                 dataPagination?.map((res:any,index: number)=> {
-                                  return <ListDataUser res={res} index={index} updateData={updateData} />
+                                  return   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.permission === 3 ? "Admin" : 'User' }
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.full_name}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.address}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.name}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.phone}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.username}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.password}
+                                        </TableCell>
+                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                              {res.is_active ? "Active" : "don't Active" }
+                                          </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.created_at}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.updated_at}
+                                        </TableCell>
+                                    </TableRow>
                                 })
                             }
                         </TableBody>
@@ -87,9 +121,14 @@ export default function TableUser() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
                 {
-                    modalUpdate && <ModalUpdateUser dataModalUpdate={dataModalUpdate}  modalUpdate={modalUpdate}  closeUpdateDatas={closeUpdateData} />
+                    modalUpdate && <ModalUpdateUser dataModalUpdate={dataModalUpdate}
+                                                    fetchDataUser={fetchDataUser}
+                                                             modalUpdate={modalUpdate}
+                                                             closeUpdateDatas={closeUpdateData}
+                    />
                 }
             </Paper>
         </div>
     );
 }
+export default TableUser;

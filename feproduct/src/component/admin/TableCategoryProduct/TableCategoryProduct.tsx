@@ -1,42 +1,21 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import  {
+    TableRow,
+    TablePagination,
+    TableHead,
+    TableContainer,
+    TableCell,
+    TableBody,
+    Table,
+    Paper } from "@mui/material";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
 import ModalAddTableCategoryProduct from "./AddTableCategoryProduct/modalAddTableCategoryProduct";
 import ModalUpdateCategoryProduct from "./ModalUpdateCategoryProduct/ModalUpdateCategoryProduct";
 import ListTableCategoryProduct from "./ListTableCategoryProduct/ListTableCategoryProduct";
-// import "./TableOptionOrder.scss";
+import { columnsCategoryProduct } from "../NameColumsTable/NameColumnsTable";
 
-const columns: any = [
-    {
-        id: 'id',
-        label: 'id',
-        minWidth: 100
-    },
-    {
-        id: 'Name',
-        label: 'Name',
-        minWidth: 100
-    },
-    {
-        id: 'created_at',
-        label: 'created_at',
-        minWidth: 100
-    },
-    {
-        id: 'created_at',
-        label: 'created_at',
-        minWidth: 100,
-    },
-];
 
 export default function TableCategoryProduct() {
     const [page, setPage] = useState(1) as any | undefined;
@@ -90,7 +69,7 @@ export default function TableCategoryProduct() {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                {columns?.map((column: any) => (
+                                {columnsCategoryProduct?.map((column: any) => (
                                     <TableCell
                                         key={column.id}
                                         align={column.align}

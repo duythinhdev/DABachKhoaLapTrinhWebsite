@@ -54,6 +54,9 @@ class ProductController
     public function post()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        $filename = $_FILES['image']['name'];
+        var_dump($filename);
+        die;
         $product = new \product();
 //        $product->id = $data['id'];
         $product->product_name = $data['product_name'];

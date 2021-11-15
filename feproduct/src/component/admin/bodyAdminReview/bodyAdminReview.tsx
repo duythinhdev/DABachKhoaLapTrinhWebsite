@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import * as actions from "../../../store/action";
 import {Grid} from "@mui/material";
 import NavBodyAdmin from "../navBodyAdmin/navBodyAdmin";
-import TableReview from "../TableReview/TableReview";
+import TableReview from "../tableReview/tableReview";
 
 const  BodyAdminReview = () => {
     let dispatch = useDispatch();
