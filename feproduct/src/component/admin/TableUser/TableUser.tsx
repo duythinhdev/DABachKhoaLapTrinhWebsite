@@ -1,18 +1,14 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import { Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow } from "@mui/material";
 import "./TableUser.scss";
 import ModalAddUser from "../TableUser/modalUser/modalUser";
 import { columnsTableUser } from "../NameColumsTable/NameColumnsTable";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
+import ListDataUser from "./listDataUser/listDataUser";
+import ModalUpdateUser from "./modalUpdateUser/ModalUpdateUser";
+
 export default function TableUser() {
     const [page, setPage] = useState(1) as any | undefined;
     const [rowsPerPage, setRowsPerPage] = useState(10) as any | undefined;
@@ -41,7 +37,7 @@ export default function TableUser() {
     useEffect(() => {
         fetchDataCategoryProduct();
     }, [])
-    const updateData = async (res: any) => {
+    const updateData = async (res: Array<any>) => {
         await setModalUpdate(true);
         await setDataModalUpdate(res);
     }
@@ -50,7 +46,7 @@ export default function TableUser() {
     }
     return (
         <div className="TableProduct">
-            <Paper sx={{ width: '90%' }} >
+            <Paper sx={{ width: '86%' }} >
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -75,38 +71,7 @@ export default function TableUser() {
                         <TableBody>
                             {
                                 dataPagination?.map((res:any,index: number)=> {
-                                  return  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.id}
-                                        </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.permission === 3 ? "Admin" : 'User' }
-                                        </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.full_name}
-                                        </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.address}
-                                        </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
-                                              {res.name}
-                                          </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
-                                              {res.phone}
-                                          </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
-                                              {res.username}
-                                          </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
-                                              {res.password}
-                                          </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
-                                              {res.created_at}
-                                          </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
-                                              {res.updated_at}
-                                          </TableCell>
-                                    </TableRow>
+                                  return <ListDataUser res={res} index={index} updateData={updateData} />
                                 })
                             }
                         </TableBody>
@@ -121,6 +86,9 @@ export default function TableUser() {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                {
+                    modalUpdate && <ModalUpdateUser dataModalUpdate={dataModalUpdate}  modalUpdate={modalUpdate}  closeUpdateDatas={closeUpdateData} />
+                }
             </Paper>
         </div>
     );
