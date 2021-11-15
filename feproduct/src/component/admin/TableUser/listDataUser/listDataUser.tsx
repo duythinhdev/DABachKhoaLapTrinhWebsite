@@ -44,5 +44,4 @@ const ListTableUser:React.FC<propsTableReview> = ({indexs,res,updateData}) => {
         </TableRow>
     );
 }
-
-export default ListTableUser;
+export default ListDataUser;

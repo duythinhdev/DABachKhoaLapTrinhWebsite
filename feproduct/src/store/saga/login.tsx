@@ -11,7 +11,7 @@ export function* loginApp(actions: any) : any {
     }
     let urlLogin = 'v1/user/loginadmin';
     try {
-        const response:any =  yield axios.post(enviroment.locals + urlLogin, body);
+        const response:any =  yield axios.post(enviroment.local + urlLogin, body);
         yield localStorage.setItem("token",JSON.stringify(response.data.response.data.token));
         // yield put(Actions.loginAppSuccess(true))
     }

@@ -18,7 +18,7 @@ export function* postUser(actions: any) {
     }
     let urlLogin = 'v1/user/post';
     try {
-        const response:Promise<any> =  yield axios.post(enviroment.locals + urlLogin, body);
+        const response:Promise<any> =  yield axios.post(enviroment.local + urlLogin, body);
         yield put(Actions.PostProduct("post success",true))
     }
     catch (error) {
@@ -40,7 +40,7 @@ export function* putUser(actions: any) {
         updated_at: updated_at
     }
     try {
-        const response:Promise<any> =  yield axios.put(enviroment.locals + urlLogin, body);
+        const response:Promise<any> =  yield axios.put(enviroment.local + urlLogin, body);
         yield put(Actions.PostProduct("post success",true))
     }
     catch (error) {
@@ -51,7 +51,7 @@ export function* deleteUser(actions: any) {
     let id = actions.id;
     let urlLogin = `v1/user/delete${id}`;
     try {
-        const response:Promise<any> =  yield axios.delete(enviroment.locals + urlLogin);
+        const response:Promise<any> =  yield axios.delete(enviroment.local + urlLogin);
         yield put(Actions.PostProduct("post success",true))
     }
     catch (error) {

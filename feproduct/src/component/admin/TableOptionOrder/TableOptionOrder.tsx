@@ -44,7 +44,7 @@ export default function TableOptionOrder() {
     };
     let fetchDataComment = async () => {
         let apiPagination = `v1/oderoption/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);

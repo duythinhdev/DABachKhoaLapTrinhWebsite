@@ -32,7 +32,7 @@ const TableOption = () => {
     };
     let fetchDataProduct = async () => {
         let apiPagination = `v1/option/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);

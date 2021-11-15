@@ -89,7 +89,7 @@ const TableProduct = () => {
     };
     let fetchDataProduct = async () => {
         let apiPagination = `v1/product/get?pagenumber=${state.page}&pagesize=${state.rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setState({...state, totalpage: res.data.response.totalpage[0].total})
                 setState({...state, dataPagination: res.data.response.data});

@@ -26,7 +26,7 @@ export default function TableCategoryProduct() {
     const [dataModalUpdate, setDataModalUpdate] = useState([]) as Array<any>;
     const handleChangePage = async (event:any, newPage:any) => {
         await setPage(newPage);
-        await fetchDataCategoryProduct();
+        fetchDataCategoryProduct();
     };
 
     const handleChangeRowsPerPage = (event:any) => {
@@ -35,16 +35,16 @@ export default function TableCategoryProduct() {
     };
     let fetchDataCategoryProduct = async () => {
         let apiPagination = `v1/categoryproduct/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
-                setTotalPage(res.data.response.totalpage[0].total)
+                setTotalPage(res.data.response.totalpage[0].total);
                 setRowsPerPage(rowsPerPage);
                 setDataPagination(res.data.response.data);
             }).catch(err => console.log(err));
     }
     useEffect(() => {
         fetchDataCategoryProduct();
-    }, [])
+    }, [page])
     const updateData = async (res: any) => {
         await setModalUpdate(true);
         await setDataModalUpdate(res);

@@ -1,19 +1,13 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import { Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow } from "@mui/material";
 import "./TableUser.scss";
 import ModalAddUser from "../TableUser/modalUser/modalUser";
 import { columnsTableUser } from "../NameColumsTable/NameColumnsTable";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
-import ModalUpdateUser from "../TableUser/modalupdateUser/ModalUpdateUser";
+import ModalUpdateUser from "./modalUpdateUser/ModalUpdateUser";
+
 
 const TableUser = () =>  {
     const [page, setPage] = useState(1) as any | undefined;
@@ -33,7 +27,7 @@ const TableUser = () =>  {
     };
     let fetchDataUser = async () => {
         let apiPagination = `v1/user/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setRowsPerPage(rowsPerPage);
                 setDataPagination(res.data.response.data);
@@ -43,7 +37,7 @@ const TableUser = () =>  {
     useEffect(() => {
         fetchDataUser();
     }, [])
-    const updateData = async (res: any) => {
+    const updateData = async (res: Array<any>) => {
         await setModalUpdate(true);
         await setDataModalUpdate(res);
     }
@@ -52,7 +46,7 @@ const TableUser = () =>  {
     }
     return (
         <div className="TableProduct">
-            <Paper sx={{ width: '90%' }} >
+            <Paper sx={{ width: '86%' }} >
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>

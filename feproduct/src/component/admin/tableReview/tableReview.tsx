@@ -28,7 +28,7 @@ export default function TableReview() {
     const [dataModalUpdate, setDataModalUpdate] = useState([]) as Array<any>;
     let fetchDataReview = async () => {
         let apiPagination = `v1/review/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);
