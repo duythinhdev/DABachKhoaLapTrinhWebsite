@@ -173,10 +173,16 @@ class review
         $this->create_at = $date;
         $this->update_at = $date;
         // Bind data
+        if(isset($this->create_at) || isset($this->update_at))
+        {
+    
+            $stmt->bindParam(':created_at', $this->create_at);
+            $stmt->bindParam(':updated_at', $this->update_at);
+        }
+
         $stmt->bindParam(':count_start', $this->count_start);
         $stmt->bindParam(':product_id', $this->product_id );
-        $stmt->bindParam(':created_at', $this->create_at);
-        $stmt->bindParam(':updated_at', $this->update_at);
+
         $stmt->bindParam(':content', $this->content);
         $stmt->bindParam(':user_id', $this->user_id);
 
@@ -222,8 +228,8 @@ class review
         }
 
 
-        $sql .= " create_at = :create_at, 
-					  update_at = :update_at
+        $sql .= " created_at = :created_at, 
+					  updated_at = :updated_at
 					WHERE 
 						id = :id";
         date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -232,8 +238,13 @@ class review
         $this->update_at = $date;
         $stmt = $this->dbConn->prepare($sql);
         $stmt->bindParam(':id', $this->id);
-        $stmt->bindParam(':create_at', $this->create_at);
-        $stmt->bindParam(':update_at', $this->update_at);
+        if(isset($this->create_at) || isset($this->update_at))
+        {
+    
+            $stmt->bindParam(':created_at', $this->create_at);
+            $stmt->bindParam(':updated_at', $this->update_at);
+        }
+
         if ($stmt->execute()) {
             return true;
         } else {

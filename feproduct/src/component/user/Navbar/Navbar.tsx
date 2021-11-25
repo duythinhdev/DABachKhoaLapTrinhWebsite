@@ -6,7 +6,7 @@ import { mobile } from "../response";
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-  height: 60px;
+  height: 100px;
   ${mobile({ height: "50px" })}
 `;
 
@@ -51,6 +51,7 @@ const Center = styled.div`
 
 const Logo = styled.h1`
   font-weight: bold;
+  color: black;
   ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
@@ -58,14 +59,18 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ flex: 2, justifyContent: "center" })}
+  &:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+  ${mobile({ flex: 2, justifyContent: "center" })};
 `;
 
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })};
 `;
 
 const Navbar = () => {
@@ -83,11 +88,11 @@ const Navbar = () => {
                     <Logo>TiKi</Logo>
                 </Center>
                 <Right>
-                    <Link to="/register" > <MenuItem>REGISTER</MenuItem> </Link>
-                    <Link to="/login" > <MenuItem>SIGN IN</MenuItem> </Link>
+                    <MenuItem><Link to="/register" > REGISTER </Link></MenuItem>
+                    <MenuItem> <Link to="/login" >SIGN IN </Link></MenuItem>
                     <MenuItem>
                         <Badge badgeContent={4} color="primary">
-                            <Link to="/cart" > <ShoppingCartOutlined /></Link>
+                            <Link to="/bought" > <ShoppingCartOutlined /></Link>
                         </Badge>
                     </MenuItem>
                 </Right>

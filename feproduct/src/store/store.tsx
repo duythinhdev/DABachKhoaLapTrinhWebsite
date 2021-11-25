@@ -14,7 +14,8 @@ import {
     watchOptionAdmin,
     watchReviewAdmin,
     watchCommentAdmin
-    ,watchCategoryAdmin
+    ,watchCategoryAdmin,
+    watchNewsAdmin
 } from "../store/saga/index";
 
 const sagaMiddleware: any = createSagaMiddleware();
@@ -42,6 +43,7 @@ sagaMiddleware.run(watchOptionAdmin);
 sagaMiddleware.run(watchReviewAdmin);
 sagaMiddleware.run(watchCommentAdmin);
 sagaMiddleware.run(watchCategoryAdmin);
+sagaMiddleware.run(watchNewsAdmin);
 export const app = (
     <Provider store={store}>
         <App/>

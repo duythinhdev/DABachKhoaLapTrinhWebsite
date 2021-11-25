@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow } from "@mui/material";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from "@mui/material";
 import "./TableNews.scss";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
 import {useEffect, useState} from "react";
 import Checkbox from "@mui/material/Checkbox";
 import ModalAddNews from "./ModalAddNews/ModalAddNews";
-import { columnsTableNews } from "../NameColumsTable/NameColumnsTable"
+import {columnsTableNews} from "../NameColumsTable/NameColumnsTable"
 import ModalUpdateNews from "./ModalUpdateNews/ModalUpdateNews";
 
 
@@ -17,11 +17,11 @@ export default function TableNews() {
     const [dataPagination, setDataPagination] = useState([]) as any;
     const [modalUpdate, setModalUpdate] = useState(false) as any;
     const [dataModalUpdate, setDataModalUpdate] = useState([]) as Array<any>;
-    const handleChangePage = (event:any, newPage:any) => {
+    const handleChangePage = (event: any, newPage: any) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event:any) => {
+    const handleChangeRowsPerPage = (event: any) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
@@ -38,17 +38,22 @@ export default function TableNews() {
     useEffect(() => {
         fetchDataComment();
     }, [])
-    const updateData = async (res: any) => {
+    const updateData = async (id: number) => {
+        let apiGetDetail = `v1/news/getdetail?id=${id}`;
+        await axios.get(enviroment.local + apiGetDetail)
+            .then((res: AxiosResponse<any>) => {
+                setDataModalUpdate(res.data.response.data)
+            }).catch(err => console.log(err));
+        console.log("",dataModalUpdate);
         await setModalUpdate(true);
-        await setDataModalUpdate(res);
     }
     const closeUpdateData = () => {
         setModalUpdate(false);
     }
     return (
         <div className="TableReview">
-            <Paper sx={{ width: '100%' }}>
-                <TableContainer sx={{ maxHeight: 440 }}>
+            <Paper sx={{width: '100%'}}>
+                <TableContainer sx={{maxHeight: 440}}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
@@ -58,15 +63,15 @@ export default function TableNews() {
                             </TableRow>
                             <TableRow>
                                 <TableCell align="center" colSpan={12}>
-                                    <ModalAddNews fetchDataComment={fetchDataComment} />
+                                    <ModalAddNews fetchDataComment={fetchDataComment}/>
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                {columnsTableNews?.map((column:any) => (
+                                {columnsTableNews?.map((column: any) => (
                                     <TableCell
                                         key={column.id}
                                         align={column.align}
-                                        style={{ top: 57, minWidth: column.minWidth }}
+                                        style={{top: 57, minWidth: column.minWidth}}
                                     >
                                         {column.label}
                                     </TableCell>
@@ -74,37 +79,26 @@ export default function TableNews() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {dataPagination?.map((res:any,index:number) => {
-                               return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            color="primary"
-                                            // indeterminate={numSelected > 0 && numSelected < rowCount}
-                                            // checked={rowCount > 0 && numSelected === rowCount}
-                                            // onChange={onSelectAllClick}
-                                            inputProps={{
-                                                'aria-label': 'select all desserts',
-                                            }}
-                                        />
-                                    </TableCell>
-                                    <TableCell align={res.align} onClick={() => updateData(res)}>
-                                        {res.id}
-                                    </TableCell>
-                                    <TableCell align={res.align} onClick={() => updateData(res)}>
-                                        {res.title}
-                                    </TableCell>
-                                    <TableCell align={res.align} onClick={() => updateData(res)}>
-                                        {res.is_show}
-                                    </TableCell>
-                                    <TableCell align={res.align} onClick={() => updateData(res)}>
-                                        {res.user_id}
-                                    </TableCell>
-                                    <TableCell align={res.align} onClick={() => updateData(res)}>
-                                        {res.created_at}
-                                    </TableCell>
-                                    <TableCell align={res.align} onClick={() => updateData(res)}>
-                                        {res.updated_at}
-                                    </TableCell>
+                            {dataPagination?.map((res: any, index: number) => {
+                                return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.title}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.is_show}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.user_id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.created_at}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.updated_at}
+                                        </TableCell>
                                 </TableRow>
                             })}
                         </TableBody>
@@ -121,8 +115,8 @@ export default function TableNews() {
                 />
                 {
                     modalUpdate && <ModalUpdateNews dataModalUpdate={dataModalUpdate}
-                                                       modalUpdate={modalUpdate}
-                                                       closeUpdateDatas={closeUpdateData}
+                                                    modalUpdate={modalUpdate}
+                                                    closeUpdateDatas={closeUpdateData}
                     />
                 }
             </Paper>

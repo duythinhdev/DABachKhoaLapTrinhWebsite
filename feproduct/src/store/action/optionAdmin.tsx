@@ -2,7 +2,6 @@ import * as action from "./actiontypes";
 
 
 export const postOption = (size: string,Types: string,price: number,quantity: number,product_id:number) =>  {
-    console.log(size,Types,price,quantity,product_id)
     return {
         type: action.POST_DATA_OPTION_ADMIN,
         size: size,
@@ -26,7 +25,7 @@ export const deleteOption = (id: number) => {
         id: id,
     }
 }
-export const putOption = (id: number,size: string,Types: string,price: number,quantity: number,product_id: number) => {
+export const putOption = (id: number,size: string,Types: string,price: number,quantity: number,product_id: number,created_at:string,updated_at:string) => {
     return {
         type: action.PUT_DATA_OPTION_ADMIN,
         id: id,
@@ -35,18 +34,5 @@ export const putOption = (id: number,size: string,Types: string,price: number,qu
         price: price,
         quantity: quantity,
         product_id: product_id,
-    }
-}
-export const dataOption  = (data: any) => {
-    return {
-        type: action.DATA_OPTION_ADMIN,
-        data:data
-    }
-}
-export const statusOption = (status:string,flag: boolean) => {
-    return {
-        type: action.DATA_OPTION_ADMIN,
-        status: status,
-        flag: flag
     }
 }

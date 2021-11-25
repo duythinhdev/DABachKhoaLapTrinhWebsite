@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, useState} from 'react';
+import React, {BaseSyntheticEvent, ChangeEventHandler, useState} from 'react';
 import {Box, Button, Modal, TableCell, TableRow, TextField} from "@mui/material";
 import * as action from "../../../../store/action/index";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,6 +11,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import { makeStyles, createStyles, createMuiTheme } from '@material-ui/core/styles';
+import axios from "axios";
+import * as actions from "../../../../store/action";
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
 let style: any = {
     position: 'absolute',
     top: '50%',
@@ -64,49 +68,54 @@ const useStyles = makeStyles({
 
 });
 interface props {
-    fetchDataProduct: () => void
+    fetchDataProduct: () => void,
+}
+interface addData {
+    product_name: string,
+    image: any,
+    description: string,
+    id_category: any,
 }
 const ModalAddProduct:React.FC<props> = ({fetchDataProduct}) => {
     let ditpatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [postProduct, setPostProduct] = useState({
         product_name: '' as string,
-        image: '' as string,
+        image: '' as any,
         description: '' as string,
         id_category: '' as any,
     });
     let statusPost:boolean = useSelector((state:any) =>  state.main.status);
     let titlePost:string = useSelector((state:any) => state.main.titleProductPost);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const ClickValue = (event:any) => {
-        event.preventDefault();
-        let actions = action.dataProduct(postProduct.product_name,postProduct.image,postProduct.description,postProduct.id_category);
-        ditpatch(actions);
-        notify(titlePost)
-        fetchDataProduct();
-        console.log("statusPost,",statusPost,titlePost);
-    }
     const notify = (titlePost:String) => toast(titlePost);
     const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
         setPostProduct({...postProduct, [event.target.name]: newValue});
     }
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
-
-
+    const {register, formState: {errors}, handleSubmit} = useForm<addData>({
+        criteriaMode: "all"
+    });
     function handleChange(e:any) {
-        let url:any = URL.createObjectURL(e.target.files[0]);
-        console.log("url",url);
+        let url:any = e.target.files[0];
         setPostProduct({...postProduct, image: url});
-        console.log(url)
     }
-    const classes = useStyles();
+    const ClickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined) => {
+        let fd = new FormData();
+        fd.append('image', postProduct.image);
+        fd.append('product_name', postProduct.product_name);
+        fd.append('description', postProduct.description);
+        fd.append('id_category', postProduct.id_category);
+        let actions = action.dataProduct(fd);
+        ditpatch(actions);
+        notify(titlePost)
+        fetchDataProduct();
+    }
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    }
     return (
         <TableCell align="right" colSpan={12}>
             <Button onClick={handleOpen}>Thêm Phần Tử</Button>
@@ -124,15 +133,37 @@ const ModalAddProduct:React.FC<props> = ({fetchDataProduct}) => {
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField id="filled-basic" name="" label="id" variant="outlined" disabled />
+                        <TextField id="filled-basic"
+                                   name="" label="id"
+                                   variant="outlined" disabled />
 
-                        <TextField id="filled-basic" name="product_name" label="Product Name" variant="outlined"
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField
+                            id="filled-basic"
+                            label="Product Name"
+                            variant="outlined"
+                            {...register("product_name", {
+                                required: "This is required.",
+                                maxLength: {
+                                    value: 30,
+                                    message: "This input exceed maxLength."
+                                }
+                            })}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
+                        <ErrorMessage
+                            errors={errors}
+                            name="product_name"
+                            render={({messages}) =>
+                                messages &&
+                                Object.entries(messages).map(([type, message]) => (
+                                    <p key={type}>{message}</p>
+                                ))
+                            }
+                        />
+                        <TextField
+                            className="imageProduct"
                             id="outlined-full-width"
                             label="Image Upload"
                             style={{ margin: 8 }}
-                            name="image"
                             type="file"
                             fullWidth
                             margin="normal"
@@ -142,31 +173,49 @@ const ModalAddProduct:React.FC<props> = ({fetchDataProduct}) => {
                             variant="outlined"
                             onChange={handleChange}
                         />
-                        {
-                            postProduct.image.length > 0 &&
-
-                                <Card className={classes.paperRoot}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            alt="Contemplative Reptile"
-                                            height="140"
-                                            image={postProduct.image}
-                                            title="Contemplative Reptile"
-                                        />
-                                    </CardActionArea>
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            {/*{text}*/}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                        }
-                        <TextField id="filled-basic" name="id_category" label="id_category" variant="outlined"
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
+                        <TextField id="filled-basic"    label="description"  variant="outlined"
+                                   {...register("description", {
+                                       required: "This is required.",
+                                       maxLength: {
+                                           value: 30,
+                                           message: "This input exceed maxLength."
+                                       }
+                                   })}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}
+                        />
+                        <ErrorMessage
+                            errors={errors}
+                            name="description"
+                            render={({messages}) =>
+                                messages &&
+                                Object.entries(messages).map(([type, message]) => (
+                                    <p key={type}>{message}</p>
+                                ))
+                            }
+                        />
+                        <TextField id="filled-basic"  label="id_category" variant="outlined"
+                                   {...register("id_category", {
+                                       required: "This is required.",
+                                       maxLength: {
+                                           value: 30,
+                                           message: "This input exceed maxLength."
+                                       }
+                                   })}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}
+                        />
+                        <ErrorMessage
+                            errors={errors}
+                            name="id_category"
+                            render={({messages}) =>
+                                messages &&
+                                Object.entries(messages).map(([type, message]) => (
+                                    <p key={type}>{message}</p>
+                                ))
+                            }
+                        />
                         <TextField id="filled-basic" name="cteated_at"  variant="outlined" type="date"  />
                         <TextField id="filled-basic" name="update_at"  variant="outlined" type="date" />
-                        <Button variant="contained" onClick={(event) => ClickValue(event)}>Add</Button>
+                        <Button variant="contained" onClick={handleSubmit((data: any) => ClickValue(data))}>Add</Button>
                     </Box>
                 </Box>
             </Modal>

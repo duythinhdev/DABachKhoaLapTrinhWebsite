@@ -158,7 +158,7 @@ class product
 
     public function create()
     {
-        $query = 'INSERT INTO ' . $this->tableName . ' (Product_name, image, created_at, updated_at, description, id_catergory_product) VALUES ( :Product_name, :image, :created_at, :updated_at, :description, :id_catergory_product)';
+        $query = 'INSERT INTO ' . $this->tableName . ' (product_name, image, created_at, updated_at, description, id_catergory_product) VALUES ( :product_name, :image, :created_at, :updated_at, :description, :id_catergory_product)';
 
         // Prepare statement
         $stmt = $this->dbConn->prepare($query);
@@ -176,7 +176,7 @@ class product
         $this->create_at = $date;
         $this->update_at = $date;
         // Bind data
-        $stmt->bindParam(':Product_name', $this->product_name);
+        $stmt->bindParam(':product_name', $this->product_name);
         $stmt->bindParam(':image', $this->image);
         $stmt->bindParam(':created_at', $this->create_at);
         $stmt->bindParam(':updated_at', $this->update_at);

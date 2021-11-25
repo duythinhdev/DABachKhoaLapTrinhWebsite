@@ -34,6 +34,6 @@ export function* putOption(actions: any) {
         const response: Promise<any> = yield axios.put(enviroment.local + urlLogin, body);
         console.log("response", response);
     } catch (error) {
-        put(Actions.statusOption("post fail", false))
+        put(Actions.PostProduct("post fail", false))
     }
 }

@@ -8,7 +8,7 @@ interface propsTableReview {
     res: any,
     updateData: (res: Array<any>) => void,
 }
-const ListTableUser:React.FC<propsTableReview> = ({indexs,res,updateData}) => {
+const ListDataUser:React.FC<propsTableReview> = ({indexs,res,updateData}) => {
     return (
         <TableRow hover role="checkbox" tabIndex={-1} key={indexs}>
             <TableCell align={res.align} onClick={() => updateData(res)}>

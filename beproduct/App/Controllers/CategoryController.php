@@ -79,8 +79,6 @@ class CategoryController
     public function getdetail($request)
     {
         $category_product = new \category_product();
-        var_dump($request['query']['id']);
-        die;
         $category_product->setId($request['query']['id']);
         $data = $category_product->getdetail();
         $rest = new \Rest();

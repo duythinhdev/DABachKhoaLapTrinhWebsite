@@ -77,12 +77,12 @@ const ModalUpdateProduct:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,cl
                         <TextField id="filled-basic" name="user_id" label="user_id" variant="outlined"
                                    defaultValue={dataModalUpdate.user_id}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="user_id" label="product_id" variant="outlined"
-                                   defaultValue={dataModalUpdate.product_id}
+                        <TextField id="filled-basic" name="image" label="image" variant="outlined"
+                                   defaultValue={dataModalUpdate.image}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
                         <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>
-                        <Button variant="contained" onClick={(event) => ClickValue(event)}>Add</Button>
+                        <Button variant="contained" onClick={(event) => ClickValue(event)}>Update</Button>
                     </Box>
                 </Box>
             </Modal>

@@ -1,14 +1,9 @@
 import * as React from 'react';
 import "./tableProduct.scss";
-import {useEffect, useState, useReducer} from "react";
+import {useEffect, useState, useLayoutEffect} from "react";
 import axios, {AxiosResponse} from "axios";
-import {enviroment} from "../../../enviroment/enviroment";
 import {makeStyles, createMuiTheme} from '@material-ui/core/styles';
 import {
-    Button,
-    TextField,
-    Box,
-    Modal,
     TableRow,
     TableHead,
     TableContainer,
@@ -16,18 +11,13 @@ import {
     TableBody,
     Table,
     Paper,
-    FormControl,
     TablePagination,
-    CardActionArea,
-    CardContent,
-    CardMedia,
-    Typography,
-    Card
 } from '@mui/material';
 import ModalAddProduct from "./modalAddProduct/modalAddProduct";
 import {columnsNamesTableProducts} from "../NameColumsTable/NameColumnsTable";
-import ModalUpdateComment from "../TableComment/ModalUpdateComment/ModalUpdateComment";
-import ListDataProduct from "./lisdataproduct/listData";
+import ModalUpdateProduct from "../tableProduct/ModalUpdateProduct/ModalUpdateProduct";
+import { enviroment } from "../../../enviroment/enviroment";
+import Authorization from "../../../enviroment/Authorization";
 
 
 const theme = createMuiTheme({
@@ -69,7 +59,7 @@ const useStyles = makeStyles({
 
 });
 const TableProduct = () => {
-    const [state, setState] = useReducer((state: any, newState: any) => ({...state, ...newState}), {
+    const [state, setState] = useState({
         page: 1 as any,
         rowsPerPage: 10 as any,
         dataPagination: [] as any,
@@ -96,7 +86,7 @@ const TableProduct = () => {
             }).catch(err => console.log(err));
         console.log("123",state.dataPagination);
     }
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetchDataProduct();
     }, [])
 
@@ -104,6 +94,7 @@ const TableProduct = () => {
     const updateData = async (res: any) => {
         await setState({...state,ModalUpdate:true});
         await setState({...state,DataModalUpdate: res});
+        console.log(state.ModalUpdate);
     }
     const closeUpdateData = () => {
         setState({...state,ModalUpdate:false});
@@ -144,16 +135,13 @@ const TableProduct = () => {
                                             {res.Product_name}
                                         </TableCell>
                                         <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.image}
+                                            <img src={enviroment.local + '/' + res.image}  />
                                         </TableCell>
                                         <TableCell align={res.align} onClick={() => updateData(res)}>
                                             {res.description}
                                         </TableCell>
                                         <TableCell align={res.align} onClick={() => updateData(res)}>
                                             {res.created_at}
-                                        </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.updated_at}
                                         </TableCell>
                                         <TableCell align={res.align} onClick={() => updateData(res)}>
                                             {res.updated_at}
@@ -177,7 +165,7 @@ const TableProduct = () => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
                 {
-                    state.ModalUpdate && <ModalUpdateComment dataModalUpdate={state.dataModalUpdate}
+                    state.ModalUpdate && <ModalUpdateProduct dataModalUpdate={state.DataModalUpdate}
                                                        modalUpdate={state.ModalUpdate}
                                                        closeUpdateDatas={closeUpdateData}
                     />

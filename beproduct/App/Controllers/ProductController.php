@@ -10,10 +10,13 @@ include_once PATH_ROOT . '/config/constants.php';
 class ProductController
 {
     public $data;
+    public $dbConn;
     public function __construct()
     {
         $db = new \DbConnect();
-        $db->connect();
+        $this->dbcon = $db->connect();
+        $rest = new \Rest();
+        $rest->validateToken();
     }
 
     public function getPagination($request)
@@ -54,16 +57,49 @@ class ProductController
     public function post()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $filename = $_FILES['image']['name'];
-        var_dump($filename);
-        die;
         $product = new \product();
-//        $product->id = $data['id'];
-        $product->product_name = $data['product_name'];
-        $product->image = $data['image'];
-        $product->description = $data['description'];
-        $product->id_catergory_product = $data['id_catergory_product'];
-        $data =  $product->create();
+        $img_name = $_FILES['image']['name'];
+        $img_size = $_FILES['image']['size'];
+        $tmp_name = $_FILES['image']['tmp_name'];
+        $error = $_FILES['image']['error'];
+        if($error ==  0)
+        {
+            if($img_size > 125000)
+            {
+                echo "Sorry, your file is too large";
+            }
+            else {
+                $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+                $img_ex_lc = strtolower($img_ex);
+                $allowed_exs = array("jpg", "jpeg", "png");     
+
+                if (in_array($img_ex_lc, $allowed_exs)) {
+                    $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                    $img_upload_path = 'asset/'.$new_img_name;
+                    move_uploaded_file($tmp_name, $img_upload_path);
+                    $product->image = $img_upload_path;
+                    $product->product_name = $_POST['product_name'];
+                    $product->description = $_POST['description'];
+                    $product->id_catergory_product = $_POST['id_category'];
+                    $data = $product->create();
+                    $rest = new \Rest();
+                    try {
+                        $rest->returnResponse(SUCCESS_RESPONSE, $data);
+                    } catch (Exception $e) {
+                        $rest->throwError(NOT_FOUND, $e);
+                    }
+                    // Insert into Database
+                    echo "cannot upload file";
+                }else {
+                    $em = "You can't upload files of this type";
+                    echo $em;
+                }
+            }
+        }
+        else {
+            $em = "unknown error occurred!";
+            echo $em;
+        }
         $rest = new \Rest();
         try {
             $rest->returnResponse(SUCCESS_RESPONSE, $data);
@@ -72,6 +108,51 @@ class ProductController
         }
     }
 
+
+    public function postImage() {
+        $product = new \product();
+        $img_name = $_FILES['image']['name'];
+        $img_size = $_FILES['image']['size'];
+        $tmp_name = $_FILES['image']['tmp_name'];
+        $error = $_FILES['image']['error'];
+        if($error ==  0)
+        {
+            if($img_size > 125000)
+            {
+                echo "Sorry, your file is too large";
+            }
+            else {
+                $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+                $img_ex_lc = strtolower($img_ex);
+                $allowed_exs = array("jpg", "jpeg", "png"); 
+
+                if (in_array($img_ex_lc, $allowed_exs)) {
+                    $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                    $img_upload_path = 'asset/'.$new_img_name;
+                    move_uploaded_file($tmp_name, $img_upload_path);
+                    $product->image = $img_upload_path;
+                    $data = $product->create();
+                    $rest = new \Rest();
+                    try {
+                        $rest->returnResponse(SUCCESS_RESPONSE, $data);
+                    } catch (Exception $e) {
+                        $rest->throwError(NOT_FOUND, $e);
+                    }
+                    // Insert into Database
+                    echo "cannot upload file";
+                }else {
+                    $em = "You can't upload files of this type";
+                    echo $em;
+                }
+            }
+        }
+        else {
+            $em = "unknown error occurred!";
+            echo $em;
+        }
+        // var_dump($_FILES['image']);
+        // die;
+    }
     public function delete($request)
     {
         $product = new \product();

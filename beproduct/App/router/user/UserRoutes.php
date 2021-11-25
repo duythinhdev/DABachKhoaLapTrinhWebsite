@@ -9,3 +9,5 @@ $router->post('/v1/user/loginadmin', 'UserController@loginAdmin');
 $router->post('/v1/user/signup', 'UserController@signup');
 
 $router->get('/v1/user/getall', 'UserController@getAllUser');
+
+$router->get('/v1/user/detail', 'UserController@getDetail');

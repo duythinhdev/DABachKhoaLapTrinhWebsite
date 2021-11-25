@@ -21,36 +21,41 @@ let style: any = {
 interface dataUpdate  {
     dataModalUpdate:any,
     modalUpdate:boolean,
-    closeUpdateDatas: () => void
+    closeUpdateDatas: () => void,
+    fetchDataReview: () => void
 }
-const ModalUpdateReview:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,closeUpdateDatas}) => {
+const ModalUpdateReview:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,closeUpdateDatas,fetchDataReview}) => {
     let ditpatch = useDispatch();
-    const [open, setOpen] = useState(false);
-    const [postReview, setPostReview] = useState({
+    const [putReview, setPutReview] = useState({
         count_start: 1 as number,
         content: '' as string,
         user_id: 1 as number,
         product_id: 1 as number,
+        created_at: '' as any,
+        updated_at: '' as any,
     });
     let statusPost:boolean = useSelector((state:any) =>  state.main.status);
     let titlePost:string = useSelector((state:any) => state.main.titleProductPost);
 
     const ClickValue = (event:any) => {
         event.preventDefault();
-        let actions = action.postReview(postReview.count_start,postReview.content,postReview.user_id,postReview.product_id);
+        let actions = action.updateReview(dataModalUpdate[0].id,putReview.count_start,putReview.content,putReview.user_id,putReview.product_id,putReview.created_at,putReview.updated_at);
         ditpatch(actions);
+        fetchDataReview();
+        notify(titlePost)
+    }
+    const deleteValue = (event:any) => {
+        event.preventDefault();
+        let actions = action.deleteReview(dataModalUpdate[0].id);
+        ditpatch(actions);
+        fetchDataReview();
         notify(titlePost)
     }
     const notify = (titlePost:String) => toast(titlePost);
     const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
-        setPostReview({...postReview, [event.target.name]: newValue});
+        setPutReview({...putReview, [event.target.name]: newValue});
     }
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
-
-    const handleChange = (newValue:any) => {
-        setValue(newValue);
-    };
     return (
         <TableCell align="right" colSpan={12}>
             <Modal
@@ -67,22 +72,27 @@ const ModalUpdateReview:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,clo
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField id="filled-basic" name="" label="id" variant="outlined" defaultValue={dataModalUpdate.id} disabled />
+                        <TextField id="filled-basic" name="" label="id" variant="outlined" defaultValue={dataModalUpdate[0].id} disabled />
                         <TextField id="filled-basic" name="count_start" label="count_start" variant="outlined"
-                                   defaultValue={dataModalUpdate.count_start}
+                                   defaultValue={dataModalUpdate[0].count_start}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="content" label="content" variant="outlined"
-                                   defaultValue={dataModalUpdate.content}
+                                   defaultValue={dataModalUpdate[0].content}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="user_id" label="user_id" variant="outlined"
-                                   defaultValue={dataModalUpdate.user_id}
+                                   defaultValue={dataModalUpdate[0].user_id}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="user_id" label="product_id" variant="outlined"
-                                   defaultValue={dataModalUpdate.product_id}
+                        <TextField id="filled-basic" name="product_id" label="product_id" variant="outlined"
+                                   defaultValue={dataModalUpdate[0].product_id}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
-                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>
+                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0].created_at}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}
+                        />
+                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0].updated_at}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}
+                        />
                         <Button variant="contained" onClick={(event) => ClickValue(event)}>Add</Button>
+                        <Button variant="contained" onClick={(event) => deleteValue(event)}>Delete</Button>
                     </Box>
                 </Box>
             </Modal>

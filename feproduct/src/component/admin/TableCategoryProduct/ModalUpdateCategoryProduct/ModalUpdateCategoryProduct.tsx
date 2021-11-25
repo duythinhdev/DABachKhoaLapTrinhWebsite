@@ -69,13 +69,13 @@ const ModalUpdateCategoryProduct:React.FC<dataUpdate> = ({dataModalUpdate,modalU
                         autoComplete="off"
                     >
                         <TextField id="filled-basic" name="" label="id" variant="outlined"
-                                   defaultValue={dataModalUpdate.id} disabled />
+                                   defaultValue={dataModalUpdate[0].id} disabled />
                         <TextField id="filled-basic" name="nameCategory" label="nameCategory" variant="outlined"
-                                   defaultValue={dataModalUpdate.name}
+                                   defaultValue={dataModalUpdate[0].name}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
-                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>
-                        <Button variant="contained" onClick={(event) => ClickValue(event)}>Add</Button>
+                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0].created_at}/>
+                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0].updated_at}/>
+                        <Button variant="contained" onClick={(event) => ClickValue(event)}>Update Category</Button>
                         <Button variant="outlined" startIcon={<DeleteIcon />} onClick={(event) => deleteValue(event)}>delete</Button>
                     </Box>
                 </Box>

@@ -21,20 +21,32 @@ export function* postReview(actions: any) {
 }
 
 export function* putReview(actions: any) {
-    const {id, size, Types, price, quantity, product_id} = actions;
+    const {id,count_start, content, product_id, user_id,created_at,updated_at} = actions;
     let body = {
-        id: id,
-        size: size,
-        Types: Types,
-        price: price,
-        quantity: quantity,
+        count_start: count_start,
+        content: content,
         product_id: product_id,
+        user_id: user_id,
+        created_at: created_at,
+        updated_at: updated_at,
     }
-    let urlLogin = `v1/option/put/${id}`;
+    let urlLogin = `v1/review/update/${id}`;
     try {
         const response: Promise<any> = yield axios.put(enviroment.local + urlLogin, body);
+        yield put(Actions.PostProduct("update success", true))
         console.log("response", response);
     } catch (error) {
-        put(Actions.statusOption("post fail", false))
+        // put(Actions.statusOption("post fail", false))
+    }
+}
+export function* deleteReview(actions: any) {
+    const {id} = actions;
+    let urlLogin = `v1/review/delete/${id}`;
+    try {
+        const response: Promise<any> = yield axios.delete(enviroment.local + urlLogin);
+        yield put(Actions.PostProduct("delete success", true))
+        console.log("response", response);
+    } catch (error) {
+        // put(Actions.statusOption("post fail", false))
     }
 }

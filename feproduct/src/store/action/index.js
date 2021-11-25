@@ -11,35 +11,56 @@ export {
     isMenuAdmin,
     dataProduct,
     PostProduct
-} from "../action/admin";
+}
+from "../action/admin";
 export {
     loginAppAdmin,
-    loginAppSuccess
-} from "../action/login";
+    statusSignup,
+    signup,
+    loginAppUser,
+    logoutSucceed,
+    authSuccess,
+    logout,
+    checkAuthTimeOut,
+    setAuthRedirectPath,
+    isTokenauth,
+    authSuccessUser
+}
+from "../action/login";
 
 export {
     postOption,
     getOption,
     putOption,
     deleteOption,
-    dataOption,
-    statusOption
 } from "../action/optionAdmin";
+export  {
+    postNews,
+    updateNews,
+    deleteNews
+} from "../action/newsAdmin";
 export {
     postReview,
-} from "../action/reviewAdmin";
+    deleteReview,
+    updateReview
+}
+from "../action/reviewAdmin";
 export {
     postComment,
-} from "../action/commentAdmin";
+
+}
+from "../action/commentAdmin";
 export {
     postCategory,
     putCategory,
     deleteCategory
-} from "../action/categoryproduct";
+}
+from "../action/categoryproduct";
 
 
 export {
     postUser,
     putUser,
     deleteUser
-} from "../action/userAdmin";
+}
+from "../action/userAdmin";

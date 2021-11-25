@@ -71,12 +71,14 @@ const TableUser = () =>  {
                         <TableBody>
                             {
                                 dataPagination?.map((res:any,index: number)=> {
-                                  return   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+
+                                    return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                         <TableCell align={res.align} onClick={() => updateData(res)}>
                                             {res.id}
                                         </TableCell>
                                         <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.permission === 3 ? "Admin" : 'User' }
+                                            {res.permission  == 1 ? "Admin" : 'user'}
+                                            {res.permission  == 2 ? "Leader" : ''}
                                         </TableCell>
                                         <TableCell align={res.align} onClick={() => updateData(res)}>
                                             {res.full_name}

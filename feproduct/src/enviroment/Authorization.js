@@ -1,20 +1,24 @@
 import React from 'react';
 
-function Authorization() {
-    let token  =  JSON.parse(localStorage.getItem("token") || '{}');
-    if(token)
-    {
-        let header  = {
-            headers: {
-                'Authorization': `bearer ${token}`,
-                'Content-Type': 'application/json'
+
+class Authorization {
+    header = '';
+    setheader(value) {
+        this._header = value;
+    }
+    getheader() {
+        return this._header;
+    }
+    constructor(props) {
+        super(props);
+        let admin = JSON.parse(localStorage.getItem('tokenAdmin')  || '{}')
+        if(admin !== undefined)
+        {
+            let header =  {
+                authorization: `Bearer ${admin}`,
             }
+            return this.setheader(header);
         }
-        return header;
     }
 }
-
-
-module.exports = {
-    Authorization
-}
+export default Authorization

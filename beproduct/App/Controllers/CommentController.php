@@ -68,7 +68,7 @@ class CommentController
     }
     public function delete($request){
         $comment = new \Comment();
-        $id = $request['params'][1];
+        $id = $request['query']['id'];
         $rest = new \Rest();
         $comment->id = $id;
         $data =  $comment->delete();

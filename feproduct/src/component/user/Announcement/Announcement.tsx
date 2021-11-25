@@ -10,9 +10,8 @@ const Container = styled.div`
   justify-content: center;
   font-size: 14px;
   font-weight: 500;
-  margin-top: 30px;
 `;
-const span = styled.span `
+const span = styled.span`
     height: 30px;
     width:20px;
 `;
@@ -23,6 +22,7 @@ function Announcement() {
             <Link to="/news"><span>news</span></Link> &nbsp;
             <Link to="/news"><span>news</span></Link> &nbsp;
             <Link to="/cart"><span>carts</span></Link> &nbsp;
+            <Link to="/bought"><span>carts</span></Link> &nbsp;
                 Super Deal! Free Shipping on Orders Over $50
         </Container>
     );

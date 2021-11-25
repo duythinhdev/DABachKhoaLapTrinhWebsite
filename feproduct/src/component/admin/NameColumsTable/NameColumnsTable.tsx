@@ -56,35 +56,29 @@ export const columnsNamesTableProducts:Array<any>= [
         id: 'image',
         label: 'image',
         minWidth: 100,
-        format: (value: any) => value.toLocaleString('en-US'),
     },
     {
         id: 'description',
         label: 'description',
-        minWidth: 100,
-        format: (value: any) => value.toLocaleString('en-US'),
+        minWidth: 100
     },
     {
         id: 'create_at',
         label: 'create_at',
         minWidth: 100,
-        format: (value: any) => value.toFixed(2),
     },
     {
         id: 'update_at',
         label: 'update_at',
         minWidth: 100,
-        format: (value: any) => value.toFixed(2),
     },
     {
         id: 'id_catergory_product',
         label: 'id_catergory_product',
         minWidth: 100,
-        format: (value: any) => value.toFixed(2),
     },
 ];
 export const columnsReview:Array<any> = [
-    {id: '', label: '', minWidth: 100},
     {id: 'id', label: 'id', minWidth: 100},
     {id: 'count_start', label: 'count_start', minWidth: 100},
     {id: 'product_id', label: 'product_id', minWidth: 100},
@@ -94,11 +88,6 @@ export const columnsReview:Array<any> = [
     {id: 'updated_at', label: 'updated_at', minWidth: 100},
 ];
 export const columnsNameTableComment:Array<any> = [
-    {
-        id: '',
-        label: '',
-        minWidth: 100,
-    },
     {
         id: 'id',
         label: 'id',
@@ -131,11 +120,6 @@ export const columnsNameTableComment:Array<any> = [
     },
 ];
 export const columnsTableNews:Array<any> = [
-    {
-        id: '',
-        label: '',
-        minWidth: 100
-    },
     {
         id: 'id',
         label: 'id',
@@ -254,23 +238,23 @@ export const columnsOptionOrder:Array<any> = [
     },
 
     {
-        id: 'Product_name',
-        label: 'Product_name',
+        id: 'option_id',
+        label: 'option_id',
         minWidth: 100
     },
     {
-        id: 'population',
-        label: 'Population',
+        id: 'order_id',
+        label: 'order_id',
         minWidth: 100,
     },
     {
-        id: 'size',
-        label: 'Size\u00a0(km\u00b2)',
+        id: 'total',
+        label: 'total',
         minWidth: 100,
     },
     {
-        id: 'density',
-        label: 'Density',
+        id: 'quantity',
+        label: 'quantity',
         minWidth: 100,
     },
 ];
