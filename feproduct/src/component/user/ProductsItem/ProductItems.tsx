@@ -4,6 +4,15 @@ import {
     ShoppingCartOutlined,
 } from "@mui/icons-material";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { enviroment } from "../../../enviroment/enviroment";
+import React,{useState} from "react";
+import axios, {AxiosResponse} from "axios";
+import  * as Actions from "../../../store/action/index";
+import {useDispatch} from "react-redux";
+
+
+
 
 const Info = styled.div`
   opacity: 0;
@@ -69,20 +78,31 @@ interface items{
     item:any
 }
 const ProductItems:React.FC<items> = ({ item }) => {
+    let dispatch = useDispatch();
+    const clickValueDetail = async (id:number) => {
+        let action =  await  Actions.getDetailProduct(id);
+        await dispatch(action);
+    }
     return (
         <Container>
             <Circle />
-            <Image src={item.img} />
+            <Image src={enviroment.local + '/' + item.image} />
             <Info>
-                <Icon>
-                    <ShoppingCartOutlined />
-                </Icon>
-                <Icon>
-                    <SearchOutlined />
-                </Icon>
-                <Icon>
-                    <FavoriteBorderOutlined />
-                </Icon>
+                    <Link to="/cart" onClick={()=>clickValueDetail(item.id)}>
+                        <Icon>
+                            <ShoppingCartOutlined />
+                        </Icon>
+                    </Link>
+                    <Link to="/cart" onClick={()=>clickValueDetail(item.id)}>
+                        <Icon>
+                            <SearchOutlined />
+                        </Icon>
+                    </Link>
+                    <Link to="/cart" onClick={()=>clickValueDetail(item.id)}>
+                      <Icon>
+                          <FavoriteBorderOutlined />
+                      </Icon>
+                    </Link>
             </Info>
         </Container>
     );

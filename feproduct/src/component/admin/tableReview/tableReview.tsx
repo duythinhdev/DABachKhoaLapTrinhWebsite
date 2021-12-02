@@ -11,12 +11,11 @@ import "./TableReview.scss";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
-import ModalAddReview from "../tableReview/modalAddReview/modalAddReview";
-import ModalUpdateReview from "../tableReview/modalUpdateReview/ModalUpdateReview";
-import Checkbox from '@mui/material/Checkbox';
+import ModalAddReview from "../TableReview/modalAddReview/modalAddReview";
+import ModalUpdateReview from "../TableReview/modalUpdateReview/ModalUpdateReview";
 import {columnsReview} from "../NameColumsTable/NameColumnsTable";
-import ListTableReview from "../tableReview/listTableReview/ListTableReview";
-import ListColumnNames from "../tableReview/ListColumnNames/ListColumnNames";
+import ListTableReview from "../TableReview/listTableReview/ListTableReview";
+import ListColumnNames from "../TableReview/ListColumnNames/ListColumnNames";
 
 
 export default function TableReview() {
@@ -33,7 +32,6 @@ export default function TableReview() {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);
                 setDataPagination(res.data.response.data);
-                console.log("res", res)
             }).catch(err => console.log(err));
     }
     useEffect(() => {
@@ -47,9 +45,14 @@ export default function TableReview() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    const updateData = async (res: any) => {
+    const updateData = async (id: number ) => {
+        let apiGetDetail = `v1/review/getdetail?id=${id}`;
+        await axios.get(enviroment.local + apiGetDetail)
+            .then((res: AxiosResponse<any>) => {
+                setDataModalUpdate(res.data.response.data)
+            }).catch(err => console.log(err));
+        console.log("",dataModalUpdate);
         await setModalUpdate(true);
-        await setDataModalUpdate(res);
     }
     const closeUpdateData = () => {
         setModalUpdate(false);
@@ -77,7 +80,7 @@ export default function TableReview() {
                         <TableBody>
                             {
                                 dataPagination?.map((res: any, index: number) => {
-                                    return <ListTableReview indexs={index} res={res} updateData={updateData}/>
+                                    return <ListTableReview indexs={index} res={res} updateData={()=>updateData(res.id)}/>
                                 })
                             }
                         </TableBody>
@@ -96,6 +99,7 @@ export default function TableReview() {
                     modalUpdate && <ModalUpdateReview dataModalUpdate={dataModalUpdate}
                                                       modalUpdate={modalUpdate}
                                                       closeUpdateDatas={closeUpdateData}
+                                                      fetchDataReview={fetchDataReview}
                     />
                 }
             </Paper>

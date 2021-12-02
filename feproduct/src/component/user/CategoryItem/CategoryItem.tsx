@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import { mobile } from "../response";
 import { Link }  from "react-router-dom";
+import { enviroment } from "../../../enviroment/enviroment";
 const Container = styled.div`
   flex: 1;
   margin: 3px;
@@ -48,7 +49,7 @@ interface items {
 const CategoryItem:React.FC<items> = ({ item }) => {
     return (
         <Container>
-            <Image src={item.img} />
+            <Image src={enviroment.local + '/' + item.image} />
             <Info>
                 <Title>{item.title}</Title>
                 <Link to='/productitem' ><Button>SHOP NOW</Button></Link>

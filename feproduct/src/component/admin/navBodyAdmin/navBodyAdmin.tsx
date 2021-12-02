@@ -21,8 +21,8 @@ const NavBodyAdmin = () => {
         <Grid className="NavBodyAdmin" item lg={12} xs={12} md={12} container>
             <Paper className="item">
                 {isMenuleft && <MenuIcon  className="menuIcon"
-                                         onClick={() => clickHideMenu()}/>}
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" onClick={()=>clickModalPerson()} />
+                                          onClick={() => clickHideMenu()}/>}
+                <Avatar alt="Remy Sharp" className="Avatar" src="/static/images/avatar/1.jpg" onClick={()=>clickModalPerson()} />
                 {
                     logout &&  <ModalLogout />
                 }

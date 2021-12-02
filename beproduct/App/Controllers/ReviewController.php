@@ -61,6 +61,8 @@ class ReviewController
         $review->product_id = $data['product_id'];
         $review->content = $data['content'];
         $review->user_id = $data['user_id'];
+        $review->setCreateAt($data['create_at']);
+        $review->setUpdateAt($data['update_at']);
         $review->create();
     }
 
@@ -77,17 +79,17 @@ class ReviewController
         $review = new \review();
         $review->setId($request['params'][1]);
         $review->setCountStart($data['count_start']);
-        $review->setCreateAt($data['create_at']);
-        $review->setUpdateAt($data['update_at']);
         $review->setProductId($data['product_id']);
         $review->setContent($data['content']);
         $review->setUserId($data['user_id']);
+        $review->setCreateAt($data['created_at']);
+        $review->setUpdateAt($data['updated_at']);
         $review->update();
     }
 
     public function getdetail($request)
     {
-        $review = new \product();
+        $review = new \review();
         $review->setId($request['query']['id']);
         $data = $review->getdetail();
         $rest = new \Rest();

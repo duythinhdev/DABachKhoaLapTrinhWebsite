@@ -60,18 +60,25 @@ export const isMenuAdmin = (menuLeft:boolean) => {
         menuLeft:menuLeft
     }
 }
-export const dataProduct  = (product_name:string,image:string,description:string,id_catergory_product: number) => {
+export const dataProduct  = (fd:any) => {
     return {
         type: action.POST_DATA_PRODUCT_ADMIN,
-        product_name: product_name,
+        fd: fd
+    }
+}
+export const putDataProduct  = (fd:any) => {
+    return {
+        type: action.POST_DATA_PRODUCT_ADMIN,
+        fd: fd
+    }
+}
+export  const dataProductImage = (image:any) => {
+    return {
+        type: action.POST_DATA_PRODUCT_ADMIN,
         image: image,
-        description: description,
-        id_catergory_product: id_catergory_product
-
     }
 }
 export const PostProduct = (title: any,status: boolean)  => {
-    console.log("Action",title,status)
     return {
         type: action.STATUS_SUCCESS_POST_PRODUCT,
         title: title,

@@ -12,34 +12,25 @@ interface propsTableReview {
 const ListTableReview: React.FC<propsTableReview> = ({indexs,res,updateData}) => {
     return (
         <TableRow hover role="checkbox" tabIndex={-1} key={indexs}>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
+            <TableCell align={res.align} onClick={() => updateData(res.id)}>
                 {res.id}
             </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
-                {res.permission === 3 ? "Admin" : 'User' }
+            <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                {res.count_start }
             </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
-                {res.full_name}
+            <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                {res.product_id}
             </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
-                {res.address}
+            <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                {res.product_id}
             </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
-                {res.name}
+            <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                {res.user_id}
             </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
-                {res.phone}
-            </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
-                {res.username}
-            </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
-                {res.password}
-            </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
+            <TableCell align={res.align} onClick={() => updateData(res.id)}>
                 {res.created_at}
             </TableCell>
-            <TableCell align={res.align} onClick={() => updateData(res)}>
+            <TableCell align={res.align} onClick={() => updateData(res.id)}>
                 {res.updated_at}
             </TableCell>
         </TableRow>

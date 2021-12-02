@@ -91,7 +91,38 @@ class Order_OptionController {
             $rest->throwError(NOT_FOUND, $e);
         }
     }
-
+    public function getdataAboutOptionOrder($request){
+        $order_option = new \order_option();
+        if(isset($request['query']['pagenumber']) && isset($request['query']['pagesize']))
+        {
+            $pageNumber = $request['query']['pagenumber'];
+            $pageSize = $request['query']['pagesize'];
+        }
+        else {
+            $pageNumber = null;
+            $pageSize = null;
+        }
+        if($pageNumber === null && $pageSize === null)
+        {
+            $this->data = $order_option->getAll();
+            $count = $order_option->countAllProduct();
+            $pageNumber = 0;
+            $pageSize = 0;
+        }
+        else{
+            $start = ( $pageNumber - 1) * $pageSize;
+            $order_option->pagenumber = $start;
+            $order_option->pageSize = $pageSize;
+            $this->data = $order_option->getAboutOptionOrderPagination();
+            $count = $order_option->countAllProduct();
+        }
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$this->data , $count ,$pageNumber,$pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
+    }
 
 }
 

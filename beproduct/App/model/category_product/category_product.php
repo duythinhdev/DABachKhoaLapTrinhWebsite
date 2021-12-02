@@ -75,6 +75,17 @@ class category_product
         return $product;
     }
 
+
+    public function getCategoryOfProduct(){
+        $stmt = $this->dbConn->prepare("SELECT product.id,product.Product_name,product.image,product.description,product.id_catergory_product,name FROM 
+         product "  . "LEFT JOIN " . $this->tableName ." ON product.id_catergory_product = category_product.id " . "WHERE category_product.id = " . $this->id  .  " LIMIT "   . $this->pagenumber . ',' . $this->pageSize);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
+
+
     public function create()
     {
         $query = 'INSERT INTO ' . $this->tableName . ' (name,created_at,updated_at) VALUES (:name,:created_at,:updated_at)';

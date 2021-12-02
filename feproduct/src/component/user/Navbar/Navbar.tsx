@@ -4,9 +4,12 @@ import React from "react";
 import styled from "styled-components";
 import { mobile } from "../response";
 import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import * as actions from "../../../store/action";
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
-  height: 60px;
+  height: 100px;
   ${mobile({ height: "50px" })}
 `;
 
@@ -51,6 +54,7 @@ const Center = styled.div`
 
 const Logo = styled.h1`
   font-weight: bold;
+  color: black;
   ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
@@ -58,17 +62,38 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ flex: 2, justifyContent: "center" })}
+  &:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+  ${mobile({ flex: 2, justifyContent: "center" })};
 `;
 
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })};
 `;
 
 const Navbar = () => {
+    let token  = JSON.parse(localStorage.getItem('tokenUser') as any | string);
+    let elementLogin = null;
+    let elementLogout = null;
+    let dispatch = useDispatch();
+    let history  = useHistory();
+    const logout = async () => {
+        let action = actions.logoutUser();
+        await  dispatch(action);
+    }
+    if(token)
+    {
+        elementLogin = <MenuItem onClick={logout}><Link to="/login"  > LOGOUT </Link></MenuItem>
+    }
+    else  {
+        elementLogout = <MenuItem><Link to="/register" > REGISTER </Link></MenuItem>
+        elementLogin  =  <MenuItem><Link to="/login" > SIGN IN </Link></MenuItem>
+    }
     return (
         <Container>
             <Wrapper>
@@ -83,11 +108,11 @@ const Navbar = () => {
                     <Logo>TiKi</Logo>
                 </Center>
                 <Right>
-                    <Link to="/register" > <MenuItem>REGISTER</MenuItem> </Link>
-                    <Link to="/login" > <MenuItem>SIGN IN</MenuItem> </Link>
+                    {elementLogin}
+                    {elementLogout}
                     <MenuItem>
-                        <Badge badgeContent={4} color="primary">
-                            <Link to="/cart" > <ShoppingCartOutlined /></Link>
+                        <Badge badgeContent={50} color="primary">
+                            <Link to="/bought" > <ShoppingCartOutlined /></Link>
                         </Badge>
                     </MenuItem>
                 </Right>

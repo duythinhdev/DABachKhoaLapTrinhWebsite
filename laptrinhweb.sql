@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th10 02, 2021 lúc 06:26 AM
+-- Thời gian đã tạo: Th12 02, 2021 lúc 03:33 PM
 -- Phiên bản máy phục vụ: 10.4.19-MariaDB
 -- Phiên bản PHP: 8.0.7
 
@@ -24,15 +24,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `category`
+-- Cấu trúc bảng cho bảng `category_product`
 --
 
-CREATE TABLE `category` (
+CREATE TABLE `category_product` (
   `id` int(50) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `category_product`
+--
+
+INSERT INTO `category_product` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'LG', '2021-11-09', '2021-11-09'),
+(2, 'SamSung', '2021-11-09', '2021-11-09'),
+(3, '1', '2021-11-09', '2021-11-09'),
+(4, 'Dell', '2021-11-09', '2021-11-09'),
+(5, 'Macbook M1', '2021-11-09', '2021-11-09'),
+(7, 'Macbook M2', '2021-11-09', '2021-11-09'),
+(10, 'ThinkView', '2021-11-09', '2021-11-09'),
+(13, 'HKT', '2021-11-09', '2021-11-09'),
+(29, 'YUT456', '2021-11-10', '2021-11-10'),
+(30, 'YUT78910', '2021-11-10', '2021-11-10'),
+(31, 'YUT1231111', '2021-11-10', '2021-11-10'),
+(32, 'IUYT', '2021-11-10', '2021-11-10'),
+(33, '', '2021-11-21', '2021-11-21'),
+(34, '', '2021-11-21', '2021-11-21');
 
 -- --------------------------------------------------------
 
@@ -49,6 +69,16 @@ CREATE TABLE `comment` (
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `comment`
+--
+
+INSERT INTO `comment` (`id`, `user_id`, `new_id`, `content`, `created_at`, `updated_at`) VALUES
+(1, 2, 3, 'ban hang gi hai z', '2021-11-07', '2021-11-07'),
+(2, 1, 2, 'ban hang gi hai z', '2021-11-07', '2021-11-07'),
+(3, 0, 0, '', '0000-00-00', '0000-00-00'),
+(4, 0, 0, '', '0000-00-00', '0000-00-00');
+
 -- --------------------------------------------------------
 
 --
@@ -64,6 +94,13 @@ CREATE TABLE `news` (
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `news`
+--
+
+INSERT INTO `news` (`id`, `is_show`, `created_at`, `updated_at`, `user_id`, `title`) VALUES
+(1, 1, '2021-11-09', '2021-11-09', 12, 'hay lam ne ');
+
 -- --------------------------------------------------------
 
 --
@@ -78,8 +115,26 @@ CREATE TABLE `option` (
   `quantity` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `product_id` int(100) NOT NULL,
   `created_at` date NOT NULL,
-  `updated_at` int(11) NOT NULL
+  `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `option`
+--
+
+INSERT INTO `option` (`id`, `size`, `type`, `price`, `quantity`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, 'XL11', 'High', 20000, '1', 35, '2021-11-07', '2021-11-07'),
+(2, '19 inch1', 'DELL latitude', 25000, '1', 36, '2021-11-07', '2021-11-07'),
+(3, '19 inch1', 'DELL', 400000, '2', 37, '2021-11-07', '2021-11-07'),
+(4, '21 inch', 'ACER', 250000, '5', 38, '2021-11-06', '2021-11-06'),
+(5, '23 inch', 'ASUS', 400000, '10', 39, '2021-11-06', '2021-11-06'),
+(6, '23 inch', 'HP', 400000, '12', 40, '2021-11-06', '2021-11-06'),
+(7, '25 inch', 'HKT', 800000, '14', 58, '2021-11-07', '2021-11-07'),
+(8, '27 inch', 'ThinkView', 100000, '16', 1, '2021-11-07', '2021-11-07'),
+(9, '27 inch', 'TKLink', 12000, '18', 1, '2021-11-07', '2021-11-07'),
+(10, '27 inch', 'LinkNew', 1500000, '20', 1, '2021-11-07', '2021-11-07'),
+(11, '19 inch', 'Dell', 400000, '2', 1, '2021-11-07', '2021-11-07'),
+(12, '19 inch', 'Dell', 400000, '2', 1, '2021-11-07', '2021-11-07');
 
 -- --------------------------------------------------------
 
@@ -92,9 +147,18 @@ CREATE TABLE `option_order` (
   `option_id` int(50) NOT NULL,
   `order_id` int(50) NOT NULL,
   `total` int(50) NOT NULL,
-  `quantity` date NOT NULL,
-  `create_at` date NOT NULL
+  `quantity` int(255) NOT NULL,
+  `updated_at` date NOT NULL,
+  `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `option_order`
+--
+
+INSERT INTO `option_order` (`id`, `option_id`, `order_id`, `total`, `quantity`, `updated_at`, `created_at`) VALUES
+(1, 1, 1, 200000, 2, '0000-00-00', '2021-11-10'),
+(2, 2, 2, 200000, 3, '0000-00-00', '2021-11-10');
 
 -- --------------------------------------------------------
 
@@ -114,6 +178,14 @@ CREATE TABLE `order` (
   `created_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `order`
+--
+
+INSERT INTO `order` (`id`, `address`, `phone`, `name`, `user_id`, `status`, `total_order`, `updated_at`, `created_at`) VALUES
+(1, '10234 cao lo ', 392349083, 'Duy Thinh', 1, 4, 100000, '2021-11-09', '2021-11-09'),
+(2, '10234 cao lo ', 392349083, 'Duy Thinh', 1, 4, 100000, '2021-11-09', '2021-11-09');
+
 -- --------------------------------------------------------
 
 --
@@ -125,10 +197,22 @@ CREATE TABLE `product` (
   `Product_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id_catergory` int(50) NOT NULL,
+  `id_catergory_product` int(50) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `product`
+--
+
+INSERT INTO `product` (`id`, `Product_name`, `image`, `description`, `id_catergory_product`, `created_at`, `updated_at`) VALUES
+(35, 'Dell 36 inch', 'asset/IMG-619b58f55dee47.80724166.jpg', 'hay lam', 13, '2021-11-22', '2021-11-22'),
+(36, 'Màn Hình Dell S2721HN 27inch FHD (1920x1080) 4ms 75Hx IPS 300nits/HDMI+Audio/AMD FreeSync - Hàng Chính Hãng', 'asset/IMG-619fc7dcb5a6d5.72406758.png', 'Màn Hình Dell S2721HN 27inch FHD (1920x1080) 4ms 75Hx IPS 300nits/HDMI+Audio/AMD FreeSync - Hàng Chính Hãng', 4, '2021-11-26', '2021-11-26'),
+(37, 'Màn Hình Dell S2721HN 27inch FHD (1920x1080) 4ms 75Hx IPS 300nits/HDMI+Audio/AMD FreeSync - Hàng Chính Hãng', 'asset/IMG-619fc804b52e06.05460454.png', 'Màn Hình Dell S2721HN 27inch FHD (1920x1080) 4ms 75Hx IPS 300nits/HDMI+Audio/AMD FreeSync - Hàng Chính Hãng', 4, '2021-11-26', '2021-11-26'),
+(38, 'Màn Hình Dell S2721HN 27inch FHD (1920x1080) 4ms 75Hx IPS 300nits/HDMI+Audio/AMD FreeSync - Hàng Chính Hãng', 'asset/IMG-619fc816563da8.09047445.png', 'Màn Hình Dell S2721HN 27inch FHD (1920x1080) 4ms 75Hx IPS 300nits/HDMI+Audio/AMD FreeSync - Hàng Chính Hãng', 4, '2021-11-26', '2021-11-26'),
+(39, 'Màn hình máy tính Dell P2319H 23\'\' FHD 60Hz', 'asset/IMG-619fc8c90fa723.02605680.jpg', 'Màn hình máy tính Dell P2319H 23\'\' FHD 60Hz', 4, '2021-11-26', '2021-11-26'),
+(40, 'Màn hình máy tính LG LED 19.5\'\' HD 20MK400H-B  0 (0)  ', 'asset/IMG-61a634d6e452b4.66197760.jpg', 'Màn hình máy tính LG LED 19.5\'\' HD 20MK400H-B', 1, '2021-11-30', '2021-11-30');
 
 -- --------------------------------------------------------
 
@@ -146,6 +230,17 @@ CREATE TABLE `review` (
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `review`
+--
+
+INSERT INTO `review` (`count_start`, `product_id`, `content`, `user_id`, `created_at`, `id`, `updated_at`) VALUES
+(5, 111, '22', 4, '2021-11-08', 1, '2021-11-08'),
+(1123, 123, '123', 1, '2021-11-07', 3, '2021-11-07'),
+(3123, 1123, '1231', 1312312, '2021-11-21', 4, '2021-11-21'),
+(1121, 11212, '1121', 112, '2021-11-21', 5, '2021-11-21'),
+(123, 123, '123', 1, '2021-11-08', 6, '2021-11-08');
+
 -- --------------------------------------------------------
 
 --
@@ -162,6 +257,7 @@ CREATE TABLE `user` (
   `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `is_active` int(11) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -170,17 +266,18 @@ CREATE TABLE `user` (
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`id`, `permission`, `full_name`, `address`, `name`, `phone`, `country`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Do Duy Thinh', '', 'Thinh', 392349083, '', 'do.duythinh1@gmail.com', '123456789', '2021-10-31', '2021-10-31');
+INSERT INTO `user` (`id`, `permission`, `full_name`, `address`, `name`, `phone`, `country`, `username`, `password`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Do Duy Thinh', '', 'Thinh', 392349083, '', 'do.duythinh1@gmail.com', '123456789', 1, '2021-10-31', '2021-10-31'),
+(43, 2, 'Do Duy Thinh3', '', 'Thinh', 392349083, '', 'do.duythinh20@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 1, '2021-11-16', '2021-11-16');
 
 --
 -- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Chỉ mục cho bảng `category`
+-- Chỉ mục cho bảng `category_product`
 --
-ALTER TABLE `category`
+ALTER TABLE `category_product`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -236,58 +333,58 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT cho bảng `category`
+-- AUTO_INCREMENT cho bảng `category_product`
 --
-ALTER TABLE `category`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `category_product`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `option`
 --
 ALTER TABLE `option`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `option_order`
 --
 ALTER TABLE `option_order`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT cho bảng `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

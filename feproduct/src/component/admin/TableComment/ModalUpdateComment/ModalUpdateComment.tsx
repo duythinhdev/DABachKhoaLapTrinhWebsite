@@ -44,8 +44,6 @@ const ModalUpdateComment:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,cl
         const newValue = event.target.value;
         setPostReview({...postReview, [event.target.name]: newValue});
     }
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
-
     return (
         <TableCell align="right" colSpan={12}>
             <Modal
@@ -63,15 +61,15 @@ const ModalUpdateComment:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,cl
                         autoComplete="off"
                     >
                         <TextField id="filled-basic" name="" label="id" variant="outlined"
-                                   defaultValue={dataModalUpdate.id} disabled />
+                                   defaultValue={dataModalUpdate[0].id} disabled />
                         <TextField id="filled-basic" name="new_id" label="new_id" variant="outlined"
-                                   defaultValue={dataModalUpdate.new_id}
+                                   defaultValue={dataModalUpdate[0].new_id}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="content" label="content" variant="outlined"
-                                   defaultValue={dataModalUpdate.content}
+                                   defaultValue={dataModalUpdate[0].content}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="user_id" label="user_id" variant="outlined"
-                                   defaultValue={dataModalUpdate.user_id}
+                                   defaultValue={dataModalUpdate[0].user_id}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
                         <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>

@@ -19,8 +19,10 @@ define('API_PARAM_REQUIRED', 106);
 define('API_DOST_NOT_EXIST', 107);
 define('INVALID_USER_PASS', 108);
 define('USER_NOT_ACTIVE', 109);
+define('BAD_REQUEST', 400);
 define('FOR_BIDDEN', 403);
 define('NOT_FOUND', 404);
+define('VALIDATION', 422);
 define('INTERNAL_SERVER_ERROR', 500);
 
 define('SUCCESS_RESPONSE', 200);

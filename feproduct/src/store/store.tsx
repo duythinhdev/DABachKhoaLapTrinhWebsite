@@ -7,6 +7,7 @@ import optionMainReducer from "../store/redux/optionAdmin";
 import mainReducer from "../store/redux/body";
 import LoginReducer from "../store/redux/login";
 import userAdminReducer from "../store/redux/UserAdmin";
+import dataUserReducer from "../store/redux/dataUser";
 import {
     watchLoginAdmin,
     watchProductAdmin,
@@ -14,7 +15,8 @@ import {
     watchOptionAdmin,
     watchReviewAdmin,
     watchCommentAdmin
-    ,watchCategoryAdmin
+    ,watchCategoryAdmin,
+    watchNewsAdmin
 } from "../store/saga/index";
 
 const sagaMiddleware: any = createSagaMiddleware();
@@ -31,6 +33,7 @@ const rootReducer = combineReducers({
     login: LoginReducer,
     userAdmin: userAdminReducer,
     option: optionMainReducer,
+    dataUser: dataUserReducer
 });
 const store = createStore(
     rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware))
@@ -42,6 +45,7 @@ sagaMiddleware.run(watchOptionAdmin);
 sagaMiddleware.run(watchReviewAdmin);
 sagaMiddleware.run(watchCommentAdmin);
 sagaMiddleware.run(watchCategoryAdmin);
+sagaMiddleware.run(watchNewsAdmin);
 export const app = (
     <Provider store={store}>
         <App/>

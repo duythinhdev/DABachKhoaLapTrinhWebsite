@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {Suspense, useEffect} from 'react';
 import "./App.css"
-import {routing} from "./router/router";
+import RoutingUser from "./router/routerUser";
+import Routing from "./router/router";
 const App = () => {
     return (
         <div className="App">
-            {routing}
+            <Routing  />
+            <RoutingUser  />
         </div>
     );
 }
