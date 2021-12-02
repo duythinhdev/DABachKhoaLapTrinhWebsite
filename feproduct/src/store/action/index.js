@@ -10,7 +10,8 @@ export {
     navIsAdminNews,
     isMenuAdmin,
     dataProduct,
-    PostProduct
+    PostProduct,
+    putDataProduct
 }
 from "../action/admin";
 export {
@@ -24,7 +25,8 @@ export {
     checkAuthTimeOut,
     setAuthRedirectPath,
     isTokenauth,
-    authSuccessUser
+    authSuccessUser,
+    logoutUser
 }
 from "../action/login";
 
@@ -33,12 +35,14 @@ export {
     getOption,
     putOption,
     deleteOption,
-} from "../action/optionAdmin";
-export  {
+}
+from "../action/optionAdmin";
+export {
     postNews,
     updateNews,
     deleteNews
-} from "../action/newsAdmin";
+}
+from "../action/newsAdmin";
 export {
     postReview,
     deleteReview,
@@ -53,7 +57,9 @@ from "../action/commentAdmin";
 export {
     postCategory,
     putCategory,
-    deleteCategory
+    deleteCategory,
+    detailproduct,
+    getDetailProduct
 }
 from "../action/categoryproduct";
 

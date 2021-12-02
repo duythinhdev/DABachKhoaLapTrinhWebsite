@@ -83,6 +83,7 @@ const LoginUser = () => {
         setValue({...value, [event.target.name]: event.target.value});
     }
     const notify = (titlePost: String) => toast(titlePost);
+    let redirect = null;
     let isLoginUser = useSelector((state: any) => state.login.isLoginUser);
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined) => {
         let action = actions.loginAppUser(value.email,value.passwords);
@@ -91,7 +92,7 @@ const LoginUser = () => {
     }
     if(isLoginUser)
     {
-        history.push("/user")
+        redirect = <Redirect  to="/user" />
     }
     return (
         <Container>
@@ -149,6 +150,7 @@ const LoginUser = () => {
                 {statusSignUp && <ToastContainer/>}
                 {statusSignUp && <Spinner />}
             </>
+            {redirect}
         </Container>
     );
 };

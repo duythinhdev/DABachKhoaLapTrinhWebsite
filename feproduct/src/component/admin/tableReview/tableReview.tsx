@@ -13,7 +13,6 @@ import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
 import ModalAddReview from "../TableReview/modalAddReview/modalAddReview";
 import ModalUpdateReview from "../TableReview/modalUpdateReview/ModalUpdateReview";
-import Checkbox from '@mui/material/Checkbox';
 import {columnsReview} from "../NameColumsTable/NameColumnsTable";
 import ListTableReview from "../TableReview/listTableReview/ListTableReview";
 import ListColumnNames from "../TableReview/ListColumnNames/ListColumnNames";

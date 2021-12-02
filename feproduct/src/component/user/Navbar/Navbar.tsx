@@ -4,6 +4,9 @@ import React from "react";
 import styled from "styled-components";
 import { mobile } from "../response";
 import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import * as actions from "../../../store/action";
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   height: 100px;
@@ -74,6 +77,23 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+    let token  = JSON.parse(localStorage.getItem('tokenUser') as any | string);
+    let elementLogin = null;
+    let elementLogout = null;
+    let dispatch = useDispatch();
+    let history  = useHistory();
+    const logout = async () => {
+        let action = actions.logoutUser();
+        await  dispatch(action);
+    }
+    if(token)
+    {
+        elementLogin = <MenuItem onClick={logout}><Link to="/login"  > LOGOUT </Link></MenuItem>
+    }
+    else  {
+        elementLogout = <MenuItem><Link to="/register" > REGISTER </Link></MenuItem>
+        elementLogin  =  <MenuItem><Link to="/login" > SIGN IN </Link></MenuItem>
+    }
     return (
         <Container>
             <Wrapper>
@@ -88,10 +108,10 @@ const Navbar = () => {
                     <Logo>TiKi</Logo>
                 </Center>
                 <Right>
-                    <MenuItem><Link to="/register" > REGISTER </Link></MenuItem>
-                    <MenuItem> <Link to="/login" >SIGN IN </Link></MenuItem>
+                    {elementLogin}
+                    {elementLogout}
                     <MenuItem>
-                        <Badge badgeContent={4} color="primary">
+                        <Badge badgeContent={50} color="primary">
                             <Link to="/bought" > <ShoppingCartOutlined /></Link>
                         </Badge>
                     </MenuItem>

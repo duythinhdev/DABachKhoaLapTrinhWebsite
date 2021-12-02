@@ -29,7 +29,7 @@ const ContainerAdmin = () => {
     return (
         <Grid className="bodyAdmin" lg={12} xs={12} md={12} container >
             <NavAdmin />
-            { IsAdminUser && <BodyAdmin />  }
+            { IsAdminUser &&  <BodyAdmin />   }
             { IsAdminProduct  &&  <BodyAdminProduct /> }
             { IsAdminReview  &&  <BodyAdminReview /> }
             { IsAdminOption  &&  <BodyAdminOption />}

@@ -144,7 +144,7 @@ const ModalAddProduct:React.FC<props> = ({fetchDataProduct}) => {
                             {...register("product_name", {
                                 required: "This is required.",
                                 maxLength: {
-                                    value: 30,
+                                    value: 500,
                                     message: "This input exceed maxLength."
                                 }
                             })}
@@ -177,7 +177,7 @@ const ModalAddProduct:React.FC<props> = ({fetchDataProduct}) => {
                                    {...register("description", {
                                        required: "This is required.",
                                        maxLength: {
-                                           value: 30,
+                                           value: 500,
                                            message: "This input exceed maxLength."
                                        }
                                    })}
@@ -197,7 +197,7 @@ const ModalAddProduct:React.FC<props> = ({fetchDataProduct}) => {
                                    {...register("id_category", {
                                        required: "This is required.",
                                        maxLength: {
-                                           value: 30,
+                                           value: 500,
                                            message: "This input exceed maxLength."
                                        }
                                    })}

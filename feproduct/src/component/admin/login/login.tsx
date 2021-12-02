@@ -18,7 +18,7 @@ const Login = () => {
     }) as any;
     let dispatch = useDispatch();
     let history = useHistory();
-    let isAuthenticated = useSelector((state: any) => state.login.token !== null)
+    let isAuthenticated = useSelector((state: any) => state.login.token !   == null)
     let isLoginAdmin = useSelector((state: any) => state.login.isLoginAdmin);
     let authRedirectPath = useSelector((state: any) => state.login.authRedirectPath);
     let token:any = null;
@@ -32,11 +32,16 @@ const Login = () => {
     const changeValue = (event: any) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
-    useEffect(()  => {
-        if (isAuthenticated) {
-            token = <Redirect to="/admin" />
+    function redirect(){
+        console.log("isLoginAdmin",isLoginAdmin);
+        if (isLoginAdmin)
+        {
+           token =  history.push("/admin")
         }
-    }, [])
+    }
+    useEffect(()=> {
+        redirect();
+    },[])
     return (
         <div className="backgroundLogin">
             <form className="formlogin" onSubmit={handleSubmit((data: any) => clickValue(data))}>

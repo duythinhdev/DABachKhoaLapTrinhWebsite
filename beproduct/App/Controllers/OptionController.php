@@ -93,6 +93,7 @@ class OptionController {
             $rest->throwError(NOT_FOUND, $e);
         }
     }
+
 }
 
 ?>

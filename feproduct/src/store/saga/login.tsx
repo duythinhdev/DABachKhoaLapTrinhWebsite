@@ -2,6 +2,7 @@ import {put, call,delay} from "redux-saga/effects";
 import axios from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
+import axiosApp from "../../enviroment/axiosApp";
 
 
 export function* logoutSaga(action:any) {
@@ -54,6 +55,11 @@ export function* signupUser(actions: any) :any
     catch (e) {
         yield put(Actions.statusSignup("signup failed",true))
     }
+}
+export function* logoutUserSaga(action:any) {
+    yield call([localStorage, 'removeItem'], 'tokenUser');
+    yield put(Actions.authSuccessUser(null,false));
+    yield put(Actions.logoutSucceed())
 }
 export function* loginUser(actions:any) : any{
     const { username, password } = actions;

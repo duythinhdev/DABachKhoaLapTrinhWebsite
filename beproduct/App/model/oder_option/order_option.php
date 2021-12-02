@@ -9,6 +9,7 @@ class order_option {
     public $create_at;
     public $tableName = 'option_order';
     public $tableOption = 'option';
+    public $tableOrder = 'order';
     public $pagenumber;
     public $pageSize;
 
@@ -39,6 +40,20 @@ class order_option {
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
     }
+
+    public function getAboutOptionOrderPagination()
+    {
+
+        // $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName 
+        // . "INNER JOIN " . $this->tableOption . ' option_order.option_id = option.id '. "INNER JOIN " . $this->tableOrder . ' order.id = option_order.order_id ' . " LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName  . " AS option_order ,". $this->tableOption 
+         . " AS option ,". $this->tableOrder . " AS order " . " WHERE option.id = option_order.option_id and order.id = option_order.order_id  "." LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
 
     public function create()
     {

@@ -15,8 +15,6 @@ class ProductController
     {
         $db = new \DbConnect();
         $this->dbcon = $db->connect();
-        $rest = new \Rest();
-        $rest->validateToken();
     }
 
     public function getPagination($request)
@@ -180,5 +178,38 @@ class ProductController
         $product->setId($request['query']['id']);
         $data = $product->getdetail();
         echo json_encode($data);
+    }
+    public function productOfOption($request)
+    {
+        $product = new \product();
+        if(isset($request['query']['pagenumber']) && isset($request['query']['pagesize']))
+        {
+            $pageNumber = $request['query']['pagenumber'];
+            $pageSize = $request['query']['pagesize'];
+        }
+        else {
+            $pageNumber = null;
+            $pageSize = null;
+        }
+        if($pageNumber === null && $pageSize === null)
+        {
+            $this->data = $product->getAll();
+            $count = $product->countAllProduct();
+            $pageNumber = 0;
+            $pageSize = 0;
+        }
+        else{
+            $start = ( $pageNumber - 1) * $pageSize;
+            $product->pagenumber = $start;
+            $product->pageSize = $pageSize;
+            $this->data = $product->getOptionOfProduct();
+            $count = $product->countAllProduct();
+        }
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$this->data , $count ,$pageNumber,$pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
     }
 }

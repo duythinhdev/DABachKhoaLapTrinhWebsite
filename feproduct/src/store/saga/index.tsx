@@ -1,7 +1,7 @@
 import { takeEvery, all, takeLatest } from "redux-saga/effects";
 import  * as actionTypes from '../action/actiontypes';
-import {loginApp, loginUser, signupUser,logoutSaga} from "./login";
-import {postProduct} from "./main";
+import {loginApp, loginUser, signupUser, logoutSaga, logoutUserSaga} from "./login";
+import {postProduct,getDetailProduct,putProduct} from "./main";
 import { postUser,putUser,deleteUser } from "../saga/userAdmin";
 import {postOption, putOption} from "../saga/optionAdmin";
 import {getOption} from "../action/optionAdmin";
@@ -15,12 +15,15 @@ export function* watchLoginAdmin() {
         takeEvery(actionTypes.LOGIN_APP_USER,loginUser),
         takeEvery(actionTypes.SIGNUP_APP_USER,signupUser),
         takeEvery(actionTypes.AUTH_INITITATE_LOGOUT,logoutSaga),
+        takeEvery(actionTypes.AUTH_INITITATE_LOGOUT_USER,logoutUserSaga),
     ])
 }
 
 export function* watchProductAdmin() {
     yield all([
-        takeEvery(actionTypes.POST_DATA_PRODUCT_ADMIN,postProduct)
+        takeEvery(actionTypes.PUT_DATA_PRODUCT_ADMIN,putProduct),
+        takeEvery(actionTypes.POST_DATA_PRODUCT_ADMIN,postProduct),
+        takeEvery(actionTypes.GET_DETAIL_PRODUCT,getDetailProduct),
     ])
 }
 export function* watchOptionAdmin(){

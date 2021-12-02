@@ -21,36 +21,45 @@ let style: any = {
 interface dataUpdate  {
     dataModalUpdate:any,
     modalUpdate:boolean,
-    closeUpdateDatas: () => void
+    closeUpdateDatas: () => void,
+    fetchDataProduct: () => void
 }
-const ModalUpdateProduct:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,closeUpdateDatas}) => {
+const ModalUpdateProduct:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,closeUpdateDatas,fetchDataProduct}) => {
     let ditpatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const [postReview, setPostReview] = useState({
-        count_start: 1 as number,
+    const [postProduct, setPostProduct] = useState({
         content: '' as string,
-        user_id: 1 as number,
-        product_id: 1 as number,
+        id: 1 as number,
+        product_name: '' as string,
+        image: '' as string,
     });
     let statusPost:boolean = useSelector((state:any) =>  state.main.status);
-    let titlePost:string = useSelector((state:any) => state.main.titleProductPost);
+    let titlePost:string = useSelector((state:any) => state.main.titleProdhuctPost);
 
     const ClickValue = (event:any) => {
         event.preventDefault();
-        let actions = action.postReview(postReview.count_start,postReview.content,postReview.user_id,postReview.product_id);
+        let fd = new FormData();
+        // fd.append('id',postProduct.id)
+        fd.append('image', postProduct.image);
+        fd.append('product_name', postProduct.product_name);
+        fd.append('content', postProduct.content);
+        let actions = action.putDataProduct(fd);
         ditpatch(actions);
         notify(titlePost)
+        fetchDataProduct();
     }
     const notify = (titlePost:String) => toast(titlePost);
     const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
-        setPostReview({...postReview, [event.target.name]: newValue});
+        setPostProduct({...postProduct, [event.target.name]: newValue});
     }
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
-
-    const handleChange = (newValue:any) => {
-        setValue(newValue);
-    };
+    const deleteValue = (event: any) => {
+        event.preventDefault();
+    }
+    function handleChange(e:any) {
+        let url:any = e.target.files[0];
+        setPostProduct({...postProduct, image: url});
+    }
     return (
         <TableCell align="right" colSpan={12}>
             <Modal
@@ -60,29 +69,41 @@ const ModalUpdateProduct:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,cl
                 aria-describedby="parent-modal-description"
             >
                 <Box sx={{...style}}>
-                    <h2 id="parent-modal-title">Update Review</h2>
+                    <h2 id="parent-modal-title">Update Product</h2>
                     <Box
                         component="form"
                         sx={{'& > :not(style)': {m: 1, width: '25ch'},}}
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField id="filled-basic" name="" label="id" variant="outlined" defaultValue={dataModalUpdate.id} disabled />
-                        <TextField id="filled-basic" name="count_start" label="count_start" variant="outlined"
-                                   defaultValue={dataModalUpdate.count_start}
+                        <TextField id="filled-basic" name="id" label="id" variant="outlined" defaultValue={dataModalUpdate.id} disabled />
+                        <TextField id="filled-basic" name="product_name" label="product_name" variant="outlined"
+                                   defaultValue={dataModalUpdate.Product_name}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="content" label="content" variant="outlined"
-                                   defaultValue={dataModalUpdate.content}
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="user_id" label="user_id" variant="outlined"
-                                   defaultValue={dataModalUpdate.user_id}
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
+                                   defaultValue={dataModalUpdate.description}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} />
                         <TextField id="filled-basic" name="image" label="image" variant="outlined"
                                    defaultValue={dataModalUpdate.image}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
+                        <TextField
+                            className="imageProduct"
+                            id="outlined-full-width"
+                            label="Image Upload"
+                            style={{ margin: 8 }}
+                            type="file"
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                            onChange={handleChange}
+                        />
                         <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
                         <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>
                         <Button variant="contained" onClick={(event) => ClickValue(event)}>Update</Button>
+                        <Button variant="contained" onClick={(event) => deleteValue(event)}>Delete</Button>
                     </Box>
                 </Box>
             </Modal>

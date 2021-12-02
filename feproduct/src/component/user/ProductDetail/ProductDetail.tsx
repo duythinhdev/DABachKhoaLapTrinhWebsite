@@ -1,23 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import "./producDetail.scss";
-
-let datadetail = [
-    {
-        title: "Laptop Dell Gaming G15 5511 (P105F006AGR): i7 11800H, RTX 3050 4G, Ram 8G, SSD NVMe 512G, Win11 | OfficeHS21, Led Keyboard, 15.6”FHD 120Hz (Dark Shadow Grey)",
-        size: "1920",
-        price: "35,900,000₫",
-        detail: "CPU: Intel Core i7-11800H 2.3GHz up to 4.6GHz 24MB, 8 nhân 16 luồng\n" +
-            "RAM: 8GB (8×1) DDR4 3200MHz (2x SO-DIMM socket, up to 32GB SDRAM)\n" +
-            "Ổ cứng: 512GB SSD M.2 PCIe\n" +
-            "Card đồ họa: NVIDIA GeForce RTX 3050 4GB GDDR6\n" +
-            "Màn hình: 15.6″ FHD (1920 x1080) 120Hz, 250 nits, WVA, Anti-Glare, LED Backlit, Narrow Border Display\n" +
-            "Hệ điều hành: Windows 11 Home + Office Home and Student 2021\n" +
-            "Pin: 3 Cell 56WHr\n" +
-            "Cân nặng: 2.81 kg",
-        Address: "Giao đến Q. 8, P. 04, Hồ Chí Minh - Đổi địa chỉ",
-        Amount: "1"
-    }
-]
+import {useDispatch, useSelector} from "react-redux";
+import {enviroment} from "../../../enviroment/enviroment";
+import ModalBuyProduct from "./moDalBuyProduct/ModalBuyProduct";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import axios, {AxiosResponse} from "axios";
 let dataProduct = [
     {
         name: "Màn Hình 14 inch",
@@ -63,35 +51,71 @@ let dataProduct = [
 
 
 function ProductDetail() {
+    let dispatch = useDispatch();
+    const [page, setPage] = React.useState(1);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [totalpage, setTotalPage] = useState(1) as any;
+    const [dataPagination, setDataPagination] = useState([]) as any;
+    let datadetails = useSelector((res:any) =>{ return res.dataUser.dataDetailProduct});
+    let token  = JSON.parse(localStorage.getItem('tokenUser') as any | string);
+    let textData:any = null;
+    const clickNotLogin = () => {
+        if(token)
+        {
+            textData = 'Người dùng  mới mua được hàng'
+        }
+        else {
+            textData = 'Người dùng phải đăng nhập mới mua được hàng'
+        }
+        notify();
+    }
+    const notify = () => toast(textData);
+    const  fetchDataCategory = async () => {
+        var  apiPagination = '';
+        if(datadetails){
+             apiPagination = `v1/categoryproduct/getaboutproduct?pagenumber=${page}&pagesize=${rowsPerPage}&idcategory=${datadetails[0].id_catergory_product}`;
+        }
+        else {
+            apiPagination = `v1/categoryproduct/getaboutproduct?pagenumber=${page}&pagesize=${rowsPerPage}`;
+        }
+         axios.get(enviroment.local + apiPagination)
+            .then((res: AxiosResponse<any>) => {
+                setTotalPage(res.data.response.totalpage[0].total)
+                setRowsPerPage(rowsPerPage);
+                setDataPagination(res.data.response.data);
+     
+            }).catch(err => console.log(err));
+    }
+    useEffect(()=>{
+        fetchDataCategory();
+    },[])
     return (
         <div className="Container">
             <div className="ItemDetail">
                 <div className="ItemDetailImage">
                     <div className="ItemDetailImageOne">
-                        {/*<img src="https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"  />*/}
+                        {
+                            datadetails ?  <img src={enviroment.local + '/' + datadetails[0]?.image}  /> : ''
+                        }
                     </div>
                     <div className="ItemDetailImageTwo">
                     </div>
                 </div>
-                {
-                    datadetail.map((res: any, index: number) => {
-                        return <div className="ItemDetailImagPrice">
+                        <div className="ItemDetailImagPrice">
                             <div className="ItemDetailImageTitle">
-                                <h3>{res.title}</h3>
+                                <h3>{datadetails ?  datadetails[0]?.Product_name : ''}</h3>
                             </div>
                             <hr/>
                             <div className="ItemDetailImageTitlePrice">
-                                <h3>{res.price}</h3>
+                                <h3>{datadetails ? datadetails[0]?.price : ''}</h3>
                             </div>
                             <div className="ItemDetailImageProduct">
-                                <h3>{res.detail}</h3>
+                                <h3>{datadetails ? datadetails[0]?.description : ''}</h3>
                             </div>
                             <div className="ItemDetailImagebuttonBuy">
-                                <button>Mua hàng</button>
+                                <button onClick={()=>clickNotLogin()} >Mua hàng</button>
                             </div>
                         </div>
-                    })
-                }
             </div>
             <div className="ItemRecommand">
                 <div className="ItemRecommandTitle">
@@ -269,6 +293,7 @@ function ProductDetail() {
                 </div>
 
             </div>
+                <ToastContainer />
         </div>
     );
 }

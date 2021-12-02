@@ -42,6 +42,7 @@ export const authSuccess = (token: any,isLogin:boolean) => {
     }
 }
 export const authSuccessUser = (tokenUser: any,isLoginUser:boolean) => {
+    console.log("tokenUser",tokenUser,isLoginUser);
     return {
         type: actionTypes.AUTH_SUCCESS_USER,
         tokenUser: tokenUser,
@@ -62,6 +63,11 @@ export const logoutSucceed= () => {
 export  const logout = () => {
     return {
         type:actionTypes.AUTH_INITITATE_LOGOUT
+    }
+}
+export  const logoutUser = () => {
+    return {
+        type:actionTypes.AUTH_INITITATE_LOGOUT_USER
     }
 }
 export const checkAuthTimeOut = (expirationTime:any) => {

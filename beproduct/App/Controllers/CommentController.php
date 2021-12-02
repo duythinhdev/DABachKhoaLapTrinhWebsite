@@ -91,7 +91,39 @@ class CommentController
         $comment->updated_at = $data['updated_at'];
         $comment->update();
     }
-
+    public function commentaboutproduct()
+    {
+        $comment = new \Comment();
+        if(isset($request['query']['pagenumber']) && isset($request['query']['pagesize']))
+        {
+            $pageNumber = $request['query']['pagenumber'];
+            $pageSize = $request['query']['pagesize'];
+        }
+        else {
+            $pageNumber = null;
+            $pageSize = null;
+        }
+        if($pageNumber === null && $pageSize === null)
+        {
+            $this->data = $comment->getAll();
+            $count = $comment->countAll();
+            $pageNumber = 0;
+            $pageSize = 0;
+        }
+        else{
+            $start = ( $pageNumber - 1) * $pageSize;
+            $comment->pagenumber = $start;
+            $comment->pageSize = $pageSize;
+            $this->data = $comment->getProductPagination();
+            $count = $comment->countAll();
+        }
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$this->data , $count ,$pageNumber,$pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
+    }
 }
 
 ?>

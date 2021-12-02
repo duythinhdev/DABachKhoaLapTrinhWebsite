@@ -88,6 +88,35 @@ class CategoryController
             $rest->throwError(NOT_FOUND, $e);
         }
     }
+    public function getAboutProduct($request){
+        $category_product = new \category_product();
+        if (isset($request['query']['pagenumber']) && isset($request['query']['pagesize']) && isset($request['query']['idcategory'])) {
+            $pageNumber = $request['query']['pagenumber'];
+            $pageSize = $request['query']['pagesize'];
+            $category_product->setId($request['query']['idcategory']);
+        } else {
+            $pageNumber = null;
+            $pageSize = null;
+        }
+        if ($pageNumber === null && $pageSize === null) {
+            $this->data = $category_product->getAll();
+            $count = $category_product->countAllProduct();
+            $pageNumber = 0;
+            $pageSize = 0;
+        } else {
+            $start = ($pageNumber - 1) * $pageSize;
+            $category_product->pagenumber = $start;
+            $category_product->pageSize = $pageSize;
+            $this->data = $category_product->getCategoryOfProduct();
+            $count = $category_product->countAllProduct();
+        }
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE, $this->data, $count, $pageNumber, $pageSize);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
+    }
 }
 
 ?>
