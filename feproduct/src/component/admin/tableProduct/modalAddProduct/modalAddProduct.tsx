@@ -11,10 +11,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import { makeStyles, createStyles, createMuiTheme } from '@material-ui/core/styles';
-import axios from "axios";
 import * as actions from "../../../../store/action";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
+import axios, {AxiosResponse} from "axios";
+import {enviroment} from "../../../../enviroment/enviroment";
 let style: any = {
     position: 'absolute',
     top: '50%',
@@ -100,15 +101,19 @@ const ModalAddProduct:React.FC<props> = ({fetchDataProduct}) => {
         setPostProduct({...postProduct, image: url});
     }
     const ClickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined) => {
+        console.log("postProduct.image",postProduct.image,postProduct.product_name,postProduct.description,postProduct.id_category)
         let fd = new FormData();
         fd.append('image', postProduct.image);
         fd.append('product_name', postProduct.product_name);
         fd.append('description', postProduct.description);
         fd.append('id_category', postProduct.id_category);
-        let actions = action.dataProduct(fd);
-        ditpatch(actions);
-        notify(titlePost)
-        fetchDataProduct();
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+        let urlLogin = 'v1/product/post';
+        await axios.post(enviroment.local + urlLogin, fd,config).then(res=>console.log(res)).catch(err=>console.log(err));
+        await notify(titlePost)
+        await fetchDataProduct();
     }
     const handleOpen = () => {
         setOpen(true);

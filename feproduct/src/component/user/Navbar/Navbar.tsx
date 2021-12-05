@@ -2,7 +2,7 @@ import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
-import { mobile } from "../response";
+import { mobile,table } from "../response";
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import * as actions from "../../../store/action";
@@ -10,7 +10,8 @@ import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   height: 100px;
-  ${mobile({ height: "50px" })}
+  ${table({ height: "10%", width: "167%" })}
+  ${mobile({ height: "50px", width: "100%",position: "relative" })}
 `;
 
 const Wrapper = styled.div`
@@ -55,6 +56,7 @@ const Center = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   color: black;
+  ${table({ fontSize: "50px"})};
   ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
@@ -73,6 +75,7 @@ const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
+  ${table({ fontSize: "32px"})};
   ${mobile({ fontSize: "12px", marginLeft: "10px" })};
 `;
 

@@ -42,7 +42,7 @@ const ModalUpdateUser:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,close
     let titlePost:string = useSelector((state:any) => state.main.titleProductPost);
     const ClickValue = (event: any) => {
         event.preventDefault();
-        let actions = action.putUser(putUser.id,
+        let actions = action.putUser(dataModalUpdate[0]?.id,
             permission,
             putUser.full_name,
             putUser.address,
@@ -59,8 +59,7 @@ const ModalUpdateUser:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,close
     }
     const deleteUser = (event: any) => {
         event.preventDefault();
-        let actions = action.deleteUser(putUser.id,
-        );
+        let actions = action.deleteUser(dataModalUpdate[0]?.id);
         ditpatch(actions);
         fetchDataUser();
         notify(titlePost)
@@ -91,8 +90,8 @@ const ModalUpdateUser:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,close
                         autoComplete="off"
                     >
                         <TextField id="filled-basic" name="" label="id" variant="outlined"
-                                   defaultValue={dataModalUpdate?.id} disabled />
-                        <InputLabel id="demo-simple-select-standard-label">{ dataModalUpdate?.permission  }</InputLabel>
+                                   defaultValue={dataModalUpdate[0]?.id} disabled />
+                        <InputLabel id="demo-simple-select-standard-label">{ dataModalUpdate[0]?.permission  }</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select"
@@ -106,26 +105,26 @@ const ModalUpdateUser:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,close
                             <MenuItem value={3}>Admin</MenuItem>
                         </Select>
                         <TextField id="filled-basic" name="full_name" label="full_name" variant="outlined"
-                                   defaultValue={dataModalUpdate?.full_name}
+                                   defaultValue={dataModalUpdate[0]?.full_name}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="address" label="address" variant="outlined"
-                                   defaultValue={dataModalUpdate?.address}
+                                   defaultValue={dataModalUpdate[0]?.address}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="name" label="name" variant="outlined"
-                                   defaultValue={dataModalUpdate?.name}
+                                   defaultValue={dataModalUpdate[0]?.name}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="phone" label="phone" variant="outlined"
-                                   defaultValue={dataModalUpdate?.phone}
+                                   defaultValue={dataModalUpdate[0]?.phone}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="username" label="username" variant="outlined"
-                                   defaultValue={dataModalUpdate?.username}
+                                   defaultValue={dataModalUpdate[0]?.username}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="password" label="password" variant="outlined"
-                                   defaultValue={dataModalUpdate?.password}
+                                   defaultValue={dataModalUpdate[0]?.password}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
-                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
-                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>
-                        <Button variant="contained" onClick={(event: any) => ClickValue(event)}>Add</Button>
+                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0]?.created_at}/>
+                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0]?.updated_at}/>
+                        <Button variant="contained" onClick={(event: any) => ClickValue(event)}>update</Button>
                         <Button variant="outlined" startIcon={<DeleteIcon />} onClick={(event: any) => deleteUser(event)}>delete</Button>
                     </Box>
                 </Box>

@@ -30,6 +30,7 @@ interface addData {
     new_id: string,
     title: string,
     user_id: string,
+    is_show: number,
 }
 
 const ModalAddNews: React.FC<propsData> = ({fetchDataComment}) => {
@@ -40,7 +41,7 @@ const ModalAddNews: React.FC<propsData> = ({fetchDataComment}) => {
     const [postReview, setPostReview] = useState({
         new_id: 1 as number,
         title: '' as string,
-        user_id: 1 as number,
+        user_id: 1 as number
     });
     const handleOpen = () => {
         setOpen(true);
@@ -131,6 +132,47 @@ const ModalAddNews: React.FC<propsData> = ({fetchDataComment}) => {
                         <ErrorMessage
                             errors={errors}
                             name="user_id"
+                            render={({messages}) =>
+                                messages &&
+                                Object.entries(messages).map(([type, message]) => (
+                                    <p key={type}>{message}</p>
+                                ))
+                            }
+                        />
+                    <TextField id="filled-basic"
+                                   {...register("is_show", {
+                                       required: "This is required.",
+                                       maxLength: {
+                                           value: 30,
+                                           message: "This input exceed maxLength."
+                                       }
+                                   })}
+                                   label="user_id" variant="outlined"
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}
+                                   
+                                   />
+                        <ErrorMessage
+                            errors={errors}
+                            name="is_show"
+                            render={({messages}) =>
+                                messages &&
+                                Object.entries(messages).map(([type, message]) => (
+                                    <p key={type}>{message}</p>
+                                ))
+                            }
+                        />
+                    <TextField id="filled-basic"  label="user_id" variant="outlined"
+                                   {...register("title", {
+                                       required: "This is required.",
+                                       maxLength: {
+                                           value: 30,
+                                           message: "This input exceed maxLength."
+                                       }
+                                   })}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
+                        <ErrorMessage
+                            errors={errors}
+                            name="title"
                             render={({messages}) =>
                                 messages &&
                                 Object.entries(messages).map(([type, message]) => (

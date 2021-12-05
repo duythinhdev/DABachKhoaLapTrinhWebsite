@@ -124,6 +124,18 @@ class CommentController
             $rest->throwError(NOT_FOUND, $e);
         }
     }
+    public function getdetail($request)
+    {
+        $comment = new \Comment();
+        $comment->id = $request['query']['id'];
+        $data = $comment->getdetail();
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE,$data);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
+    }
 }
 
 ?>

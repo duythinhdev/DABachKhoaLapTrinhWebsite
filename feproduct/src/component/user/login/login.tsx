@@ -1,6 +1,6 @@
 import React, {BaseSyntheticEvent, useState} from "react";
 import styled from "styled-components";
-import {mobile} from "../response";
+import {mobile,table} from "../response";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import * as actions from "../../../store/action";
@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
+  ${table({ width: "75%" })}
   ${mobile({ width: "75%" })}
 `;
 

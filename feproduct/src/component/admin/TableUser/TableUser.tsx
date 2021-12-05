@@ -37,9 +37,14 @@ const TableUser = () =>  {
     useEffect(() => {
         fetchDataUser();
     }, [])
-    const updateData = async (res: Array<any>) => {
+    const updateData = async (id: number) => {
+        let apiGetDetail = `v1/user/getdetail?id=${id}`;
+        await axios.get(enviroment.local + apiGetDetail)
+            .then((res: AxiosResponse<any>) => {
+                console.log("res",res)
+                setDataModalUpdate(res.data.response.data)
+            }).catch(err => console.log(err));
         await setModalUpdate(true);
-        await setDataModalUpdate(res);
     }
     const closeUpdateData = () => {
         setModalUpdate(false);
@@ -73,38 +78,38 @@ const TableUser = () =>  {
                                 dataPagination?.map((res:any,index: number)=> {
 
                                     return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.id}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.permission  == 1 ? "Admin" : 'user'}
                                             {res.permission  == 2 ? "Leader" : ''}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.full_name}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.address}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.name}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.phone}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.username}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.password}
                                         </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                          <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                               {res.is_active ? "Active" : "don't Active" }
                                           </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.created_at}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.updated_at}
                                         </TableCell>
                                     </TableRow>

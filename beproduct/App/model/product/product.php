@@ -151,15 +151,14 @@ class product
     public function getProductPagination()
     {
 
-        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName  ." LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . " LIMIT " . $this->pagenumber . ',' . $this->pageSize);
         $stmt->execute();
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
     }
 
     public function getOptionOfProduct(){
-        $stmt = $this->dbConn->prepare("SELECT product.id,product.Product_name,product.image,product.description,product.id_catergory_product,option.size,option.type,option.quantity,option.price
-         FROM 
+        $stmt = $this->dbConn->prepare("SELECT product.id,product.Product_name,product.image,product.description,product.id_catergory_product,option.size,option.type,option.quantity,option.price  FROM 
          option "  . "INNER JOIN " . $this->tableName ." ON product.id = option.product_id " .  " LIMIT "   . $this->pagenumber . ',' . $this->pageSize);
         $stmt->execute();
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -264,4 +263,4 @@ class product
     }
 }
 
-?>h
+?>

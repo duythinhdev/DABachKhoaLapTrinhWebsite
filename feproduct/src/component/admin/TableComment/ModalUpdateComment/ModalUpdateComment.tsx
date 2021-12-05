@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+import ImageCollectionsBookmark from 'material-ui/svg-icons/image/collections-bookmark';
 let style: any = {
     position: 'absolute',
     top: '50%',
@@ -24,6 +25,7 @@ interface dataUpdate  {
     closeUpdateDatas: () => void
 }
 const ModalUpdateComment:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,closeUpdateDatas}) => {
+    console.log("dataModalUpdate",dataModalUpdate);
     let ditpatch = useDispatch();
     const [postReview, setPostReview] = useState({
         new_id: 1 as number,
@@ -61,15 +63,15 @@ const ModalUpdateComment:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,cl
                         autoComplete="off"
                     >
                         <TextField id="filled-basic" name="" label="id" variant="outlined"
-                                   defaultValue={dataModalUpdate[0].id} disabled />
+                                   defaultValue={dataModalUpdate[0]?.id} disabled />
                         <TextField id="filled-basic" name="new_id" label="new_id" variant="outlined"
-                                   defaultValue={dataModalUpdate[0].new_id}
+                                   defaultValue={dataModalUpdate[0]?.new_id}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="content" label="content" variant="outlined"
-                                   defaultValue={dataModalUpdate[0].content}
+                                   defaultValue={dataModalUpdate[0]?.content}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="user_id" label="user_id" variant="outlined"
-                                   defaultValue={dataModalUpdate[0].user_id}
+                                   defaultValue={dataModalUpdate[0]?.user_id}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
                         <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>

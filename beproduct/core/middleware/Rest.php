@@ -11,20 +11,11 @@ class Rest
 
     public function __construct()
     {
-//        if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-//            $this->throwError(REQUEST_METHOD_NOT_VALID, 'Request Method is not valid.');
-//        }
-//        $handler = fopen('php://input', 'r');
-//        $this->request = stream_get_contents($handler);
-//        $this->validateRequest();
         $db = new DbConnect;
         $this->dbConn = $db->connect();
 
-//        if( 'generatetoken' != strtolower( $this->serviceName) ) {
-//            $this->validateToken();
-//        }
     }
-
+    
     public function validateToken()
     {
         try {
@@ -79,7 +70,7 @@ class Rest
         $response = json_encode(['response' => ['status' => $code, "data" => $data]]);
         echo $response;
         exit;
-    }
+    }             
 
     /**
      * Get hearder Authorization

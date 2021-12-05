@@ -2,7 +2,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import styled from "styled-components";
 import { sliderItems } from "../data";
-import { mobile } from "../response";
+import { mobile,table } from "../response";
 
 const Container = styled.div`
   width: 100%;
@@ -11,7 +11,8 @@ const Container = styled.div`
   position: relative;
   overflow: hidden;
   margin-top: 20px;
-  ${mobile({ display: "none" })}
+  ${table({ height: "100%",width: "164%" })}
+  ${mobile({ height: "100%",width: "100%",position:"relative",top: "20px" })}
 `;
 
 const Arrow = styled.div`

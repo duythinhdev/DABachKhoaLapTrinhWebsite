@@ -43,6 +43,7 @@ export default function TableComment() {
         let apiGetDetail = `v1/comment/getdetail?id=${id}`;
         await axios.get(enviroment.local + apiGetDetail)
             .then((res: AxiosResponse<any>) => {
+                console.log("res",res);
                 setDataModalUpdate(res.data.response.data)
             }).catch(err => console.log(err));
         console.log("",dataModalUpdate);

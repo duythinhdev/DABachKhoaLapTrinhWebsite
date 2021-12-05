@@ -61,6 +61,7 @@ export const isMenuAdmin = (menuLeft:boolean) => {
     }
 }
 export const dataProduct  = (fd:any) => {
+    console.log("fd",fd);
     return {
         type: action.POST_DATA_PRODUCT_ADMIN,
         fd: fd

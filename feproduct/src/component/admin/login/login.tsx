@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory, Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
+import usePasswordToggle from "./usePasswordToggle";
 
 interface FormInputs {
     passwords: string;
@@ -16,11 +17,10 @@ const Login = () => {
         email: '',
         passwords: '',
     }) as any;
+    const  [PasswordInputType,ToggleIcon] = usePasswordToggle() as  any | undefined;
     let dispatch = useDispatch();
     let history = useHistory();
-    let isAuthenticated = useSelector((state: any) => state.login.token !   == null)
     let isLoginAdmin = useSelector((state: any) => state.login.isLoginAdmin);
-    let authRedirectPath = useSelector((state: any) => state.login.authRedirectPath);
     let token:any = null;
     const {register, formState: {errors}, handleSubmit} = useForm<FormInputs>({
         criteriaMode: "all"
@@ -32,16 +32,10 @@ const Login = () => {
     const changeValue = (event: any) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
-    function redirect(){
-        console.log("isLoginAdmin",isLoginAdmin);
-        if (isLoginAdmin)
-        {
-           token =  history.push("/admin")
-        }
+    if (isLoginAdmin)
+    {
+       token =  history.push("/admin")
     }
-    useEffect(()=> {
-        redirect();
-    },[])
     return (
         <div className="backgroundLogin">
             <form className="formlogin" onSubmit={handleSubmit((data: any) => clickValue(data))}>
@@ -75,7 +69,7 @@ const Login = () => {
                 <div className="formlogin__password">
                     <input
                         placeholder="Mật Khẩu"
-                        type="password"
+                        type={PasswordInputType}
                         {...register("passwords", {
                             required: "This is required.",
                             maxLength: {
@@ -85,6 +79,7 @@ const Login = () => {
                         })}
                         onChange={(event) => changeValue(event)}
                     />
+                    <span className='iconPassword' >{ToggleIcon }</span>
                 </div>
                 <ErrorMessage
                     errors={errors}

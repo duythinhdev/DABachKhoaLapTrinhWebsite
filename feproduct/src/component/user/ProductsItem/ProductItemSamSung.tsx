@@ -11,6 +11,9 @@ import axios, {AxiosResponse} from "axios";
 import  * as Actions from "../../../store/action/index";
 import {useDispatch} from "react-redux";
 
+
+
+
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -74,7 +77,7 @@ const Icon = styled.div`
 interface items{
     item:any
 }
-const ProductItems:React.FC<items> = ({ item }) => {
+const ProductItemsSamsung:React.FC<items> = ({ item }) => {
     let dispatch = useDispatch();
     const clickValueDetail = async (id:number) => {
         let action =  await  Actions.getDetailProduct(id);
@@ -105,4 +108,4 @@ const ProductItems:React.FC<items> = ({ item }) => {
     );
 };
 
-export default ProductItems;
+export default ProductItemsSamsung;
