@@ -44,6 +44,8 @@ const ModalAddReview:React.FC<propsData> = ({fetchDataReview}) => {
         content: '' as string,
         user_id: 1 as number,
         product_id: 1 as number,
+        created_at: "" as any,
+        updated_at: "" as any,
     });
     const {register, formState: {errors}, handleSubmit} = useForm<FormInputs>({
         criteriaMode: "all"
@@ -148,7 +150,9 @@ const ModalAddReview:React.FC<propsData> = ({fetchDataReview}) => {
                                            message: "This input exceed maxLength."
                                        }
                                    })}
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} 
+                                   
+                                   />
                         <ErrorMessage
                             errors={errors}
                             name="product_id"
@@ -167,6 +171,7 @@ const ModalAddReview:React.FC<propsData> = ({fetchDataReview}) => {
                                            message: "This input exceed maxLength."
                                        }
                                    })}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} 
                         />
                         <ErrorMessage
                             errors={errors}
@@ -186,7 +191,9 @@ const ModalAddReview:React.FC<propsData> = ({fetchDataReview}) => {
                                            message: "This input exceed maxLength."
                                        }
                                    })}
-                                   variant="outlined" type="date" />
+                                   variant="outlined" type="date"
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} 
+                                   />
                         <ErrorMessage
                             errors={errors}
                             name="updated_at"

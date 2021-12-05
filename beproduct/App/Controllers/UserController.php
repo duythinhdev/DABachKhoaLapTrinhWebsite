@@ -53,8 +53,9 @@ class UserController
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $stmt = $this->dbConn->prepare("SELECT * FROM user WHERE username = :email AND password = :password");
+        $password = sha1($data['password']);
         $stmt->bindParam(":email", $data['email']);
-        $stmt->bindParam(":password", $data['password']);
+        $stmt->bindParam(":password", $password);
         $stmt->execute();
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
         $rest = new  \Rest();
@@ -183,6 +184,12 @@ class UserController
         }
     }
 
+    public function delete($request)
+    {
+        $user = new \user();
+        $user->id = $request['params'][1];
+        $user->delete();
+    }
 
     public function getDetail($request) {
         $user = new \user();
@@ -205,8 +212,67 @@ class UserController
         $user->setPhone($data['phone']);
         $user->setPassword($data['password']);
         $user->setPermission($data['permission']);
+        $user->setCreatedAt($data['created_at']);
+        $user->setUpdatedAt($data['updated_at']);
         $user->update();
     }
-
+    public function postUser()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $img_name = $_FILES['image']['name'];
+        $img_size = $_FILES['image']['size'];
+        $tmp_name = $_FILES['image']['tmp_name'];
+        $error = $_FILES['image']['error'];
+        $user = new \user();
+        if($error ==  0)
+        {
+            if($img_size > 125000)
+            {
+                echo "Sorry, your file is too large";
+            }
+            else {
+                $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+                $img_ex_lc = strtolower($img_ex);
+                $allowed_exs = array("jpg", "jpeg", "png");     
+                        
+                if (in_array($img_ex_lc, $allowed_exs)) {
+                    $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                    $img_upload_path = 'asset/'.$new_img_name;
+                    move_uploaded_file($tmp_name, $img_upload_path);
+                    $user->setImage($img_upload_path);
+                    $user->setFirstName($_POST['full_name']);
+                    $user->setUsername($_POST['username']);
+                    $user->setName($_POST['name']);
+                    $user->setPhone($_POST['phone']);
+                    $user->setPassword($_POST['password']);
+                    $user->setPermission($_POST['permission']);
+                    $user->setPassword($_POST['created_at']);
+                    $user->setPermission($_POST['updated_at']);
+                    $data = $user->createUser();
+                    $rest = new \Rest();
+                    try {
+                        $rest->returnResponse(SUCCESS_RESPONSE, $data);
+                    } catch (Exception $e) {
+                        $rest->throwError(NOT_FOUND, $e);
+                    }
+                    // Insert into Database
+                    echo "cannot upload file";
+                }else {
+                    $em = "You can't upload files of this type";
+                    echo $em;
+                }
+            }
+        }
+        else {
+            $em = "unknown error occurred!";
+            echo $em;
+        }
+        $rest = new \Rest();
+        try {
+            $rest->returnResponse(SUCCESS_RESPONSE, $data);
+        } catch (Exception $e) {
+            $rest->throwError(NOT_FOUND, $e);
+        }
+    }
 }
 ?>

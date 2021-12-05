@@ -8,6 +8,10 @@ import mainReducer from "../store/redux/body";
 import LoginReducer from "../store/redux/login";
 import userAdminReducer from "../store/redux/UserAdmin";
 import dataUserReducer from "../store/redux/dataUser";
+import { persistStore,persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistGate } from "redux-persist/integration/react";
+
 import {
     watchLoginAdmin,
     watchProductAdmin,
@@ -27,6 +31,10 @@ declare global {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const persistConfig = {
+    key: "root",
+    storage
+}
 
 const rootReducer = combineReducers({
     main: mainReducer,
@@ -35,9 +43,14 @@ const rootReducer = combineReducers({
     option: optionMainReducer,
     dataUser: dataUserReducer
 });
+const persistReducers = persistReducer(persistConfig,rootReducer);
+
 const store = createStore(
-    rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware))
+    persistReducers, composeEnhancers(applyMiddleware(sagaMiddleware))
 );
+const persistor = persistStore(store);
+
+
 sagaMiddleware.run(watchLoginAdmin);
 sagaMiddleware.run(watchProductAdmin);
 sagaMiddleware.run(watchUserAdmin);
@@ -48,6 +61,8 @@ sagaMiddleware.run(watchCategoryAdmin);
 sagaMiddleware.run(watchNewsAdmin);
 export const app = (
     <Provider store={store}>
-        <App/>
+        <PersistGate loading={null} persistor={persistor}  >
+            <App/>
+        </PersistGate>
     </Provider>
 );

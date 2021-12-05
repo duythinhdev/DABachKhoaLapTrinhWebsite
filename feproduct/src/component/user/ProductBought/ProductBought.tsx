@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {mobile, laptop} from "../response";
+import {mobile, laptop,table} from "../response";
 
 export const Container = styled.div`
     width: 100%;
@@ -11,6 +11,8 @@ export const Container = styled.div`
     justify-content: center;
     flex-direction: column;
     justify-content: center;
+    ${table({ height: "100%",width: "167%" })}
+    ${mobile({ height: "150vh",width: "100%" })}
 `;
 export const ItemInformationCart = styled.div`
     width: 80%;
@@ -18,12 +20,14 @@ export const ItemInformationCart = styled.div`
     background: #efefef;
     display: flex;
     flex-direction: row;
+    ${mobile({ height: "100vh",width: "100%",position: "relative",top: "20px", display: "flex",flexdirection: "column" })}
 `;
 export const ItemInformation = styled.div`
         flex: 0.7;
         background: #efefef;
         display: flex;
         flex-direction: column;
+        ${mobile({  display: "flex",flexdirection: "column" })}
 `;
 export const ItemInformationTitle = styled.div`
         flex:  0.05;

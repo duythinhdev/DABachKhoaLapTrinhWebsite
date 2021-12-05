@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import { mobile,table } from "../response";
 const Container = styled.div`
   height: 30px;
   background-color: teal;
@@ -10,6 +11,8 @@ const Container = styled.div`
   justify-content: center;
   font-size: 14px;
   font-weight: 500;
+  ${table({ height: "15%",width: "167%" })}
+  ${mobile({ height: "50px",width: "100%",position:"relative",top: "20px" })}
 `;
 const span = styled.span`
     height: 30px;

@@ -1,6 +1,6 @@
 import * as action from "./actiontypes";
 
-export const postUser = (permission: number,full_name: string,address: string,name:string,phone: number,username:string,password:string,created_at:any,updated_at:any) =>  {
+export const postUser = (permission: number,full_name: string,address: string,name:string,phone: number,username:string,password:string) =>  {
     return {
         type: action.POST_USER_ADMIN,
         permission: permission,
@@ -9,9 +9,7 @@ export const postUser = (permission: number,full_name: string,address: string,na
         name: name,
         phone: phone,
         username: username,
-        password: password,
-        created_at: created_at,
-        updated_at: updated_at
+        password: password
     }
 }
 export const putUser = (id: number,permission: number,full_name: string,address: string,name:string,phone: number,username:string,password:string,created_at:any,updated_at:any) =>  {

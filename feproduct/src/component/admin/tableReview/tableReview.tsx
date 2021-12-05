@@ -39,6 +39,7 @@ export default function TableReview() {
     }, [])
     const handleChangePage = (event: any, newPage: any) => {
         setPage(newPage);
+        fetchDataReview();
     };
 
     const handleChangeRowsPerPage = (event: any) => {

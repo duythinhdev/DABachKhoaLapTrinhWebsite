@@ -12,30 +12,21 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const Products = () => {
-    const [state, setState] = useState({
-        page: 1 as any,
-        rowsPerPage: 10 as any,
-        dataPagination: [] as Array<any>,
-    });
-    let fetchDataProduct = async () => {
-        let apiPagination = `v1/product/get?pagenumber=${state.page}&pagesize=${state.rowsPerPage}`;
-        await axios.get(enviroment.local + apiPagination)
-            .then((res: AxiosResponse<any>) => {
-                console.log("res",res);
-                setState({...state, dataPagination: res.data.response.data});
-            }).catch(err => console.log(err));
-    }
-    useEffect(() => {
-        fetchDataProduct();
-    }, [])
+interface propProductCategory  {
+    dataPagination?: any
+}
+const Products:React.FC<propProductCategory> = ({dataPagination}) => {
     return (
         <Container>
-            {state.dataPagination?.map((res) => (
-                <ProductItems item={res} key={res.id} />
-            ))}
+            {dataPagination?.map((res:any) => {
+                return <div>
+                    <h1>{res.name}</h1>
+                    <ProductItems item={res} key={res.id} />
+                </div>
+            })}
         </Container>
     );
 };
 
 export default Products;
+

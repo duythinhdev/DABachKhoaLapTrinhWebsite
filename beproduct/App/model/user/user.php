@@ -127,6 +127,17 @@ class user
     public $is_active;
     public $tableName = 'user';
     public $dbConn;
+    public $image;
+
+    public function setImage($image) {
+        $this->image = $image;
+    }
+    public function setCreatedAt($created_at) {
+        $this->image = $created_at;
+    }
+    public function setUpdatedAt($updated_at) {
+        $this->image = $updated_at;
+    }
 
 
     public function __construct()
@@ -200,8 +211,8 @@ class user
 
         $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . " LIMIT " . $this->pagenumber . ',' . $this->pageSize);
         $stmt->execute();
-        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $product;
+        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $user;
     }
 
     public function getDetail(){
@@ -249,6 +260,19 @@ class user
             return false;
         }
     }
+    public function delete()
+    {
+        $stmt = $this->dbConn->prepare('DELETE FROM ' . $this->tableName . ' WHERE id = :id');
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bindParam(':id', $this->id);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 
 ?>

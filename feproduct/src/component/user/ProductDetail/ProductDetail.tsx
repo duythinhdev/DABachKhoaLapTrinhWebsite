@@ -73,10 +73,10 @@ function ProductDetail() {
     const  fetchDataCategory = async () => {
         var  apiPagination = '';
         if(datadetails){
-             apiPagination = `v1/categoryproduct/getaboutproduct?pagenumber=${page}&pagesize=${rowsPerPage}&idcategory=${datadetails[0].id_catergory_product}`;
+             apiPagination = `v1/product/getdetail?pagenumber=${page}&pagesize=${rowsPerPage}&idcategory=${datadetails[0].id_catergory_product}`;
         }
         else {
-            apiPagination = `v1/categoryproduct/getaboutproduct?pagenumber=${page}&pagesize=${rowsPerPage}`;
+            apiPagination = `v1/product/getdetail?pagenumber=${page}&pagesize=${rowsPerPage}`;
         }
          axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
@@ -158,97 +158,8 @@ function ProductDetail() {
                                    Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
                                 tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
                                 phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                v
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
                             </span>
-                            <span>
-                                Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                v
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                                   Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó,
-                                tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển,
-                                phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
-                            </span>
+                      
                         </div>
                     </div>
                 </div>

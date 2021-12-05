@@ -76,15 +76,15 @@ const ModalUpdateProduct:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,cl
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField id="filled-basic" name="id" label="id" variant="outlined" defaultValue={dataModalUpdate.id} disabled />
+                        <TextField id="filled-basic" name="id" label="id" variant="outlined" defaultValue={dataModalUpdate[0]?.id} disabled />
                         <TextField id="filled-basic" name="product_name" label="product_name" variant="outlined"
-                                   defaultValue={dataModalUpdate.Product_name}
+                                   defaultValue={dataModalUpdate[0]?.Product_name}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField id="filled-basic" name="content" label="content" variant="outlined"
-                                   defaultValue={dataModalUpdate.description}
+                                   defaultValue={dataModalUpdate[0]?.description}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)} />
                         <TextField id="filled-basic" name="image" label="image" variant="outlined"
-                                   defaultValue={dataModalUpdate.image}
+                                   defaultValue={dataModalUpdate[0]?.image}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event)}/>
                         <TextField
                             className="imageProduct"
@@ -100,8 +100,8 @@ const ModalUpdateProduct:React.FC<dataUpdate> = ({dataModalUpdate,modalUpdate,cl
                             variant="outlined"
                             onChange={handleChange}
                         />
-                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.created_at}/>
-                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate.updated_at}/>
+                        <TextField id="filled-basic" name="created_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0]?.created_at}/>
+                        <TextField id="filled-basic" name="updated_at" type="date" variant="outlined"  defaultValue={dataModalUpdate[0]?.updated_at}/>
                         <Button variant="contained" onClick={(event) => ClickValue(event)}>Update</Button>
                         <Button variant="contained" onClick={(event) => deleteValue(event)}>Delete</Button>
                     </Box>

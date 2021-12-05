@@ -60,8 +60,6 @@ const useStyles = makeStyles({
 const TableProduct = () => {
 
     const [state, setState] = useState({
-        page: 1 as any,
-        rowsPerPage: 10 as any,
         dataPagination: [] as any,
         totalpage: 1 as any,
         file: '' as any,
@@ -71,18 +69,10 @@ const TableProduct = () => {
 
     const [modalUpdate,setModalUpdate] = useState(false) as any;
     const [dataModalUpdate,setDataModalUpdate] = useState([]) as any;
-
-    const handleChangePage = async (event: any, newPage: any) => {
-        await setState({...state, page: newPage});
-        await fetchDataProduct();
-    };
-
-    const handleChangeRowsPerPage = (event: any) => {
-        setState({...state, rowsPerPage: +event.target.value});
-        setState({...state, page: 1});
-    };
+    const [page,setPage ] = useState(1) as any;
+    const [rowsPerPage,setRowPerPage] = useState(10) as any;
     let fetchDataProduct = async () => {
-        let apiPagination = `v1/product/get?pagenumber=${state.page}&pagesize=${state.rowsPerPage}`;
+        let apiPagination = `v1/product/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
         await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setState({...state, totalpage: res.data.response.totalpage[0].total})
@@ -93,13 +83,23 @@ const TableProduct = () => {
     useLayoutEffect(() => {
         fetchDataProduct();
     }, [])
+    const handleChangePage = async (event: any, newPage: any) => {
+        setPage(newPage);
+        fetchDataProduct();
+    };
+
+    const handleChangeRowsPerPage =  (event: any) => {
+        console.log("event.target.value",event.target.value)
+        setRowPerPage(+event.target.value);
+        setPage(0);
+    }
 
 
     const updateData = async (id: any) => {
         let apiGetDetail = `v1/product/getdetail?id=${id}`;
         await axios.get(enviroment.local + apiGetDetail)
             .then((res: AxiosResponse<any>) => {
-                setDataModalUpdate(res.data[0])
+                setDataModalUpdate(res.data.response.data)
             }).catch(err => console.log(err));
         await setModalUpdate(true);
     }
@@ -109,7 +109,7 @@ const TableProduct = () => {
     const classes = useStyles();
     return (
         <div className="TableProduct">
-            <Paper sx={{width: '100%'}}>
+            <Paper sx={{width: '85%'}}>
                 <TableContainer sx={{maxHeight: 440}}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -166,8 +166,8 @@ const TableProduct = () => {
                     rowsPerPageOptions={[1, 10, 25, 100]}
                     component="div"
                     count={state.totalpage}
-                    rowsPerPage={state.rowsPerPage}
-                    page={state.page}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
