@@ -8,11 +8,12 @@ import {
     Twitter,
 } from "@mui/icons-material";
 import styled from "styled-components";
-import { mobile } from "../response";
+import { mobile,table } from "../response";
 
 const Container = styled.div`
   display: flex;
-  ${mobile({ flexDirection: "column" })}
+  ${table({ width: "167%" })}
+  ${mobile({ width: "100%",position: "relative",flexDirection: "column" })}
 `;
 
 const Left = styled.div`
@@ -88,7 +89,7 @@ const Footer = () => {
     return (
         <Container>
             <Left>
-                <Logo>LAMA.</Logo>
+                <Logo>TIKI.</Logo>
                 <Desc>
                     There are many variations of passages of Lorem Ipsum available, but
                     the majority have suffered alteration in some form, by injected

@@ -54,7 +54,7 @@ class OptionController {
         $data = json_decode(file_get_contents('php://input'), true);
         $option = new \option();
         $option->size = $data['size'];
-        $option->type = $data['type'];
+        $option->type = $data['Types'];
         $option->price = $data['price'];
         $option->quantity = $data['quantity'];
         $option->product_id = $data['product_id'];
@@ -74,7 +74,7 @@ class OptionController {
         $option = new \option();
         $option->setId($request['params'][1]);
         $option->setSize($data['size']);
-        $option->setType($data['type']);
+        $option->setType($data['Types']);
         $option->setPrice($data['price']);
         $option->setQuantity($data['quantity']);
         $option->setProductId($data['product_id']);
@@ -93,6 +93,7 @@ class OptionController {
             $rest->throwError(NOT_FOUND, $e);
         }
     }
+
 }
 
 ?>

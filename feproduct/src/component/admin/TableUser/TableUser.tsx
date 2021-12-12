@@ -1,19 +1,13 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import { Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow } from "@mui/material";
 import "./TableUser.scss";
 import ModalAddUser from "../TableUser/modalUser/modalUser";
 import { columnsTableUser } from "../NameColumsTable/NameColumnsTable";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../../enviroment/enviroment";
-import ModalUpdateUser from "../TableUser/modalupdateUser/ModalUpdateUser";
+import ModalUpdateUser from "./modalUpdateUser/ModalUpdateUser";
+
 
 const TableUser = () =>  {
     const [page, setPage] = useState(1) as any | undefined;
@@ -33,7 +27,7 @@ const TableUser = () =>  {
     };
     let fetchDataUser = async () => {
         let apiPagination = `v1/user/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setRowsPerPage(rowsPerPage);
                 setDataPagination(res.data.response.data);
@@ -43,16 +37,21 @@ const TableUser = () =>  {
     useEffect(() => {
         fetchDataUser();
     }, [])
-    const updateData = async (res: any) => {
+    const updateData = async (id: number) => {
+        let apiGetDetail = `v1/user/getdetail?id=${id}`;
+        await axios.get(enviroment.local + apiGetDetail)
+            .then((res: AxiosResponse<any>) => {
+                console.log("res",res)
+                setDataModalUpdate(res.data.response.data)
+            }).catch(err => console.log(err));
         await setModalUpdate(true);
-        await setDataModalUpdate(res);
     }
     const closeUpdateData = () => {
         setModalUpdate(false);
     }
     return (
         <div className="TableProduct">
-            <Paper sx={{ width: '90%' }} >
+            <Paper sx={{ width: '86%' }} >
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -77,38 +76,40 @@ const TableUser = () =>  {
                         <TableBody>
                             {
                                 dataPagination?.map((res:any,index: number)=> {
-                                  return   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+
+                                    return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.id}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.permission === 3 ? "Admin" : 'User' }
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.permission  == 1 ? "Admin" : 'user'}
+                                            {res.permission  == 2 ? "Leader" : ''}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.full_name}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.address}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.name}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.phone}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.username}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.password}
                                         </TableCell>
-                                          <TableCell align={res.align} onClick={() => updateData(res)}>
+                                          <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                               {res.is_active ? "Active" : "don't Active" }
                                           </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.created_at}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.updated_at}
                                         </TableCell>
                                     </TableRow>

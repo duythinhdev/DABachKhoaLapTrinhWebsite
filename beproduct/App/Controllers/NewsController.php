@@ -81,7 +81,7 @@ class NewsController {
     public function getdetail($request)
     {
         $news = new \News();
-        $news->setId($request['query']['id']);
+        $news->id = $request['query']['id'];
         $data = $news->getdetail();
         $rest = new \Rest();
         try {

@@ -44,7 +44,7 @@ export default function TableOptionOrder() {
     };
     let fetchDataComment = async () => {
         let apiPagination = `v1/oderoption/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);
@@ -87,21 +87,43 @@ export default function TableOptionOrder() {
                         <TableBody>
                             {
                                 dataPagination?.map((res:any,index:number) => {
-
+                                 return   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            { res.option_id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.order_id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.total}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.quantity}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.created_at}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                            {res.updated_at}
+                                        </TableCell>
+                                    </TableRow>
                                 })
                             }
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/*<TablePagination*/}
-                {/*    rowsPerPageOptions={[10, 25, 100]}*/}
-                {/*    component="div"*/}
-                {/*    // count={rows.length}*/}
-                {/*    rowsPerPage={rowsPerPage}*/}
-                {/*    page={page}*/}
-                {/*    onPageChange={handleChangePage}*/}
-                {/*    onRowsPerPageChange={handleChangeRowsPerPage}*/}
-                {/*/>*/}
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={totalpage}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
             </Paper>
         </div>
     );

@@ -124,8 +124,20 @@ class user
     public $created_at;
     public $updated_at;
     public $last_name;
+    public $is_active;
     public $tableName = 'user';
     public $dbConn;
+    public $image;
+
+    public function setImage($image) {
+        $this->image = $image;
+    }
+    public function setCreatedAt($created_at) {
+        $this->image = $created_at;
+    }
+    public function setUpdatedAt($updated_at) {
+        $this->image = $updated_at;
+    }
 
 
     public function __construct()
@@ -136,8 +148,8 @@ class user
 
     public function createUser()
     {
-        $query = 'INSERT INTO ' . $this->tableName . ' (permission, Name, full_name, phone, username, password,created_at,updated_at)
-         VALUES(:permission, :Name, :full_name, :phone, :username, :password,:created_at,:updated_at)';
+        $query = 'INSERT INTO ' . $this->tableName . ' (permission, Name, full_name, phone, username, password,created_at,updated_at,is_active)
+         VALUES(:permission, :Name, :full_name, :phone, :username, :password,:created_at,:updated_at,:is_active)';
 
         // Prepare statement
         $stmt = $this->dbConn->prepare($query);
@@ -167,6 +179,7 @@ class user
         $stmt->bindParam(':password', $this->password);
         $stmt->bindParam(':created_at', $this->created_at);
         $stmt->bindParam(':updated_at', $this->updated_at);
+        $stmt->bindParam(':is_active', $this->is_active);
         // Execute query
         if ($stmt->execute()) {
             return true;
@@ -198,19 +211,67 @@ class user
 
         $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . " LIMIT " . $this->pagenumber . ',' . $this->pageSize);
         $stmt->execute();
-        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $product;
+        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $user;
     }
-    
-    public function getPermissionUser()
-    {
-        $stmt = $this->dbConn->prepare("SELECT permission FROM " . $this->tableName. "where id = :id");
+
+    public function getDetail(){
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . "	WHERE 
+        id = :id");
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
     }
+    public function update()
+    {
+        $sql = "UPDATE $this->tableName SET";
+        if (null != $this->getFirstName()) {
+            $sql .= " full_name = '" . $this->getFirstName() . "',";
+        }
 
+        if (null != $this->getName()) {
+            $sql .= " name = " . $this->getName() . ",";
+        }
+
+        if (null != $this->getPhone()) {
+            $sql .= " phone = '" . $this->getPhone() . "',";
+        }
+        if (null != $this->getPassword()) {
+            $sql .= " password = '" . $this->getPassword() . "',";
+        }
+
+
+        $sql .= " created_at = :created_at, 
+					  updated_at = :updated_at
+					WHERE 
+						id = :id";
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->created_at = $date;
+        $this->updated_at = $date;
+        $stmt = $this->dbConn->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':created_at', $this->create_at);
+        $stmt->bindParam(':updated_at', $this->update_at);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function delete()
+    {
+        $stmt = $this->dbConn->prepare('DELETE FROM ' . $this->tableName . ' WHERE id = :id');
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bindParam(':id', $this->id);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
 

@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory, Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from '@hookform/error-message';
+import usePasswordToggle from "./usePasswordToggle";
 
 interface FormInputs {
     passwords: string;
@@ -16,22 +17,24 @@ const Login = () => {
         email: '',
         passwords: '',
     }) as any;
+    const  [PasswordInputType,ToggleIcon] = usePasswordToggle() as  any | undefined;
+    let dispatch = useDispatch();
+    let history = useHistory();
+    let isLoginAdmin = useSelector((state: any) => state.login.isLoginAdmin);
+    let token:any = null;
     const {register, formState: {errors}, handleSubmit} = useForm<FormInputs>({
         criteriaMode: "all"
     });
-    let dispatch = useDispatch();
-    let history = useHistory();
-    let isLoginAdmin: boolean = useSelector((state: any) => {
-        return state.login.isLoginAdmin
-    });
-    let token =  localStorage.getItem("token") || '{}'
-    const clickValue = async ( data: BaseSyntheticEvent<object, any, any> | undefined)   => {
-        // event.preventDefault();
+    const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined) => {
         let action: any = actions.loginAppAdmin(value.email, value.passwords);
         await dispatch(action);
     }
     const changeValue = (event: any) => {
         setValue({...value, [event.target.name]: event.target.value});
+    }
+    if (isLoginAdmin)
+    {
+       token =  history.push("/admin")
     }
     return (
         <div className="backgroundLogin">
@@ -65,9 +68,8 @@ const Login = () => {
                 />
                 <div className="formlogin__password">
                     <input
-                        // name="password"
                         placeholder="Mật Khẩu"
-                        type="password"
+                        type={PasswordInputType}
                         {...register("passwords", {
                             required: "This is required.",
                             maxLength: {
@@ -77,6 +79,7 @@ const Login = () => {
                         })}
                         onChange={(event) => changeValue(event)}
                     />
+                    <span className='iconPassword' >{ToggleIcon }</span>
                 </div>
                 <ErrorMessage
                     errors={errors}
@@ -91,6 +94,7 @@ const Login = () => {
                 <div className="formlogin__submit">
                     <button>Đăng Nhập</button>
                 </div>
+                {token}
             </form>
         </div>
     );

@@ -28,7 +28,7 @@ export default function TableComment() {
     };
     let fetchDataComment = async () => {
         let apiPagination = `v1/comment/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setTotalPage(res.data.response.totalpage[0].total)
                 setRowsPerPage(rowsPerPage);
@@ -39,9 +39,15 @@ export default function TableComment() {
     useEffect(() => {
         fetchDataComment();
     }, [])
-    const updateData = async (res: any) => {
+    const updateData = async (id: any) => {
+        let apiGetDetail = `v1/comment/getdetail?id=${id}`;
+        await axios.get(enviroment.local + apiGetDetail)
+            .then((res: AxiosResponse<any>) => {
+                console.log("res",res);
+                setDataModalUpdate(res.data.response.data)
+            }).catch(err => console.log(err));
+        console.log("",dataModalUpdate);
         await setModalUpdate(true);
-        await setDataModalUpdate(res);
     }
     const closeUpdateData = () => {
         setModalUpdate(false);
@@ -77,7 +83,26 @@ export default function TableComment() {
                         <TableBody>
                             {
                                 dataPagination?.map((res: any, index: number) => {
-                                    return <ListTableComment res={res} indexs={index} updateData={updateData} />
+                                    return <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.user_id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.new_id}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.content}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.created_at}
+                                        </TableCell>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            {res.updated_at}
+                                        </TableCell>
+                                    </TableRow>
                                 })
                             }
                         </TableBody>

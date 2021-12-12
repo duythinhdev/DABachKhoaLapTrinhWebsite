@@ -1,6 +1,6 @@
 import { Send } from "@mui/icons-material";
 import styled from "styled-components";
-import { mobile } from "../response";
+import { mobile,table } from "../response";
 
 const Container = styled.div`
   height: 60vh;
@@ -9,6 +9,8 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  ${table({ height: "60vh", width: "167%" })}
+  ${mobile({ height: "60vh", width: "100%",position: "relative" })}
 `;
 const Title = styled.h1`
   font-size: 70px;

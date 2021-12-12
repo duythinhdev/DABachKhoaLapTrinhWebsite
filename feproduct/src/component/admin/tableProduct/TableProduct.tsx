@@ -1,14 +1,9 @@
 import * as React from 'react';
 import "./tableProduct.scss";
-import {useEffect, useState, useReducer} from "react";
+import {useEffect, useState, useLayoutEffect} from "react";
 import axios, {AxiosResponse} from "axios";
-import {enviroment} from "../../../enviroment/enviroment";
 import {makeStyles, createMuiTheme} from '@material-ui/core/styles';
 import {
-    Button,
-    TextField,
-    Box,
-    Modal,
     TableRow,
     TableHead,
     TableContainer,
@@ -16,18 +11,12 @@ import {
     TableBody,
     Table,
     Paper,
-    FormControl,
     TablePagination,
-    CardActionArea,
-    CardContent,
-    CardMedia,
-    Typography,
-    Card
 } from '@mui/material';
 import ModalAddProduct from "./modalAddProduct/modalAddProduct";
 import {columnsNamesTableProducts} from "../NameColumsTable/NameColumnsTable";
-import ModalUpdateComment from "../TableComment/ModalUpdateComment/ModalUpdateComment";
-import ListDataProduct from "./lisdataproduct/listData";
+import ModalUpdateProduct from "../tableProduct/ModalUpdateProduct/ModalUpdateProduct";
+import { enviroment } from "../../../enviroment/enviroment";
 
 
 const theme = createMuiTheme({
@@ -69,49 +58,58 @@ const useStyles = makeStyles({
 
 });
 const TableProduct = () => {
-    const [state, setState] = useReducer((state: any, newState: any) => ({...state, ...newState}), {
-        page: 1 as any,
-        rowsPerPage: 10 as any,
+
+    const [state, setState] = useState({
         dataPagination: [] as any,
         totalpage: 1 as any,
         file: '' as any,
-        ModalUpdate: false as boolean,
         DataModalUpdate: [] as any,
     });
-    const handleChangePage = async (event: any, newPage: any) => {
-        await setState({...state, page: newPage});
-        await fetchDataProduct();
-    };
 
-    const handleChangeRowsPerPage = (event: any) => {
-        setState({...state, rowsPerPage: +event.target.value});
-        setState({...state, page: 1});
-    };
+
+    const [modalUpdate,setModalUpdate] = useState(false) as any;
+    const [dataModalUpdate,setDataModalUpdate] = useState([]) as any;
+    const [page,setPage ] = useState(1) as any;
+    const [rowsPerPage,setRowPerPage] = useState(10) as any;
     let fetchDataProduct = async () => {
-        let apiPagination = `v1/product/get?pagenumber=${state.page}&pagesize=${state.rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        let apiPagination = `v1/product/get?pagenumber=${page}&pagesize=${rowsPerPage}`;
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
                 setState({...state, totalpage: res.data.response.totalpage[0].total})
                 setState({...state, dataPagination: res.data.response.data});
             }).catch(err => console.log(err));
         console.log("123",state.dataPagination);
     }
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetchDataProduct();
     }, [])
+    const handleChangePage = async (event: any, newPage: any) => {
+        setPage(newPage);
+        fetchDataProduct();
+    };
+
+    const handleChangeRowsPerPage =  (event: any) => {
+        console.log("event.target.value",event.target.value)
+        setRowPerPage(+event.target.value);
+        setPage(0);
+    }
 
 
-    const updateData = async (res: any) => {
-        await setState({...state,ModalUpdate:true});
-        await setState({...state,DataModalUpdate: res});
+    const updateData = async (id: any) => {
+        let apiGetDetail = `v1/product/getdetail?id=${id}`;
+        await axios.get(enviroment.local + apiGetDetail)
+            .then((res: AxiosResponse<any>) => {
+                setDataModalUpdate(res.data.response.data)
+            }).catch(err => console.log(err));
+        await setModalUpdate(true);
     }
     const closeUpdateData = () => {
-        setState({...state,ModalUpdate:false});
+        setModalUpdate(false)
     }
     const classes = useStyles();
     return (
         <div className="TableProduct">
-            <Paper sx={{width: '100%'}}>
+            <Paper sx={{width: '85%'}}>
                 <TableContainer sx={{maxHeight: 440}}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -137,25 +135,22 @@ const TableProduct = () => {
                             {
                                 state.dataPagination?.map((res: any, index: number) => {
                                   return  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.id}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.Product_name}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.image}
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                            <img src={enviroment.local + '/' + res.image}  width="500" height="400"  />
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.description}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.created_at}
                                         </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
-                                            {res.updated_at}
-                                        </TableCell>
-                                        <TableCell align={res.align} onClick={() => updateData(res)}>
+                                        <TableCell align={res.align} onClick={() => updateData(res.id)}>
                                             {res.updated_at}
                                         </TableCell>
                                         <TableCell key={index} align={res.align}>
@@ -171,15 +166,16 @@ const TableProduct = () => {
                     rowsPerPageOptions={[1, 10, 25, 100]}
                     component="div"
                     count={state.totalpage}
-                    rowsPerPage={state.rowsPerPage}
-                    page={state.page}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
                 {
-                    state.ModalUpdate && <ModalUpdateComment dataModalUpdate={state.dataModalUpdate}
-                                                       modalUpdate={state.ModalUpdate}
+                    modalUpdate && <ModalUpdateProduct dataModalUpdate={dataModalUpdate}
+                                                       modalUpdate={modalUpdate}
                                                        closeUpdateDatas={closeUpdateData}
+                                                       fetchDataProduct={fetchDataProduct}
                     />
                 }
             </Paper>

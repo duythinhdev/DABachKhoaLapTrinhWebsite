@@ -90,6 +90,12 @@ class Comment
         return $product;
     }
 
+    public function getCommentAboutProduct(){
+        $stmt = $this->dbcon->prepare("SELECT * FROM " . $this->tableName  ." LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
     public function create()
     {
         $query = 'INSERT INTO ' . $this->tableName . ' (user_id, created_at, updated_at, content, new_id) VALUES ( :user_id, :created_at, :updated_at, :content, :new_id)';
@@ -103,7 +109,11 @@ class Comment
         $this->updated_at = htmlspecialchars(strip_tags($this->updated_at));
         $this->content = htmlspecialchars(strip_tags($this->content));
         $this->new_id = htmlspecialchars(strip_tags($this->new_id));
-
+        
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date('Y-m-d', time());
+        $this->create_at = $date;
+        $this->update_at = $date;
         // Bind data
         $stmt->bindParam(':user_id', $this->user_id);
         $stmt->bindParam(':created_at', $this->created_at);

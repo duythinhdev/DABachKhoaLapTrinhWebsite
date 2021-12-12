@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Controllers;
+
+use Rest;
+
 //define('PATH_ROOT', __DIR__);
 include_once PATH_ROOT . '/app/model/product/product.php';
 include_once PATH_ROOT . '/config/DBConnect.php';
@@ -56,17 +59,21 @@ class ReviewController
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $review = new \review();
-//        $product->id = $data['id'];
+        $this->validationToken();
         $review->count_start = $data['count_start'];
         $review->product_id = $data['product_id'];
         $review->content = $data['content'];
         $review->user_id = $data['user_id'];
+        $review->setCreateAt($data['create_at']);
+        $review->setUpdateAt($data['update_at']);
         $review->create();
     }
 
     public function delete($request)
     {
         $review = new \review();
+        $rest = new Rest();
+        $rest->validateToken();
         $review->id = $request['params'][1];
         $review->delete();
     }
@@ -75,19 +82,24 @@ class ReviewController
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $review = new \review();
+        $this->validationToken();
         $review->setId($request['params'][1]);
         $review->setCountStart($data['count_start']);
-        $review->setCreateAt($data['create_at']);
-        $review->setUpdateAt($data['update_at']);
         $review->setProductId($data['product_id']);
         $review->setContent($data['content']);
         $review->setUserId($data['user_id']);
+        $review->setCreateAt($data['created_at']);
+        $review->setUpdateAt($data['updated_at']);
         $review->update();
     }
-
+    public function validationToken() {
+        $rest = new Rest();
+        $rest->validateToken();
+    }
     public function getdetail($request)
     {
-        $review = new \product();
+        $review = new \review();
+        $this->validationToken();
         $review->setId($request['query']['id']);
         $data = $review->getdetail();
         $rest = new \Rest();

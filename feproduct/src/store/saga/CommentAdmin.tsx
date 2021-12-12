@@ -11,7 +11,7 @@ export function* postComment(actions: any) {
     }
     let urlLogin = 'v1/comment/post';
     try {
-        const response: Promise<any> = yield axios.post(enviroment.locals + urlLogin, body);
+        const response: Promise<any> = yield axios.post(enviroment.local + urlLogin, body);
         console.log("response", response);
     } catch (error) {
         put(Actions.PostProduct("post fail", false))

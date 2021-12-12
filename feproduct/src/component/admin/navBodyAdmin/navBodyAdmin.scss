@@ -7,10 +7,16 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: relative;
   }
   .menuIcon{
     font-size: 35px;
     cursor:pointer;
     margin: 25px;
+  }
+  .Avatar{
+    position: absolute;
+    top: 20px;
+    right: 20px;
   }
 }

@@ -16,6 +16,14 @@ export const medium = (props:any) => {
   `;
 };
 
+export const table = (props:any) => {
+  return css`
+  @media only screen and (max-width: 768px) {
+    ${props}
+  }
+`;
+};
+
 export const mobile = (props:any) => {
     return css`
     @media only screen and (max-width: 380px) {

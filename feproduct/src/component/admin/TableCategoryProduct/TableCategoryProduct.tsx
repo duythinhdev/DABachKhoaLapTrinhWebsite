@@ -26,7 +26,7 @@ export default function TableCategoryProduct() {
     const [dataModalUpdate, setDataModalUpdate] = useState([]) as Array<any>;
     const handleChangePage = async (event:any, newPage:any) => {
         await setPage(newPage);
-        await fetchDataCategoryProduct();
+        fetchDataCategoryProduct();
     };
 
     const handleChangeRowsPerPage = (event:any) => {
@@ -35,19 +35,25 @@ export default function TableCategoryProduct() {
     };
     let fetchDataCategoryProduct = async () => {
         let apiPagination = `v1/categoryproduct/getall?pagenumber=${page}&pagesize=${rowsPerPage}`;
-        await axios.get(enviroment.locals + apiPagination)
+        await axios.get(enviroment.local + apiPagination)
             .then((res: AxiosResponse<any>) => {
-                setTotalPage(res.data.response.totalpage[0].total)
+                setTotalPage(res.data.response.totalpage[0].total);
                 setRowsPerPage(rowsPerPage);
                 setDataPagination(res.data.response.data);
             }).catch(err => console.log(err));
     }
     useEffect(() => {
         fetchDataCategoryProduct();
-    }, [])
-    const updateData = async (res: any) => {
+    }, [page])
+    const updateData = async (id: number) => {
+        let apiGetDetail = `v1/categoryproduct/getdetail?id=${id}`;
+        await axios.get(enviroment.local + apiGetDetail)
+            .then((res: AxiosResponse<any>) => {
+                console.log("response",res)
+                setDataModalUpdate(res.data.response.data)
+            }).catch(err => console.log(err));
         await setModalUpdate(true);
-        await setDataModalUpdate(res);
+        console.log("",dataModalUpdate);
     }
     const closeUpdateData = () => {
         setModalUpdate(false);
@@ -82,7 +88,20 @@ export default function TableCategoryProduct() {
                         </TableHead>
                         <TableBody>
                             {dataPagination?.map((res:any,index:number) => {
-                                return <ListTableCategoryProduct  res={res} indexs={index} updateData={updateData}  />
+                                return         <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                    <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                        {res.id}
+                                    </TableCell>
+                                    <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                        {res.name}
+                                    </TableCell>
+                                    <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                        {res.created_at}
+                                    </TableCell>
+                                    <TableCell align={res.align} onClick={() => updateData(res.id)}>
+                                        {res.updated_at}
+                                    </TableCell>
+                                </TableRow>
                             })}
                         </TableBody>
                     </Table>

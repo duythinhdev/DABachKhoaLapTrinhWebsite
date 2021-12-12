@@ -4,7 +4,8 @@ import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
 
 export function* postUser(actions: any) {
-    const { permission,full_name,address,name,phone,username,password,created_at,updated_at } = actions;
+    const { permission,full_name,name,address,phone,username,password } = actions;
+    let urlLogin = 'v1/user/signup';
     let body = {
         permission: permission,
         full_name: full_name,
@@ -13,12 +14,9 @@ export function* postUser(actions: any) {
         phone: phone,
         username: username,
         password: password,
-        created_at: created_at,
-        updated_at: updated_at
     }
-    let urlLogin = 'v1/user/post';
     try {
-        const response:Promise<any> =  yield axios.post(enviroment.locals + urlLogin, body);
+        const response:Promise<any> =  yield axios.post(enviroment.local + urlLogin,body);
         yield put(Actions.PostProduct("post success",true))
     }
     catch (error) {
@@ -27,7 +25,7 @@ export function* postUser(actions: any) {
 }
 export function* putUser(actions: any) {
     const { id,permission,full_name,address,name,phone,username,password,created_at,updated_at } = actions;
-    let urlLogin = `v1/user/delete${id}`;
+    let urlLogin = `v1/user/put/${id}`;
     let body = {
         permission: permission,
         full_name: full_name,
@@ -40,7 +38,7 @@ export function* putUser(actions: any) {
         updated_at: updated_at
     }
     try {
-        const response:Promise<any> =  yield axios.put(enviroment.locals + urlLogin, body);
+        const response:Promise<any> =  yield axios.put(enviroment.local + urlLogin, body);
         yield put(Actions.PostProduct("post success",true))
     }
     catch (error) {
@@ -49,9 +47,9 @@ export function* putUser(actions: any) {
 }
 export function* deleteUser(actions: any) {
     let id = actions.id;
-    let urlLogin = `v1/user/delete${id}`;
+    let urlLogin = `v1/user/delete/${id}`;
     try {
-        const response:Promise<any> =  yield axios.delete(enviroment.locals + urlLogin);
+        const response:Promise<any> =  yield axios.delete(enviroment.local + urlLogin);
         yield put(Actions.PostProduct("post success",true))
     }
     catch (error) {

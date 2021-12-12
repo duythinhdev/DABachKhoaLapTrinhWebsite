@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import { mobile,table } from "../response";
 const Container = styled.div`
   height: 30px;
   background-color: teal;
@@ -10,9 +11,10 @@ const Container = styled.div`
   justify-content: center;
   font-size: 14px;
   font-weight: 500;
-  margin-top: 30px;
+  ${table({ height: "15%",width: "167%" })}
+  ${mobile({ height: "50px",width: "100%",position:"relative",top: "20px" })}
 `;
-const span = styled.span `
+const span = styled.span`
     height: 30px;
     width:20px;
 `;
@@ -23,6 +25,7 @@ function Announcement() {
             <Link to="/news"><span>news</span></Link> &nbsp;
             <Link to="/news"><span>news</span></Link> &nbsp;
             <Link to="/cart"><span>carts</span></Link> &nbsp;
+            <Link to="/bought"><span>carts</span></Link> &nbsp;
                 Super Deal! Free Shipping on Orders Over $50
         </Container>
     );

@@ -3,17 +3,41 @@ import axios from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
 
-export function* postOption(actions: any) {
+export function* postNews(actions: any) {
     let body = {
-        size: actions.size,
-        Types: actions.Types,
-        price: actions.price,
-        quantity: actions.quantity,
-        product_id: actions.product_id,
+        new_id: actions.new_id,
+        content:  actions.content,
+        user_id:  actions.user_id
     }
-    let urlLogin = 'v1/option/post';
+    let urlLogin = 'v1/news/post';
     try {
-        const response: Promise<any> = yield axios.post(enviroment.locals + urlLogin, body);
+        const response: Promise<any> = yield axios.post(enviroment.local + urlLogin, body);
+        console.log("response", response);
+    } catch (error) {
+        put(Actions.PostProduct("post fail", false))
+    }
+}
+export function* putNews(actions: any) {
+    let id = actions.id;
+    let body = {
+        new_id: actions.new_id,
+        content:  actions.content,
+        user_id:  actions.user_id
+    }
+    let urlLogin =  `v1/news/put${id}`;
+    try {
+        const response: Promise<any> = yield axios.post(enviroment.local + urlLogin, body);
+        console.log("response", response);
+    } catch (error) {
+        put(Actions.PostProduct("post fail", false))
+    }
+}
+
+export function* deleteNews(actions: any) {
+    let id = actions.id;
+    let urlLogin = `v1/news/delete${id}`;
+    try {
+        const response: Promise<any> = yield axios.post(enviroment.local + urlLogin);
         console.log("response", response);
     } catch (error) {
         put(Actions.PostProduct("post fail", false))

@@ -8,6 +8,8 @@ class order_option {
     public $update_at;
     public $create_at;
     public $tableName = 'option_order';
+    public $tableOption = 'option';
+    public $tableOrder = 'order';
     public $pagenumber;
     public $pageSize;
 
@@ -17,7 +19,7 @@ class order_option {
         $this->dbConn = $db->connect();
     }
     public function getAll(){
-        $sql = 'SELECT *' .$this->tableName ;
+        $sql = 'SELECT option_order.total AS totalOO, option_order.quantity  AS quantityOO, option.size AS sizeOption, option.type AS typeOption,option.price AS priceOption,order.address AS addressOrder,order.phone AS phoneOrder,order.name AS nameOrder  FROM '  .$this->tableOption .  'INNER JOIN  option_order  ON   option.id = option_order.option_id  INNER JOIN  order ON order.id = option_order.order_id';
         $stmt = $this->dbConn->prepare($sql);
         $stmt->execute();
         $option_order = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -38,6 +40,20 @@ class order_option {
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
     }
+
+    public function getAboutOptionOrderPagination()
+    {
+
+        // $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName 
+        // . "INNER JOIN " . $this->tableOption . ' option_order.option_id = option.id '. "INNER JOIN " . $this->tableOrder . ' order.id = option_order.order_id ' . " LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName  . " AS option_order ,". $this->tableOption 
+         . " AS option ,". $this->tableOrder . " AS order " . " WHERE option.id = option_order.option_id and order.id = option_order.order_id  "." LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
 
     public function create()
     {
@@ -63,7 +79,7 @@ class order_option {
         $stmt->bindParam(':total', $this->total);
         $stmt->bindParam(':order_id', $this->order_id);
         $stmt->bindParam(':option_id', $this->option_id);
-        $stmt->bindParam(':option_id', $this->option_id);
+        $stmt->bindParam(':order_id', $this->option_id);
         $stmt->bindParam(':create_at', $this->create_at);
         $stmt->bindParam(':update_at', $this->update_at);
 

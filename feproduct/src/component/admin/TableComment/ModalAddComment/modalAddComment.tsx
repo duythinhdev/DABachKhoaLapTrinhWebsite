@@ -40,12 +40,12 @@ const ModalAddComment:React.FC<propsData> = ({fetchDataComment}) => {
         setOpen(false);
     };
 
-    const ClickValue = (event:any) => {
+    const ClickValue = async (event:any) => {
         event.preventDefault();
-        let actions = action.postReview(postReview.count_start,postReview.content,postReview.user_id,postReview.product_id);
-        ditpatch(actions);
+        let actions =  await action.postReview(postReview.count_start,postReview.content,postReview.user_id,postReview.product_id);
+        await ditpatch(actions);
         notify(titlePost)
-        fetchDataComment();
+        await fetchDataComment();
     }
     const notify = (titlePost:String) => toast(titlePost);
     const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {

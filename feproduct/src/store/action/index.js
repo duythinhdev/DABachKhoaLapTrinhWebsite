@@ -10,36 +10,63 @@ export {
     navIsAdminNews,
     isMenuAdmin,
     dataProduct,
-    PostProduct
-} from "../action/admin";
+    PostProduct,
+    putDataProduct
+}
+from "../action/admin";
 export {
     loginAppAdmin,
-    loginAppSuccess
-} from "../action/login";
+    statusSignup,
+    signup,
+    loginAppUser,
+    logoutSucceed,
+    authSuccess,
+    logout,
+    checkAuthTimeOut,
+    setAuthRedirectPath,
+    isTokenauth,
+    authSuccessUser,
+    logoutUser
+}
+from "../action/login";
 
 export {
     postOption,
     getOption,
     putOption,
     deleteOption,
-    dataOption,
-    statusOption
-} from "../action/optionAdmin";
+}
+from "../action/optionAdmin";
+export {
+    postNews,
+    updateNews,
+    deleteNews
+}
+from "../action/newsAdmin";
 export {
     postReview,
-} from "../action/reviewAdmin";
+    deleteReview,
+    updateReview
+}
+from "../action/reviewAdmin";
 export {
     postComment,
-} from "../action/commentAdmin";
+
+}
+from "../action/commentAdmin";
 export {
     postCategory,
     putCategory,
-    deleteCategory
-} from "../action/categoryproduct";
+    deleteCategory,
+    detailproduct,
+    getDetailProduct
+}
+from "../action/categoryproduct";
 
 
 export {
     postUser,
     putUser,
     deleteUser
-} from "../action/userAdmin";
+}
+from "../action/userAdmin";

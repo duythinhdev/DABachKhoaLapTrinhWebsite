@@ -124,6 +124,7 @@ class product
     public $description;
     public $id_catergory_product;
     public $tableName = 'product';
+    public $tableNameOption = 'option';
     public $pagenumber;
     public $pageSize;
     public $dbConn;
@@ -150,15 +151,24 @@ class product
     public function getProductPagination()
     {
 
-        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName  ." LIMIT " . $this->pagenumber . ','. $this->pageSize);
+        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . " LIMIT " . $this->pagenumber . ',' . $this->pageSize);
         $stmt->execute();
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $product;
     }
 
+    public function getOptionOfProduct(){
+        $stmt = $this->dbConn->prepare("SELECT product.id,product.Product_name,product.image,product.description,product.id_catergory_product,option.size,option.type,option.quantity,option.price  FROM 
+         option "  . "INNER JOIN " . $this->tableName ." ON product.id = option.product_id " .  " LIMIT "   . $this->pagenumber . ',' . $this->pageSize);
+        $stmt->execute();
+        $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
+
     public function create()
     {
-        $query = 'INSERT INTO ' . $this->tableName . ' (Product_name, image, created_at, updated_at, description, id_catergory_product) VALUES ( :Product_name, :image, :created_at, :updated_at, :description, :id_catergory_product)';
+        $query = 'INSERT INTO ' . $this->tableName . ' (product_name, image, created_at, updated_at, description, id_catergory_product) VALUES ( :product_name, :image, :created_at, :updated_at, :description, :id_catergory_product)';
 
         // Prepare statement
         $stmt = $this->dbConn->prepare($query);
@@ -176,7 +186,7 @@ class product
         $this->create_at = $date;
         $this->update_at = $date;
         // Bind data
-        $stmt->bindParam(':Product_name', $this->product_name);
+        $stmt->bindParam(':product_name', $this->product_name);
         $stmt->bindParam(':image', $this->image);
         $stmt->bindParam(':created_at', $this->create_at);
         $stmt->bindParam(':updated_at', $this->update_at);
@@ -243,8 +253,9 @@ class product
 
     public function getdetail()
     {
-        $stmt = $this->dbConn->prepare("SELECT * FROM " . $this->tableName . "	WHERE 
-						id = :id");
+        $stmt = $this->dbConn->prepare("SELECT product.id,product.Product_name,product.image,product.description,product.id_catergory_product,option.size,option.type,option.quantity,option.price
+        FROM 
+        option "  . "INNER JOIN " . $this->tableName ." ON product.id = option.product_id where product.id = :id");
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();
         $product = $stmt->fetchAll(PDO::FETCH_ASSOC);

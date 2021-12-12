@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+header('Content-Type: application/json,multipart/form-data');
 header('Access-Control-Allow-Methods: POST,GET,DELETE,PUT,OPTIONS');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 // Định nghĩa hằng Path của file index.php

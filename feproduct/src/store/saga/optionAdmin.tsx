@@ -13,7 +13,7 @@ export function* postOption(actions: any) {
     }
     let urlLogin = 'v1/option/post';
     try {
-        const response: Promise<any> = yield axios.post(enviroment.locals + urlLogin, body);
+        const response: Promise<any> = yield axios.post(enviroment.local + urlLogin, body);
         console.log("response", response);
     } catch (error) {
         put(Actions.PostProduct("post fail", false))
@@ -31,9 +31,9 @@ export function* putOption(actions: any) {
     }
     let urlLogin = `v1/option/put/${id}`;
     try {
-        const response: Promise<any> = yield axios.put(enviroment.locals + urlLogin, body);
+        const response: Promise<any> = yield axios.put(enviroment.local + urlLogin, body);
         console.log("response", response);
     } catch (error) {
-        put(Actions.statusOption("post fail", false))
+        put(Actions.PostProduct("post fail", false))
     }
 }

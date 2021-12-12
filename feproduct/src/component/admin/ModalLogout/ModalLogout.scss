@@ -1,7 +1,20 @@
 .modalLogout{
-  width: 200px;
-  height: 200px;
-  background: darkgray;
+  width: 100px;
+  height: 130px;
+  background: gainsboro;
   margin-top: 30px !important;
   z-index: 100;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  .modalLogoutName
+  {
+    display: flex;
+    justify-content: flex-start;
+    margin: auto;
+    border-bottom: 1px solid #FFFFFF;
+    span{
+      cursor: pointer;
+    }
+  }
 }

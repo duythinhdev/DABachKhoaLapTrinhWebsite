@@ -1,6 +1,8 @@
 <?php
 $router->get('/v1/oderoption/get', 'Order_OptionController@getPagination');
 
+$router->get('/v1/oderoption/getaboutoptionoder', 'Order_OptionController@getdataAboutOptionOrder');
+
 $router->get('/v1/oderoption/getdetail', 'Order_OptionController@getdetail');
 
 $router->post('/v1/oderoption/post', 'Order_OptionController@post');
