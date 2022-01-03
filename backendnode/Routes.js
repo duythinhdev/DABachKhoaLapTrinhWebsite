@@ -5,31 +5,33 @@ const mainDetailRoutes = require('./api/maindetail');
 const userRoutes = require('./api/user')
 const productRoutes = require('./api/products');
 const optionRoutes = require('./api/option');
+const categoryRoutes = require('./api/category_product');
 
 class Routers {
-    apiVersion;
-    app;
-    constructor() {
+    // apiVersion;
+    // app;
+    // constructor() {
 
-    }
-    getApiVersion() {
-        return this.apiVersion;
-    }
-    setApiVersion(apiVersion) {
-        this.apiVersion = apiVersion;
-    }
-    setApp(app) {
-        this.app = app;
-    }
+    // }
+    // getApiVersion() {
+    //     return this.apiVersion;
+    // }
+    // setApiVersion(apiVersion) {
+    //     this.apiVersion = apiVersion;
+    // }
+    // setApp(app) {
+    //     this.app = app;
+    // }
     runApi(app, apiVersion) {
         app.use(morgan('dev'))
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(`${apiVersion}/user`, userRoutes);
         app.use(`${apiVersion}/main`, mainRoutes);
-        app.use(`${apiVersion}/mainDetail`, mainDetailRoutes)
-        app.use(`${apiVersion}/products`, productRoutes)
-        app.use(`${apiVersion}/option`, optionRoutes)
+        app.use(`${apiVersion}/mainDetail`, mainDetailRoutes);
+        app.use(`${apiVersion}/products`, productRoutes);
+        app.use(`${apiVersion}/option`, optionRoutes);
+        app.use(`${apiVersion}/categoryproduct`, categoryRoutes);
     }
 }
 

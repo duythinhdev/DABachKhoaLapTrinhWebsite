@@ -8,28 +8,29 @@ import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
 import Spinner from "../../spinner/spinner";
 import {useHistory, Redirect} from "react-router-dom";
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import "./login.scss";
+// const Container = styled.div`
+//   width: 100vw;
+//   height: 100vh;
+//   background: linear-gradient(
+//       rgba(255, 255, 255, 0.5),
+//       rgba(255, 255, 255, 0.5)
+//     ),
+//     url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+//       center;
+//   background-size: cover;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
-const Wrapper = styled.div`
-  width: 25%;
-  padding: 20px;
-  background-color: white;
-  ${table({ width: "75%" })}
-  ${mobile({ width: "75%" })}
-`;
+// const Wrapper = styled.div`
+//   width: 25%;
+//   padding: 20px;
+//   background-color: white;
+//   ${table({ width: "75%" })}
+//   ${mobile({ width: "75%" })}
+// `;
 
 const Title = styled.h1`
   font-size: 24px;
@@ -96,11 +97,11 @@ const LoginUser = () => {
         redirect = <Redirect  to="/user" />
     }
     return (
-        <Container>
-            <Wrapper>
-                <Title>SIGN IN</Title>
-                <Form onSubmit={handleSubmit((data: any) => clickValue(data))}>
-                    <Input placeholder="email"
+        <div className="Container">
+            <div className="Wrapper">
+                <div className="Title">SIGN IN</div>
+                <div  className="Form" onSubmit={handleSubmit((data: any) => clickValue(data))}>
+                    <input className="Input" placeholder="email"
                            type="email"
                            {...register("email", {
                                required: "This is required.",
@@ -121,7 +122,9 @@ const LoginUser = () => {
                             ))
                         }
                     />
-                    <Input     placeholder="Mật Khẩu"
+                    <input  
+                            className="Input" 
+                            placeholder="Mật Khẩu"
                                type="password"
                                {...register("passwords", {
                                    required: "This is required.",
@@ -142,17 +145,17 @@ const LoginUser = () => {
                             ))
                         }
                     />
-                    <Button>LOGIN</Button>
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-                    <Link>CREATE A NEW ACCOUNT</Link>
-                </Form>
-            </Wrapper>
+                    <button className="Button">LOGIN</button>
+                    <div>DO NOT YOU REMEMBER THE PASSWORD?</div>
+                    <div>CREATE A NEW ACCOUNT</div>
+                </div>
+            </div>
             <>
                 {statusSignUp && <ToastContainer/>}
                 {statusSignUp && <Spinner />}
             </>
             {redirect}
-        </Container>
+        </div>
     );
 };
 

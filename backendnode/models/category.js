@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const tuan = require
 
 const userSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
-    image: { type: String, required: true },
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now },
+    product: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
+}, {
+    timestamps: { createdAt: true, updatedAt: true }
 })
 
-module.exports = mongoose.model("Product", userSchema)
+module.exports = mongoose.model("Category_Product", userSchema)

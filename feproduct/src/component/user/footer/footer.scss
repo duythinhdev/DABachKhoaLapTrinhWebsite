@@ -1,0 +1,51 @@
+.ContainerFooter {
+    display: flex;
+    @media screen and (max-width: 768px) {
+        width: 167%;
+    }
+    @media screen and (max-width: 380px) {
+        width: 100%;
+        position: relative;
+        flex-direction: column;
+    }
+    .Left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+    .Desc {
+        margin: 20px 0px;
+    }
+    .SocialContainer {
+        display: flex;
+    }
+    .Center {
+        flex: 1;
+        padding: 20px;
+        @media screen and (max-width: 380px) {
+            display: none
+        }
+    }
+    .Title {
+        margin-bottom: 30px;
+    }
+    .List {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .ListItem {
+        width: 50%;
+        margin-bottom: 10px;
+    }
+    .Right {
+        flex: 1;
+        padding: 20px;
+        @media screen and (max-width: 380px) {
+            background-color: "#fff8f8";
+        }
+    }
+}

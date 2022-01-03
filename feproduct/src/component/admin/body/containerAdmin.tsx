@@ -30,7 +30,7 @@ const ContainerAdmin = () => {
         <Grid className="bodyAdmin" lg={12} xs={12} md={12} container >
             <NavAdmin />
             { isLoginAdmin ?  IsAdminUser &&  <BodyAdmin /> : <Redirect to='/loginadmin' />  }
-            { IsAdminProduct  &&  <BodyAdminProduct /> }
+            <BodyAdminProduct />
             { IsAdminReview  &&  <BodyAdminReview /> }
             { IsAdminOption  &&  <BodyAdminOption />}
             { IsAdminOrder && <BodyAdminOrder  />}
