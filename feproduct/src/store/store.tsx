@@ -61,8 +61,8 @@ sagaMiddleware.run(watchCategoryAdmin);
 sagaMiddleware.run(watchNewsAdmin);
 export const app = (
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}  >
+        {/* <PersistGate loading={null} persistor={persistor}  > */}
             <App/>
-        </PersistGate>
+        {/* </PersistGate> */}
     </Provider>
 );

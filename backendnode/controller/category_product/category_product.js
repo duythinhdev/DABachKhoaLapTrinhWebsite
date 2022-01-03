@@ -1,11 +1,10 @@
+const CategoryProduct = require("../../models/category");
 const Product = require("../../models/product");
+const product = require
 const PAGE_SIZE = 10;
-exports.postProduct = (req, res, next) => {
-    const product = new Product({
-        Product_name: req.body.Product_name,
-        productImage: req.file.path,
-        description: req.body.description,
-        id_categoryProduct: req.body.id_categoryProduct,
+exports.postCategoryProduct = (req, res, next) => {
+    const product = new CategoryProduct({
+        name: req.body.name,
     })
     product.save().then((product) => {
         res.status(200).json({
@@ -17,7 +16,7 @@ exports.postProduct = (req, res, next) => {
         })
     })
 }
-exports.getProduct = async(req, res, next) => {
+exports.getCategoryProduct = async(req, res, next) => {
     var page = req.query.page;
     if (page) {
         page = parseInt(page);
@@ -26,17 +25,18 @@ exports.getProduct = async(req, res, next) => {
         }
         var skipOption = (page - 1) * PAGE_SIZE;
         var totalPage;
-        await Product.find({}).
-        populate('categoryProduct').exec().then((response) => {
-            Product.count({}, (err, counts) => {
+        await CategoryProduct.find({}).
+        populate('product').exec().then((response) => {
+            CategoryProduct.count({}, (err, counts) => {
                 totalPage = counts;
             })
         })
-        await Product.find({})
+        await CategoryProduct.find({})
             .skip(skipOption)
             .limit(PAGE_SIZE).then((response) => {
                 return res.status(200).json({
                     total: totalPage,
+                    pageNumber: page,
                     data: response
                 })
             }).catch(err => {
@@ -47,8 +47,8 @@ exports.getProduct = async(req, res, next) => {
         return;
     }
 
-    await Product.find({}).exec().then((response) => {
-            Product.count({}, (err, counts) => {
+    await CategoryProduct.find({}).exec().then((response) => {
+            CategoryProduct.count({}, (err, counts) => {
                 if (err) {
                     return res.status(404).json({
                         error: err
@@ -68,9 +68,9 @@ exports.getProduct = async(req, res, next) => {
             })
         })
 }
-exports.getProductDetail = (req, res, next) => {
+exports.getCategoryProductDetail = (req, res, next) => {
     var id = req.params.id
-    Product.findById(id).then((response) => {
+    CategoryProduct.findById(id).then((response) => {
             return res.status(200).json({
                 data: response
             })
@@ -81,18 +81,20 @@ exports.getProductDetail = (req, res, next) => {
             })
         })
 }
-exports.putProduct = async(req, res, next) => {
-    var Product_name = req.body.Product_name;
-    var productImage = req.file.path;
-    var description = req.body.description;
-    var id_categoryProduct = req.body.id_categoryProduct;
+exports.putCategoryProduct = async(req, res, next) => {
+    var type = req.body.type;
+    var size = req.body.size;
+    var price = req.body.price;
+    var quantity = req.body.quantity;
+    var product_id = req.body.product_id;
     var id = req.query.id;
-    await Product.updateOne({ _id: id }, {
+    await CategoryProduct.updateOne({ _id: id }, {
             $set: {
-                Product_name: type,
-                productImage: size,
-                description: description,
-                id_categoryProduct: id_categoryProduct,
+                type: type,
+                size: size,
+                price: price,
+                quantity: quantity,
+                product_id: product_id,
             }
         })
         .exec()
@@ -107,9 +109,9 @@ exports.putProduct = async(req, res, next) => {
             res.status(500).json({ error: err })
         });
 }
-exports.deleteProduct = async(req, res, next) => {
+exports.deleteCategoryProduct = async(req, res, next) => {
     const id = req.query.id;
-    await Product.remove({ _id: id }).exec().then(response => {
+    await CategoryProduct.remove({ _id: id }).exec().then(response => {
         res.status(200).json({
             message: "delete table Option success",
         })
@@ -117,4 +119,19 @@ exports.deleteProduct = async(req, res, next) => {
         res.status(500).json({ error: err })
         console.log(err);
     })
+}
+exports.postRelationShipProduct = async(req, res, next) => {
+    const { cateGoryId } = req.query;
+    const newProduct = new Product({
+        Product_name: req.body.Product_name,
+        productImage: req.body.productImage,
+        description: req.body.description,
+    })
+    const CategoryProducts = await CategoryProduct.findById(cateGoryId);
+    console.log("CategoryProducts", CategoryProducts)
+    newProduct.categoryProduct = CategoryProducts;
+    await newProduct.save();
+    CategoryProducts.product.push(newProduct);
+    await CategoryProducts.save();
+    res.status(201).json(newProduct);
 }

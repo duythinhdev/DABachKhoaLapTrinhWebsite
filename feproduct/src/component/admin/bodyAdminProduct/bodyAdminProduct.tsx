@@ -28,7 +28,7 @@ const BodyAdminProduct = () => {
         dispatch(actionUser);
     }
     useEffect(()=>{
-        switchTab()
+        // switchTab()
     },[])
     return (
         <Grid item className="bodyAdmin" lg={isMenuleft ? 12 : 10} xs={isMenuleft ? 12 : 10} sx={{ display: 'flex',flexDirection: 'column' }}  container>

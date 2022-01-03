@@ -1,0 +1,83 @@
+.ContainerNavbar {
+    height: 70px;
+    @media only screen and (max-width: 768px) {
+        height: 10%;
+        width: 167%;
+    }
+    @media only screen and (max-width: 380px) {
+        height: 50px;
+        width: 100%;
+        position: relative;
+    }
+    .Wrapper {
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @media only screen and (max-width: 380px) {
+            padding: 10px 0px;
+        }
+    }
+    .Left {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+    .Language {
+        font-size: 14px;
+        cursor: pointer;
+        @media only screen and (max-width: 380px) {
+            display: none;
+        }
+    }
+    .SearchContainer {
+        border: 0.5px solid lightgray;
+        display: flex;
+        align-items: center;
+        margin-left: 25px;
+        padding: 5px;
+    }
+    .Input {
+        border: none;
+        outline: none;
+        @media only screen and (max-width: 380px) {
+            width: 50px;
+        }
+    }
+    .Center {
+        flex: 1;
+        text-align: center;
+    }
+    .Logo {
+        font-weight: bold;
+        color: black;
+        font-size: 30px;
+    }
+    .Right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        &:hover {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+        @media only screen and (max-width: 380px) {
+            flex: 2;
+            justify-content: center;
+        }
+    }
+    .MenuItem {
+        font-size: 14px;
+        cursor: pointer;
+        margin-left: 25px;
+        @media only screen and (max-width: 768px) {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        @media only screen and (max-width: 380px) {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    }
+}

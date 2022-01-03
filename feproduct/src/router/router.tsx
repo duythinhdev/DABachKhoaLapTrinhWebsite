@@ -16,6 +16,7 @@ const layoutUser = React.lazy(() => import("../component/user/layoutUser/layoutU
 const News = React.lazy(() => import("../component/user/layoutNews/layoutNews"));
 const layoutCart = React.lazy(() => import("../component/user/layoutCart/layoutCart"));
 const layoutBought = React.lazy(() => import("../component/user/layoutBought/layoutBought"));
+const containerUser = React.lazy(() => import("../component/users/container/container"));
 
 const routes: Array<any> = [
     {
@@ -53,6 +54,59 @@ const routes: Array<any> = [
             },
         ]
     },
+    {
+        path: "/user",
+        component: layoutUser,
+        // child: [
+        //     {
+        //         path: "/user/login",
+        //         component: login
+        //     },
+        //     {
+        //         path: "/user/register",
+        //         component: register
+        //     },
+        //     {
+        //         path: "/user/news",
+        //         component: News
+        //     }
+        //     ,
+        //     {
+        //         path: "/user/cart",
+        //         component: layoutCart
+        //     }
+        //     ,
+        //     {
+        //         path: "/user/bought",
+        //         component: layoutBought
+        //     }
+        // ]
+    },
+    {
+        path: "/login",
+        component: login
+    },
+    {
+        path: "/register",
+        component: register
+    },
+    {
+        path: "/news",
+        component: News
+    }
+    ,
+    {
+        path: "/cart",
+        component: layoutCart
+    }
+    ,
+    {
+        path: "/bought",
+        component: layoutBought
+    },
+    // {
+    //     component: Notfoundpage,
+    // },
 ]
 const Routing = () => {
     let isLoginAdmin = useSelector((state: any) => state.login.isLoginAdmin)

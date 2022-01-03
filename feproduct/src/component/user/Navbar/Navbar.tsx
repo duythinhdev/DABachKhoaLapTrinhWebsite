@@ -7,77 +7,78 @@ import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import * as actions from "../../../store/action";
 import { useHistory } from 'react-router-dom';
+import "./Navbar.scss";
 
-const Container = styled.div`
-  height: 100px;
-  ${table({ height: "10%", width: "167%" })}
-  ${mobile({ height: "50px", width: "100%",position: "relative" })}
-`;
+// const Container = styled.div`
+//   height: 100px;
+//   ${table({ height: "10%", width: "167%" })}
+//   ${mobile({ height: "50px", width: "100%",position: "relative" })}
+// `;
 
-const Wrapper = styled.div`
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ${mobile({ padding: "10px 0px" })}
-`;
+// const Wrapper = styled.div`
+//   padding: 10px 20px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   ${mobile({ padding: "10px 0px" })}
+// `;
 
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-`;
+// const Left = styled.div`
+//   flex: 1;
+//   display: flex;
+//   align-items: center;
+// `;
 
-const Language = styled.span`
-  font-size: 14px;
-  cursor: pointer;
-  ${mobile({ display: "none" })}
-`;
+// const Language = styled.span`
+//   font-size: 14px;
+//   cursor: pointer;
+//   ${mobile({ display: "none" })}
+// `;
 
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-`;
+// const SearchContainer = styled.div`
+//   border: 0.5px solid lightgray;
+//   display: flex;
+//   align-items: center;
+//   margin-left: 25px;
+//   padding: 5px;
+// `;
 
-const Input = styled.input`
-  border: none;
-    outline:none;
-  ${mobile({ width: "50px" })}
-`;
+// const Input = styled.input`
+//     border: none;
+//     outline:none;
+//   ${mobile({ width: "50px" })}
+// `;
 
-const Center = styled.div`
-  flex: 1;
-  text-align: center;
-`;
+// const Center = styled.div`
+//   flex: 1;
+//   text-align: center;
+// `;
 
-const Logo = styled.h1`
-  font-weight: bold;
-  color: black;
-  ${table({ fontSize: "50px"})};
-  ${mobile({ fontSize: "24px" })}
-`;
-const Right = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  &:hover {
-    color: #FFFFFF;
-    text-decoration: none;
-  }
-  ${mobile({ flex: 2, justifyContent: "center" })};
-`;
+// const Logo = styled.h1`
+//   font-weight: bold;
+//   color: black;
+//   ${table({ fontSize: "50px"})};
+//   ${mobile({ fontSize: "24px" })}
+// `;
+// const Right = styled.div`
+//   flex: 1;
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-end;
+//   &:hover {
+//     color: #FFFFFF;
+//     text-decoration: none;
+//   }
+//   ${mobile({ flex: 2, justifyContent: "center" })};
+// `;
 
-const MenuItem = styled.div`
-  font-size: 14px;
-  cursor: pointer;
-  margin-left: 25px;
-  ${table({ fontSize: "32px"})};
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })};
-`;
+// const MenuItem = styled.div`
+//   font-size: 14px;
+//   cursor: pointer;
+//   margin-left: 25px;
+//   ${table({ fontSize: "32px"})};
+//   ${mobile({ fontSize: "12px", marginLeft: "10px" })};
+// `;
 
 const Navbar = () => {
     let token  = JSON.parse(localStorage.getItem('tokenUser') as any | string);
@@ -91,36 +92,36 @@ const Navbar = () => {
     }
     if(token)
     {
-        elementLogin = <MenuItem onClick={logout}><Link to="/login"  > LOGOUT </Link></MenuItem>
+        elementLogin = <div className="MenuItem" onClick={logout}><Link to="/login"  > LOGOUT </Link></div>
     }
     else  {
-        elementLogout = <MenuItem><Link to="/register" > REGISTER </Link></MenuItem>
-        elementLogin  =  <MenuItem><Link to="/login" > SIGN IN </Link></MenuItem>
+        elementLogout = <div className="MenuItem" ><Link to="/register" > REGISTER </Link></div>
+        elementLogin  =  <div className="MenuItem" ><Link to="/login" > SIGN IN </Link></div>
     }
     return (
-        <Container>
-            <Wrapper>
-                <Left>
-                    <Language>EN</Language>
-                    <SearchContainer>
-                        <Input placeholder="Search" />
+        <div className="ContainerNavbar">
+            <div className="Wrapper">
+                <div  className="Left">
+                    <div className="Language">EN</div>
+                    <div className="SearchContainer">
+                        <input className="Input"  placeholder="Search" />
                         <Search style={{ color: "gray", fontSize: 16 }} />
-                    </SearchContainer>
-                </Left>
-                <Center>
-                    <Logo>TiKi</Logo>
-                </Center>
-                <Right>
+                    </div>
+                </div>
+                <div className="Center">
+                    <div className="Logo">TiKi</div>
+                </div>
+                <div className="Right">
                     {elementLogin}
                     {elementLogout}
-                    <MenuItem>
+                    <div className="MenuItem">
                         <Badge badgeContent={50} color="primary">
                             <Link to="/bought" > <ShoppingCartOutlined /></Link>
                         </Badge>
-                    </MenuItem>
-                </Right>
-            </Wrapper>
-        </Container>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
