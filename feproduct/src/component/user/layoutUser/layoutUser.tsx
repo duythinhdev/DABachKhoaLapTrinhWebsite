@@ -9,8 +9,10 @@ import ProductsSamSung from "../Products/productSamsung";
 import Productslg from "../Products/Productlg";
 import Newsletter from "../Newletter/Newletter";
 import Footer from "../footer/footer";
+import CategoryProduct from "../CategoryProduct/CategoryProduct";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../../enviroment/enviroment";
+import CategoryProducts from "../CategoryProducts/CategoryProducts";
 
 const arrayCategory = {
     categoryLG: 1,
@@ -47,19 +49,21 @@ const LayoutUser = () => {
         fetchDataProduct();
     },[])
     return (
-        <>
-            <Navbar />
+        <div className="">
             <Announcement />
-            <Slider />
-            <Categories />
-            <Products  dataPagination={dataPagination} />
+            <Navbar />
+            <CategoryProduct />
+            <CategoryProducts />
+            {/* <Slider /> */}
+            {/* <Categories /> */}
+            {/* <Products  dataPagination={dataPagination} /> */}
             {/* <ProductsSamSung
              />
             <Productslg
              /> */}
             <Newsletter />
             <Footer />
-        </>
+        </div >
     );
 }
 
