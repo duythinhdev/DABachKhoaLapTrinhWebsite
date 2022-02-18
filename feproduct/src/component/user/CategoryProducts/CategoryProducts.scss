@@ -19,13 +19,70 @@
             display: flex;
             flex-direction: row;
         }
+        .box-center__titleProductSpeed {
+            display: flex;
+            flex: 0.4;
+            background: #546ce8;
+            color: #fff;
+            width: 713px;
+        }
         &__content {
             flex: 0.83;
-            background-color: blue;
+            // background-color: blue;
+            display: flex;
+            flex-direction: column;
+            &--product {
+                width: 100%;
+                display: flex;
+                flex: 0.5;
+                display: flex;
+                flex-direction: row;
+                .product--detail {
+                    // background-color: burlywood;
+                    display: flex;
+                    flex: 0.17;
+                    flex-direction: column;
+                    &__img {
+                        display: flex;
+                        flex: 0.6;
+                    }
+                    &__Code {
+                        display: flex;
+                        flex: 0.1;
+                    }
+                    &__Name {
+                        display: flex;
+                        flex: 0.1;
+                    }
+                    &__pricePromotion {
+                        display: flex;
+                        flex: 0.1;
+                    }
+                    &__price {
+                        display: flex;
+                        flex: 0.1;
+                    }
+                }
+            }
         }
         &__seeMore {
             flex: 0.1;
-            background-color: aquamarine;
+            // background-color: aquamarine;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .button__seemore {
+                width: 230px;
+                color: #3d52bf;
+                border: 1px solid #3d52bf;
+                text-transform: uppercase;
+                padding: 14px;
+                text-decoration: none;
+                &:hover {
+                    background-color: #3d52bf;
+                    color: #FFFFFF;
+                }
+            }
         }
     }
 }
