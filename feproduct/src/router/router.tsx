@@ -16,7 +16,7 @@ const layoutUser = React.lazy(() => import("../component/user/layoutUser/layoutU
 const News = React.lazy(() => import("../component/user/layoutNews/layoutNews"));
 const layoutCart = React.lazy(() => import("../component/user/layoutCart/layoutCart"));
 const layoutBought = React.lazy(() => import("../component/user/layoutBought/layoutBought"));
-const containerUser = React.lazy(() => import("../component/users/container/container"));
+const AllTopProduct =  React.lazy(() => import("../component/user/AllTopProduct/AllTopProduct"));
 
 const routes: Array<any> = [
     {
@@ -104,9 +104,10 @@ const routes: Array<any> = [
         path: "/bought",
         component: layoutBought
     },
-    // {
-    //     component: Notfoundpage,
-    // },
+    {
+        path: "/topproduct",
+        component: AllTopProduct
+    }
 ]
 const Routing = () => {
     let isLoginAdmin = useSelector((state: any) => state.login.isLoginAdmin)

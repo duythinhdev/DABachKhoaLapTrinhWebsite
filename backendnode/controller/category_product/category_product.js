@@ -1,6 +1,5 @@
 const CategoryProduct = require("../../models/category");
 const Product = require("../../models/product");
-const product = require
 const PAGE_SIZE = 10;
 exports.postCategoryProduct = (req, res, next) => {
     const product = new CategoryProduct({
@@ -99,7 +98,6 @@ exports.putCategoryProduct = async(req, res, next) => {
         })
         .exec()
         .then(result => {
-            console.log(result);
             res.status(200).json({
                 message: "update table Option success",
             })

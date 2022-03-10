@@ -6,12 +6,12 @@ import ProductDetail from "../ProductDetail/ProductDetail";
 
 function LayoutCart() {
     return (
-        <>
-            <Navbar />
+        <div>
             <Announcement />
+            <Navbar />
             <ProductDetail />
             <Footer />
-        </>
+        </div>
     );
 }
 

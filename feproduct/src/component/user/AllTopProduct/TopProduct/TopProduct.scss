@@ -1,0 +1,116 @@
+.containter__TopProduct {
+    width: 100%;
+    height: 230vh;
+    background-color: #edeef2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .name__TopProduct {
+        width: 90%;
+        // background: gray;
+        display: flex;
+        flex: 0.025;
+        flex-direction: row;
+        align-items: center;
+        span {
+            font-size: inherit;
+            font-weight: inherit;
+            margin: 0;
+            line-height: inherit;
+        }
+    }
+    .title__TopProduct {
+        width: 90%;
+        background: #FFFFFF;
+        display: flex;
+        flex: 0.07;
+        flex-direction: column;
+        &--name {
+            padding: 6px 20px;
+            font-weight: 600;
+            background: #f7f7f7;
+            font-size: 20px;
+            display: flex;
+        }
+        &--filter {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            .TopProduct--filter__Brand {
+                display: flex;
+                background-color: aquamarine;
+                flex: 0.5;
+            }
+            .TopProduct--filter__About {
+                background-color: rgb(193, 127, 255);
+                display: flex;
+                flex: 0.5;
+            }
+        }
+    }
+    .content__TopProduct {
+        margin-top: 20px;
+        width: 90%;
+        background: #FFFFFF;
+        display: flex;
+        flex: 0.93;
+        flex-direction: column;
+        background-color: #FFFFFF;
+        &--title {
+            display: flex;
+            flex: 0.2;
+        }
+        &--container {
+            display: flex;
+            // position: relative;
+            border-top: 1px solid #edeef2;
+            flex-wrap: wrap;
+            flex-direction: row;
+            .product__item {
+                width: calc(100% /6.78);
+                height: 345px;
+                border: 1px solid #edeef2;
+                display: flex;
+                flex-direction: column;
+                padding: 15px 15px;
+                &--img {
+                    position: relative;
+                    display: flex;
+                    flex: 0.6;
+                    background-color: aqua;
+                }
+                &--code {
+                    display: flex;
+                    flex: 0.07;
+                }
+                &--name {
+                    display: flex;
+                    flex: 0.07;
+                }
+                &--pricemotion {
+                    display: flex;
+                    flex: 0.07;
+                }
+                &--price {
+                    display: flex;
+                    flex: 0.07;
+                    color: red;
+                    font-weight: bold;
+                }
+                &--motion {
+                    display: flex;
+                    flex: 0.07;
+                }
+                &--compare {
+                    display: flex;
+                    flex: 0.07;
+                }
+            }
+        }
+        &--pagination {
+            background-color: black;
+            display: flex;
+            flex: 0.5;
+        }
+    }
+}

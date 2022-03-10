@@ -1,0 +1,44 @@
+.Container__ProductDetail {
+    background-color: #edeef2;
+    display: -webkit-flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    .bg__white {
+        background-color: #fff;
+        width: 88%;
+        height: 100vh;
+        display: -webkit-flex;
+        flex-direction: row;
+        .product__image {
+            display: -webkit-flex;
+            flex: 0.3;
+            background-color: aqua;
+            flex-direction: column;
+            &--img {
+                display: -webkit-flex;
+                flex: 0.3;
+                background-color: #edeef2;
+            }
+            &--zoom {
+                display: -webkit-flex;
+                flex: 0.1;
+                background-color: aquamarine;
+            }
+            &--detail {
+                display: -webkit-flex;
+                flex: 0.6;
+                background-color: blue;
+            }
+        }
+        .product__info {
+            display: flex;
+            flex: 0.4;
+        }
+    }
+    .bg__white--detail {
+        background-color: black;
+        width: 86%;
+        height: 100vh;
+    }
+}

@@ -13,7 +13,6 @@ import CategoryProduct from "../CategoryProduct/CategoryProduct";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../../enviroment/enviroment";
 import CategoryProducts from "../CategoryProducts/CategoryProducts";
-
 const arrayCategory = {
     categoryLG: 1,
     categorySamSung: 2,
@@ -49,6 +48,7 @@ const LayoutUser = () => {
         fetchDataProduct();
     },[])
     return (
+        
         <div className="">
             <Announcement />
             <Navbar />

@@ -19,7 +19,6 @@ exports.signup = (req, res, next) => {
                     })
                 } else {
                     const user = new User({
-                        _id: new mongoose.Types.ObjectId(),
                         name: req.body.name,
                         email: req.body.email,
                         full_name: req.body.full_name,
@@ -48,7 +47,6 @@ exports.signup = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-    console.log(req);
     User.find({ email: req.body.email })
         .exec()
         .then(user => {
@@ -64,13 +62,10 @@ exports.login = (req, res, next) => {
                     })
                 }
                 if (result) {
-                    // const expireTokenDuration = 60 * 60 * 24 * 30;
-                    // const now = new Date();
-                    // const expiredAt = new Date(now.getTime() + (expireTokenDuration * 10));
                     const token = jwt.sign({
                         email: user[0].email,
                         userId: user[0]._id,
-                    }, "secret", {
+                    }, process.env.SECRET_KEY, {
                         expiresIn: "7d"
                     })
                     return res.status(200).json({

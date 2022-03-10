@@ -3,16 +3,19 @@ import Navbar from "../Navbar/Navbar";
 import Announcement from "../Announcement/Announcement";
 import Footer from "../footer/footer";
 import ProductBought from "../ProductBought/ProductBought";
+import TopProduct from './TopProduct/TopProduct';
+import Newsletter from "../Newletter/Newletter";
 
-function LayoutCart() {
+const AllTopProduct = () => {
     return (
-        <>
-            <Navbar />
+        <div>
             <Announcement />
-            <ProductBought />
+            <Navbar />
+            <TopProduct />
+            <Newsletter />
             <Footer />
-        </>
+        </div>
     );
 }
 
-export default LayoutCart;
+export default AllTopProduct;

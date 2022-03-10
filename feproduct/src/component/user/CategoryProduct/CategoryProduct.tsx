@@ -4,6 +4,12 @@ import Laptop from "../../../asset/cat_29cbb25a2308bdc8faaaf9e7b989cc1f.png";
 import MayIn from "../../../asset/cat_253ba2e2e09d924162a97aabca93b45d.jpg";
 import LinhKienMayTinh from  "../../../asset/cat_253ba2e2e09d924162a97aabca93b45d.jpg";
 import ManHinhMayTinh from  "../../../asset/cat_5804bb2ce092a894cf86a82c17affb54.png";
+// import { Slide } from  'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
+import Asus from "../../../asset/sliderUser/12_Novd1c4d43154d2e3a531a0d265a3f274b2.jpg";
+import Rtx from  "../../../asset/sliderUser/21_Deca04496114ad5355c7b1b4c0752b62f53.jpg";
+import Intel from "../../../asset/sliderUser/27_Jan62b922e43d88aa7913a887d30e396eab.jpg";
+import  Predator from "../../../asset/sliderUser/29_Janfab52e4d00e0fc1f810aa6740ba1ac9e.jpg";
 const data = [
     {
         name: "Laptop - Máy tính xách tay",
@@ -72,6 +78,21 @@ const data = [
     },
     
 ]
+const slideImages = [
+    {
+      url: 'images/slide_2.jpg',
+      caption: 'Slide 1'
+    },
+    {
+      url: 'images/slide_3.jpg',
+      caption: 'Slide 2'
+    },
+    {
+      url: 'images/slide_4.jpg',
+      caption: 'Slide 3'
+    },
+  ];
+  
 
 const CategoryProduct = ()  => {
     return (
@@ -95,7 +116,15 @@ const CategoryProduct = ()  => {
     
             </div>
             <div className='header-menu-holder__slide'>
-
+                {/* <Slide>
+                {slideImages.map((slideImage:any, index:number)=> (
+                    <div className="each-slide" key={index}>
+                    <div style={{'backgroundImage': `url(${slideImage.url})`}}>
+                        <span>{slideImage.caption}</span>
+                    </div>
+                    </div>
+                ))} 
+                </Slide> */}
             </div>
             <div className='header-menu-holder__discount'>
 

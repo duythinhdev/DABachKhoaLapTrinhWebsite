@@ -28,7 +28,7 @@ function Announcement() {
             <Link to="/news"><span  className="span">news</span></Link> &nbsp;
             <Link to="/cart"><span  className="span">carts</span></Link> &nbsp;
             <Link to="/bought"><span  className="span">carts</span></Link> &nbsp;
-                Super Deal! Free Shipping on Orders Over $50
+            <span>Super Deal! Free Shipping on Orders Over $50</span>
         </div>
     );
 }
