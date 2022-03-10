@@ -23,6 +23,7 @@
     "@types/sass": "^1.16.1",
     "@types/styled-components": "^5.1.15",
     "axios": "^0.22.0",
+    "framer-motion": "^6.2.7",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

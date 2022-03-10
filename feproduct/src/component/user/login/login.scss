@@ -1,38 +1,146 @@
-.Container {
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../../../asset/243615.jpg") center;
+.Container-Login {
+    width: 100%;
+    height: 40vh;
+    background: #edeef2;
     background-size: cover;
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    .title {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        // background: black;
+        /* width: auto; */
+        flex: 0.12 1;
+    }
     .Wrapper {
-        width: 25%;
-        padding: 20px;
-        background-color: white;
+        display: flex;
+        flex-direction: column;
+        width: 88%;
+        /* width: auto; */
+        flex: 0.7;
+        .Wrapper__login {
+            display: flex;
+            flex: 0.15 1;
+            background: #546ce8;
+            padding: 0 20px;
+            width: 7%;
+            border-radius: 0 15px 0px 0;
+            justify-content: center;
+            align-items: center;
+            span {
+                color: #FFFFFF;
+                font-size: 18px;
+                text-transform: uppercase;
+                white-space: nowrap;
+            }
+        }
         @media screen and(max-width: 768px) {
             width: 75px;
         }
         @media screen and(max-width: 380px) {
             width: 75px;
         }
+        .Wrapper__Form {
+            display: flex;
+            flex-direction: column;
+            border-top: 2px solid #546ce8;
+            flex: 0.7 1;
+            background: white;
+            flex-direction: row;
+            &--login {
+                // background: #546ce8;
+                display: flex;
+                flex-direction: column;
+                flex: 0.5;
+                .Form__login--title {
+                    display: flex;
+                    flex: 0.2;
+                    align-items: center;
+                    margin: 10px;
+                }
+                .Form__login--email {
+                    display: flex;
+                    flex: 0.2;
+                    // background-color: #FFFFFF;
+                    align-items: center;
+                    span {
+                        margin: 10px;
+                    }
+                    input {
+                        margin-left: 120px;
+                        font-size: 19px;
+                        outline: none;
+                    }
+                }
+                .Form__login--password {
+                    display: flex;
+                    flex: 0.2;
+                    // background-color: #edeef2;
+                    align-items: center;
+                    span {
+                        margin: 10px;
+                    }
+                    input {
+                        margin-left: 170px;
+                        font-size: 19px;
+                        outline: none;
+                    }
+                }
+                .Form__login--forgot {
+                    display: flex;
+                    flex: 0.2;
+                    // background-color: #000000;
+                    button {
+                        margin-left: 260px;
+                    }
+                    span {
+                        margin-left: 20px;
+                    }
+                }
+            }
+            &--signUp {
+                display: flex;
+                flex: 0.5;
+                flex-direction: column;
+                justify-content: flex-start;
+                .Form__signUp--member {
+                    display: flex;
+                    flex: 0.2;
+                    align-items: center;
+                    span {
+                        color: rgb(88, 88, 88);
+                    }
+                }
+                .Form__signUp--membermany {
+                    display: flex;
+                    flex: 0.2;
+                    align-items: center;
+                }
+                .Form__signUp--account {
+                    display: flex;
+                    flex: 0.2;
+                    align-items: center;
+                    span {
+                        color: #546ce8;
+                    }
+                }
+            }
+        }
     }
     .Title {
         font-size: 24px;
         font-weight: 300;
     }
-    .Form {
-        display: flex;
-        flex-direction: column;
-    }
     .Input {
         flex: 1;
-        min-width: 40%;
+        min-width: 10%;
         margin: 10px 0;
         padding: 10px;
     }
     .Button {
-        width: 40%;
+        width: 10%;
         border: none;
         padding: 15px 20px;
         background-color: teal;

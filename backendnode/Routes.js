@@ -6,6 +6,7 @@ const userRoutes = require('./api/user')
 const productRoutes = require('./api/products');
 const optionRoutes = require('./api/option');
 const categoryRoutes = require('./api/category_product');
+const newsRoutes = require('./api/news');
 
 class Routers {
     // apiVersion;
@@ -32,6 +33,7 @@ class Routers {
         app.use(`${apiVersion}/products`, productRoutes);
         app.use(`${apiVersion}/option`, optionRoutes);
         app.use(`${apiVersion}/categoryproduct`, categoryRoutes);
+        app.use(`${apiVersion}/news`, newsRoutes)
     }
 }
 

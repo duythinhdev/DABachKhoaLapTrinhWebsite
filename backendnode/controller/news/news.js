@@ -1,23 +1,24 @@
-const Product = require("../../models/product");
+const News = require("../../models/news");
 const PAGE_SIZE = 10;
-exports.postProduct = (req, res, next) => {
-    const product = new Product({
-        Product_name: req.body.Product_name,
-        productImage: req.file.path,
-        description: req.body.description,
-        id_categoryProduct: req.body.id_categoryProduct,
+exports.PostNews = (req, res, next) => {
+    const { update_post, is_show, content, title } = req.body;
+    const createNews = new News({
+        update_post: update_post,
+        is_show: is_show,
+        content: content,
+        title: title
     })
-    product.save().then((product) => {
+    createNews.save().then((data) => {
         res.status(200).json({
-            data: "Bạn đã thêm thành công"
+            data: "Bạn đã thêm news thành công"
         })
-    }).catch((err) => {
+    }).catch((error) => {
         res.status(400).json({
-            err: err
+            err: error
         })
-    })
+    });
 }
-exports.getProduct = async(req, res, next) => {
+exports.getAllnews = async(req, res, next) => {
     var page = req.query.page;
     if (page) {
         page = parseInt(page);
@@ -26,13 +27,12 @@ exports.getProduct = async(req, res, next) => {
         }
         var skipOption = (page - 1) * PAGE_SIZE;
         var totalPage;
-        await Product.find({}).
-        populate('categoryProduct').exec().then((response) => {
-            Product.count({}, (err, counts) => {
+        await News.find({}).exec().then((response) => {
+            News.count({}, (err, counts) => {
                 totalPage = counts;
             })
         })
-        await Product.find({})
+        await News.find({})
             .skip(skipOption)
             .limit(PAGE_SIZE).then((response) => {
                 return res.status(200).json({
@@ -47,8 +47,8 @@ exports.getProduct = async(req, res, next) => {
         return;
     }
 
-    await Product.find({}).exec().then((response) => {
-            Product.count({}, (err, counts) => {
+    await News.find({}).exec().then((response) => {
+            News.count({}, (err, counts) => {
                 if (err) {
                     return res.status(404).json({
                         error: err
@@ -68,9 +68,9 @@ exports.getProduct = async(req, res, next) => {
             })
         })
 }
-exports.getProductDetail = (req, res, next) => {
-    var id = req.params.id
-    Product.findById(id).then((response) => {
+exports.newDetails = (req, res, next) => {
+    var id = req.query.id
+    News.findById(id).then((response) => {
             return res.status(200).json({
                 data: response
             })
@@ -81,23 +81,19 @@ exports.getProductDetail = (req, res, next) => {
             })
         })
 }
-exports.putProduct = async(req, res, next) => {
-    var Product_name = req.body.Product_name;
-    var productImage = req.file.path;
-    var description = req.body.description;
-    var id_categoryProduct = req.body.id_categoryProduct;
+exports.putNews = async(req, res, next) => {
+    const { update_post, is_show, content, title } = req.body;
     var id = req.query.id;
-    await Product.updateOne({ _id: id }, {
+    await News.updateOne({ _id: id }, {
             $set: {
-                Product_name: Product_name,
-                productImage: productImage,
-                description: description,
-                id_categoryProduct: id_categoryProduct,
+                update_post: update_post,
+                is_show: is_show,
+                content: content,
+                title: title,
             }
         })
         .exec()
         .then(result => {
-            console.log(result);
             res.status(200).json({
                 message: "update table Option success",
             })
@@ -107,9 +103,9 @@ exports.putProduct = async(req, res, next) => {
             res.status(500).json({ error: err })
         });
 }
-exports.deleteProduct = async(req, res, next) => {
+exports.deleteNews = async(req, res, next) => {
     const id = req.query.id;
-    await Product.remove({ _id: id }).exec().then(response => {
+    await News.remove({ _id: id }).exec().then(response => {
         res.status(200).json({
             message: "delete table Option success",
         })

@@ -45,6 +45,7 @@
                     &__img {
                         display: flex;
                         flex: 0.6;
+                        position: relative;
                     }
                     &__Code {
                         display: flex;
@@ -61,6 +62,9 @@
                     &__price {
                         display: flex;
                         flex: 0.1;
+                        font-size: 18px;
+                        color: #ce0707;
+                        font-weight: 500;
                     }
                 }
             }

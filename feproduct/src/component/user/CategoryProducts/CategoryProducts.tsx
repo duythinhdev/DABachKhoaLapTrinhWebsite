@@ -1,5 +1,8 @@
-import React from 'react';
+import React,{useState} from 'react';
 import "./CategoryProducts.scss";
+import  HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDetailProduct";
+import { Link } from 'react-router-dom';
+
 
 const listProduct:Array<any> = [
     {
@@ -41,10 +44,15 @@ const listProduct:Array<any> = [
 ]
 
 const CategoryProducts  = () =>  {
-
-
-    const moveDetail = () => {
-        const hover = document.getElementsByName('product--detail__img');
+    const [hoverDetail,setHoverDetail] =  useState(false as boolean);
+    const [indexDetail,setIndexDetail] = useState(1 as number);
+    const moveDetail = async (index: number)  => {
+      console.log("index",index)
+      await  setHoverDetail(true);
+      await  setIndexDetail(index);
+    }
+    const moveDetailOver = () : void => {
+        setHoverDetail(false);
     }
     return (
         <div className='p-container'>
@@ -60,10 +68,14 @@ const CategoryProducts  = () =>  {
                     <div className='box-center__content--product'>
                         {
                             listProduct.map((res:any,index:number)=> {
-                              return  <div className='product--detail'>
-                                    <div className='product--detail__img' onMouseDown={()=>moveDetail()}>
-                                    
-                                </div>
+                              return  <div className='product--detail' >
+                                    <div className='product--detail__img' onMouseOver={(index:any)=>moveDetail(index)} onMouseOut={()=>moveDetailOver()} >
+                                        <div>
+                                        {
+                                            hoverDetail && indexDetail == index && <HoverDetailProduct />
+                                        }
+                                        </div>
+                                    </div>
                                 <div className='product--detail__Code'>
                                         {res.code}
                                 </div>
@@ -105,7 +117,7 @@ const CategoryProducts  = () =>  {
                     </div>
                 </div>
                 <div className='box-center__seeMore'>
-                            <a href='#' className="button__seemore">xem tất cả sản phẩm</a>
+                            <a  className="button__seemore"><Link to="/topproduct">xem tất cả sản phẩm</Link></a>
                 </div>
             </div>
         </div>

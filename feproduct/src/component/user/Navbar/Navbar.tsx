@@ -9,7 +9,7 @@ import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 // import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 // import DirectionsCarTwoToneIcon from '@mui/icons-material/DirectionsCarTwoTone';
-import React from "react";
+import React,{useEffect, useState} from "react";
 import styled from "styled-components";
 import { mobile,table } from "../response";
 import { Link } from 'react-router-dom';
@@ -62,20 +62,28 @@ const category:Array<any> = [
 
 const Navbar = () => {
     let token  = JSON.parse(localStorage.getItem('tokenUser') as any | string);
+    let [linkNavBar,setLinkNavBar] = useState(false as boolean);
     let elementLogin = null;
-    let elementLogout = null;    let dispatch = useDispatch();
+    let elementLogout = null;
+    let dispatch = useDispatch();
     let history  = useHistory();
     const logout = async () => {
         let action = actions.logoutUser();
         await  dispatch(action);
     }
-    if(token)
-    {
-        elementLogin = <div className="MenuItem" onClick={logout}><Link to="/login"  > LOGOUT </Link></div>
+    useEffect(()=>{
+    },[])
+    // if(token)
+    // {
+    //     elementLogin = <div className="MenuItem" onClick={logout}><Link to="/login"  > LOGOUT </Link></div>
+    // }
+    // else  {
+    //     elementLogin  =  <div className="MenuItem" ><Link to="/login" > SIGN IN </Link> <Link to="/register" > REGISTER </Link></div>
+    // }
+    const clickNav  = () => {
+        setLinkNavBar(!linkNavBar)
     }
-    else  {
-        elementLogin  =  <div className="MenuItem" ><Link to="/login" > SIGN IN </Link> <Link to="/register" > REGISTER </Link></div>
-    }
+
     return (
         <div className="header">
             <div className="Wrapper">
@@ -117,8 +125,8 @@ const Navbar = () => {
                     <div className="MenuItem">
                         <div className="MenuItem_Icon"><AccountCircleOutlinedIcon /></div>
                         <div  className="MenuItem_span">
-                            <span>Đăng nhập </span>
-                            <span>Đăng ký</span>
+                            <span><Link to="/login" >Đăng nhập </Link></span>
+                            <span><Link to="/register" >Đăng ký</Link></span>
                         </div>
                     </div>
                     {/* {elementLogin}
