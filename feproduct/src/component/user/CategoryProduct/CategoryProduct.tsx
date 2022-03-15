@@ -10,6 +10,8 @@ import Asus from "../../../asset/sliderUser/12_Novd1c4d43154d2e3a531a0d265a3f274
 import Rtx from  "../../../asset/sliderUser/21_Deca04496114ad5355c7b1b4c0752b62f53.jpg";
 import Intel from "../../../asset/sliderUser/27_Jan62b922e43d88aa7913a887d30e396eab.jpg";
 import  Predator from "../../../asset/sliderUser/29_Janfab52e4d00e0fc1f810aa6740ba1ac9e.jpg";
+
+
 const data = [
     {
         name: "Laptop - Máy tính xách tay",

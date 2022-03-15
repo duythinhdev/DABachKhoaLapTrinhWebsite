@@ -96,7 +96,7 @@ const routes: Array<any> = [
     }
     ,
     {
-        path: "/cart",
+        path: "/cart"    ,
         component: layoutCart
     }
     ,
