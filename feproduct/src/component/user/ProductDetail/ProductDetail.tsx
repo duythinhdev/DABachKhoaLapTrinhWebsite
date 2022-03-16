@@ -6,6 +6,8 @@ import images from "./images";
 import Payment from "../../../asset/Capture123.png";
 import CheckIcon from '@mui/icons-material/Check';
 import Promotion from "../../../asset/t3-2022-trang-sp-500x654.jpg";
+import image from "../../../asset/newsoffer/120_7828_dell_ultrasharp_u2422h_thumb4.jpg";
+import Noavatar from "../../../asset/newsoffer/noavatar.jpg";
 
 
 const dataDetail:Array<any> = [
@@ -63,6 +65,10 @@ const ProductDetail = () => {
         setSeeMore(false)
     }
 
+    const clickShowMore  = (event:  React.FormEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        setSeeMore(!seeMore);    
+    }
     return (
         <section className="Container__ProductDetail">
             <div  className="bg__white">
@@ -106,12 +112,12 @@ const ProductDetail = () => {
                             </div>
                         </div>
                 </div>
-                <div  className="product__info">
-                    <div  className="product__info--title">
-                            <div className="info__name"> 
+                <div  className="productinfo">
+                    <div  className="productinfo__title">
+                            <div className="productinfo__title--name"> 
                                 <span>Màn hình máy tính Acer VG270 UM.HV0SS.001 27'' Full HD 75Hz Gaming</span>
                             </div>
-                            <div className="info__code"> 
+                            <div className="productinfo__title--code"> 
                                 <div className="info__code--name">
                                     <span>Mã SP: MOAC0047</span>
                                 </div>
@@ -126,7 +132,7 @@ const ProductDetail = () => {
                                 </div>
                             </div>
                     </div>
-                    <div className="product__info--detail">
+                    <div className="productinfo__detail">
                         {
                             dataDetail.map((res: any,index: number) =>{
                                     return <span key={index}>{ index > 3 && seeMore ?  res.detail :  res.detail}</span>
@@ -134,19 +140,19 @@ const ProductDetail = () => {
                         }
                         <div>{seeMore ? <span onClick={() =>disableSeeMore()}>Thu Gọn</span> : <span onClick={() =>enableSeeMore()}> Xem Thêm</span>}</div>
                     </div>
-                    <div className="product__info--price">
-                            <div className="info__Listed--price">
+                    <div className="productinfo__price">
+                            <div className="productinfo__price--Listedprice">
                                 <h5>Giá niêm yết:</h5>
                                 <span>23.990.000 đ</span>
        
                             </div>
-                            <div className="info__Promotion--price">
+                            <div className="productinfo__price--Promotionprice">
                                 <h5>Giá khuyến mại:	</h5>
                                 <b>20.690.000 đ</b> <span>[Giá đã có VAT]</span>
                             </div>
                     </div>
-                    <div className="product__info--promotion">
-                        <div className="info__titlepromotion">
+                    <div className="productinfo__promotion">
+                        <div className="productinfo__promotion--title">
                             <div>Khuyến Mãi</div>
                         </div>
                         <ul>
@@ -158,17 +164,17 @@ const ProductDetail = () => {
                             <li>Ưu đãi giảm giá màn hình lên tới 1.000.000đ khi mua cùng màn hình: Danh sách màn hình xem tại đây</li>
                         </ul>
                     </div>
-                    <div className="product__info--Insurance">
+                    <div className="productinfo__Insurance">
                             <h4>Bảo hành: 12 tháng, Đổi mới trong 15 ngày, Dịch vụ bảo hành tại nơi sử dụng của HP</h4>
                     </div>
-                    <div className="product__info--Buy">
+                    <div className="productinfo__Buy">
                             <button><b>Đặt Mua Ngay</b> <span>Nhanh Chóng, Thuận Tiện</span></button>
                     </div>
-                    <div className="product__info--BuyCart">
-                         <button  className="info__BuyCart--Installment" ><b>Mua Trả Góp</b> <span>Thủ tục đơn giản</span></button>
-                         <button className="info__BuyCart--forCard"><b>Cho Vào Giỏ</b> <span>Mua tiếp sản phẩm khác</span></button>
+                    <div className="productinfo__BuyCart">
+                         <button  className="productinfo__BuyCart--Installment" ><b>Mua Trả Góp</b> <span>Thủ tục đơn giản</span></button>
+                         <button className="productinfo__BuyCart--forCard"><b>Cho Vào Giỏ</b> <span>Mua tiếp sản phẩm khác</span></button>
                     </div>
-                    <div className="product__info--AcceptPayment">
+                    <div className="productinfo__AcceptPayment">
                        <span>Chấp Nhận Thanh Toán</span>
                        <img src={Payment}  />
                     </div>
@@ -195,9 +201,58 @@ const ProductDetail = () => {
                 </div>
             </div>
 
-            <div  className="bg__white--detail">
-    
+            <div  className="whitenews">
+                <div className="whitenews__productdetail">
+                    <div className="whitenews__productdetail--title">
+                        <h3>MÔ TẢ SẢN PHẨM</h3>
+                    </div>
+                    <div className="whitenews__productdetail--content">
+                        <p>Màn hình máy tính Samsung LF22T350FHEXXV 21.5 inch FHD
+                        Mở Rộng Góc Nhìn Hiệu Quả
+                        Thiết kế tràn viền 3 cạnh giúp mọi không gian làm việc trở nên gọn gàng nhưng vẫn đảm bảo khả năng truyền tải liền mạch mọi nội dung một cách hoàn hảo, cho phép tập trung vượt trội, ngay cả khi thiết lập đa màn hình cùng lúc.
+                        Sắc Màu Chân Thực 
+                        Với tấm nền IPS đem tới sắc màu sống động và rõ ràng đến từng chi tiết ở mọi góc nhìn. Hiển thị chính xác từng tông màu và sắc thái ở hầu hết mọi góc độ.
+                        Đồng Bộ Mọi Khung Hình 
+                        Màn hình được tích hợp công nghệ AMD Radeon FreeSync™ đồng bộ tốc độ quét của card đồ họa và màn hình, giảm thiểu tình trạng xé hình và lặp hình thường thấy, trải nghiệm giải trí với trải nghiệm không gián đoạn. Với các khung hình nhanh cũng được xử lý liền mạch và mượt mà.
+                        <span className={seeMore ? "read-more-text--show" : "read-more-text"}>
+                        Mượt Mà Trong Từng Khung Hình
+                        Với tần số quét 75Hz giúp hiển thị mọi chuyển động mượt mà giúp người dùng có thể thưởng thức từng khung hình mà không còn bị giựt hình hay hiệu ứng bóng mờ.
+
+                        
+
+                        Sức Mạnh Chơi Game 
+                        Tối ưu màu sắc và độ tương phản, cho khung cảnh rực rỡ và giúp bạn dễ dàng phát hiện kẻ địch đang ẩn nấp trong bóng tối. Chế độ Game Mode tùy chỉnh khung hình với mọi dòng game mang lại cho bạn những lợi thế vượt trội, bứt phá để dành chiến thắng.
+
+                            
+
+                        Chăm Sóc Toàn Diện Cho Đôi Mắt
+                        Bạn sẽ luôn yên tâm đôi mắt của mình luôn được bảo vệ khi sử dụng trên chiếc màn hình này với công nghệ bảo vệ mắt tiên tiến giúp giảm thiểu tình trạng mỏi mắt khi dùng trong thời gian dài. Công nghệ Flicker Free loại bỏ tình trạng nhấp nháy khó chịu thường thấy trên màn hình, trong khi chế độ Eye Saver giảm thiểu tác hại của ánh sáng xanh.
+                            </span></p>
+                        <div className="productdetail__btn">
+                            <button className="read-more-btn" onClick={(event: any)=>clickShowMore(event)}>{seeMore ? "Rút Gọn..." : "Xem Thêm..." }</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="whitenews__involve">
+                    <div className="whitenews__involve--titleoffer">
+                        <h3>TIN TỨC LIÊN QUAN</h3>
+                    </div>
+                    <div className="whitenews__involve--content">
+                        <div className="involve__img">
+                            <img src={image} />
+                        </div>
+                        <div className="involve__content">
+                            <span>Dell Ultrasharp U2422H Nhìn Em Là Anh Quất Liền</span>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div className="whitenewscomment">
+                    <div className="whitenewscomment__title">
+                        <h3>HỎI ĐÁP</h3>
+                    </div>
+                </div>
         </section>
     );
 }
