@@ -1,10 +1,14 @@
 @import "../../../../src/sass/variable";
 @import "../../../../src/sass/mixin";
 .header {
-    background: $header;
+    background: #546ce8;
     height: 100px;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    width: 100%;
+    z-index: 8;
+    margin-top: 30px;
     @include respond(laptop) {
         height: 160px;
     }
@@ -33,9 +37,12 @@
             align-items: center;
             justify-content: center;
             .Logo {
-                font-weight: bold;
-                color: $white;
-                font-size: 30px;
+                .Logo__Link {
+                    font-weight: bold;
+                    color: $white;
+                    font-size: 30px;
+                    text-decoration: none;
+                }
             }
         }
         .Language {
@@ -110,19 +117,25 @@
                     font-size: 12px;
                     margin-left: 10px;
                 }
-                .MenuItem_Icon {
+                &__Icon {
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     flex: 1;
                     color: $white;
                 }
-                .MenuItem_span {
+                &__span {
                     display: flex;
                     flex-direction: column;
                     justify-content: flex-start;
                     align-items: center;
                     color: $white;
+                }
+                &__Link {
+                    font-weight: bold;
+                    color: $white;
+                    font-size: 0.8rem;
+                    text-decoration: none;
                 }
             }
             @include respond(phone) {

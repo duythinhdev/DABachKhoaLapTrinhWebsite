@@ -9,20 +9,6 @@ const categoryRoutes = require('./api/category_product');
 const newsRoutes = require('./api/news');
 
 class Routers {
-    // apiVersion;
-    // app;
-    // constructor() {
-
-    // }
-    // getApiVersion() {
-    //     return this.apiVersion;
-    // }
-    // setApiVersion(apiVersion) {
-    //     this.apiVersion = apiVersion;
-    // }
-    // setApp(app) {
-    //     this.app = app;
-    // }
     runApi(app, apiVersion) {
         app.use(morgan('dev'))
         app.use(bodyParser.json());
@@ -32,7 +18,7 @@ class Routers {
         app.use(`${apiVersion}/mainDetail`, mainDetailRoutes);
         app.use(`${apiVersion}/products`, productRoutes);
         app.use(`${apiVersion}/option`, optionRoutes);
-        app.use(`${apiVersion}/categoryproduct`, categoryRoutes);
+        app.use(`${apiVersion}/ctproduct`, categoryRoutes);
         app.use(`${apiVersion}/news`, newsRoutes)
     }
 }

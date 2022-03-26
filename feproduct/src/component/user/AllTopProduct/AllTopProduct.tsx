@@ -5,10 +5,11 @@ import Footer from "../footer/footer";
 import ProductBought from "../ProductBought/ProductBought";
 import TopProduct from './TopProduct/TopProduct';
 import Newsletter from "../Newletter/Newletter";
+import "../layoutUser/layoutUser.scss";
 
 const AllTopProduct = () => {
     return (
-        <div>
+        <div className="ContainerApp">
             <Announcement />
             <Navbar />
             <TopProduct />

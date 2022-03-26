@@ -12,10 +12,9 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import React,{useEffect, useState} from "react";
 import styled from "styled-components";
 import { mobile,table } from "../response";
-import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import * as actions from "../../../store/action";
-import { useHistory } from 'react-router-dom';
+import { useHistory,Link } from 'react-router-dom';
 import "./Navbar.scss";
 
 const category:Array<any> = [
@@ -88,7 +87,10 @@ const Navbar = () => {
         <div className="header">
             <div className="Wrapper">
                 <div  className="Left">
-                <div className="Logo">TiKi</div>
+                <div className="Logo">
+                    <Link className="Logo__Link" to="/user">TiKi
+                    </Link>
+                </div>
                 </div>
                 <div className="Center">
                     <form className="SearchContainer">
@@ -109,31 +111,31 @@ const Navbar = () => {
                 </div>
                 <div className="Right">
                     <div className="MenuItem">
-                        <div className="MenuItem_Icon"><LocalPhoneOutlinedIcon /></div>
-                        <div  className="MenuItem_span">
+                        <div className="MenuItem__Icon"><LocalPhoneOutlinedIcon /></div>
+                        <div  className="MenuItem__span">
                             <span>0392349083</span>
                             <span>19000323</span>
                         </div>
                     </div>
                     <div className="MenuItem">
-                        <div className="MenuItem_Icon"><LaptopChromebookOutlinedIcon /></div>
-                        <div  className="MenuItem_span">
+                        <div className="MenuItem__Icon"><LaptopChromebookOutlinedIcon /></div>
+                        <div  className="MenuItem__span">
                             <span>Xây Dựng</span>
                             <span>Cấu Hình PC</span>
                         </div>
                     </div>
                     <div className="MenuItem">
-                        <div className="MenuItem_Icon"><AccountCircleOutlinedIcon /></div>
-                        <div  className="MenuItem_span">
-                            <span><Link to="/login" >Đăng nhập </Link></span>
-                            <span><Link to="/register" >Đăng ký</Link></span>
+                        <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/login" ><AccountCircleOutlinedIcon /></Link></div>
+                        <div  className="MenuItem__span">
+                            <Link  className="MenuItem__Link" to="/login" ><span>Đăng nhập </span></Link>
+                            <Link className="MenuItem__Link" to="/register" > <span>Đăng ký</span></Link>
                         </div>
                     </div>
                     {/* {elementLogin}
                     {elementLogout} */}
                     <div className="MenuItem">
                         <Badge badgeContent={50} color="primary">
-                            <Link to="/bought" > <ShoppingCartOutlined /></Link>
+                            <Link to="/bought" className="MenuItem__Link" > <ShoppingCartOutlined /></Link>
                         </Badge>
                     </div>
                 </div>

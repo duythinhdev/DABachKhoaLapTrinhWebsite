@@ -2,9 +2,9 @@
 @import "../../../../src/sass/mixin";
 .p-container {
     width: 100%;
-    height: 850px;
     background-color: #edeef2;
     display: flex;
+    margin-top: 20px;
     flex-direction: center;
     justify-content: center;
     .box-center {
@@ -14,34 +14,36 @@
         display: flex;
         flex-direction: column;
         &__title {
-            flex: 0.07;
-            background-color: aquamarine;
             display: flex;
             flex-direction: row;
-        }
-        .box-center__titleProductSpeed {
-            display: flex;
-            flex: 0.4;
-            background: #546ce8;
-            color: #fff;
-            width: 713px;
+            height: 45px;
+            &--ProductSpeed {
+                align-items: center;
+                display: flex;
+                flex: 0.16;
+                background: #546ce8;
+                clip-path: polygon(0 0, 100% 0%, 74% 100%, 0% 100%);
+                color: #fff;
+            }
         }
         &__content {
-            flex: 0.83;
+            flex: 0.93;
             // background-color: blue;
             display: flex;
             flex-direction: column;
             &--product {
-                width: 100%;
+                flex-wrap: wrap;
                 display: flex;
                 flex: 0.5;
                 display: flex;
                 flex-direction: row;
                 .product--detail {
+                    width: calc(100% /6.78);
                     // background-color: burlywood;
                     display: flex;
                     flex: 0.17;
                     flex-direction: column;
+                    position: relative;
                     &__img {
                         display: flex;
                         flex: 0.6;
@@ -54,6 +56,18 @@
                     &__Name {
                         display: flex;
                         flex: 0.1;
+                        .detailName__link {
+                            display: flex;
+                            color: black;
+                            font-size: 15px;
+                            font-weight: bold;
+                            text-decoration: none;
+                            &:hover {
+                                color: #3d52bf;
+                                font-size: 15px;
+                                font-weight: bold;
+                            }
+                        }
                     }
                     &__pricePromotion {
                         display: flex;
@@ -80,7 +94,7 @@
                 color: #3d52bf;
                 border: 1px solid #3d52bf;
                 text-transform: uppercase;
-                padding: 14px;
+                padding: 6px;
                 text-decoration: none;
                 &:hover {
                     background-color: #3d52bf;

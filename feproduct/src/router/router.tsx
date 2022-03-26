@@ -1,22 +1,23 @@
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {lazy, Suspense} from "react";
-
-const ContainerAdmin = React.lazy(() => import("../component/admin/body/containerAdmin"));
-const LoginAmin = React.lazy(() => import("../component/admin/login/login"));
-const BodyAdminProduct = React.lazy(() => import("../component/admin/bodyAdminProduct/bodyAdminProduct"));
-const BodyAdminUser = React.lazy(() => import("../component/admin/bodyAdminUser/bodyAdmin"));
-const BodyAdminReview = React.lazy(() => import("../component/admin/bodyAdminReview/bodyAdminReview"));
-const BodyAdminOption = React.lazy(() => import("../component/admin/bodyAdminOption/bodyAdminOption"));
-const BodyAdminOptionOrder = React.lazy(() => import("../component/admin/bodyAdminOptionOrder/bodyAdminOptionOrder"));
-const BodyAdminOrder = React.lazy(() => import("../component/admin/bodyAdminOder/bodyAdminOrder"));
-const login = React.lazy(() => import("../component/user/login/login"));
-const register = React.lazy(() => import("../component/user/register/Register"));
-const layoutUser = React.lazy(() => import("../component/user/layoutUser/layoutUser"));
-const News = React.lazy(() => import("../component/user/layoutNews/layoutNews"));
-const layoutCart = React.lazy(() => import("../component/user/layoutCart/layoutCart"));
-const layoutBought = React.lazy(() => import("../component/user/layoutBought/layoutBought"));
-const AllTopProduct =  React.lazy(() => import("../component/user/AllTopProduct/AllTopProduct"));
+import { ContainerAdmin,
+    LoginAmin,
+    BodyAdminProduct,
+    BodyAdminUser,
+    BodyAdminReview,
+    BodyAdminOption,
+    BodyAdminOptionOrder,
+    BodyAdminOrder,
+    login,
+    register,
+    layoutUser,
+    News,
+    layoutCart,
+    layoutBought,
+    AllTopProduct,
+    ProductBrand
+} from "./index";
 
 const routes: Array<any> = [
     {
@@ -96,7 +97,7 @@ const routes: Array<any> = [
     }
     ,
     {
-        path: "/cart",
+        path: "/cart"    ,
         component: layoutCart
     }
     ,
@@ -107,10 +108,13 @@ const routes: Array<any> = [
     {
         path: "/topproduct",
         component: AllTopProduct
+    },
+    {
+        path: "/productbrand",
+        component: ProductBrand
     }
 ]
 const Routing = () => {
-    let isLoginAdmin = useSelector((state: any) => state.login.isLoginAdmin)
     return (
         <Router>
             <div>
