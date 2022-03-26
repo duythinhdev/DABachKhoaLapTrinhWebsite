@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 const tuan = require
 
 const userSchema = mongoose.Schema({
-    name: { type: String, required: true },
-    product: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
+    name: { type: String, required: true }
 }, {
     timestamps: { createdAt: true, updatedAt: true }
 })

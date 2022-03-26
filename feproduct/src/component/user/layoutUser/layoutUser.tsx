@@ -13,6 +13,8 @@ import CategoryProduct from "../CategoryProduct/CategoryProduct";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../../enviroment/enviroment";
 import CategoryProducts from "../CategoryProducts/CategoryProducts";
+import NewsFeeds from "../NewsFeed/NewsFeed";
+
 const arrayCategory = {
     categoryLG: 1,
     categorySamSung: 2,
@@ -49,19 +51,13 @@ const LayoutUser = () => {
     },[])
     return (
         
-        <div className="">
+        <div className="ContainerApp">
             <Announcement />
             <Navbar />
             <CategoryProduct />
             <CategoryProducts />
-            {/* <Slider /> */}
-            {/* <Categories /> */}
-            {/* <Products  dataPagination={dataPagination} /> */}
-            {/* <ProductsSamSung
-             />
-            <Productslg
-             /> */}
             <Newsletter />
+            <NewsFeeds />
             <Footer />
         </div >
     );

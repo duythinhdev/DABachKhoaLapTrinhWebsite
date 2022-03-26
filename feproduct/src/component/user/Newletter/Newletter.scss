@@ -1,8 +1,9 @@
 .ContainerNewletter {
-    height: 60vh;
-    background-color: #fcf5f5;
+    height: 40vh;
+    background-color: #3d52bf;
     display: flex;
     align-items: center;
+    margin-top: 20px;
     justify-content: center;
     flex-direction: column;
     @media screen and (max-width: 768px) {
@@ -17,11 +18,13 @@
     .Title {
         font-size: 70px;
         margin-bottom: 20px;
+        color: #FFFFFF;
     }
     .Desc {
         font-size: 24px;
         font-weight: 300;
         margin-bottom: 20px;
+        color: #FFFFFF;
         @media screen and (max-width: 380px) {
             text-align: center;
         }

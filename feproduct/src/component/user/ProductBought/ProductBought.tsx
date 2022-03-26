@@ -11,6 +11,7 @@ export const Container = styled.div`
     justify-content: center;
     flex-direction: column;
     justify-content: center;
+    margin-top: 140px;
     ${table({ height: "100%",width: "167%" })}
     ${mobile({ height: "150vh",width: "100%" })}
 `;
