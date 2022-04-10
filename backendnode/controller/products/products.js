@@ -1,21 +1,46 @@
 const Product = require("../../models/product");
+const CategoryProduct = require("../../models/category");
 const PAGE_SIZE = 10;
-exports.postProduct = (req, res, next) => {
+exports.postProduct = async(req, res, next) => {
     const product = new Product({
         Product_name: req.body.Product_name,
         productImage: req.file.path,
         description: req.body.description,
         id_categoryProduct: req.body.id_categoryProduct,
+        price: req.body.price,
+        pricePromotion: req.body.pricePromotion,
     })
-    product.save().then((product) => {
-        res.status(200).json({
-            data: "Bạn đã thêm thành công"
-        })
+    let postProduct = product.save();
+    await postProduct.then((productData) => {
+        res.status(201).json({ data: productData })
     }).catch((err) => {
-        res.status(400).json({
-            err: err
-        })
+        res.status(400).json({ err: err })
     })
+
+}
+exports.postProductofCategory = async(req, res, next) => {
+    const { productId } = req.params;
+    var newCategoryProduct;
+    // await CategoryProduct.exists({ name: req.body.name }).then(exists => {
+    //     if (exists) {
+    //         const CProduct = CategoryProduct.find({ name: req.body.name });
+    //         const Products = Product.findById(productId);
+    //         CProduct.product = Products;
+    //         CProduct.save();
+    //         Products.id_categoryProduct.push(CProduct._id);
+    //         Products.save()
+    //         return res.status(404).json({
+    //             message: "category exists"
+    //         });
+    //     }
+    // })
+    newCategoryProduct = new CategoryProduct(req.body);
+    const Products = await Product.findById(productId);
+    newCategoryProduct.product = Products;
+    await newCategoryProduct.save();
+    Products.id_categoryProduct.push(newCategoryProduct._id);
+    await Products.save()
+    res.status(201).json({ data: newCategoryProduct });
 }
 exports.getProduct = async(req, res, next) => {
     var page = req.query.page;

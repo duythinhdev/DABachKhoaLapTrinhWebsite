@@ -1,6 +1,7 @@
+@import "../../../../sass/variable";
+@import "../../../../sass/mixin";
 .containter__TopProduct {
     width: 100%;
-    height: 230vh;
     background-color: #edeef2;
     display: flex;
     flex-direction: column;
@@ -59,7 +60,10 @@
         background-color: #FFFFFF;
         &--title {
             display: flex;
-            flex: 0.2;
+            height: 18vh;
+            @include respond(laptop) {
+                height: 17vh;
+            }
         }
         &--container {
             display: flex;
@@ -69,6 +73,9 @@
             flex-direction: row;
             .product__item {
                 width: calc(100% /6.78);
+                @include respond(laptop) {
+                    width: calc(100% / 5.8);
+                }
                 height: 345px;
                 border: 1px solid #edeef2;
                 display: flex;
@@ -111,7 +118,10 @@
         &--pagination {
             background-color: black;
             display: flex;
-            flex: 0.5;
+            height: 18vh;
+            @include respond(laptop) {
+                height: 17vh;
+            }
         }
     }
 }

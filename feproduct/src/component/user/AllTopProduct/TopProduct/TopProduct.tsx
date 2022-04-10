@@ -234,14 +234,6 @@ const Product:Array<any> = [
         promotion: "1 khuyến mại",
         compare: "So sánh",
     },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
 ]
 const TopProduct = () => {
     return (

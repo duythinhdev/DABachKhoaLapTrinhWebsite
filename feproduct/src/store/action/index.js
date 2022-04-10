@@ -11,7 +11,8 @@ export {
     isMenuAdmin,
     dataProduct,
     PostProduct,
-    putDataProduct
+    putDataProduct,
+    discoloration
 }
 from "../action/admin";
 export {

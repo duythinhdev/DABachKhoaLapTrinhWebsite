@@ -3,7 +3,9 @@ import Navbar from "../Navbar/Navbar";
 import Announcement from "../Announcement/Announcement";
 import Footer from "../footer/footer";
 import ProductBought from "../ProductBought/ProductBought";
-import "../layoutUser/layoutUser.scss";
+import "../../../page/layoutUser/layoutUser.scss";
+import Newsletter from "../Newletter/Newletter";
+import NewsFeeds from "../NewsFeed/NewsFeed";
 
 function LayoutCart() {
     return (
@@ -11,6 +13,8 @@ function LayoutCart() {
             <Navbar />
             <Announcement />
             <ProductBought />
+            <Newsletter />
+            <NewsFeeds />
             <Footer />
         </div>
     );

@@ -5,7 +5,8 @@ import Footer from "../footer/footer";
 import ProductBought from "../ProductBought/ProductBought";
 import TopProduct from './TopProduct/TopProduct';
 import Newsletter from "../Newletter/Newletter";
-import "../layoutUser/layoutUser.scss";
+import "../../../page/layoutUser/layoutUser.scss";
+import NewsFeeds from "../NewsFeed/NewsFeed";
 
 const AllTopProduct = () => {
     return (
@@ -14,6 +15,7 @@ const AllTopProduct = () => {
             <Navbar />
             <TopProduct />
             <Newsletter />
+            <NewsFeeds />
             <Footer />
         </div>
     );

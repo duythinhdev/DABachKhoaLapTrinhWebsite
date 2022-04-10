@@ -25,11 +25,13 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-router.post("/posts", upload.single('productImage'), ProductController.postProduct);
+router.post("/posts/:productId", ProductController.postProductofCategory);
+// router.get("/getcateofproduct/:productId", ProductController.getCategoryProduct);
 router.get("/get", ProductController.getProduct);
 router.get("/getdetail/:id", ProductController.getProductDetail);
 router.put("/put", upload.single('productImage'), ProductController.putProduct);
 router.delete("/delete", ProductController.deleteProduct)
+router.post("/postdata", upload.single('productImage'), ProductController.postProduct)
 
 
 module.exports = router;

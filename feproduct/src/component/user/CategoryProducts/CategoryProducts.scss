@@ -8,6 +8,9 @@
     flex-direction: center;
     justify-content: center;
     .box-center {
+        @include respond(laptop) {
+            width: 93%;
+        }
         background-color: $white;
         width: 88%;
         height: 850px;
@@ -21,6 +24,9 @@
                 align-items: center;
                 display: flex;
                 flex: 0.16;
+                @include respond(laptop) {
+                    flex: 0.19;
+                }
                 background: #546ce8;
                 clip-path: polygon(0 0, 100% 0%, 74% 100%, 0% 100%);
                 color: #fff;
@@ -44,6 +50,9 @@
                     flex: 0.17;
                     flex-direction: column;
                     position: relative;
+                    @include respond(laptop) {
+                        flex: 0.16;
+                    }
                     &__img {
                         display: flex;
                         flex: 0.6;
@@ -62,10 +71,16 @@
                             font-size: 15px;
                             font-weight: bold;
                             text-decoration: none;
+                            @include respond(laptop) {
+                                font-size: 13px;
+                            }
                             &:hover {
                                 color: #3d52bf;
                                 font-size: 15px;
                                 font-weight: bold;
+                                @include respond(laptop) {
+                                    font-size: 13px;
+                                }
                             }
                         }
                     }

@@ -1,6 +1,14 @@
 const express = require('express');
-const router = express.Router();
-const CategoryController = require("../controller/category_product/category_product");
+var router = express.Router();
+var {
+    postCategoryProduct,
+    postRelationShipProduct,
+    getCategoryProduct,
+    getCategoryProductDetail,
+    putCategoryProduct,
+    deleteCategoryProduct,
+    categoryOfProduct
+} = require("../controller/category_product/category_product");
 const multer = require("multer");
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -11,7 +19,8 @@ const storage = multer.diskStorage({
     }
 })
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    console.log("file", file);
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
         cb(null, true);
     } else {
         cb(null, false);
@@ -24,12 +33,11 @@ const upload = multer({
     },
     fileFilter: fileFilter
 });
-
-router.post("/post", CategoryController.postCategoryProduct);
-router.post("/postOfProduct", upload.single('productImage'), CategoryController.postRelationShipProduct);
-router.get("/get", CategoryController.getCategoryProduct);
-router.get("/getdetail/:id", CategoryController.getCategoryProductDetail);
-router.put("/put", CategoryController.putCategoryProduct);
-router.delete("/delete", CategoryController.deleteCategoryProduct);
-
+router.route("/post").post(postCategoryProduct);
+router.route("/pproduct").post(upload.single('productImage'), postRelationShipProduct);
+router.route("/").get(getCategoryProduct);
+router.route("/detail/:id").get(getCategoryProductDetail);
+router.route("/put").put(putCategoryProduct);
+router.route("/delete").delete(deleteCategoryProduct);
+router.route("/of").get(categoryOfProduct);
 module.exports = router;

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {lazy, Suspense} from "react";
 const login = React.lazy(() => import("../component/user/login/login"));
 const register = React.lazy(() => import("../component/user/register/Register"));
-const layoutUser = React.lazy(() => import("../component/user/layoutUser/layoutUser"));
+const layoutUser = React.lazy(() => import("../page/layoutUser/layoutUser"));
 const News = React.lazy(() => import("../component/user/layoutNews/layoutNews"));
 const layoutCart = React.lazy(() => import("../component/user/layoutCart/layoutCart"));
 const layoutBought = React.lazy(() => import("../component/user/layoutBought/layoutBought"));
