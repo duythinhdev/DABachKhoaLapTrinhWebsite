@@ -1,0 +1,96 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.dark {
+    background-color: #111;
+    color: rgb(156, 156, 156);
+    .chartGrid {
+        stroke: rgba(228, 228, 228, 0.219);
+    }
+    .table {
+        background-color: #111;
+        .tableCell {
+            color: gray;
+        }
+    }
+    .navbar {
+        color: #999;
+        border-color: #333;
+        .search {
+            border-color: gray;
+        }
+    }
+    .sidebar {
+        background-color: #111;
+        border-color: #333;
+        .top {
+            .logo {
+                color: #999;
+            }
+        }
+        hr {
+            border-color: #333;
+        }
+        ul {
+            li {
+                &:hover {
+                    background-color: #333;
+                }
+                .icon {
+                    color: #999;
+                }
+            }
+        }
+    }
+    .datatable {
+        .datagrid {
+            color: gray;
+            border: none;
+            .viewButton,
+            .deleteButton,
+            .cellWithStatus {
+                color: gray;
+                border: none;
+            }
+        }
+    }
+    input {
+        background-color: transparent;
+    }
+}

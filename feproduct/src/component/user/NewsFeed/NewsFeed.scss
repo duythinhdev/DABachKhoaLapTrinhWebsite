@@ -1,9 +1,13 @@
+@import "../../../../src/sass/variable";
+@import "../../../../src/sass/mixin";
 .ContainerNewsFeed {
     background-color: #FFFFFF;
-    height: 100vh;
     display: flex;
     padding: 0px 100px;
     flex-direction: row;
+    @include respond(laptop) {
+        margin-top: 30px;
+    }
     .item-container {
         width: calc(50% - 10px);
         display: flex;

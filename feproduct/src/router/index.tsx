@@ -20,7 +20,7 @@ const login: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
 const register: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/user/register/Register"));
 const layoutUser: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
-    import ("../component/user/layoutUser/layoutUser"));
+    import ("../page/layoutUser/layoutUser"));
 const News: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/user/layoutNews/layoutNews"));
 const layoutCart: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>

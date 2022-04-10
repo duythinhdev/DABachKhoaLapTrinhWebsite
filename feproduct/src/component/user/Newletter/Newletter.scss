@@ -1,3 +1,5 @@
+@import "../../../../src/sass/variable";
+@import "../../../../src/sass/mixin";
 .ContainerNewletter {
     height: 40vh;
     background-color: #3d52bf;
@@ -6,6 +8,9 @@
     margin-top: 20px;
     justify-content: center;
     flex-direction: column;
+    @include respond(laptop) {
+        height: 60vh;
+    }
     @media screen and (max-width: 768px) {
         height: 60vh;
         width: 167%;
@@ -19,6 +24,9 @@
         font-size: 70px;
         margin-bottom: 20px;
         color: #FFFFFF;
+        @include respond(laptop) {
+            font-size: 30px;
+        }
     }
     .Desc {
         font-size: 24px;

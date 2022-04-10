@@ -15,7 +15,8 @@ interface tsInitialState {
     isMenu: boolean
     isLoginAdmin: boolean,
     titleProductPost: string,
-    status: boolean
+    status: boolean,
+    darkMode: boolean,
 }
 
 const initialState: tsInitialState = {
@@ -31,7 +32,8 @@ const initialState: tsInitialState = {
     isMenu: false,
     isLoginAdmin: false,
     titleProductPost: "",
-    status: false
+    status: false,
+    darkMode: false
 
 }
 const setIsNavAdminUser = (action: any, state: any) => {
@@ -67,6 +69,9 @@ const setIsNavAdminCategoryComment = (action: any, state: any) => {
 const titleProductPost = (action: any, state: any) => {
     return updateObject(state, {titleProductPost: action.title, status: action.status})
 }
+const discoloration = (action:any, state: any) => {
+    return updateObject(state,{discolor: state.discolor });
+} 
 const mainReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case actionTypes.IS_NAV_ADMIN_BODY_USER:
@@ -91,6 +96,18 @@ const mainReducer = (state = initialState, action: any) => {
             return titleProductPost(action, state);
         case actionTypes.IS_NAV_MENU_LEFT:
             return setIsMenuLeft(action, state);
+        case actionTypes.STATUS_DISCOLORATION:
+            if(action.discolor === 'LIGHT')
+            {
+                state.darkMode = false;
+            }
+            else if(action.discolor === 'DARK' ) {
+                state.darkMode = true;
+            }
+            else if(action.discolor === 'TOGGLE' ) {
+                state.darkMode =  !state.darkMode ;
+            }
+            return discoloration(action, state)
         default :
             return state;
     }

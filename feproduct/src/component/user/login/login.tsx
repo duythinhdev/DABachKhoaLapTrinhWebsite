@@ -12,8 +12,9 @@ import "./login.scss";
 import Navbar from "../Navbar/Navbar";
 import Announcement from "../Announcement/Announcement";
 import Newsletter from "../Newletter/Newletter";
+import NewsFeeds from "../NewsFeed/NewsFeed";
 import Footer from "../footer/footer";
-import "../layoutUser/layoutUser.scss";
+import "../../../page/layoutUser/layoutUser.scss";
 
 interface FormInputs {
     passwords: string;
@@ -146,7 +147,8 @@ const LoginUser = () => {
             {redirect}
         </div>
         <Newsletter />
-            <Footer />
+        <NewsFeeds />
+        <Footer />
         </div>
     );
 };

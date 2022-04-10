@@ -1,7 +1,21 @@
 const CategoryProduct = require("../../models/category");
 const Product = require("../../models/product");
 const PAGE_SIZE = 10;
-exports.postCategoryProduct = (req, res, next) => {
+exports.categoryOfProduct = async function(req, res, next) {
+    const { categoryProductId } = req.query;
+    const CtProduct = await CategoryProduct.findById(categoryProductId).populate('product')
+    try {
+        return res.status(200).json({
+            data: CtProduct.product,
+        })
+    } catch (err) {
+        console.log("err", err);
+        return res.status(500).json({
+            message: err,
+        })
+    }
+}
+exports.postCategoryProduct = function(req, res, next) {
     const product = new CategoryProduct({
         name: req.body.name,
     })
@@ -15,7 +29,7 @@ exports.postCategoryProduct = (req, res, next) => {
         })
     })
 }
-exports.getCategoryProduct = async(req, res, next) => {
+exports.getCategoryProduct = async function(req, res, next) {
     var page = req.query.page;
     if (page) {
         page = parseInt(page);
@@ -67,7 +81,7 @@ exports.getCategoryProduct = async(req, res, next) => {
             })
         })
 }
-exports.getCategoryProductDetail = (req, res, next) => {
+exports.getCategoryProductDetail = function(req, res, next) {
     var id = req.params.id
     CategoryProduct.findById(id).then((response) => {
             return res.status(200).json({
@@ -80,7 +94,7 @@ exports.getCategoryProductDetail = (req, res, next) => {
             })
         })
 }
-exports.putCategoryProduct = async(req, res, next) => {
+exports.putCategoryProduct = async function(req, res, next) {
     var type = req.body.type;
     var size = req.body.size;
     var price = req.body.price;
@@ -107,7 +121,7 @@ exports.putCategoryProduct = async(req, res, next) => {
             res.status(500).json({ error: err })
         });
 }
-exports.deleteCategoryProduct = async(req, res, next) => {
+exports.deleteCategoryProduct = async function(req, res, next) {
     const id = req.query.id;
     await CategoryProduct.remove({ _id: id }).exec().then(response => {
         res.status(200).json({
@@ -118,18 +132,19 @@ exports.deleteCategoryProduct = async(req, res, next) => {
         console.log(err);
     })
 }
+
 exports.postRelationShipProduct = async(req, res, next) => {
-    const { cateGoryId } = req.query;
+    const { cproductId } = req.query;
     const newProduct = new Product({
-        Product_name: req.body.Product_name,
-        productImage: req.body.productImage,
-        description: req.body.description,
-    })
-    const CategoryProducts = await CategoryProduct.findById(cateGoryId);
-    console.log("CategoryProducts", CategoryProducts)
-    newProduct.categoryProduct = CategoryProducts;
+            Product_name: req.body.Product_name,
+            productImage: req.file.path,
+            description: req.body.description,
+        })
+        // console.log("req.body.productImage", req.body.productImage);
+    const CategoryProducts = await CategoryProduct.findById(cproductId);
+    newProduct.id_categoryProduct = CategoryProducts;
     await newProduct.save();
-    CategoryProducts.product.push(newProduct);
+    CategoryProducts.product.push(newProduct._id);
     await CategoryProducts.save();
-    res.status(201).json(newProduct);
+    res.status(201).json({ data: newProduct });
 }
