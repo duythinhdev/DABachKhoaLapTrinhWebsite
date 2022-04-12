@@ -26,7 +26,7 @@ const upload = multer({
 });
 
 router.post("/posts/:productId", ProductController.postProductofCategory);
-// router.get("/getcateofproduct/:productId", ProductController.getCategoryProduct);
+router.post("/postofoption", ProductController.postProductofOption)
 router.get("/get", ProductController.getProduct);
 router.get("/getdetail/:id", ProductController.getProductDetail);
 router.put("/put", upload.single('productImage'), ProductController.putProduct);
