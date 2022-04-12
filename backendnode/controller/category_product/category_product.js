@@ -2,19 +2,38 @@ const CategoryProduct = require("../../models/category");
 const Product = require("../../models/product");
 const PAGE_SIZE = 10;
 exports.categoryOfProduct = async function(req, res, next) {
-    const { categoryProductId } = req.query;
-    const CtProduct = await CategoryProduct.findById(categoryProductId).populate('product')
+    let OptionProduct = [];
+    const { categoryProductId, productId } = req.query;
+    const CtProduct = await CategoryProduct.findById(categoryProductId).populate('product');
+    const Products = await Product.findById(productId).populate('options');
+    let option = OptionProduct.push(CtProduct.product);
+    console.log("Products", Products);
     try {
         return res.status(200).json({
             data: CtProduct.product,
         })
     } catch (err) {
-        console.log("err", err);
         return res.status(500).json({
             message: err,
         })
     }
 }
+exports.postRelationShipProduct = async(req, res, next) => {
+    const { cproductId } = req.query;
+    const newProduct = new Product({
+            Product_name: req.body.Product_name,
+            productImage: req.file.path,
+            description: req.body.description,
+        })
+        // console.log("req.body.productImage", req.body.productImage);
+    const CategoryProducts = await CategoryProduct.findById(cproductId);
+    newProduct.id_categoryProduct = CategoryProducts;
+    await newProduct.save();
+    CategoryProducts.product.push(newProduct._id);
+    await CategoryProducts.save();
+    res.status(201).json({ data: newProduct });
+}
+
 exports.postCategoryProduct = function(req, res, next) {
     const product = new CategoryProduct({
         name: req.body.name,
@@ -131,20 +150,4 @@ exports.deleteCategoryProduct = async function(req, res, next) {
         res.status(500).json({ error: err })
         console.log(err);
     })
-}
-
-exports.postRelationShipProduct = async(req, res, next) => {
-    const { cproductId } = req.query;
-    const newProduct = new Product({
-            Product_name: req.body.Product_name,
-            productImage: req.file.path,
-            description: req.body.description,
-        })
-        // console.log("req.body.productImage", req.body.productImage);
-    const CategoryProducts = await CategoryProduct.findById(cproductId);
-    newProduct.id_categoryProduct = CategoryProducts;
-    await newProduct.save();
-    CategoryProducts.product.push(newProduct._id);
-    await CategoryProducts.save();
-    res.status(201).json({ data: newProduct });
 }

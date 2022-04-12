@@ -28,7 +28,7 @@ const layoutCart: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =
 const layoutBought: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/user/layoutBought/layoutBought"));
 const AllTopProduct: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
-    import ("../component/user/AllTopProduct/AllTopProduct"));
+    import ("../page/AllTopProduct/AllTopProduct"));
 const ProductBrand : React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
 import ("../component/user/ProductDetail/ProductBrand/ProductBand"));
 

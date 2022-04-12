@@ -8,9 +8,13 @@ const productSchema = mongoose.Schema({
         id_categoryProduct: {
             type: Schema.Types.ObjectId,
             ref: 'Category_Product',
-        }
+        },
+        options: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Option',
+            required: false
+        }]
     }, { timestamps: { createdAt: true, updatedAt: true } }
 
 )
-
 module.exports = mongoose.model("Product", productSchema)
