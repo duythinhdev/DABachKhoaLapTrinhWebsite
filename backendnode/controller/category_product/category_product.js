@@ -3,8 +3,15 @@ const Product = require("../../models/product");
 const PAGE_SIZE = 10;
 exports.categoryOfProduct = async function(req, res, next) {
     const { categoryProductId, productId } = req.query;
-    const CtProduct = await CategoryProduct.findById(categoryProductId).populate('product')
-        // const Products = await Product.findById(productId).populate('options');
+    const CtProduct = await CategoryProduct.findById(categoryProductId)
+        .populate({
+            path: 'product',
+            model: 'Product',
+            populate: {
+                path: 'options',
+                model: 'Option'
+            }
+        })
     try {
         return res.status(200).json({
             data: CtProduct.product,
@@ -15,6 +22,17 @@ exports.categoryOfProduct = async function(req, res, next) {
         })
     }
 }
+exports.updateCategoryOfProduct = async(req, res, next) => {
+    // number of fields
+    const { categoryProductId } = req.value.params
+
+    const body = req.value.body
+
+    let result = await categoryOfProduct.findByIdAndUpdate(categoryProductId, body)
+
+    return res.status(200).json({ data: result })
+}
+
 exports.postRelationShipProduct = async(req, res, next) => {
     const { cproductId } = req.query;
     const newProduct = new Product({
@@ -54,8 +72,7 @@ exports.getCategoryProduct = async function(req, res, next) {
         }
         var skipOption = (page - 1) * PAGE_SIZE;
         var totalPage;
-        await CategoryProduct.find({}).
-        populate('product').exec().then((response) => {
+        await CategoryProduct.find({}).then((response) => {
             CategoryProduct.count({}, (err, counts) => {
                 totalPage = counts;
             })
@@ -76,26 +93,26 @@ exports.getCategoryProduct = async function(req, res, next) {
         return;
     }
 
-    await CategoryProduct.find({}).exec().then((response) => {
-            CategoryProduct.count({}, (err, counts) => {
-                if (err) {
-                    return res.status(404).json({
-                        error: err
-                    })
+    // await CategoryProduct.find({}).exec().then((response) => {
+    //         CategoryProduct.count({}, (err, counts) => {
+    //             if (err) {
+    //                 return res.status(404).json({
+    //                     error: err
+    //                 })
 
-                } else {
-                    return res.status(200).json({
-                        totalPage: counts,
-                        data: response,
-                    })
-                }
-            })
-        })
-        .catch(err => {
-            return res.status(404).json({
-                error: err
-            })
-        })
+    //             } else {
+    //                 return res.status(200).json({
+    //                     totalPage: counts,
+    //                     data: response,
+    //                 })
+    //             }
+    //         })
+    //     })
+    //     .catch(err => {
+    //         return res.status(404).json({
+    //             error: err
+    //         })
+    //     })
 }
 exports.getCategoryProductDetail = function(req, res, next) {
     var id = req.params.id

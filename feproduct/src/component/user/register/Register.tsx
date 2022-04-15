@@ -32,7 +32,8 @@ const Register = () => {
         email: '' as string,
         password: '' as string,
         phoneNumber: '' as string,
-        gender: '' as string,
+        genderMale: 0 as number,
+        genderFeMale: 0 as number,
         address: '' as string,
         city: '' as string
     });
@@ -45,8 +46,8 @@ const Register = () => {
           .oneOf([Yup.ref('password')], 'Mật khẩu Không trùng'),
         fullName: Yup.string().required('Họ Và Tên Cần Phải nhập'),
         email:  Yup.string().email().required('Email Cần Phải nhập'),
-        gender: Yup.bool()
-        .oneOf([true], 'Giới Tính Cần Phải nhập'),
+        genderMale: Yup.bool(),
+        genderFeMale: Yup.bool(),
         city:  Yup.string().required('Thành phố Cần Phải nhập'),
         address:  Yup.string().required('Địa chỉ Cần Phải nhập'),
         phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
@@ -88,8 +89,8 @@ const Register = () => {
                             <div className="Form__input">
                                 <input  placeholder="email" type="email"
                                         {...register('email')}
-                                        className={`form-control email ${errors.email ? 'is-invalid' : ''}`}
-                                  
+                                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                                        onChange={(event) => changeValue(event)}
                                 />
                                  <div className="invalid-feedback">{errors.email?.message}</div>
                                 <b style={{color: "#ff0000" }}>*</b>
@@ -116,6 +117,7 @@ const Register = () => {
                             <div className="Form__input"> 
                                 <input {...register('confirmPwd')}  type="password" placeholder="Nhập lại Mật khẩu"
                                    className={`form-control ${errors.confirmPwd ? 'is-invalid' : ''}`}
+                                   onChange={(event) => changeValue(event)}
                                 />
                                 <b style={{color: "#ff0000" }}>*</b>
                                 <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
@@ -141,17 +143,17 @@ const Register = () => {
                             </div>
                             <div className="Form__radio">
                                 <input type="radio"  value="0" 
-                                     {...register('gender')} id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
+                                     {...register('genderMale')} id="gender" className={`form-check-input ${errors.genderMale ? 'is-invalid' : ''}`}
                                      onChange={(event) => changeValue(event)}
                                 />
                                 <label>Nam</label>
                                 <div className="invalid-feedback">{errors.genderMale?.message}</div>
                                 <input type="radio"  value="1" 
-                                     {...register('gender')} id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
+                                     {...register('genderFeMale')} id="gender" className={`form-check-input ${errors.genderFeMale ? 'is-invalid' : ''}`}
                                      onChange={(event) => changeValue(event)}
                                 />
                                 <label>Nữ</label>
-                                <div className="invalid-feedback">{errors.gender?.message}</div>
+                                <div className="invalid-feedback">{errors.genderFeMale?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -159,8 +161,8 @@ const Register = () => {
                                 <span>Tinh/Tp</span>
                             </div>
                             <div className="Form__select">
-                                <select id="City" 
-                                    {...register('city')} className={`form-check-select ${errors.city ? 'is-invalid' : ''}`}
+                                <select
+                                    {...register('city')} className={`form-check-input ${errors.city ? 'is-invalid' : ''}`}
                                     onChange={(event) => changeValue(event)}
                                 >
                                     <option value="0"></option>
