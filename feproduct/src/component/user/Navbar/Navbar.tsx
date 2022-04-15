@@ -98,7 +98,7 @@ const Navbar = () => {
                             {
                                 category.map((res:any,index:number)=>{
                                     <option>2</option>
-                                    return <option>{res.name}</option>
+                                    return <option key={index}>{res.name}</option>
                                 })
                             }
                         </select>

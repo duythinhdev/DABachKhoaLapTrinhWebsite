@@ -23,14 +23,13 @@ const arrayCategory = {
 const LayoutUser = () => {
     const [state, setState] = useState({
         page: 1 as any,
-        rowsPerPage: 10 as any,
-        // dataPagination: [] as any,
-        dataPaginationSamsung: [] as Array<any>
     });
     const [dataPagination,setDataPagination] = useState([]) as Array<any>;
     let fetchDataProduct = async () => {
-        let apiCategoryProduct = `of?categoryProductId=6246b87d8b27c4245837281d`;
-        axios.get(enviroment.localNode + apiCategoryProduct);
+        let apiCategoryProduct = `ctproduct/of?categoryProductId=6246b87d8b27c4245837281d`;
+        await axios.get(enviroment.localNode + apiCategoryProduct).then((res)=> {
+            console.log("res",res)
+        });
         
         // let categories:any = [];
         // await axios.get(enviroment.local + apiPagination1)
@@ -49,6 +48,7 @@ const LayoutUser = () => {
         // console.log("categories",categories)
     }
     useEffect(()=>{
+        fetchDataProduct();
     },[])
     return (
         

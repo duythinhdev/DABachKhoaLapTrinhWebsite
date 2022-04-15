@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
-    console.log("req.bodyreq.body", req.body);
+    console.log("req.body", req.body);
     User.find({ email: req.body.email }).exec().then(user => {
         if (user.length >= 1) {
             console.log("user", user);
@@ -19,12 +19,14 @@ exports.signup = (req, res, next) => {
                     })
                 } else {
                     const user = new User({
-                        name: req.body.name,
                         email: req.body.email,
                         full_name: req.body.full_name,
                         permission: req.body.permission,
                         is_active: req.body.is_active,
                         address: req.body.address,
+                        gender: req.body.gender,
+                        phone_number: req.body.phone_number,
+                        city: req.body.city,
                         password: hash
                     });
                     user.save().then(result => {

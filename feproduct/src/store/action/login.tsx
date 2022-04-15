@@ -17,7 +17,8 @@ export const loginAppUser = (username:string,password:string) => {
     }
 }
 
-export const signup = (name:string,fullname:string,username:string,password:string,phone:string) => {
+export const signup = (name:string,fullname:string,username:string,
+    password:string,phone:string,city:string,gender:string) => {
     return {
         type: actionTypes.SIGNUP_APP_USER,
         name: name,
@@ -25,6 +26,8 @@ export const signup = (name:string,fullname:string,username:string,password:stri
         username: username,
         password: password,
         phone: phone,
+        city: city,
+        gender: gender,
     }
 }
 export const statusSignup = (title: any,status: boolean) => {

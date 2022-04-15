@@ -2,12 +2,9 @@ const CategoryProduct = require("../../models/category");
 const Product = require("../../models/product");
 const PAGE_SIZE = 10;
 exports.categoryOfProduct = async function(req, res, next) {
-    let OptionProduct = [];
     const { categoryProductId, productId } = req.query;
-    const CtProduct = await CategoryProduct.findById(categoryProductId).populate('product');
-    const Products = await Product.findById(productId).populate('options');
-    let option = OptionProduct.push(CtProduct.product);
-    console.log("Products", Products);
+    const CtProduct = await CategoryProduct.findById(categoryProductId).populate('product')
+        // const Products = await Product.findById(productId).populate('options');
     try {
         return res.status(200).json({
             data: CtProduct.product,

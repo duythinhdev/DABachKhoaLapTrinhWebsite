@@ -1,9 +1,10 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns, userRows } from "../../../datatablesource";
-import { Link } from "react-router-dom";
+import { Link,Switch } from "react-router-dom";
 import { useState } from "react";
-
+import { Routes, RouteWithSubRoutes} from "../../../router/router";
+ 
 const Datatable = () => {
   const [data, setData] = useState(userRows);
 
@@ -49,6 +50,11 @@ const Datatable = () => {
         rowsPerPageOptions={[9]}
         checkboxSelection
       />
+       {/* <Switch>
+        {Routes.map((route, i) => (
+          <RouteWithSubRoutes key={i} {...route} />
+        ))}
+      </Switch> */}
     </div>
   );
 };

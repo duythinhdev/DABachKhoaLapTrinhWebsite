@@ -31,7 +31,12 @@ const AllTopProduct: React.LazyExoticComponent<() => JSX.Element> = React.lazy((
     import ("../page/AllTopProduct/AllTopProduct"));
 const ProductBrand : React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
 import ("../component/user/ProductDetail/ProductBrand/ProductBand"));
-
+const HomeAdmin : React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
+import ("../page/homeAdmin/Home"));
+const newAdmin = React.lazy(() =>
+import ("../component/adminNew/new/New"));
+const ListAdmin : React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
+import ("../page/ListAdmin/ListAdmin"));
 export {
     ContainerAdmin,
     LoginAmin,
@@ -48,5 +53,8 @@ export {
     layoutBought,
     AllTopProduct,
     BodyAdminOptionOrder,
-    ProductBrand
+    ProductBrand,
+    HomeAdmin,
+    ListAdmin,
+    newAdmin
 }

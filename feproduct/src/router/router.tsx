@@ -16,44 +16,16 @@ import { ContainerAdmin,
     layoutCart,
     layoutBought,
     AllTopProduct,
-    ProductBrand
+    ProductBrand,
+    HomeAdmin,
+    ListAdmin,
+    newAdmin
 } from "./index";
 
-const routes: Array<any> = [
+export const Routes: Array<any> = [
     {
         path: "/loginadmin",
         component: LoginAmin,
-    },
-    {
-        path: "/admin",
-        component: ContainerAdmin,
-        routes: [
-            {
-                path: "/admin/user",
-                component: BodyAdminUser
-            },
-            {
-                path: "/admin/product",
-                component: BodyAdminProduct
-            },
-            {
-                path: "/admin/review",
-                component: BodyAdminReview
-            },
-            {
-                path: "/admin/option",
-                component: BodyAdminOption
-            },
-            {
-                path: "/admin/optionorder",
-                component: BodyAdminOptionOrder
-
-            },
-            {
-                path: "/admin/order",
-                component: BodyAdminOrder
-            },
-        ]
     },
     {
         path: "/user",
@@ -88,6 +60,20 @@ const routes: Array<any> = [
     {
         path: "/productbrand",
         component: ProductBrand
+    },
+    {
+        path: "/home",
+        component: HomeAdmin,
+    },
+    {
+        path: "/users",
+        component: ListAdmin,
+        routes: [
+            {
+              path: "/users/new",
+              component: newAdmin
+            },
+          ]
     }
 ]
 const Routing = () => {
@@ -96,17 +82,8 @@ const Routing = () => {
             <div>
                 <Suspense fallback={<p>Loading</p>}>
                     <Switch>
-                        {routes.map((route, index) => {
-                                return <Route
-                                    key={index}
-                                    path={route.path}
-                                    exact={route.exact}
-                                    component={route.component}
-                                    // render={(props) => {
-                                    //     return isLoginAdmin ? <route.component {...props} routes={route.routes}/> :
-                                    //         <Redirect to="/loginadmin"/>
-                                    // }}
-                                />
+                        {Routes.map((route, index) => {
+                                return  <RouteWithSubRoutes key={index} {...route} />
                             }
                         )}
                     </Switch>
@@ -116,4 +93,16 @@ const Routing = () => {
     )
 }
 export default Routing;
+
+export function RouteWithSubRoutes(route :any) {
+    return (
+      <Route
+      path={route.path}
+      component={route.component}
+      render={props => (
+        <route.component {...props} routes={route.routes} />
+        )}
+      />
+    );
+  }
 
