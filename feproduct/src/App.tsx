@@ -15,23 +15,23 @@ const App = () => {
     return (
         <div className="App">
             <Routing  />
-            <div className={darkMode ? "app dark" : "app"}>
+            {/* <div className={darkMode ? "app dark" : "app"}>
                 <BrowserRouter>
                     <Switch>
                         <Route path="/">
                                 <Route path="/home"  component={Home} />
                                 <Route path="/users"  component={list}> 
                                         <Route  component={list} />
-                                        <Route path=":userId" component={single} />
+                                        <Route path="/users/:userId" component={single} />
                                         <Route
-                                                path="/new"
+                                                path="/users/new"
                                                 component={news}
                                             />
                                 </Route>
                         </Route>
                     </Switch>
                 </BrowserRouter>
-            </div>
+            </div> */}
         </div>
     );
 }

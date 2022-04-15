@@ -37,7 +37,7 @@ const  NewsFeed = () => {
                 </div> 
                 {
                     ArrayNewFeed.map((res:any,index:number)=>{
-                        return  <div className="content-news">
+                        return  <div className="content-news" key={index}>
                         <div className="content-news__img">
                             <img src={res.img} />
                         </div>
@@ -60,7 +60,7 @@ const  NewsFeed = () => {
                 </div>    
                 {
                     ArrayNewFeed.map((res:any,index:number)=>{
-                        return  <div className="content-news">
+                        return  <div className="content-news" key={index}>
                         <div className="content-news__img">
                             <img src={res.img} />
                         </div>

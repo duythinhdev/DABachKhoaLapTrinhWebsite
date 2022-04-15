@@ -1,13 +1,10 @@
-import styled from "styled-components";
-import React, {BaseSyntheticEvent, useState} from "react";
+import React, {BaseSyntheticEvent, useState,useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
-import {Container, Wrapper, Title, Form, Input, Agreement, Button} from "./RegisterCss";
-import * as actions from "../../../store/action/index";
+import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import {TableCell} from "@mui/material";
-import {useHistory} from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import "./Register.scss";
 import Navbar from "../Navbar/Navbar";
 import Announcement from "../Announcement/Announcement";
@@ -15,43 +12,66 @@ import Newsletter from "../Newletter/Newletter";
 import NewsFeeds from "../NewsFeed/NewsFeed";
 import Footer from "../footer/footer";
 import "../../../page/layoutUser/layoutUser.scss";
-interface FormInputs {
-    name: string;
-    fullname: string,
-    username: string,
-    password: string,
-    phone: string,
-    confirmpassword: string,
-}
+import * as actions from "../../../store/action/index";
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+// interface FormInputs {
+//     fullname: string,
+//     email: string,
+//     password: string,
+//     phone: string,
+//     confirmPwd: string
+// }
 
 const Register = () => {
     const [value, setValue] = useState({
-        name: '',
-        fullname: '',
-        username: '',
-        password: '',
-        phone: '',
-        confirmpassword: '',
-    }) as any;
+        fullName: '' as string,
+        confirmPwd: '' as string,
+        email: '' as string,
+        password: '' as string,
+        phoneNumber: '' as string,
+        genderMale: 0 as number,
+        genderFeMale: 0 as number,
+        address: '' as string,
+        city: '' as string
+    });
+    const formSchema = Yup.object().shape({
+        password: Yup.string()
+          .required('Mật Khẩu Cần Phải nhập')
+          .min(3, 'Mật khẩu phải dài hơn 3 ký tự'),
+        confirmPwd: Yup.string()
+          .required('Nhập lại Mật Khẩu Cần Phải nhập')
+          .oneOf([Yup.ref('password')], 'Mật khẩu Không trùng'),
+        fullName: Yup.string().required('Họ Và Tên Cần Phải nhập'),
+        email:  Yup.string().email().required('Email Cần Phải nhập'),
+        genderMale: Yup.bool(),
+        genderFeMale: Yup.bool(),
+        city:  Yup.string().required('Thành phố Cần Phải nhập'),
+        address:  Yup.string().required('Địa chỉ Cần Phải nhập'),
+        phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
+      })
     let dispatch = useDispatch();
     let history = useHistory();
-    let titleSignUp = useSelector((state: any) => state.login.titleSignup);
-    let statusSignUp = useSelector((state: any) => state.login.StatusSignup);
-    const {register, formState: {errors}, handleSubmit} = useForm<FormInputs>({
-        criteriaMode: "all"
-    });
+    // let titleSignUp = useSelector((state: any) => state.login.titleSignup);
+    // let statusSignUp = useSelector((state: any) => state.login.StatusSignup);
+    // const {register, formState: {errors}, handleSubmit,watch} = useForm<FormInputs>({
+    //     criteriaMode: "all"
+    // })
+    const formOptions = { resolver: yupResolver(formSchema) };
+    const { register, handleSubmit, formState } = useForm(formOptions);
+    const { errors } = formState
     const changeValue = (event: any) => {
         setValue({...value, [event.target.name]: event.target.value});
+        console.log("event", value)
     }
-    const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined) => {
-        let action = actions.signup(value.name, value.fullname, value.username, value.password, value.phone);
-        await dispatch(action);
-        notify(titleSignUp)
+    const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: any) => {
+        // let action = actions.signup(value.fullname, value.username, value.password, value.phone);
+        // await dispatch(action);
+        event.preventDefault();
     }
-    if (statusSignUp) {
-        history.push("/user");
-    }
-    const notify = (titlePost: String) => toast(titlePost);
+    // const notify = (notifyPassword: String) => toast(notifyPassword);
     return (
         <div className="ContainerApp">
             <Announcement />
@@ -61,13 +81,18 @@ const Register = () => {
                     <div  className="Wrapper__register">
                         <span>Đăng ký</span>
                     </div>
-                    <form  className="Wrapper__form">
+                    <form  className="Wrapper__form"  onSubmit={handleSubmit((data: any,event:any) => clickValue(data,event))}>
                         <div className="Form">
                             <div className="Form__title">
                                 <span>Địa chỉ Email</span>
                             </div>
                             <div className="Form__input">
-                                <input />
+                                <input  placeholder="email" type="email"
+                                        {...register('email')}
+                                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                                        onChange={(event) => changeValue(event)}
+                                />
+                                 <div className="invalid-feedback">{errors.email?.message}</div>
                                 <b style={{color: "#ff0000" }}>*</b>
                             </div>
                         </div>
@@ -76,17 +101,26 @@ const Register = () => {
                                 <span>Mật Khẩu </span>
                             </div>
                             <div className="Form__input">
-                                <input />
+                                <input   placeholder="Mật khẩu"  type="password"
+                                       {...register('password')}
+                                       className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                                       onChange={(event) => changeValue(event)}
+                                />
                                 <b style={{color: "#ff0000" }}>*</b>
+                                <div className="invalid-feedback">{errors.password?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
                             <div className="Form__title">
                                 <span>Nhập lại mật khẩu</span>
                             </div>
-                            <div className="Form__input">
-                                <input />
+                            <div className="Form__input"> 
+                                <input {...register('confirmPwd')}  type="password" placeholder="Nhập lại Mật khẩu"
+                                   className={`form-control ${errors.confirmPwd ? 'is-invalid' : ''}`}
+                                   onChange={(event) => changeValue(event)}
+                                />
                                 <b style={{color: "#ff0000" }}>*</b>
+                                <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -94,8 +128,13 @@ const Register = () => {
                                 <span>Họ Và Tên</span>
                             </div>
                             <div className="Form__input">
-                                <input />
+                                <input placeholder="Họ Và Tên"  type="text"
+                                        {...register('fullName')} 
+                                        className={`form-control fullName  ${errors.fullName ? 'is-invalid' : ''}`}
+                                        onChange={(event) => changeValue(event)}
+                                         />
                                 <b style={{color: "#ff0000" }}>*</b>
+                                <div className="invalid-feedback">{errors.fullName?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -103,10 +142,18 @@ const Register = () => {
                                 <span>Giới Tính</span>
                             </div>
                             <div className="Form__radio">
-                                <input type="radio" name="fav_language" value="Nam" />
+                                <input type="radio"  value="0" 
+                                     {...register('genderMale')} id="gender" className={`form-check-input ${errors.genderMale ? 'is-invalid' : ''}`}
+                                     onChange={(event) => changeValue(event)}
+                                />
                                 <label>Nam</label>
-                                <input type="radio" name="fav_language" value="Nu"  />
+                                <div className="invalid-feedback">{errors.genderMale?.message}</div>
+                                <input type="radio"  value="1" 
+                                     {...register('genderFeMale')} id="gender" className={`form-check-input ${errors.genderFeMale ? 'is-invalid' : ''}`}
+                                     onChange={(event) => changeValue(event)}
+                                />
                                 <label>Nữ</label>
+                                <div className="invalid-feedback">{errors.genderFeMale?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -114,12 +161,17 @@ const Register = () => {
                                 <span>Tinh/Tp</span>
                             </div>
                             <div className="Form__select">
-                                <select name="City" id="cars">
-                                    <option value="volvo">Hà Nội</option>
-                                    <option value="saab">Sài Gòn</option>
-                                    <option value="mercedes">Đà Nẵng</option>
-                                    <option value="audi">Cẩn Thơ</option>
+                                <select
+                                    {...register('city')} className={`form-check-input ${errors.city ? 'is-invalid' : ''}`}
+                                    onChange={(event) => changeValue(event)}
+                                >
+                                    <option value="0"></option>
+                                    <option value="1">Hà Nội</option>
+                                    <option value="2">Sài Gòn</option>
+                                    <option value="3">Đà Nẵng</option>
+                                    <option value="4">Cẩn Thơ</option>
                                 </select>
+                                <div className="invalid-feedback">{errors.city?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -127,7 +179,11 @@ const Register = () => {
                                 <span>Địa chỉ nhận hàng</span>
                             </div>
                             <div className="Form__input">
-                                <input />
+                                <input 
+                                     {...register('address')} className={`form-control ${errors.address ? 'is-invalid' : ''}`}
+                                     onChange={(event) => changeValue(event)}
+                                />
+                                 <div className="invalid-feedback">{errors.address?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -135,7 +191,11 @@ const Register = () => {
                                 <span>Điện thoại di động</span>
                             </div>
                             <div className="Form__input">
-                                <input />
+                                <input 
+                                     {...register('phoneNumber')} className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
+                                     onChange={(event) => changeValue(event)}
+                                />
+                                    <div className="invalid-feedback">{errors.phoneNumber?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -151,142 +211,13 @@ const Register = () => {
                                 <span></span>
                             </div>
                             <div className="Form__button">
-                                <button>Đăng ký</button>
+                                <button onClick={handleSubmit((data: any,event: any) => clickValue(data,event))}>Đăng ký</button>
                             </div>
                         </div>
                     </form>
-                    {/* <form  className="Form" onSubmit={handleSubmit((data: any) => clickValue(data))}>
-                            <input  className="Input"  placeholder="name"
-                                {...register("name", {
-                                    required: "This is required.",
-                                    maxLength: {
-                                        value: 30,
-                                        message: "This input exceed maxLength."
-                                    }
-                                })}
-                                onChange={(event) => changeValue(event)}
-                            />
-                            <ErrorMessage
-                                errors={errors}
-                                name="name"
-                                render={({messages}) =>
-                                    messages &&
-                                    Object.entries(messages).map(([type, message]) => (
-                                        <p key={type}>{message}</p>
-                                    ))
-                                }
-                            />
-                            <input className="Input"  placeholder="fullname"
-                                {...register("fullname", {
-                                    required: "This is required.",
-                                    maxLength: {
-                                        value: 30,
-                                        message: "This input exceed maxLength."
-                                    }
-                                })}
-                                onChange={(event) => changeValue(event)}
-                            />
-                            <ErrorMessage
-                                errors={errors}
-                                name="fullname"
-                                render={({messages}) =>
-                                    messages &&
-                                    Object.entries(messages).map(([type, message]) => (
-                                        <p key={type}>{message}</p>
-                                    ))
-                                }
-                            />
-                            <input className="Input"  placeholder="username"
-                                {...register("username", {
-                                    required: "This is required.",
-                                    maxLength: {
-                                        value: 30,
-                                        message: "This input exceed maxLength."
-                                    }
-                                })}
-                                onChange={(event) => changeValue(event)}
-                            />
-                            <ErrorMessage
-                                errors={errors}
-                                name="username"
-                                render={({messages}) =>
-                                    messages &&
-                                    Object.entries(messages).map(([type, message]) => (
-                                        <p key={type}>{message}</p>
-                                    ))
-                                }
-                            />
-                            <input className="Input"  placeholder="phone"
-                                {...register("phone", {
-                                    required: "This is required.",
-                                    maxLength: {
-                                        value: 30,
-                                        message: "This input exceed maxLength."
-                                    }
-                                })}
-                                onChange={(event) => changeValue(event)}
-                            />
-                            <ErrorMessage
-                                errors={errors}
-                                name="phone"
-                                render={({messages}) =>
-                                    messages &&
-                                    Object.entries(messages).map(([type, message]) => (
-                                        <p key={type}>{message}</p>
-                                    ))
-                                }
-                            />
-                            <input className="Input"  placeholder="password"
-                                type="password"
-                                {...register("password", {
-                                    required: "This is required.",
-                                    maxLength: {
-                                        value: 30,
-                                        message: "This input exceed maxLength."
-                                    }
-                                })}
-                                onChange={(event) => changeValue(event)}
-                            />
-                            <ErrorMessage
-                                errors={errors}
-                                name="password"
-                                render={({messages}) =>
-                                    messages &&
-                                    Object.entries(messages).map(([type, message]) => (
-                                        <p key={type}>{message}</p>
-                                    ))
-                                }
-                            />
-                            <input className="Input"  placeholder="confirmpassword"
-                                type="password"
-                                {...register("confirmpassword", {
-                                    required: "This is required.",
-                                    maxLength: {
-                                        value: 30,
-                                        message: "This input exceed maxLength."
-                                    }
-                                })}
-                                onChange={(event) => changeValue(event)}
-                            />
-                            <ErrorMessage
-                                errors={errors}
-                                name="confirmpassword"
-                                render={({messages}) =>
-                                    messages &&
-                                    Object.entries(messages).map(([type, message]) => (
-                                        <p key={type}>{message}</p>
-                                    ))
-                                }
-                            />
-                            <div className="Agreement">
-                                By creating an account, I consent to the processing of my personal
-                                data in accordance with the <b>PRIVACY POLICY</b>
-                            </div>
-                            <button className="Button" onClick={handleSubmit((data: any) => clickValue(data))}>CREATE</button>
-                    </form> */}
                 </div>
                 <>
-                    {statusSignUp && <ToastContainer/>}
+                    {/* {statusSignUp && <ToastContainer/>} */}
                 </>
             </div>
             <Newsletter />

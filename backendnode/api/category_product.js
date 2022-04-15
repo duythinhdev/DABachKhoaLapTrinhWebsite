@@ -35,7 +35,7 @@ const upload = multer({
 });
 router.route("/post").post(postCategoryProduct);
 router.route("/pproduct").post(upload.single('productImage'), postRelationShipProduct);
-router.route("/").get(getCategoryProduct);
+router.route("/get").get(getCategoryProduct);
 router.route("/detail/:id").get(getCategoryProductDetail);
 router.route("/put").put(putCategoryProduct);
 router.route("/delete").delete(deleteCategoryProduct);
