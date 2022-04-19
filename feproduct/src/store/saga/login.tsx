@@ -1,10 +1,18 @@
-import {put, call,delay} from "redux-saga/effects";
-import axios from "axios";
+import {put, call,delay } from "redux-saga/effects";
+import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
-import axiosApp from "../../enviroment/axiosApp";
 
-
+interface  signUps { 
+    type: "SIGNUPS_APP_USER",
+    fullName:string,
+    email:string,
+    password:string,
+    phone:string,
+    address:string,
+    city:string,
+    gender:string
+}
 export function* logoutSaga(action:any) {
     yield call([localStorage, 'removeItem'], 'tokenAdmin');
     yield call([localStorage, 'removeItem'], 'expirationDate');
@@ -36,24 +44,36 @@ export function* loginApp(actions: any) : any {
     }
 }
 
-export function* signupUser(actions: any) :any
+export function* signUpUser(actions: signUps)
 {
-    const { name,fullname,username, password,phone } = actions;
+    const { fullName,email,password,phone,address,city,gender } = actions;
     let body = {
-        name: name,
-        full_name: fullname,
-        username: username,
+        full_name: fullName,
+        email: email,
+        address: address,
         password: password,
-        phone: phone
+        phone: phone,
+        city: city,
+        gender: gender
     }
-    console.log(name,fullname,username,password,phone);
-    let urlSignup = 'v1/user/signup';
+    let urlSignUp = 'user/signups';
     try {
-        const response:any =  yield axios.post(enviroment.local + urlSignup, body);
-        yield put(Actions.statusSignup("post success",true))
+        let  response: any =  axios.post(enviroment.localNode + urlSignUp, body);
+        let status = { response }
+        console.log("status",status);
+        switch(response.response.status)
+        {
+            case 201: 
+                yield put(Actions.statusSignup("Chúc Mừng Bạn Đã Đăng ký thành Viên Thành Công",true))
+            break;
+            case 409:
+                yield put(Actions.statusSignup("Bạn Đã Đăng ký trùng Email",true))
+            break;
+        }
+      
     }
     catch (e) {
-        yield put(Actions.statusSignup("signup failed",true))
+        yield put(Actions.statusSignup("Bạn Đã Đăng ký thành Viên Thất Bại",true))
     }
 }
 export function* logoutUserSaga(action:any) {

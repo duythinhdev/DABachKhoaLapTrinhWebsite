@@ -32,46 +32,45 @@ const Register = () => {
         email: '' as string,
         password: '' as string,
         phoneNumber: '' as string,
-        genderMale: 0 as number,
-        genderFeMale: 0 as number,
+        gender: '' as  string,
         address: '' as string,
         city: '' as string
     });
     const formSchema = Yup.object().shape({
         password: Yup.string()
           .required('Mật Khẩu Cần Phải nhập')
-          .min(3, 'Mật khẩu phải dài hơn 3 ký tự'),
+          .min(6, 'Mật khẩu phải dài hơn 6 ký tự'),
         confirmPwd: Yup.string()
           .required('Nhập lại Mật Khẩu Cần Phải nhập')
           .oneOf([Yup.ref('password')], 'Mật khẩu Không trùng'),
         fullName: Yup.string().required('Họ Và Tên Cần Phải nhập'),
         email:  Yup.string().email().required('Email Cần Phải nhập'),
-        genderMale: Yup.bool(),
-        genderFeMale: Yup.bool(),
+        gender:  Yup.string(),
         city:  Yup.string().required('Thành phố Cần Phải nhập'),
         address:  Yup.string().required('Địa chỉ Cần Phải nhập'),
         phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
       })
     let dispatch = useDispatch();
-    let history = useHistory();
-    // let titleSignUp = useSelector((state: any) => state.login.titleSignup);
-    // let statusSignUp = useSelector((state: any) => state.login.StatusSignup);
+    let titleSignUp = useSelector((state: any) => state.login.titleSignup);
+    let statusSignUp = useSelector((state: any) => state.login.StatusSignup);
     // const {register, formState: {errors}, handleSubmit,watch} = useForm<FormInputs>({
     //     criteriaMode: "all"
     // })
     const formOptions = { resolver: yupResolver(formSchema) };
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState
-    const changeValue = (event: any) => {
+    const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
         console.log("event", value)
     }
-    const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: any) => {
-        // let action = actions.signup(value.fullname, value.username, value.password, value.phone);
-        // await dispatch(action);
+    const notify = () => toast(titleSignUp);
+    const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const {fullName,password,phoneNumber,address,gender,city,email } = value;
+        let action = actions.signup(fullName,email, password, phoneNumber, address,city,gender);
+        await dispatch(action);
+        await notify();
     }
-    // const notify = (notifyPassword: String) => toast(notifyPassword);
     return (
         <div className="ContainerApp">
             <Announcement />
@@ -89,6 +88,7 @@ const Register = () => {
                             <div className="Form__input">
                                 <input  placeholder="email" type="email"
                                         {...register('email')}
+                                        name="email"
                                         className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                         onChange={(event) => changeValue(event)}
                                 />
@@ -103,6 +103,7 @@ const Register = () => {
                             <div className="Form__input">
                                 <input   placeholder="Mật khẩu"  type="password"
                                        {...register('password')}
+                                       name="password"
                                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                        onChange={(event) => changeValue(event)}
                                 />
@@ -115,7 +116,9 @@ const Register = () => {
                                 <span>Nhập lại mật khẩu</span>
                             </div>
                             <div className="Form__input"> 
-                                <input {...register('confirmPwd')}  type="password" placeholder="Nhập lại Mật khẩu"
+                                <input {...register('confirmPwd')} 
+                                   name="confirmPwd"
+                                   type="password" placeholder="Nhập lại Mật khẩu"
                                    className={`form-control ${errors.confirmPwd ? 'is-invalid' : ''}`}
                                    onChange={(event) => changeValue(event)}
                                 />
@@ -130,6 +133,7 @@ const Register = () => {
                             <div className="Form__input">
                                 <input placeholder="Họ Và Tên"  type="text"
                                         {...register('fullName')} 
+                                        name="fullName"
                                         className={`form-control fullName  ${errors.fullName ? 'is-invalid' : ''}`}
                                         onChange={(event) => changeValue(event)}
                                          />
@@ -142,18 +146,20 @@ const Register = () => {
                                 <span>Giới Tính</span>
                             </div>
                             <div className="Form__radio">
-                                <input type="radio"  value="0" 
-                                     {...register('genderMale')} id="gender" className={`form-check-input ${errors.genderMale ? 'is-invalid' : ''}`}
+                                <input type="radio"  value="Male" 
+                                     {...register('gender')}  id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
+                                     name="gender"
                                      onChange={(event) => changeValue(event)}
                                 />
                                 <label>Nam</label>
-                                <div className="invalid-feedback">{errors.genderMale?.message}</div>
-                                <input type="radio"  value="1" 
-                                     {...register('genderFeMale')} id="gender" className={`form-check-input ${errors.genderFeMale ? 'is-invalid' : ''}`}
+                                <div className="invalid-feedback">{errors.gender?.message}</div>
+                                <input type="radio"  value="FeMale" 
+                                     {...register('gender')}  id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
+                                     name="gender"
                                      onChange={(event) => changeValue(event)}
                                 />
                                 <label>Nữ</label>
-                                <div className="invalid-feedback">{errors.genderFeMale?.message}</div>
+                                <div className="invalid-feedback">{errors.gender?.message}</div>
                             </div>
                         </div>
                         <div className="Form">
@@ -162,7 +168,9 @@ const Register = () => {
                             </div>
                             <div className="Form__select">
                                 <select
-                                    {...register('city')} className={`form-check-input ${errors.city ? 'is-invalid' : ''}`}
+                                    {...register('city')}
+                                    name="city"
+                                    className={`form-check-input ${errors.city ? 'is-invalid' : ''}`}
                                     onChange={(event) => changeValue(event)}
                                 >
                                     <option value="0"></option>
@@ -180,7 +188,9 @@ const Register = () => {
                             </div>
                             <div className="Form__input">
                                 <input 
-                                     {...register('address')} className={`form-control ${errors.address ? 'is-invalid' : ''}`}
+                                     {...register('address')} 
+                                     name="address"
+                                     className={`form-control ${errors.address ? 'is-invalid' : ''}`}
                                      onChange={(event) => changeValue(event)}
                                 />
                                  <div className="invalid-feedback">{errors.address?.message}</div>
@@ -192,7 +202,9 @@ const Register = () => {
                             </div>
                             <div className="Form__input">
                                 <input 
-                                     {...register('phoneNumber')} className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
+                                     {...register('phoneNumber')}
+                                     name="phoneNumber"
+                                     className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
                                      onChange={(event) => changeValue(event)}
                                 />
                                     <div className="invalid-feedback">{errors.phoneNumber?.message}</div>
@@ -217,7 +229,7 @@ const Register = () => {
                     </form>
                 </div>
                 <>
-                    {/* {statusSignUp && <ToastContainer/>} */}
+                    {statusSignUp && <ToastContainer/>}
                 </>
             </div>
             <Newsletter />
