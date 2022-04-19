@@ -1,6 +1,6 @@
-import { takeEvery, all, takeLatest } from "redux-saga/effects";
+import { takeEvery, all, takeLatest,StrictEffect } from "redux-saga/effects";
 import  * as actionTypes from '../action/actiontypes';
-import {loginApp, loginUser, signupUser, logoutSaga, logoutUserSaga} from "./login";
+import {loginApp, loginUser, signUpUser, logoutSaga, logoutUserSaga} from "./login";
 import {postProduct,getDetailProduct,putProduct} from "./main";
 import { postUser,putUser,deleteUser } from "../saga/userAdmin";
 import {postOption, putOption} from "../saga/optionAdmin";
@@ -9,11 +9,12 @@ import {postReview,deleteReview,putReview} from "../saga/ReviewAdmin";
 import {postComment } from "../saga/CommentAdmin";
 import {deleteCategoryProduct, postCategoryProduct, putCategoryProduct} from "../saga/CategoryAdmin";
 import { postNews,putNews,deleteNews } from "../saga/NewsAdmin";
-export function* watchLoginAdmin() {
+export function* watchLoginAdmin(): Generator<StrictEffect> {
+    console.log();
     yield all([
         takeEvery(actionTypes.LOGIN_APP_ADMIN,loginApp),
         takeEvery(actionTypes.LOGIN_APP_USER,loginUser),
-        takeEvery(actionTypes.SIGNUP_APP_USER,signupUser),
+        takeEvery(actionTypes.SIGNUPS_APP_USER,signUpUser),
         takeEvery(actionTypes.AUTH_INITITATE_LOGOUT,logoutSaga),
         takeEvery(actionTypes.AUTH_INITITATE_LOGOUT_USER,logoutUserSaga),
     ])

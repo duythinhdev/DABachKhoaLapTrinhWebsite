@@ -17,22 +17,22 @@ export const loginAppUser = (username:string,password:string) => {
     }
 }
 
-export const signup = (name:string,fullname:string,username:string,
-    password:string,phone:string,city:string,gender:string) => {
+export const signup = (fullName:string,email:string,
+    password:string,phone:string,address:string,city:string,gender:string) => {
     return {
-        type: actionTypes.SIGNUP_APP_USER,
-        name: name,
-        fullname: fullname,
-        username: username,
+        type: actionTypes.SIGNUPS_APP_USER,
+        email: email,
+        fullName: fullName,
         password: password,
         phone: phone,
         city: city,
         gender: gender,
+        address: address
     }
 }
-export const statusSignup = (title: any,status: boolean) => {
+export const statusSignup = (title: string,status: boolean) => {
     return {
-        type: actionTypes.STATUS_POST_SIGNUP,
+        type: actionTypes.STATUS_POST_SIGNUPS,
         title: title,
         status: status
     }

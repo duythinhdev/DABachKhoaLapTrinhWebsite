@@ -2,7 +2,7 @@ const CategoryProduct = require("../../models/category");
 const Product = require("../../models/product");
 const PAGE_SIZE = 10;
 exports.categoryOfProduct = async function(req, res, next) {
-    const { categoryProductId, productId } = req.query;
+    const { categoryProductId } = req.query;
     const CtProduct = await CategoryProduct.findById(categoryProductId)
         .populate({
             path: 'product',
@@ -93,30 +93,32 @@ exports.getCategoryProduct = async function(req, res, next) {
         return;
     }
 
-    // await CategoryProduct.find({}).exec().then((response) => {
-    //         CategoryProduct.count({}, (err, counts) => {
-    //             if (err) {
-    //                 return res.status(404).json({
-    //                     error: err
-    //                 })
+    await CategoryProduct.find({}).exec().then((response) => {
+            CategoryProduct.count({}, (err, counts) => {
+                if (err) {
+                    return res.status(404).json({
+                        error: err
+                    })
 
-    //             } else {
-    //                 return res.status(200).json({
-    //                     totalPage: counts,
-    //                     data: response,
-    //                 })
-    //             }
-    //         })
-    //     })
-    //     .catch(err => {
-    //         return res.status(404).json({
-    //             error: err
-    //         })
-    //     })
+                } else {
+                    return res.status(200).json({
+                        totalPage: counts,
+                        data: response,
+                    })
+                }
+            })
+        })
+        .catch(err => {
+            return res.status(404).json({
+                error: err
+            })
+        })
 }
 exports.getCategoryProductDetail = function(req, res, next) {
-    var id = req.params.id
-    CategoryProduct.findById(id).then((response) => {
+    const name = req.query.name
+    CategoryProduct.findOne({
+            'name': name
+        }).then((response) => {
             return res.status(200).json({
                 data: response
             })

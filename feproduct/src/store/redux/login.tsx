@@ -25,7 +25,8 @@ const setIsLoginAdmin = (state:any,action:any) => {
     return updateObject(state,{})
 }
 const setStatusSignUp = (state:any,action:any) => {
-    return updateObject(state,{ titleSignup: action.title,StatusSignup: action.status})
+    let  { title,status} = action
+    return updateObject(state,{ titleSignup: title,StatusSignup: status})
 }
 const authLogout = (state:any, action:any) => {
     return updateObject(state, { token: null })
@@ -48,7 +49,7 @@ const LoginReducer = (state = initialState,action:any) => {
     {
         case actionTypes.IS_LOGIN_APP_ADMIN:
             return setIsLoginAdmin(action,state);
-        case actionTypes.STATUS_POST_SIGNUP:
+        case actionTypes.STATUS_POST_SIGNUPS:
             return setStatusSignUp(action,state);
         case actionTypes.AUTH_LOGOUT:
             return  authLogout(state,action);

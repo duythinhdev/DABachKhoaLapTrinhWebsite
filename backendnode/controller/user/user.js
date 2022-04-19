@@ -7,7 +7,6 @@ exports.signup = (req, res, next) => {
     console.log("req.body", req.body);
     User.find({ email: req.body.email }).exec().then(user => {
         if (user.length >= 1) {
-            console.log("user", user);
             return res.status(409).json({
                 message: 'Mail exists'
             })
@@ -21,10 +20,10 @@ exports.signup = (req, res, next) => {
                     const user = new User({
                         email: req.body.email,
                         full_name: req.body.full_name,
-                        permission: req.body.permission,
-                        is_active: req.body.is_active,
+                        permission: 1,
+                        is_active: 1,
                         address: req.body.address,
-                        gender: req.body.gender,
+                        gender: req.body.gender === 'FeMale' ? 0 : 1,
                         phone_number: req.body.phone_number,
                         city: req.body.city,
                         password: hash
