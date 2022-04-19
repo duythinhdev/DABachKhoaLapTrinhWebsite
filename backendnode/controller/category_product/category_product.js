@@ -72,10 +72,8 @@ exports.getCategoryProduct = async function(req, res, next) {
         }
         var skipOption = (page - 1) * PAGE_SIZE;
         var totalPage;
-        await CategoryProduct.find({}).then((response) => {
-            CategoryProduct.count({}, (err, counts) => {
-                totalPage = counts;
-            })
+        await CategoryProduct.count({}, (err, counts) => {
+            totalPage = counts;
         })
         await CategoryProduct.find({})
             .skip(skipOption)
@@ -93,7 +91,14 @@ exports.getCategoryProduct = async function(req, res, next) {
         return;
     }
 
-    await CategoryProduct.find({}).exec().then((response) => {
+    await CategoryProduct.find({}).populate({
+            path: 'product',
+            model: 'Product',
+            populate: {
+                path: 'options',
+                model: 'Option'
+            }
+        }).then((response) => {
             CategoryProduct.count({}, (err, counts) => {
                 if (err) {
                     return res.status(404).json({

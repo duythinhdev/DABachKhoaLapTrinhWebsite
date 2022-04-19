@@ -2,8 +2,8 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom
 import {useDispatch, useSelector} from "react-redux";
 import React, {lazy, Suspense} from "react";
 const login = React.lazy(() => import("../component/user/login/login"));
-const register = React.lazy(() => import("../component/user/register/Register"));
-const layoutUser = React.lazy(() => import("../page/layoutUser/layoutUser"));
+const register = React.lazy(() => import("../component/user/Register/Register"));
+const layoutUser = React.lazy(() => import("../page/LayoutUser/LayoutUser"));
 const News = React.lazy(() => import("../component/user/layoutNews/layoutNews"));
 const layoutCart = React.lazy(() => import("../component/user/layoutCart/layoutCart"));
 const layoutBought = React.lazy(() => import("../component/user/layoutBought/layoutBought"));

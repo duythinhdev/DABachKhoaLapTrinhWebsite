@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import "./CategoryProducts.scss";
 import  HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDetailProduct";
 import { Link } from 'react-router-dom';
@@ -91,8 +91,13 @@ const listProduct:Array<any> = [
         img: TopProduct
     },
 ]
-
-const CategoryProducts  = () =>  {
+interface props {
+    name: Array<any>,
+    indexs: number,
+    id: number
+}
+const CategoryProducts: React.FC<props>  = ({name,indexs,id}) =>  {
+    console.log("id",id);
     const [hoverDetail,setHoverDetail] =  useState(false as boolean);
     const [indexDetail,setIndexDetail] = useState(1 as number);
     const moveDetail = async (index: number)   => {
@@ -102,12 +107,15 @@ const CategoryProducts  = () =>  {
     const moveDetailOver = () : void => {
         setHoverDetail(false);
     }
+    useEffect(()=> {
+
+    },[])
     return (
-        <div className='p-container'>
+        <div className='p-container' key={indexs}>
             <div className='box-center'>
                 <div className='box-center__title'>
                         <div className='box-center__title--ProductSpeed'>
-                                    <h4>Top Sản Phẩm Bán Chạy</h4>
+                                    <h4 key={indexs}>{name}</h4>
                         </div>
                 </div>
     

@@ -2,7 +2,7 @@ import React from 'react';
 import {updateObject} from "../share/utility";
 import * as actionTypes from "../action/actiontypes";
 
-interface tsInitialState {
+export interface tsInitialState {
     isLoginAdmin: boolean,
     titleSignup: string,
     StatusSignup: boolean,

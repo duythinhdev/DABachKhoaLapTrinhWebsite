@@ -1,7 +1,6 @@
 import React, {BaseSyntheticEvent, useState,useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
-import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,11 +10,12 @@ import Announcement from "../Announcement/Announcement";
 import Newsletter from "../Newletter/Newletter";
 import NewsFeeds from "../NewsFeed/NewsFeed";
 import Footer from "../footer/footer";
-import "../../../page/layoutUser/layoutUser.scss";
+import "../../../page/LayoutUser/LayoutUser.scss";
 import * as actions from "../../../store/action/index";
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { RootStateOrAny} from "react-redux";
 
 // interface FormInputs {
 //     fullname: string,
@@ -51,8 +51,8 @@ const Register = () => {
         phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
       })
     let dispatch = useDispatch();
-    let titleSignUp = useSelector((state: any) => state.login.titleSignup);
-    let statusSignUp = useSelector((state: any) => state.login.StatusSignup);
+    let titleSignUp = useSelector((state: RootStateOrAny) => state.login.titleSignup);
+    let statusSignUp = useSelector((state: RootStateOrAny) => state.login.StatusSignup);
     // const {register, formState: {errors}, handleSubmit,watch} = useForm<FormInputs>({
     //     criteriaMode: "all"
     // })

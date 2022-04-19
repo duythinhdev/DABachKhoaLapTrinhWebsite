@@ -5,7 +5,7 @@ import Footer from "../../component/user/footer/footer";
 import ProductBought from "../../component/user/ProductBought/ProductBought";
 import TopProduct from '../../component/user/TopProduct/TopProduct';
 import Newsletter from "../../component/user/Newletter/Newletter";
-import "../layoutUser/layoutUser.scss";
+import "../LayoutUser/LayoutUser.scss";
 import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
 
 const AllTopProduct = () => {
