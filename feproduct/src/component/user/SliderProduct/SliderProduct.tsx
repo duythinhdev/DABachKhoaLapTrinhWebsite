@@ -126,7 +126,7 @@ const CategoryProduct = ()  => {
                 setSlideIndex(1);
             }
             setSlideIndex(Math.round(Math.random() * Slider.length));
-          }, 1000);
+          }, 3000);
           return () => clearInterval(setIntervalCount);
       },[])
     return (

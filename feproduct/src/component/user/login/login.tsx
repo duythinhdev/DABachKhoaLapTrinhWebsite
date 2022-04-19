@@ -14,7 +14,8 @@ import Announcement from "../Announcement/Announcement";
 import Newsletter from "../Newletter/Newletter";
 import NewsFeeds from "../NewsFeed/NewsFeed";
 import Footer from "../footer/footer";
-import "../../../page/layoutUser/layoutUser.scss";
+import "../../../page/LayoutUser/LayoutUser.scss";
+import { RootStateOrAny} from "react-redux";
 
 interface FormInputs {
     passwords: string;
@@ -22,22 +23,22 @@ interface FormInputs {
 }
 const LoginUser = () => {
     let dispatch = useDispatch();
-    let titleSignUp = useSelector((state: any) => state.login.titleSignup);
-    let statusSignUp = useSelector((state: any) => state.login.StatusSignup);
+    let titleSignUp = useSelector((state: RootStateOrAny) => state.login.titleSignup);
+    let statusSignUp = useSelector((state: RootStateOrAny) => state.login.StatusSignup);
     let history = useHistory();
     const [value, setValue] = useState({
         email: '',
         passwords: '',
-    }) as any;
+    }) as any | string;
     const {register, formState: {errors}, handleSubmit} = useForm<FormInputs>({
         criteriaMode: "all"
     });
-    const changeValue = (event: any) => {
+    const changeValue = (event: React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
     const notify = (titlePost: String) => toast(titlePost);
     let redirect = null;
-    let isLoginUser = useSelector((state: any) => state.login.isLoginUser);
+    let isLoginUser = useSelector((state: RootStateOrAny) => state.login.isLoginUser);
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined) => {
         let action = actions.loginAppUser(value.email,value.passwords);
         await dispatch(action);

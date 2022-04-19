@@ -8,10 +8,12 @@ import Home from "./page/homeAdmin/Home";
 import list from "./page/ListAdmin/ListAdmin";
 import Single from "./page/SingleAdmin/Single";
 import New from "./component/adminNew/new/New";
+import { RootStateOrAny} from "react-redux";
+
 const App = () => {
-    const darkMode = useSelector((state:any ) => { return  state.main.darkMode });
-    let news:any = <New inputs={userInputs} title="Add New User" />;
-    let single:any =  <Single />;
+    const darkMode = useSelector((state: RootStateOrAny) => { return  state.main.darkMode });
+    let news: JSX.Element = <New inputs={userInputs} title="Add New User" />;
+    let single: JSX.Element =  <Single />;
     return (
         <div className="App">
             <Routing  />

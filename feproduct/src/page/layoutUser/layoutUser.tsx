@@ -1,15 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import "./layoutUser.scss";
+import "./LayoutUser.scss";
 import Navbar from "../../component/user/Navbar/Navbar";
 import Announcement from "../../component/user/Announcement/Announcement";
-import Slider from "../../component/user/slider/slider";
-import Categories from "../../component/user/categories/categories";
-import Products from "../../component/user/Products/Products";
-import ProductsSamSung from "../../component/user/Products/productSamsung";
-import Productslg from "../../component/user/Products/Productlg";
 import Newsletter from "../../component/user/Newletter/Newletter";
 import Footer from "../../component/user/footer/footer";
-import CategoryProduct from "../../component/user/SliderProduct/SliderProduct";
+import SliderProduct from "../../component/user/SliderProduct/SliderProduct";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../enviroment/enviroment";
 import CategoryProducts from "../../component/user/CategoryProducts/CategoryProducts";
@@ -24,28 +19,12 @@ const LayoutUser = () => {
     const [state, setState] = useState({
         page: 1 as any,
     });
-    const [dataPagination,setDataPagination] = useState([]) as Array<any>;
+    const [dataCategoryProduct,setDataCategoryProduct] = useState([]) as Array<any>;
     let fetchDataProduct = async () => {
-        let apiCategoryProduct = `ctproduct/of?categoryProductId=6246b87d8b27c4245837281d`;
-        await axios.get(enviroment.localNode + apiCategoryProduct).then((res)=> {
-            console.log("res",res)
-        });
-        
-        // let categories:any = [];
-        // await axios.get(enviroment.local + apiPagination1)
-        //     .then( async (res: AxiosResponse<any>) => {
-        //         res.data.response.data.forEach( async (item:any)=>{
-        //             let apiPagination = `v1/categoryproduct/getaboutproduct?pagenumber=${state.page}&pagesize=${state.rowsPerPage}&idcategory=${item.id}`;
-        //             await axios.get(enviroment.local + apiPagination)
-        //                 .then( async (resCategory: AxiosResponse<any>) => {
-        //                      item.product = await resCategory.data.response.data
-        //                     await categories.push(item)
-        //                     console.log("item.product",item.product);
-        //                 }).catch(err => console.log(err));
-        //         })
-        //         await setDataPagination(categories); 
-        //     }).catch(err => console.log(err));
-        // console.log("categories",categories)
+       let ctProduct = "ctproduct/get";
+       await axios.get(enviroment.localNode + ctProduct).then((res: any) => {
+            setDataCategoryProduct(res.data.data)
+       });
     }
     useEffect(()=>{
         fetchDataProduct();
@@ -55,8 +34,12 @@ const LayoutUser = () => {
         <div className="ContainerApp">
             <Announcement />
             <Navbar />
-            <CategoryProduct />
-            <CategoryProducts />
+            <SliderProduct />
+            {
+               dataCategoryProduct?.map((res: any,index:number) => {
+                    return <CategoryProducts name={res?.name} id={res?._id} indexs={index}/> 
+                })
+            }
             <Newsletter />
             <NewsFeeds />
             <Footer />

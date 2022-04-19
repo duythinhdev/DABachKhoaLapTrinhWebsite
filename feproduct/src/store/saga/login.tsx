@@ -5,13 +5,14 @@ import * as Actions from "../action/index";
 
 interface  signUps { 
     type: "SIGNUPS_APP_USER",
-    fullName:string,
-    email:string,
-    password:string,
-    phone:string,
-    address:string,
-    city:string,
-    gender:string
+    fullName?:string,
+    email?:string,
+    password?:string,
+    phone?:string,
+    address?:string,
+    city?:string,
+    gender?:string
+    status: number
 }
 export function* logoutSaga(action:any) {
     yield call([localStorage, 'removeItem'], 'tokenAdmin');
@@ -58,21 +59,21 @@ export function* signUpUser(actions: signUps)
     }
     let urlSignUp = 'user/signups';
     try {
-        let  response: any =  axios.post(enviroment.localNode + urlSignUp, body);
-        let status = { response }
-        console.log("status",status);
-        switch(response.response.status)
+        let  response: signUps  = yield axios.post(enviroment.localNode + urlSignUp, body);
+        console.log("status",response);
+        switch(response.status)
         {
             case 201: 
                 yield put(Actions.statusSignup("Chúc Mừng Bạn Đã Đăng ký thành Viên Thành Công",true))
             break;
-            case 409:
-                yield put(Actions.statusSignup("Bạn Đã Đăng ký trùng Email",true))
-            break;
+            // case 409:
+            //     yield put(Actions.statusSignup("Bạn Đã Đăng ký trùng Email",true))
+            // break;
         }
       
     }
     catch (e) {
+        console.log(e);
         yield put(Actions.statusSignup("Bạn Đã Đăng ký thành Viên Thất Bại",true))
     }
 }
