@@ -3,6 +3,7 @@ import "./CategoryProducts.scss";
 import  HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDetailProduct";
 import { Link } from 'react-router-dom';
 import TopProduct from "../../../asset/TopProduct/250_34178_large_7cafaa8dedb3d130.jpg";
+import { enviroment } from "../../../enviroment/enviroment";
 
 
 const listProduct:Array<any> = [
@@ -92,12 +93,10 @@ const listProduct:Array<any> = [
     },
 ]
 interface props {
-    name: Array<any>,
     indexs: number,
-    id: number
+    response: any
 }
-const CategoryProducts: React.FC<props>  = ({name,indexs,id}) =>  {
-    console.log("id",id);
+const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
     const [hoverDetail,setHoverDetail] =  useState(false as boolean);
     const [indexDetail,setIndexDetail] = useState(1 as number);
     const moveDetail = async (index: number)   => {
@@ -108,36 +107,35 @@ const CategoryProducts: React.FC<props>  = ({name,indexs,id}) =>  {
         setHoverDetail(false);
     }
     useEffect(()=> {
-
     },[])
     return (
         <div className='p-container' key={indexs}>
             <div className='box-center'>
                 <div className='box-center__title'>
                         <div className='box-center__title--ProductSpeed'>
-                                    <h4 key={indexs}>{name}</h4>
+                                    <h4 key={indexs}>{response?.name}</h4>
                         </div>
                 </div>
     
                 <div className='box-center__content'>
                     <div className='box-center__content--product'>
                         {
-                            listProduct.map((res:any,index:number)=> {
+                            response?.product.map((res:any,index:number)=> {
                               return  <div className='product--detail' >
                                     <div className='product--detail__img' onMouseMove={()=>moveDetail(index)} onMouseLeave={()=>moveDetailOver()} >
-                                        <img src={res.img}/>
+                                        <img src={res.productImage[0]}/>
                                     </div>
                                 <div className='product--detail__Code'>
-                                    <span> {res.code}</span>
+                                    <span> {res.id_categoryProduct}</span>
                                 </div>
                                 <div className='product--detail__Name'>
-                                       <Link to="/cart"  className="detailName__link"><span>{res.Name}</span></Link> 
+                                       <Link to="/cart"  className="detailName__link"><span>{res.Product_name}</span></Link> 
                                 </div>
                                 <div className='product--detail__pricePromotion'>
-                                        <del>{res.Promotion}</del>
+                                        <del>{res.options[0]?.price}</del>
                                 </div>
                                 <div className='product--detail__price'>
-                                        {res.Price}
+                                        {res.options[0]?.type}
                                 </div>
                                 </div>
                             })
@@ -153,6 +151,6 @@ const CategoryProducts: React.FC<props>  = ({name,indexs,id}) =>  {
             </div>
         </div>
     );
-}
+})
 
 export default CategoryProducts;

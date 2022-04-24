@@ -34,7 +34,7 @@ const upload = multer({
     fileFilter: fileFilter
 });
 router.route("/post").post(postCategoryProduct);
-router.route("/pproduct").post(upload.single('productImage'), postRelationShipProduct);
+router.route("/pproduct").post(upload.array('productImage'), postRelationShipProduct);
 router.route("/get").get(getCategoryProduct);
 router.route("/detail").get(getCategoryProductDetail);
 router.route("/put").put(putCategoryProduct);

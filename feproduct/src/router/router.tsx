@@ -1,6 +1,7 @@
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {lazy, Suspense} from "react";
+import Spinner from "../component/spinner/spinner";
 import { ContainerAdmin,
     LoginAmin,
     BodyAdminProduct,
@@ -80,7 +81,7 @@ const Routing = () => {
     return (
         <Router>
             <div>
-                <Suspense fallback={<p>Loading</p>}>
+                <Suspense fallback={<p>Loading...</p>}>
                     <Switch>
                         {Routes.map((route, index) => {
                                 return  <RouteWithSubRoutes key={index} {...route} />

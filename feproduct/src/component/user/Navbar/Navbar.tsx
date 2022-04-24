@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from "react-redux";
 import * as actions from "../../../store/action";
 import { useHistory,Link } from 'react-router-dom';
 import "./Navbar.scss";
+import { RootStateOrAny} from "react-redux";
 
 const category:Array<any> = [
     {
@@ -61,24 +62,29 @@ const category:Array<any> = [
 
 const Navbar = () => {
     let token  = JSON.parse(localStorage.getItem('tokenUser') as any | string);
+    let tokenLogin = useSelector((state: any) => state.login.tokenUser);
     let [linkNavBar,setLinkNavBar] = useState(false as boolean);
-    let elementLogin = null;
+    let elementLogin: any = null;
     let elementLogout = null;
     let dispatch = useDispatch();
     let history  = useHistory();
     const logout = async () => {
         let action = actions.logoutUser();
-        await  dispatch(action);
+        await dispatch(action);
     }
-    useEffect(()=>{
-    },[])
-    // if(token)
+    // useEffect(()=>{
+    // if(tokenLogin)
     // {
-    //     elementLogin = <div className="MenuItem" onClick={logout}><Link to="/login"  > LOGOUT </Link></div>
+    //      elementLogin = <div className="MenuItem__span" onClick={logout}><Link   className="MenuItem__Link" to="/login"  > LOGOUT </Link></div>
     // }
-    // else  {
-    //     elementLogin  =  <div className="MenuItem" ><Link to="/login" > SIGN IN </Link> <Link to="/register" > REGISTER </Link></div>
+    // else if(!tokenLogin)  {
+    //      elementLogin  = <div  className="MenuItem__span">
+    //     <Link  className="MenuItem__Link" to="/login" ><span>Đăng nhập </span></Link>
+    //     <Link className="MenuItem__Link" to="/register" > <span>Đăng ký</span></Link>
+    // </div>
     // }
+    //     return () => elementLogin;
+    // },[elementLogin])
     const clickNav  = () => {
         setLinkNavBar(!linkNavBar)
     }
@@ -126,13 +132,13 @@ const Navbar = () => {
                     </div>
                     <div className="MenuItem">
                         <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/login" ><AccountCircleOutlinedIcon /></Link></div>
-                        <div  className="MenuItem__span">
-                            <Link  className="MenuItem__Link" to="/login" ><span>Đăng nhập </span></Link>
-                            <Link className="MenuItem__Link" to="/register" > <span>Đăng ký</span></Link>
-                        </div>
+                        { tokenLogin ?<div className="MenuItem__span" onClick={logout}><Link   className="MenuItem__Link" to="/login"  > Đăng Xuất </Link></div> : 
+                            <div  className="MenuItem__span">
+                               <Link  className="MenuItem__Link" to="/login" ><span>Đăng nhập </span></Link>
+                               <Link className="MenuItem__Link" to="/register" > <span>Đăng ký</span></Link>
+                           </div>
+                        }
                     </div>
-                    {/* {elementLogin}
-                    {elementLogout} */}
                     <div className="MenuItem">
                         <Badge badgeContent={50} color="primary">
                             <Link to="/bought" className="MenuItem__Link" > <ShoppingCartOutlined /></Link>

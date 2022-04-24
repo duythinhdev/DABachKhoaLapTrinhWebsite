@@ -10,11 +10,6 @@ import { enviroment } from "../../enviroment/enviroment";
 import CategoryProducts from "../../component/user/CategoryProducts/CategoryProducts";
 import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
 
-const arrayCategory = {
-    categoryLG: 1,
-    categorySamSung: 2,
-    categoryDell: 4,
-}
 const LayoutUser = () => {
     const [state, setState] = useState({
         page: 1 as any,
@@ -37,7 +32,7 @@ const LayoutUser = () => {
             <SliderProduct />
             {
                dataCategoryProduct?.map((res: any,index:number) => {
-                    return <CategoryProducts name={res?.name} id={res?._id} indexs={index}/> 
+                    return <CategoryProducts response={res}  indexs={index}/> 
                 })
             }
             <Newsletter />

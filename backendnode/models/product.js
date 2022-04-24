@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const productSchema = mongoose.Schema({
         Product_name: { type: String, required: true },
-        productImage: { type: String, required: false },
+        productImage: [{ type: String, required: false }],
         description: { type: String, required: false },
         id_categoryProduct: {
             type: Schema.Types.ObjectId,

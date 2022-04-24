@@ -1,6 +1,8 @@
 const CategoryProduct = require("../../models/category");
 const Product = require("../../models/product");
 const PAGE_SIZE = 10;
+const fs = require('fs');
+const cloudinary = require('../../utils/cloudiary')
 exports.categoryOfProduct = async function(req, res, next) {
     const { categoryProductId } = req.query;
     const CtProduct = await CategoryProduct.findById(categoryProductId)
@@ -34,10 +36,27 @@ exports.updateCategoryOfProduct = async(req, res, next) => {
 }
 
 exports.postRelationShipProduct = async(req, res, next) => {
+    const uploader = async(path) => await cloudinary.uploads(path, 'Image');
+    var urls = [];
+    if (req.method === "POST") {
+        const files = req.files;
+        for (const file of files) {
+            const { path } = file;
+            const newPath = await uploader(path);
+            urls.push(newPath);
+            fs.unlinkSync(path);
+        }
+    }
+    console.log("urls", urls)
     const { cproductId } = req.query;
-    const newProduct = new Product({
+    var urlImageProduct = new Array();
+    urls.forEach((element) => {
+            urlImageProduct.push(element.url)
+        })
+        // Product.productImage.push(urls);
+    var newProduct = new Product({
             Product_name: req.body.Product_name,
-            productImage: req.file.path,
+            productImage: urlImageProduct,
             description: req.body.description,
         })
         // console.log("req.body.productImage", req.body.productImage);

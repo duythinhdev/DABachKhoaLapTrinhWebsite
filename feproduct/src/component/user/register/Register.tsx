@@ -61,7 +61,6 @@ const Register = () => {
     const { errors } = formState
     const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
-        console.log("event", value)
     }
     const notify = () => toast(titleSignUp);
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
