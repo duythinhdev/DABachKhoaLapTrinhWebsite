@@ -32,6 +32,6 @@ router.get("/getdetail/:id", ProductController.getProductDetail);
 router.put("/put", upload.single('productImage'), ProductController.putProduct);
 router.delete("/delete", ProductController.deleteProduct)
 router.post("/postdata", upload.single('productImage'), ProductController.postProduct)
-
+router.post("/api/upload", upload.array('productImage'), ProductController.postClouldiary)
 
 module.exports = router;

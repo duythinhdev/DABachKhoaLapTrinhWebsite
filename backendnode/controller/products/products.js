@@ -1,6 +1,8 @@
 const Product = require("../../models/product");
 const CategoryProduct = require("../../models/category");
-const Option = require("../../models/option");;
+const Option = require("../../models/option");
+const fs = require('fs');
+const cloudinary = require('../../utils/cloudiary')
 
 const PAGE_SIZE = 10;
 exports.postProduct = async(req, res, next) => {
@@ -138,4 +140,25 @@ exports.deleteProduct = async(req, res, next) => {
         res.status(500).json({ error: err })
         console.log(err);
     })
+}
+exports.postClouldiary = async(req, res, next) => {
+    const uploader = async(path) => await cloudinary.uploads(path, 'Image')
+    if (req.method === "POST") {
+        const urls = [];
+        const files = req.files;
+        for (const file of files) {
+            const { path } = file;
+            const newPath = await uploader(path);
+            urls.push(newPath);
+            fs.unlinkSync(path);
+        }
+        res.status(200).json({
+            "message": 'Image Uploaded Successfully',
+            data: urls
+        })
+    } else {
+        res.status(405).json({
+            "err": 'Image Not Uploaded Successfully',
+        })
+    }
 }

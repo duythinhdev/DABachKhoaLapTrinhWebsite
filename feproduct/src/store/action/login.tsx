@@ -9,10 +9,10 @@ export const loginAppAdmin = (username:string,password:string) => {
         password: password
     }
 }
-export const loginAppUser = (username:string,password:string) => {
+export const loginAppUser = (email:string,password:string) => {
     return {
         type: actionTypes.LOGIN_APP_USER,
-        username: username,
+        email: email,
         password: password
     }
 }

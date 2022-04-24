@@ -14,6 +14,13 @@ interface  signUps {
     gender?:string
     status: number
 }
+interface login {
+    type: "LOGIN_APP_USER",
+    email:string
+    password: string,
+    status: number,
+    data: any,
+}
 export function* logoutSaga(action:any) {
     yield call([localStorage, 'removeItem'], 'tokenAdmin');
     yield call([localStorage, 'removeItem'], 'expirationDate');
@@ -53,7 +60,7 @@ export function* signUpUser(actions: signUps)
         email: email,
         address: address,
         password: password,
-        phone: phone,
+        phone_number: phone,
         city: city,
         gender: gender
     }
@@ -74,37 +81,38 @@ export function* signUpUser(actions: signUps)
     }
     catch (e) {
         console.log(e);
-        yield put(Actions.statusSignup("Bạn Đã Đăng ký thành Viên Thất Bại",true))
+        yield put(Actions.statusSignup("Bạn Đã Đăng ký thành Viên Thất Bại "  + e,true))
     }
 }
-export function* logoutUserSaga(action:any) {
+export function* logoutUserSaga() {
     yield call([localStorage, 'removeItem'], 'tokenUser');
     yield put(Actions.authSuccessUser(null,false));
     yield put(Actions.logoutSucceed())
 }
-export function* loginUser(actions:any) : any{
-    const { username, password } = actions;
-    console.log(username,password)
+export function* loginUser(actions: login) {
+    const { email, password } = actions;
     let body = {
-        email: username,
+        email: email,
         password: password
     }
-    let urlLogin = 'v1/user/login';
+    let urlLogin = 'user/login';
     try {
-        const response: any =  yield  axios.post(enviroment.local + urlLogin, body);
-        if(response.data.response.status === 200)
+        const response: login =  yield  axios.post(enviroment.localNode + urlLogin, body);
+        console.log("response",response)
+        switch(response.status)
         {
-            yield localStorage.setItem("tokenUser",JSON.stringify(response.data.response.data.token));
-            yield put(Actions.authSuccessUser(response.data.response.data.token,true));
-            yield put(Actions.statusSignup("post success",true))
-        }
-        else if(response.data.response.status === 108) {
-            alert("fail");
-            yield put(Actions.authSuccess(null,false));
+            case 200: 
+                yield put(Actions.statusSignup("Đăng Nhập thành Công",true))
+                yield localStorage.setItem("tokenUser",JSON.stringify(response.data.token));
+                yield put(Actions.authSuccessUser(response.data.token,true));
+            break;
+            case 108: 
+                yield put(Actions.authSuccessUser(null,false));
+             break;
         }
     }
     catch (e) {
-        yield alert('Username, password are wrong');
+        yield put(Actions.statusSignup("Đăng Nhập thất bại"  + e,true))
         yield localStorage.clear();
     }
 }

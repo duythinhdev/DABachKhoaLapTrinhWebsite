@@ -7,10 +7,12 @@ const productRoutes = require('./api/products');
 const optionRoutes = require('./api/option');
 const categoryRoutes = require('./api/category_product');
 const newsRoutes = require('./api/news');
+const cors = require('cors');
 
 class Routers {
     runApi(app, apiVersion) {
-        app.use(morgan('dev'))
+        app.use(morgan('dev'));
+        app.use(cors())
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(`${apiVersion}/user`, userRoutes);

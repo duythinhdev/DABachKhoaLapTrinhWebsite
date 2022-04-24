@@ -21,6 +21,10 @@ const initialState: tsInitialState = {
     tokenUser: null,
     isLoginUser: false,
 }
+interface authSuccess {
+    tokenUser: string,
+    isLoginUser: Boolean
+}
 const setIsLoginAdmin = (state:any,action:any) => {
     return updateObject(state,{})
 }
@@ -32,10 +36,9 @@ const authLogout = (state:any, action:any) => {
     return updateObject(state, { token: null })
 }
 const authSuccess = (state:any, action:any) => {
-    console.log("action.token",action)
     return updateObject( state, {token: action.token , isLoginAdmin: action.isLogin })
 }
-const authSuccessUser = (state:any, action:any) => {
+const authSuccessUser = (state: any, action: authSuccess) => {
     return updateObject( state, {tokenUser: action.tokenUser , isLoginUser: action.isLoginUser })
 }
 const isAuth = (state:any, action:any) => {
