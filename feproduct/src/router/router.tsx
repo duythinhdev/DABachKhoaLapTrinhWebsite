@@ -33,7 +33,7 @@ export const Routes: Array<any> = [
         component: layoutUser,
     },
     {
-        path: "/login",
+        path: "/:id",
         component: login
     },
     {

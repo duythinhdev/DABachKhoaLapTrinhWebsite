@@ -83,20 +83,28 @@ exports.postCategoryProduct = function(req, res, next) {
     })
 }
 exports.getCategoryProduct = async function(req, res, next) {
-    var page = req.query.page;
+    var { page, pagesize } = req.query;
     if (page) {
         page = parseInt(page);
+        pagesize = parseInt(pagesize);
         if (page < 1) {
             page = 1;
         }
-        var skipOption = (page - 1) * PAGE_SIZE;
+        var skipOption = (page - 1) * pagesize;
         var totalPage;
         await CategoryProduct.count({}, (err, counts) => {
             totalPage = counts;
         })
-        await CategoryProduct.find({})
+        await CategoryProduct.find({}).populate({
+                path: 'product',
+                model: 'Product',
+                populate: {
+                    path: 'options',
+                    model: 'Option'
+                }
+            })
             .skip(skipOption)
-            .limit(PAGE_SIZE).then((response) => {
+            .limit(pagesize).then((response) => {
                 return res.status(200).json({
                     total: totalPage,
                     pageNumber: page,

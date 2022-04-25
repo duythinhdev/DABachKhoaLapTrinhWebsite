@@ -17,14 +17,6 @@ import * as Yup from 'yup'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RootStateOrAny} from "react-redux";
 
-// interface FormInputs {
-//     fullname: string,
-//     email: string,
-//     password: string,
-//     phone: string,
-//     confirmPwd: string
-// }
-
 const Register = () => {
     const [value, setValue] = useState({
         fullName: '' as string,
@@ -71,9 +63,6 @@ const Register = () => {
         await notify();
     }
     return (
-        <div className="ContainerApp">
-            <Announcement />
-            <Navbar />
             <div className="ContainerRegister">
                 <div className="Wrapper">
                     <div  className="Wrapper__register">
@@ -231,10 +220,6 @@ const Register = () => {
                     {statusSignUp && <ToastContainer/>}
                 </>
             </div>
-            <Newsletter />
-            <NewsFeeds />
-            <Footer />
-        </div>
     );
 };
 
