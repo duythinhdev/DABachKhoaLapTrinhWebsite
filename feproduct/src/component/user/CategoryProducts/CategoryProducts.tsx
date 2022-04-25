@@ -126,7 +126,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                                         <img src={res.productImage[0]}/>
                                     </div>
                                 <div className='product--detail__Code'>
-                                    <span> {res.id_categoryProduct}</span>
+                                    <span> {res._id}</span>
                                 </div>
                                 <div className='product--detail__Name'>
                                        <Link to="/cart"  className="detailName__link"><span>{res.Product_name}</span></Link> 
@@ -135,7 +135,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                                         <del>{res.options[0]?.price}</del>
                                 </div>
                                 <div className='product--detail__price'>
-                                        {res.options[0]?.type}
+                                        {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})} 
                                 </div>
                                 </div>
                             })
@@ -146,7 +146,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                     </div>
                 </div>
                 <div className='box-center__seeMore'>
-                            <Link to="/topproduct"  className="button__seemore" ><span>xem tất cả sản phẩm</span></Link>
+                    <Link to="/topproduct"  className="button__seemore" ><span>xem tất cả sản phẩm</span></Link>
                 </div>
             </div>
         </div>

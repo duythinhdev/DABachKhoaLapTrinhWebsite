@@ -64,9 +64,6 @@ const LoginUser = () => {
         redirect = <Redirect  to="/user" />
     }
     return (
-        <div className="ContainerApp">
-        <Announcement />
-        <Navbar />
         <div className="Container-Login">
             <div  className="title">
         
@@ -98,7 +95,7 @@ const LoginUser = () => {
                             <span className='namePassword'>Mật khẩu</span>
                             <div  className="loginemail__input">
                                 <input 
-                                    {...register('password')}
+                                    {...register('password')} 
                                     name="password"
                                     type={PasswordInputType}
                                     className={`form-control ${errors.password ? 'is-invalid' : ''}`}
@@ -110,7 +107,7 @@ const LoginUser = () => {
                         </div>
                         <div className="Form__login--forgot">
                             <button>Đăng Nhập</button>
-                            <span>Quên mật khẩu </span>
+                            <Link to="/forgot"><span>Quên mật khẩu </span></Link>
                         </div>
                     </form>
                     <div className="Wrapper__Form--signUp">
@@ -129,10 +126,6 @@ const LoginUser = () => {
             </div>
             {redirect}
             {statusSignUp && <ToastContainer/>}
-        </div>
-        <Newsletter />
-        <NewsFeeds />
-        <Footer />
         </div>
     );
 };

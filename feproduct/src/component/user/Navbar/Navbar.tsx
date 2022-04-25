@@ -134,7 +134,7 @@ const Navbar = () => {
                         <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/login" ><AccountCircleOutlinedIcon /></Link></div>
                         { tokenLogin ?<div className="MenuItem__span" onClick={logout}><Link   className="MenuItem__Link" to="/login"  > Đăng Xuất </Link></div> : 
                             <div  className="MenuItem__span">
-                               <Link  className="MenuItem__Link" to="/login" ><span>Đăng nhập </span></Link>
+                               <Link  className="MenuItem__Link" to="/account" ><span>Đăng nhập </span></Link>
                                <Link className="MenuItem__Link" to="/register" > <span>Đăng ký</span></Link>
                            </div>
                         }
