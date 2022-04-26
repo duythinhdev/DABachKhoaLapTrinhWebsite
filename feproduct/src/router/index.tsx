@@ -16,7 +16,7 @@ const BodyAdminOptionOrder: React.LazyExoticComponent<() => JSX.Element> = React
 const BodyAdminOrder: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/admin/bodyAdminOder/bodyAdminOrder"));
 const login: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
-    import ("../page/Logins/Logins"));
+    import ("../page/TotalInterface/TotalInterface"));
 const register: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/user/Register/Register"));
 const layoutUser: React.LazyExoticComponent< ()  => JSX.Element> = React.lazy(() =>

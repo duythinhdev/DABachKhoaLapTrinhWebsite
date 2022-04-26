@@ -105,9 +105,11 @@ exports.getCategoryProduct = async function(req, res, next) {
             })
             .skip(skipOption)
             .limit(pagesize).then((response) => {
+                console.log("response", response)
                 return res.status(200).json({
                     total: totalPage,
                     pageNumber: page,
+                    pagesize: pagesize,
                     data: response
                 })
             }).catch(err => {

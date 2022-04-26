@@ -129,7 +129,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                                     <span> {res._id}</span>
                                 </div>
                                 <div className='product--detail__Name'>
-                                       <Link to="/cart"  className="detailName__link"><span>{res.Product_name}</span></Link> 
+                                       <Link to="/system/productdetail"  className="detailName__link"><span>{res.Product_name}</span></Link> 
                                 </div>
                                 <div className='product--detail__pricePromotion'>
                                         <del>{res.options[0]?.price}</del>
@@ -146,7 +146,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                     </div>
                 </div>
                 <div className='box-center__seeMore'>
-                    <Link to="/topproduct"  className="button__seemore" ><span>xem tất cả sản phẩm</span></Link>
+                    <Link to="/system/topproduct"  className="button__seemore" ><span>xem tất cả sản phẩm</span></Link>
                 </div>
             </div>
         </div>

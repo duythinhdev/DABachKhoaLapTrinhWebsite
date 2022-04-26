@@ -107,7 +107,7 @@ const LoginUser = () => {
                         </div>
                         <div className="Form__login--forgot">
                             <button>Đăng Nhập</button>
-                            <Link to="/forgot"><span>Quên mật khẩu </span></Link>
+                            <Link to="/system/forgot"><span>Quên mật khẩu </span></Link>
                         </div>
                     </form>
                     <div className="Wrapper__Form--signUp">
@@ -118,7 +118,7 @@ const LoginUser = () => {
                             <span>Đăng ký là thành viên để hưởng nhiều lợi ích và đặt mua hàng dễ dàng hơn.</span>
                         </div>
                         <div className="Form__signUp--account">
-                            <Link to="/register"><span>Đăng ký tài khoản. </span></Link>
+                            <Link to="/system/register"><span>Đăng ký tài khoản. </span></Link>
                         </div>
                     </div>
                 </div>
