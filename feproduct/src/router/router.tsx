@@ -33,7 +33,7 @@ export const Routes: Array<any> = [
         component: layoutUser,
     },
     {
-        path: "/:id",
+        path: "/system/:id",
         component: login
     },
     {
@@ -45,19 +45,6 @@ export const Routes: Array<any> = [
         component: News
     }
     ,
-    {
-        path: "/cart"    ,
-        component: layoutCart
-    }
-    ,
-    {
-        path: "/bought",
-        component: layoutBought
-    },
-    {
-        path: "/topproduct",
-        component: AllTopProduct
-    },
     {
         path: "/productbrand",
         component: ProductBrand

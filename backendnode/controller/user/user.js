@@ -86,3 +86,6 @@ exports.login = (req, res, next) => {
             })
         });
 }
+exports.forgot = (req, res, next) => {
+
+}

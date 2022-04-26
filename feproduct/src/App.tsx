@@ -12,8 +12,8 @@ import { RootStateOrAny} from "react-redux";
 
 const App = () => {
     const darkMode = useSelector((state: RootStateOrAny) => { return  state.main.darkMode });
-    let news: JSX.Element = <New inputs={userInputs} title="Add New User" />;
-    let single: JSX.Element =  <Single />;
+    let news: any = <New inputs={userInputs} title="Add New User" />;
+    let single: any =  <Single />;
     return (
         <div className="App">
             <Routing  />

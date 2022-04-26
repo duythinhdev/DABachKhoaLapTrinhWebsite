@@ -17,6 +17,9 @@ import * as actions from "../../../store/action";
 import { useHistory,Link } from 'react-router-dom';
 import "./Navbar.scss";
 import { RootStateOrAny} from "react-redux";
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import CarRepairIcon from '@mui/icons-material/CarRepair';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 const category:Array<any> = [
     {
@@ -131,17 +134,17 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="MenuItem">
-                        <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/login" ><AccountCircleOutlinedIcon /></Link></div>
-                        { tokenLogin ?<div className="MenuItem__span" onClick={logout}><Link   className="MenuItem__Link" to="/login"  > Đăng Xuất </Link></div> : 
+                        <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/system/account" ><AccountCircleOutlinedIcon /></Link></div>
+                        { tokenLogin ?<div className="MenuItem__span" onClick={logout}><Link   className="MenuItem__Link" to="/system/account"  > Đăng Xuất </Link></div> : 
                             <div  className="MenuItem__span">
-                               <Link  className="MenuItem__Link" to="/account" ><span>Đăng nhập </span></Link>
-                               <Link className="MenuItem__Link" to="/register" > <span>Đăng ký</span></Link>
+                               <Link  className="MenuItem__Link" to="/system/account" ><span>Đăng nhập </span></Link>
+                               <Link className="MenuItem__Link" to="/system/register" > <span>Đăng ký</span></Link>
                            </div>
                         }
                     </div>
                     <div className="MenuItem">
                         <Badge badgeContent={50} color="primary">
-                            <Link to="/bought" className="MenuItem__Link" > <ShoppingCartOutlined /></Link>
+                            <Link to="/system/cart" className="MenuItem__Link" > <ShoppingCartOutlined /></Link>
                         </Badge>
                     </div>
                 </div>
@@ -162,7 +165,7 @@ const Navbar = () => {
                         </div>
                         <div className="children-sub">
                             <div className="children-sub__1">
-                                <CheckIcon />
+                                <PointOfSaleIcon />
                                  <a href=""> Flash sale </a>
                             </div>
                         </div>
@@ -174,7 +177,7 @@ const Navbar = () => {
                         </div>
                         <div className="children-sub">
                             <div className="children-sub__1">
-                                <CardGiftcardIcon />
+                                <CardMembershipIcon />
                                  <a href=""> Hàng chính hãng </a>
                             </div>
                         </div>
@@ -186,7 +189,7 @@ const Navbar = () => {
                         </div>
                         <div className="children-sub">
                             <div className="children-sub__1">
-                                <CardGiftcardIcon />
+                                <CarRepairIcon />
                                  <a href="">Miễn phí vẫn chuyển</a>
                             </div>
                         </div>

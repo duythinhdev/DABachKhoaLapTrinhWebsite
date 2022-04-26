@@ -17,8 +17,9 @@ function Announcement() {
                 <Link to="/user" className="link"  ><span className="span">Trang chủ</span></Link> &nbsp;
                 <Link to="/news"  className="link"><span  className="span">Tin tức</span></Link> &nbsp;
                 <Link to="/news"  className="link"><span  className="span">Slicder </span></Link> &nbsp;
-                <Link to="/cart"  className="link"><span  className="span">Product Detail </span></Link> &nbsp;
-                <Link to="/bought"  className="link"><span  className="span">Giỏ Hàng</span></Link> &nbsp;
+                <Link to="/system/productdetail"  className="link"><span  className="span">Product Detail </span></Link> &nbsp;
+                <Link to="/system/cart"  className="link"><span  className="span">Giỏ Hàng</span></Link> &nbsp;
+                <Link to="/system/topproduct"  className="link"><span  className="span">Top Sản Phẩm</span></Link> &nbsp;
             </div>
         </div>
     );
