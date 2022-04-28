@@ -1,12 +1,12 @@
 import React,{useState, useEffect,lazy, Suspense} from 'react';
 import "./TopProduct.scss";
+import useFetchingTopProduct from "../TopProduct/useFetchingData";
 import {
     useLocation
   } from "react-router-dom";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../../enviroment/enviroment";
 import Spinner from "../../../component/spinner/spinner.jsx";
-import useFetchingTopProduct from "../TopProduct/useFetchingTopProduct";
 const Product:Array<any> = [
     {
         code: "Mã SP : PCAP102",
@@ -271,42 +271,43 @@ const TopProduct = () => {
                         </div>
                     </div>
                 </div>
-                <div className='content__TopProduct'>
-                    <div className='content__TopProduct--title'>
-                    
-                    </div>
-                    <div className='content__TopProduct--container flex-box'>
-                        {
-                            data?.map((res:any,index:number) => {
-                            return  <div className='product__item'>
-                                <div className='product__item--img'>
+            </div>
+            <div className='content__TopProduct'>
+                <div className='content__TopProduct--title'>
+                
+                </div>
+                <div className='content__TopProduct--container flex-box'>
+                    {
+                        data?.map((res:any,index:number) => {
+                          return  <div className='product__item'>
+                                    <div className='product__item--img'>
                                     <img src={res?.productImage[0]} />
+                                    </div>
+                                    <div className='product__item--code'>
+                                            {res?._id}
+                                    </div>
+                                    <div className='product__item--name'>
+                                            {res?.Product_name}
+                                    </div>
+                                    <div className='product__item--pricemotion'>
+                                            {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                                    </div>
+                                    <div className='product__item--price'>
+                                            {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                                    </div>
+                                    <div className='product__item--motion'>
+                                            <span>1 Khuyến Mãi</span>
+                                    </div>
+                                    <div className='product__item--compare'>
+                                            <span>So Sanh</span>
+                                    </div>
                                 </div>
-                                <div className='product__item--code'>
-                                        {res?._id}
-                                </div>
-                                <div className='product__item--name'>
-                                        {res?.Product_name}
-                                </div>
-                                <div className='product__item--pricemotion'>
-                                        {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
-                                </div>
-                                <div className='product__item--price'>
-                                    {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
-                                </div>
-                                <div className='product__item--motion'>
-                                    <span>1 Khuyến Mãi</span>
-                                </div>
-                                <div className='product__item--compare'>
-                                    <span>So Sanh</span>
-                                </div>
-                        </div>
-                            })
-                        }
-                    </div>
-                    <div className='content__TopProduct--pagination'>
+                        })
+                    }
+                </div>
+                <div className='content__TopProduct--pagination'>
 
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
         </Suspense>

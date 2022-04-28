@@ -9,10 +9,12 @@ import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../enviroment/enviroment";
 import CategoryProducts from "../../component/user/CategoryProducts/CategoryProducts";
 import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
-import useFetchingTopProduct from "../../component/user/TopProduct/useFetchingTopProduct";
+
+import useFetchingData from "../../component/user/TopProduct/useFetchingData";
+
 const LayoutUser = () => {
     let ctProduct = enviroment.localNode + "ctproduct/get";
-    let { data } =  useFetchingTopProduct(ctProduct);
+    let { data } = useFetchingData(ctProduct);
     return (
         <div className="ContainerApp">
             <Announcement />
@@ -20,7 +22,7 @@ const LayoutUser = () => {
             <SliderProduct />
             {
                data?.map((res: any,index:number) => {
-                    return <CategoryProducts response={res} indexs={index}/> 
+                    return <CategoryProducts response={res}  indexs={index}/> 
                 })
             }
             <Newsletter />

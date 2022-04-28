@@ -4,7 +4,7 @@ import Announcement from "../Announcement/Announcement";
 import Footer from "../footer/footer";
 import ProductDetail from "../ProductDetail/ProductDetail";
 import Newsletter from "../Newletter/Newletter";
-import "../../../page/LayoutUser/LayoutUser.scss";
+// import "../../../page/LayoutUser/LayoutUser.scss";
 import NewsFeeds from "../NewsFeed/NewsFeed";
 
 function LayoutCart() {

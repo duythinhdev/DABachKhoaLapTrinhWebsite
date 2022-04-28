@@ -6,16 +6,16 @@ import ImageProductDetail from "../ProductDetailImage";
 import Payment from "../../../../asset/Capture123.png";
 import CheckIcon from '@mui/icons-material/Check';
 import Promotion from "../../../../asset/t3-2022-trang-sp-500x654.jpg";
+import useSlideFetching from "../../SliderProduct/useSlideFetching";
 
 interface propsdata {
     dataDetail: Array<any>,
     ImageProductDetail:  Array<any>,
 }
 const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail}) => {
+    let { slideIndex,setSlideIndex,nextSlide,prevSlide } = useSlideFetching(ImageProductDetail.length);
     const [seeMore,setSeeMore] = useState(false) as any | Boolean;
     const [showModalPD,setModalPD] = useState(false) as any | Boolean;
-    const [slideIndex, setSlideIndex] = useState(1) as any | number ;
-
     const enableSeeMore = () => {
         setSeeMore(true)
     }
@@ -42,23 +42,6 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail})
     useEffect(() => {
         rowAlternateColors();
     },[])
-    const nextSlide = () => {
-        if (slideIndex !== ImageProductDetail.length) {
-          setSlideIndex(slideIndex + 1);
-        } else if (slideIndex === ImageProductDetail.length) {
-          setSlideIndex(1);
-        }
-    
-      };
-    
-      const prevSlide = () => {
-        if (slideIndex !== 1) {
-          setSlideIndex(slideIndex - 1);
-        } else if (slideIndex === 1) {
-          setSlideIndex(ImageProductDetail.length);
-        }
-
-      };
     return <div  className="bg__white">
     <div  className="productimage">
             <div  className="productimage__img">

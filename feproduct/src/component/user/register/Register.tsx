@@ -10,7 +10,6 @@ import Announcement from "../Announcement/Announcement";
 import Newsletter from "../Newletter/Newletter";
 import NewsFeeds from "../NewsFeed/NewsFeed";
 import Footer from "../footer/footer";
-import "../../../page/LayoutUser/LayoutUser.scss";
 import * as actions from "../../../store/action/index";
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
