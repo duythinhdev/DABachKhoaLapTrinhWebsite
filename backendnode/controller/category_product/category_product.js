@@ -27,13 +27,15 @@ exports.categoryOfProduct = async function(req, res, next) {
     })
     try {
         return res.status(200).json({
-            data: CtProduct.product,
+            totalPage: totalPages,
+            data: CtProduct.product
         })
     } catch (err) {
         return res.status(500).json({
             message: err,
         })
     }
+
 }
 exports.updateCategoryOfProduct = async(req, res, next) => {
     // number of fields
@@ -62,15 +64,13 @@ exports.postRelationShipProduct = async(req, res, next) => {
     const { cproductId } = req.query;
     var urlImageProduct = new Array();
     urls.forEach((element) => {
-            urlImageProduct.push(element.url)
-        })
-        // Product.productImage.push(urls);
+        urlImageProduct.push(element.url)
+    })
     var newProduct = new Product({
-            Product_name: req.body.Product_name,
-            productImage: urlImageProduct,
-            description: req.body.description,
-        })
-        // console.log("req.body.productImage", req.body.productImage);
+        Product_name: req.body.Product_name,
+        productImage: urlImageProduct,
+        description: req.body.description,
+    })
     const CategoryProducts = await CategoryProduct.findById(cproductId);
     newProduct.id_categoryProduct = CategoryProducts;
     await newProduct.save();
@@ -174,33 +174,43 @@ exports.getCategoryProductDetail = function(req, res, next) {
             })
         })
 }
-exports.putCategoryProduct = async function(req, res, next) {
-    var type = req.body.type;
-    var size = req.body.size;
-    var price = req.body.price;
-    var quantity = req.body.quantity;
-    var product_id = req.body.product_id;
-    var id = req.query.id;
-    await CategoryProduct.updateOne({ _id: id }, {
-            $set: {
-                type: type,
-                size: size,
-                price: price,
-                quantity: quantity,
-                product_id: product_id,
-            }
-        })
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                message: "update table Option success",
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: err })
-        });
-}
+exports.putCategoryProduct = async(req, res, next) => {
+        // number of fields
+        const { categoryID } = req.query
+
+        const newCategory = req.value.body
+
+        const result = await CategoryProduct.findByIdAndUpdate(categoryID, newCategory)
+
+        return res.status(200).json({ success: true })
+    }
+    // exports.putCategoryProduct = async function(req, res, next) {
+    //     var type = req.body.type;
+    //     var size = req.body.size;
+    //     var price = req.body.price;
+    //     var quantity = req.body.quantity;
+    //     var product_id = req.body.product_id;
+    //     var id = req.query.id;
+    //     await CategoryProduct.updateOne({ _id: id }, {
+    //             $set: {
+    //                 type: type,
+    //                 size: size,
+    //                 price: price,
+    //                 quantity: quantity,
+    //                 product_id: product_id,
+    //             }
+    //         })
+    //         .exec()
+    //         .then(result => {
+    //             res.status(200).json({
+    //                 message: "update table Option success",
+    //             })
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             res.status(500).json({ error: err })
+    //         });
+    // }
 exports.deleteCategoryProduct = async function(req, res, next) {
     const id = req.query.id;
     await CategoryProduct.remove({ _id: id }).exec().then(response => {

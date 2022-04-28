@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect,lazy, Suspense} from 'react';
 import "./TopProduct.scss";
 import useFetchingTopProduct from "../TopProduct/useFetchingData";
 import {
@@ -248,26 +248,27 @@ function useQuery() {
 }
 const TopProduct = () => {
     let query = useQuery();
-    let idctProduct = query.get("idctproduct");
-    console.log("idctProduct",idctProduct)
+    let idctProduct = query.get("idctProduct");
     let ctProduct = enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}`;
     let { data } = useFetchingTopProduct(ctProduct);
     return (
-        <div className='containter__TopProduct'>
-            <div className='name__TopProduct'>
-                <a>Home  </a>
-                <span>   Sản Phẩm Bán Chạy</span>
-            </div>
-            <div className='title__TopProduct'>
-                <div className='title__TopProduct--name'>
-                    <span>BỘ LỌC</span>
+        <Suspense fallback={<Spinner />}>
+            <div className='containter__TopProduct'>
+                <div className='name__TopProduct'>
+                    <a>Home  </a>
+                    <span>Sản Phẩm Bán Chạy</span>
                 </div>
-                <div className='title__TopProduct--filter'>
-                    <div className='TopProduct--filter__Brand'>
-                    
+                <div className='title__TopProduct'>
+                    <div className='title__TopProduct--name'>
+                        <span>BỘ LỌC</span>
                     </div>
-                    <div className='TopProduct--filter__About'>
-                
+                    <div className='title__TopProduct--filter'>
+                        <div className='TopProduct--filter__Brand'>
+                        
+                        </div>
+                        <div className='TopProduct--filter__About'>
+                    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -306,9 +307,10 @@ const TopProduct = () => {
                 </div>
                 <div className='content__TopProduct--pagination'>
 
+                    {/* </div> */}
                 </div>
             </div>
-        </div>
+        </Suspense>
     );
 }
 

@@ -4,6 +4,7 @@ import  HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDet
 import { Link } from 'react-router-dom';
 import TopProduct from "../../../asset/TopProduct/250_34178_large_7cafaa8dedb3d130.jpg";
 import { enviroment } from "../../../enviroment/enviroment";
+import axios, {AxiosResponse} from "axios";
 
 
 const listProduct:Array<any> = [
@@ -98,16 +99,14 @@ interface props {
 }
 const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
     const [hoverDetail,setHoverDetail] =  useState(false as boolean);
-    const [indexDetail,setIndexDetail] = useState(1 as number);
+    const [isProductDetail,setIsProductDetail] = useState(1 as number);
     const moveDetail = async (index: number)   => {
       await  setHoverDetail(true);
-      await  setIndexDetail(index);
+      await  setIsProductDetail(index);
     }
     const moveDetailOver = () : void => {
         setHoverDetail(false);
     }
-    useEffect(()=> {
-    },[])
     return (
         <div className='p-container' key={indexs}>
             <div className='box-center'>
@@ -141,7 +140,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                             })
                         }
                         {
-                            hoverDetail && indexDetail  && <HoverDetailProduct />
+                            hoverDetail && isProductDetail  && <HoverDetailProduct />
                         }
                     </div>
                 </div>

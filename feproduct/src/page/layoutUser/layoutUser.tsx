@@ -9,13 +9,13 @@ import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../enviroment/enviroment";
 import CategoryProducts from "../../component/user/CategoryProducts/CategoryProducts";
 import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
+
 import useFetchingData from "../../component/user/TopProduct/useFetchingData";
 
 const LayoutUser = () => {
     let ctProduct = enviroment.localNode + "ctproduct/get";
     let { data } = useFetchingData(ctProduct);
     return (
-        
         <div className="ContainerApp">
             <Announcement />
             <Navbar />
@@ -32,4 +32,4 @@ const LayoutUser = () => {
     );
 }
 
-export default LayoutUser;
+export default React.memo(LayoutUser);
