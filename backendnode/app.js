@@ -16,29 +16,18 @@ class kernel {
         this.runDB();
         this.runApiApp();
     }
+
     allowHeader() {
-        this.app = app;
-        this.app.use((req, res, next) => {
-            res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-            res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-            res.header(
-                "Access-Control-Allow-Headers",
-                "Origin, X-Requested-With, Content-Type, Accept"
-            );
-            next();
-        });
+        const router = new Routes();
+        router.allowOriginHeader(this.app);
     }
     runApiApp() {
         const router = new Routes();
         router.runApi(this.app, this.apiVersion);
     }
     runDB() {
-        this.mongoose.set('useNewUrlParser', true);
-        this.mongoose.set('useFindAndModify', false);
-        this.mongoose.set('useCreateIndex', true);
-        this.mongoose.connect(process.env.MONGO_URI)
-            .then(() => console.log("MongoDb connected"))
-            .catch(err => console.log(err));
+        const router = new Routes();
+        router.connectMongoose(this.mongoose);
     }
 }
 mongoose.Promise = global.Promise;

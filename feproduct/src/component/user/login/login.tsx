@@ -6,7 +6,7 @@ import {ErrorMessage} from "@hookform/error-message";
 import * as actions from "../../../store/action";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import Spinner from "../../spinner/spinner";
+import Spinner from "../../spinner/spinner.jsx";
 import {useHistory, Redirect} from "react-router-dom";
 import "./Login.scss";
 import Navbar from "../Navbar/Navbar";

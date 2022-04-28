@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const User = require("../../models/user");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const sendEmail = require('../../utils/sendEmail');
 
 exports.signup = (req, res, next) => {
     console.log("req.body", req.body);
@@ -86,6 +87,20 @@ exports.login = (req, res, next) => {
             })
         });
 }
-exports.forgot = (req, res, next) => {
-
+exports.forgot = async(req, res, next) => {
+    var content = '';
+    content += `
+        <div style="padding: 10px; background-color: #003375">
+            <div style="padding: 10px; background-color: white;">
+                <h4 style="color: #0085ff">Gửi mail với nodemailer và express</h4>
+                <span style="color: black">Đây là mail test</span>
+            </div>
+        </div>
+    `;
+    let options = {
+        email: req.body.email,
+        subject: 'Test Nodemailer',
+        message: content,
+    }
+    await sendEmail(options, req, res);
 }

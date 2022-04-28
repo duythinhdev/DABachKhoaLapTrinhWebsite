@@ -16,9 +16,14 @@ export const loginAppUser = (email:string,password:string) => {
         password: password
     }
 }
-
-export const signup = (fullName:string,email:string,
-    password:string,phone:string,address:string,city:string,gender:string) => {
+export const signup = (
+    fullName:string,
+    email:string,
+    password:string,
+    phone:string,
+    address:string,
+    city:string,
+    gender:string) => {
     return {
         type: actionTypes.SIGNUPS_APP_USER,
         email: email,

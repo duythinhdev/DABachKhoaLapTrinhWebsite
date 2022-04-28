@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense,MemoExoticComponent } from "react";
 const ContainerAdmin: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/admin/body/containerAdmin"));
 const LoginAmin: React.LazyExoticComponent<() => JSX.Element>  = React.lazy(() =>
@@ -19,7 +19,7 @@ const login: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../page/TotalInterface/TotalInterface"));
 const register: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/user/Register/Register"));
-const layoutUser: React.LazyExoticComponent< ()  => JSX.Element> = React.lazy(() =>
+const layoutUser: React.LazyExoticComponent<MemoExoticComponent<() => JSX.Element>> = React.lazy(() =>
     import ("../page/LayoutUser/LayoutUser"));
 const News: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
     import ("../component/user/layoutNews/layoutNews"));

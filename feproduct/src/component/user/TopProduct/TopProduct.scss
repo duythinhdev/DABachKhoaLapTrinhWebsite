@@ -7,6 +7,9 @@
     flex-direction: column;
     align-items: center;
     margin-top: 130px;
+    @include respond(laptop) {
+        margin-top: 220px;
+    }
     .name__TopProduct {
         width: 90%;
         // background: gray;
@@ -76,7 +79,7 @@
                 @include respond(laptop) {
                     width: calc(100% /5);
                 }
-                height: 345px;
+                height: 500px;
                 border: 1px solid #edeef2;
                 display: flex;
                 flex-direction: column;
@@ -85,7 +88,12 @@
                     position: relative;
                     display: flex;
                     flex: 0.6;
-                    background-color: aqua;
+                    // background-color: aqua;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    }
                 }
                 &--code {
                     display: flex;
