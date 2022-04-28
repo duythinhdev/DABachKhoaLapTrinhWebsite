@@ -1,6 +1,12 @@
 import React from 'react';
 import "./TopProduct.scss";
-
+import useFetchingTopProduct from "../TopProduct/useFetchingData";
+import {
+    useLocation
+  } from "react-router-dom";
+import axios, {AxiosResponse} from "axios";
+import { enviroment } from "../../../enviroment/enviroment";
+import Spinner from "../../../component/spinner/spinner.jsx";
 const Product:Array<any> = [
     {
         code: "Mã SP : PCAP102",
@@ -235,7 +241,17 @@ const Product:Array<any> = [
         compare: "So sánh",
     },
 ]
+function useQuery() {
+    const { search } = useLocation();
+  
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 const TopProduct = () => {
+    let query = useQuery();
+    let idctProduct = query.get("idctproduct");
+    console.log("idctProduct",idctProduct)
+    let ctProduct = enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}`;
+    let { data } = useFetchingTopProduct(ctProduct);
     return (
         <div className='containter__TopProduct'>
             <div className='name__TopProduct'>
@@ -261,30 +277,30 @@ const TopProduct = () => {
                 </div>
                 <div className='content__TopProduct--container flex-box'>
                     {
-                        Product.map((res:any,index:number) => {
+                        data?.map((res:any,index:number) => {
                           return  <div className='product__item'>
-                                <div className='product__item--img'>
-                                
+                                    <div className='product__item--img'>
+                                    <img src={res?.productImage[0]} />
+                                    </div>
+                                    <div className='product__item--code'>
+                                            {res?._id}
+                                    </div>
+                                    <div className='product__item--name'>
+                                            {res?.Product_name}
+                                    </div>
+                                    <div className='product__item--pricemotion'>
+                                            {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                                    </div>
+                                    <div className='product__item--price'>
+                                            {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                                    </div>
+                                    <div className='product__item--motion'>
+                                            <span>1 Khuyến Mãi</span>
+                                    </div>
+                                    <div className='product__item--compare'>
+                                            <span>So Sanh</span>
+                                    </div>
                                 </div>
-                            <div className='product__item--code'>
-                                    {res.code}
-                            </div>
-                            <div className='product__item--name'>
-                                    {res.name}
-                            </div>
-                            <div className='product__item--pricemotion'>
-                                    {res.pricePromotion}
-                            </div>
-                            <div className='product__item--price'>
-                                    {res.price}
-                            </div>
-                            <div className='product__item--motion'>
-                                    {res.promotion}
-                            </div>
-                            <div className='product__item--compare'>
-                                    {res.compare}
-                            </div>
-                    </div>
                         })
                     }
                 </div>

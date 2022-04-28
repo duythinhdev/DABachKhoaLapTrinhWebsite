@@ -22,7 +22,7 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import ImageDiscountA from "../../../asset/sliderUser/01_Mar1dad4b99b92a3a8025dce33eaa689a25.png";
 import ImageDiscountB from "../../../asset/sliderUser/01_Marc37767f7c68aa9a5447627450f01fb90.png";
-
+import useSlideFetching from "./useSlideFetching";
 
 
 const data = [
@@ -96,24 +96,7 @@ const data = [
   
 
 const CategoryProduct = ()  => {
-    const [slideIndex, setSlideIndex] = useState(1) as any | number ;
-    const nextSlide = () => {
-        if (slideIndex !== Slider.length) {
-          setSlideIndex(slideIndex + 1);
-        } else if (slideIndex === Slider.length) {
-          setSlideIndex(1);
-        }
-        console.log("slideIndex", slideIndex);
-      };
-    
-      const prevSlide = () => {
-        if (slideIndex !== 1) {
-          setSlideIndex(slideIndex - 1);
-        } else if (slideIndex === 1) {
-          setSlideIndex(Slider.length);
-        }
-        console.log("slideIndex", slideIndex);
-      };
+    let { slideIndex,setSlideIndex,nextSlide,prevSlide } = useSlideFetching(Slider.length);
     
       const moveDot = (index: number) => {
         setSlideIndex(index);
@@ -126,7 +109,7 @@ const CategoryProduct = ()  => {
                 setSlideIndex(1);
             }
             setSlideIndex(Math.round(Math.random() * Slider.length));
-          }, 3000);
+          }, 2000);
           return () => clearInterval(setIntervalCount);
       },[])
     return (

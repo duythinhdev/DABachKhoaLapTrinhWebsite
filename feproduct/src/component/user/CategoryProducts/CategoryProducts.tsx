@@ -146,7 +146,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                     </div>
                 </div>
                 <div className='box-center__seeMore'>
-                    <Link to="/system/topproduct"  className="button__seemore" ><span>xem tất cả sản phẩm</span></Link>
+                    <Link to={`/system/topproduct?idctproduct=${response?._id}`}  className="button__seemore" ><span>xem tất cả sản phẩm</span></Link>
                 </div>
             </div>
         </div>

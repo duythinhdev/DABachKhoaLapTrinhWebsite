@@ -21,8 +21,6 @@ interface ParamTypes {
   id: string | undefined
 }
 const TotalInterface = () =>  {
-  let ArrayCheck: any =  [
-  ]
   let { id } = useParams<ParamTypes>();
   const renderSwitch = () => {
       switch(id) {

@@ -4,16 +4,27 @@ const PAGE_SIZE = 10;
 const fs = require('fs');
 const cloudinary = require('../../utils/cloudiary')
 exports.categoryOfProduct = async function(req, res, next) {
-    const { categoryProductId } = req.query;
-    const CtProduct = await CategoryProduct.findById(categoryProductId)
-        .populate({
-            path: 'product',
-            model: 'Product',
-            populate: {
-                path: 'options',
-                model: 'Option'
-            }
-        })
+    const { categoryProductId, pagesize, pagenumber } = req.query;
+    if (pagenumber < 1) {
+        pagenumber = 1;
+        pagenumber = parseInt(pagenumber);
+        pagesize = parseInt(pagesize);
+    }
+    var skipOption = (pagenumber - 1) * pagesize;
+    var totalPages;
+    const CtProduct = await CategoryProduct.findById(categoryProductId).populate({
+        path: 'product',
+        model: 'Product',
+        populate: {
+            path: 'options',
+            model: 'Option'
+        },
+        options: {
+            sort: {},
+            skip: skipOption,
+            limit: pagesize
+        },
+    })
     try {
         return res.status(200).json({
             data: CtProduct.product,
