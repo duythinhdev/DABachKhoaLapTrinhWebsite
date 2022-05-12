@@ -7,6 +7,7 @@ import Payment from "../../../../asset/Capture123.png";
 import CheckIcon from '@mui/icons-material/Check';
 import Promotion from "../../../../asset/t3-2022-trang-sp-500x654.jpg";
 import useSlideFetching from "../../SliderProduct/useSlideFetching";
+import useColorTable from "../../hook/useColorTable";
 
 interface propsdata {
     dataDetail: Array<any>,
@@ -28,16 +29,7 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail})
     const hideModalPd = () => {
         setModalPD(false)
     }
-    function rowAlternateColors() {
-        var tr = document.getElementsByTagName('tr') as HTMLCollectionOf<HTMLElement>;
-
-        for(let x = 0;x<tr.length;x++){
-            if(x % 2 !== 0) 
-            {
-                tr[x].style.backgroundColor = '#edeef2';
-            }
-        }
-    }
+    let { rowAlternateColors } =   useColorTable('tr');
     
     useEffect(() => {
         rowAlternateColors();

@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const apiNews = require("../controller/news/news");
+const { PostNews, getAllnews, newDetails, putNews, deleteNews } = require("../controller/news/news");
 
-router.post("/post", apiNews.PostNews);
-router.get("/get", apiNews.getAllnews);
-router.get("/", apiNews.newDetails);
-router.put("/put", apiNews.putNews);
-router.delete("/delete", apiNews.deleteNews);
-
+router.route("/post").post(PostNews);
+router.route("/").get(getAllnews);
+router.route("/detail").get(newDetails);
+router.route("/put").put(putNews);
+router.route("/delete").delete(deleteNews);
 
 module.exports = router;

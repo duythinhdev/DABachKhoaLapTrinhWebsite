@@ -14,6 +14,7 @@ import Register from "../../component/user/Register/Register";
 import TopProduct from "../../component/user/TopProduct/TopProduct";
 import ProductDetail from "../../component/user/ProductDetail/ProductDetail";
 import Cart from "../../component/user/ProductBought/ProductBought";
+import InforUser from "../../component/user/InforUser/InforUser";
 import {
   useParams
 } from "react-router-dom";
@@ -36,6 +37,8 @@ const TotalInterface = () =>  {
               return  <ProductDetail />;
           case 'cart':
               return  <Cart />;
+          case 'informationuser':
+                return  <InforUser />;
       }
     }
   useEffect(()=> {

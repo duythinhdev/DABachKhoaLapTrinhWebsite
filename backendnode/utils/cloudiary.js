@@ -7,16 +7,13 @@ cloudinary.config({
 });
 
 // module.exports = { cloudinary };
-exports.uploads = (file, folder) => {
-    return new Promise(resolve => {
-        cloudinary.uploader.upload(file, (result) => {
-            resolve({
-                url: result.url,
-                id: result.public_id
-            }, {
-                resource_type: "auto",
-                folder: folder
-            })
-        })
-    })
+const data = [];
+exports.uploads = async(file, folders) => {
+    let result = await cloudinary.v2.uploader.upload(file, { folder: folders })
+    data.push({
+        public_id: result.public_id,
+        url: result.url,
+    });
+    console.log("data", data);
+    return data
 }

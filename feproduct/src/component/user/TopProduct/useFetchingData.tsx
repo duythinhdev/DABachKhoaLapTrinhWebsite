@@ -7,6 +7,7 @@ import axios, {AxiosResponse} from "axios";
 
 export default (dataSource: string) => {
     let [data,setData] = useState<Array<any>>([]);
+    let [totalpage, setTotalPage] = useState<Number>();
     useEffect(()=> {
         let fetchDataProduct = async () => {
             await axios.get(dataSource).then((res: any) => {
@@ -16,5 +17,5 @@ export default (dataSource: string) => {
         fetchDataProduct();
     },[dataSource])
   
-    return { data };
+    return { data,totalpage };
   };

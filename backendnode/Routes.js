@@ -5,45 +5,57 @@ const mainDetailRoutes = require('./api/maindetail');
 const userRoutes = require('./api/user')
 const productRoutes = require('./api/products');
 const optionRoutes = require('./api/option');
-const categoryRoutes = require('./api/category_product');
+const categoryProductRoutes = require('./api/category_product');
 const newsRoutes = require('./api/news');
+const CategoryNewsRoutes = require('./api/categoryNews');
 const cors = require('cors');
 const flash = require('express-flash');
 const session = require('express-session');
 require('dotenv').config();
+const sliderRoutes = require('./api/slider');
 
 class Routers {
-    runApi(app, apiVersion) {
-        app.use(morgan('dev'));
-        app.use(cors())
-        app.use(bodyParser.json());
-        app.use(
+    app;
+    apiVersion;
+    mongoose;
+    constructor(app = null, apiVersion = null, mongoose = null) {
+        this.app = app;
+        this.apiVersion = apiVersion;
+        this.mongoose = mongoose;
+    }
+    runApi() {
+        this.app.use(morgan('dev'));
+        this.app.use(cors())
+        this.app.use(bodyParser.json());
+        this.app.use(
             session({
                 secret: 'secret',
                 resave: true,
                 saveUninitialized: true
             })
         );
-        app.use(flash());
-        app.use(bodyParser.urlencoded({ extended: true }));
-        app.use(`${apiVersion}/user`, userRoutes);
-        app.use(`${apiVersion}/main`, mainRoutes);
-        app.use(`${apiVersion}/mainDetail`, mainDetailRoutes);
-        app.use(`${apiVersion}/products`, productRoutes);
-        app.use(`${apiVersion}/option`, optionRoutes);
-        app.use(`${apiVersion}/ctproduct`, categoryRoutes);
-        app.use(`${apiVersion}/news`, newsRoutes)
+        this.app.use(flash());
+        this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(`${this.apiVersion}/user`, userRoutes);
+        this.app.use(`${this.apiVersion}/main`, mainRoutes);
+        this.app.use(`${this.apiVersion}/mainDetail`, mainDetailRoutes);
+        this.app.use(`${this.apiVersion}/products`, productRoutes);
+        this.app.use(`${this.apiVersion}/option`, optionRoutes);
+        this.app.use(`${this.apiVersion}/ctproduct`, categoryProductRoutes);
+        this.app.use(`${this.apiVersion}/news`, newsRoutes)
+        this.app.use(`${this.apiVersion}/slider`, sliderRoutes)
+        this.app.use(`${this.apiVersion}/ctnews`, CategoryNewsRoutes)
     }
-    connectMongoose(mongoose) {
-        mongoose.set('useNewUrlParser', true);
-        mongoose.set('useFindAndModify', false);
-        mongoose.set('useCreateIndex', true);
-        mongoose.connect(process.env.MONGO_URI)
+    connectMongoose() {
+        this.mongoose.set('useNewUrlParser', true);
+        this.mongoose.set('useFindAndModify', false);
+        this.mongoose.set('useCreateIndex', true);
+        this.mongoose.connect(process.env.MONGO_URI)
             .then(() => console.log("MongoDb connected"))
             .catch(err => console.log(err));
     }
-    allowOriginHeader(app) {
-        app.use((req, res, next) => {
+    allowOriginHeader() {
+        this.app.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
             res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
             res.header(

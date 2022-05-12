@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const categoryProductSchema = mongoose.Schema({
+const categoryNewsSchema = mongoose.Schema({
     name: { type: String, required: true },
-    product: [{
+    News: [{
         type: Schema.Types.ObjectId,
-        ref: 'Product',
+        ref: 'news',
         required: false
     }]
 }, {
     timestamps: { createdAt: true, updatedAt: true }
 })
 
-module.exports = mongoose.model("Category_Product", categoryProductSchema)
+module.exports = mongoose.model("Category_News", categoryNewsSchema)
