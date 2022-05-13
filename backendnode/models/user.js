@@ -14,7 +14,10 @@ const userSchema = mongoose.Schema({
     phone_number: { type: String, required: false },
     city: { type: String, required: false },
     gender: { type: Boolean, required: false },
-    is_active: { type: Number, required: false },
+    role: {
+        type: String,
+        default: "user",
+    },
 })
 
 module.exports = mongoose.model("User", userSchema)

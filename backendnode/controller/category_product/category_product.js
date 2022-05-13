@@ -3,15 +3,17 @@ const Product = require("../../models/product");
 const PAGE_SIZE = 10;
 const fs = require('fs');
 const cloudinary = require('../../utils/cloudiary')
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 exports.categoryOfProduct = async function(req, res, next) {
     const { categoryProductId, pagesize, pagenumber } = req.query;
     if (pagenumber < 1) {
         pagenumber = 1;
-        pagenumber = parseInt(pagenumber);
-        pagesize = parseInt(pagesize);
     }
-    var skipOption = (pagenumber - 1) * pagesize;
-    var totalPages;
+    let pageNumber = parseInt(pagenumber);
+    let pageSize = parseInt(pagesize);
+    var skipOption = (pageNumber - 1) * pageSize;
+    const countCtProduct = await Product.count({ id_categoryProduct: categoryProductId });
     const CtProduct = await CategoryProduct.findById(categoryProductId).populate({
         path: 'product',
         model: 'Product',
@@ -20,14 +22,14 @@ exports.categoryOfProduct = async function(req, res, next) {
             model: 'Option'
         },
         options: {
-            sort: {},
+            // sort: { _id: -1 },
             skip: skipOption,
-            limit: pagesize
-        },
+            limit: pageSize
+        }
     })
     try {
         return res.status(200).json({
-            totalPage: totalPages,
+            totalPage: countCtProduct,
             data: CtProduct.product
         })
     } catch (err) {
@@ -47,38 +49,6 @@ exports.updateCategoryOfProduct = async(req, res, next) => {
 
     return res.status(200).json({ data: result })
 }
-
-exports.postRelationShipProduct = async(req, res, next) => {
-    const uploader = async(path) => await cloudinary.uploads(path, 'Image');
-    var urls = [];
-    if (req.method === "POST") {
-        const files = req.files;
-        for (const file of files) {
-            const { path } = file;
-            const newPath = await uploader(path);
-            urls.push(newPath);
-            fs.unlinkSync(path);
-        }
-    }
-    console.log("urls", urls)
-    const { cproductId } = req.query;
-    var urlImageProduct = new Array();
-    urls.forEach((element) => {
-        urlImageProduct.push(element.url)
-    })
-    var newProduct = new Product({
-        Product_name: req.body.Product_name,
-        productImage: urlImageProduct,
-        description: req.body.description,
-    })
-    const CategoryProducts = await CategoryProduct.findById(cproductId);
-    newProduct.id_categoryProduct = CategoryProducts;
-    await newProduct.save();
-    CategoryProducts.product.push(newProduct._id);
-    await CategoryProducts.save();
-    res.status(201).json({ data: newProduct });
-}
-
 exports.postCategoryProduct = function(req, res, next) {
     const product = new CategoryProduct({
         name: req.body.name,
@@ -94,50 +64,61 @@ exports.postCategoryProduct = function(req, res, next) {
     })
 }
 exports.getCategoryProduct = async function(req, res, next) {
-    var { page, pagesize } = req.query;
-    if (page) {
-        page = parseInt(page);
-        pagesize = parseInt(pagesize);
-        if (page < 1) {
-            page = 1;
-        }
-        var skipOption = (page - 1) * pagesize;
-        var totalPage;
-        await CategoryProduct.count({}, (err, counts) => {
-            totalPage = counts;
-        })
-        await CategoryProduct.find({}).populate({
-                path: 'product',
-                model: 'Product',
-                populate: {
-                    path: 'options',
-                    model: 'Option'
-                }
-            })
-            .skip(skipOption)
-            .limit(pagesize).then((response) => {
-                console.log("response", response)
-                return res.status(200).json({
-                    total: totalPage,
-                    pageNumber: page,
-                    pagesize: pagesize,
-                    data: response
-                })
-            }).catch(err => {
-                return res.status(404).json({
-                    error: err
-                })
-            })
-        return;
-    }
+    // var { page, pagesize } = req.query;
+    // if (page) {
+    //     page = parseInt(page);
+    //     pagesize = parseInt(pagesize);
+    //     if (page < 1) {
+    //         page = 1;
+    //     }
+    //     var skipOption = (page - 1) * pagesize;
+    //     var totalPage;
+    //     await CategoryProduct.count({}, (err, counts) => {
+    //         totalPage = counts;
+    //     })
+    //     await CategoryProduct.find({}).populate({
+    //             path: 'product',
+    //             model: 'Product',
+    //             options: {
+    //                 // sort: { _id: -1 },
+    //                 skip: skipOption,
+    //                 limit: pageSize
+    //             },
+    //             populate: {
+    //                 path: 'options',
+    //                 model: 'Option'
+    //             }
+    //         })
+    //         .skip(skipOption)
+    //         .limit(pagesize).then((response) => {
+    //             console.log("response", response)
+    //             return res.status(200).json({
+    //                 pageNumber: page,
+    //                 pagesize: pagesize,
+    //                 data: response
+    //             })
+    //         }).catch(err => {
+    //             return res.status(404).json({
+    //                 error: err
+    //             })
+    //         })
+    //     return;
+    // }
+    // var { pagesize } = req.query;
 
-    await CategoryProduct.find({}).populate({
+    // pagesize = parseInt(pagesize);
+
+    await CategoryProduct.find().populate({
             path: 'product',
             model: 'Product',
             populate: {
                 path: 'options',
                 model: 'Option'
-            }
+            },
+            // options: {
+            //     sort: { createdAt: -1 },
+            //     limit: 12
+            // }
         }).then((response) => {
             CategoryProduct.count({}, (err, counts) => {
                 if (err) {
@@ -158,6 +139,39 @@ exports.getCategoryProduct = async function(req, res, next) {
                 error: err
             })
         })
+        // const { categoryProductId, pagesize, pagenumber } = req.query;
+        // await Product.find({ id_categoryProduct: categoryProductId }).populate({
+        //         path: 'product',
+        //         model: 'Product',
+        //         populate: {
+        //             path: 'options',
+        //             model: 'Option'
+        //         },
+        //         // options: {
+        //         //     sort: { createdAt: -1 },
+        //         //     limit: 12
+        //         // }
+        //     }).then((response) => {
+        //         console.log("response", response)
+        //         CategoryProduct.count({}, (err, counts) => {
+        //             if (err) {
+        //                 return res.status(404).json({
+        //                     error: err
+        //                 })
+
+    //             } else {
+    //                 return res.status(200).json({
+    //                     totalPage: counts,
+    //                     data: response,
+    //                 })
+    //             }
+    //         })
+    //     })
+    //     .catch(err => {
+    //         return res.status(404).json({
+    //             error: err
+    //         })
+    //     })
 }
 exports.getCategoryProductDetail = function(req, res, next) {
     const name = req.query.name
@@ -221,4 +235,31 @@ exports.deleteCategoryProduct = async function(req, res, next) {
         res.status(500).json({ error: err })
         console.log(err);
     })
+}
+exports.postRelationShipProduct = async(req, res, next) => {
+    const uploader = async(path) => await cloudinary.uploads(path, 'Products');
+    var urls;
+    if (req.method === "POST") {
+        const files = req.files;
+        for (const file of files) {
+            const { path } = file;
+            const newPath = await uploader(path);
+            urls = newPath;
+            fs.unlinkSync(path);
+        }
+    }
+    // Product.images = urls;
+    req.body.productImage = urls
+    const { cproductId } = req.query;
+    var newProduct = new Product({
+        Product_name: req.body.Product_name,
+        images: req.body.productImage,
+        description: req.body.description
+    })
+    const CategoryProducts = await CategoryProduct.findById(cproductId);
+    newProduct.id_categoryProduct = CategoryProducts;
+    await newProduct.save();
+    CategoryProducts.product.push(newProduct._id);
+    await CategoryProducts.save();
+    res.status(201).json({ data: newProduct });
 }

@@ -124,12 +124,14 @@
             }
         }
         &--pagination {
-            background-color: black;
+            // background-color: black;
             display: flex;
             height: 18vh;
             @include respond(laptop) {
                 height: 17vh;
             }
+            justify-content: center;
+            align-items: center;
         }
     }
 }

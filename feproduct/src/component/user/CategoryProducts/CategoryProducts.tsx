@@ -122,7 +122,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                             response?.product.map((res:any,index:number)=> {
                               return  <div className='product--detail' >
                                     <div className='product--detail__img' onMouseMove={()=>moveDetail(index)} onMouseLeave={()=>moveDetailOver()} >
-                                        <img src={res.productImage[0]}/>
+                                        <img src={res?.images[0].url}/>
                                     </div>
                                 <div className='product--detail__Code'>
                                     <span> {res._id}</span>
@@ -144,9 +144,12 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                         }
                     </div>
                 </div>
-                <div className='box-center__seeMore'>
-                    <Link to={`/system/topproduct?idctproduct=${response?._id}`}  className="button__seemore" ><span>xem tất cả sản phẩm</span></Link>
-                </div>
+                {
+                    response?.name === "TOP SẢN PHẨM BÁN CHẠY" ? <div className='box-center__seeMore'>
+                        <Link to={`/system/topproduct?idctproduct=${response?._id}`}  className="button__seemore" ><span>Xem tất cả sản phẩm</span></Link>
+                    </div> : 
+                        <Link to={`/system/topproduct?idctproduct=${response?._id}`}  className="button__seemore" ><a>Xem tất cả sản phẩm </a></Link>
+                }
             </div>
         </div>
     );

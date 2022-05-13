@@ -2,7 +2,7 @@
 @import "../../../../src/sass/mixin";
 .p-container {
     width: 100%;
-    background-color: #edeef2;
+    background-color: $backgroundApp;
     display: flex;
     margin-top: 20px;
     flex-direction: center;
@@ -27,7 +27,7 @@
                 @include respond(laptop) {
                     flex: 0.19;
                 }
-                background: #546ce8;
+                background: $generalBackground;
                 clip-path: polygon(0 0, 100% 0%, 74% 100%, 0% 100%);
                 color: #fff;
                 h4 {
@@ -53,14 +53,19 @@
                     flex: 0.17;
                     flex-direction: column;
                     position: relative;
-                    @include respond(laptop) {
-                        flex: 0.2;
-                        width: calc(100% / 5.8);
-                    }
+                    // @include respond(laptop) {
+                    //     flex: 0.2;
+                    //     width: calc(100% / 5.8);
+                    // }
                     &__img {
                         display: flex;
                         flex: 0.6;
                         position: relative;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                        }
                     }
                     &__Code {
                         display: flex;
@@ -79,7 +84,7 @@
                                 font-size: 13px;
                             }
                             &:hover {
-                                color: #3d52bf;
+                                color: $generalBackground;
                                 font-size: 15px;
                                 font-weight: bold;
                                 @include respond(laptop) {
@@ -110,13 +115,13 @@
             align-items: center;
             .button__seemore {
                 width: 230px;
-                color: #3d52bf;
-                border: 1px solid #3d52bf;
+                color: $generalBackground;
+                border: 1px solid $generalBackground;
                 text-transform: uppercase;
                 padding: 6px;
                 text-decoration: none;
                 &:hover {
-                    background-color: #3d52bf;
+                    background-color: $generalBackground;
                     color: #FFFFFF;
                 }
             }

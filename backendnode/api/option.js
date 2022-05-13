@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const optionController = require("../controller/option/option");
+const { postOption, getOption, getOptionDetail, deleteOption, putOption } = require("../controller/option/option");
 
-router.post("/post", optionController.postOption);
-router.get("/getall", optionController.getOption);
-router.get("/getdetail/:id", optionController.getOptionDetail);
-router.put("/put", optionController.putOption);
-router.delete("/delete", optionController.deleteOption);
+router.route("/post").post(postOption);
+router.route("/get").get(getOption);
+router.route("/getdetail/:id").get(getOptionDetail);
+router.route("/put").put(putOption);
+router.route("/delete").delete(deleteOption);
 
 module.exports = router;

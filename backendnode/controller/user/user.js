@@ -72,7 +72,7 @@ exports.login = (req, res, next) => {
                     })
                     return res.status(200).json({
                         message: 'Auth success',
-                        token: token,
+                        accessToken: token,
                     })
                 }
                 res.status(401).json({
@@ -103,4 +103,17 @@ exports.forgot = async(req, res, next) => {
         message: content,
     }
     await sendEmail(options, req, res);
+}
+exports.detailsUser = (req, res, next) => {
+    const { idUser } = req.query;
+    User.findById(idUser).then((response) => {
+            return res.status(200).json({
+                data: response
+            })
+        })
+        .catch(err => {
+            return res.status(400).json({
+                error: err
+            })
+        })
 }

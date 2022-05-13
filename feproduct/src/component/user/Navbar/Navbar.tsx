@@ -9,7 +9,7 @@ import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 // import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 // import DirectionsCarTwoToneIcon from '@mui/icons-material/DirectionsCarTwoTone';
-import React,{useEffect, useState} from "react";
+import React,{useEffect, useState,useMemo} from "react";
 import styled from "styled-components";
 import { mobile,table } from "../response";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,6 +20,7 @@ import { RootStateOrAny} from "react-redux";
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import CarRepairIcon from '@mui/icons-material/CarRepair';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import jwt_decode from "jwt-decode";
 
 const category:Array<any> = [
     {
@@ -64,30 +65,28 @@ const category:Array<any> = [
 ]
 
 const Navbar = () => {
-    let token  = JSON.parse(localStorage.getItem('tokenUser') as any | string);
+    let tokenLocalStorage = localStorage.getItem('accessToken') as any | null | undefined | string;
+    let token  = JSON.parse(tokenLocalStorage);
     let tokenLogin = useSelector((state: any) => state.login.tokenUser);
     let [linkNavBar,setLinkNavBar] = useState(false as boolean);
-    let elementLogin: any = null;
-    let elementLogout = null;
     let dispatch = useDispatch();
     let history  = useHistory();
     const logout = async () => {
         let action = actions.logoutUser();
         await dispatch(action);
     }
-    // useEffect(()=>{
-    // if(tokenLogin)
-    // {
-    //      elementLogin = <div className="MenuItem__span" onClick={logout}><Link   className="MenuItem__Link" to="/login"  > LOGOUT </Link></div>
-    // }
-    // else if(!tokenLogin)  {
-    //      elementLogin  = <div  className="MenuItem__span">
-    //     <Link  className="MenuItem__Link" to="/login" ><span>Đăng nhập </span></Link>
-    //     <Link className="MenuItem__Link" to="/register" > <span>Đăng ký</span></Link>
-    // </div>
-    // }
-    //     return () => elementLogin;
-    // },[elementLogin])
+    var decoded = "";
+    const [inforToken,setInforToken] = useState({}) as Object | undefined | any ;
+    useEffect(()=>{
+        if(token){
+            decoded = jwt_decode(token);
+            setInforToken(decoded);
+        }else {
+            decoded =  "";
+            setInforToken(decoded);
+        }
+        console.log("inforToken",inforToken);
+    },[])
     const clickNav  = () => {
         setLinkNavBar(!linkNavBar)
     }
@@ -135,7 +134,11 @@ const Navbar = () => {
                     </div>
                     <div className="MenuItem">
                         <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/system/account" ><AccountCircleOutlinedIcon /></Link></div>
-                        { tokenLogin ?<div className="MenuItem__span" onClick={logout}><Link   className="MenuItem__Link" to="/system/account"  > Đăng Xuất </Link></div> : 
+                        { token ? <div className="MenuItem__span" >
+                                <Link   className="MenuItem__Link" to="/system/account" onClick={logout}> Đăng Xuất </Link>
+                                <Link  className="MenuItem__Link" to="/system/informationuser" > {inforToken?.email} </Link>
+                        </div>
+                         : 
                             <div  className="MenuItem__span">
                                <Link  className="MenuItem__Link" to="/system/account" ><span>Đăng nhập </span></Link>
                                <Link className="MenuItem__Link" to="/system/register" > <span>Đăng ký</span></Link>

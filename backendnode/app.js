@@ -18,16 +18,16 @@ class kernel {
     }
 
     allowHeader() {
-        const router = new Routes();
-        router.allowOriginHeader(this.app);
+        const router = new Routes(this.app, null, null);
+        router.allowOriginHeader();
     }
     runApiApp() {
-        const router = new Routes();
-        router.runApi(this.app, this.apiVersion);
+        const router = new Routes(this.app, this.apiVersion, null);
+        router.runApi();
     }
     runDB() {
-        const router = new Routes();
-        router.connectMongoose(this.mongoose);
+        const router = new Routes(null, null, this.mongoose);
+        router.connectMongoose();
     }
 }
 mongoose.Promise = global.Promise;
