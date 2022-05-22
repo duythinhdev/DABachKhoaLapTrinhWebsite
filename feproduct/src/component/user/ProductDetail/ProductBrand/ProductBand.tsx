@@ -10,6 +10,7 @@ import card7 from "../../../../asset/ListProductSlider/card7.jpg";
 import card8 from "../../../../asset/ListProductSlider/card8.jpg";
 import card9 from "../../../../asset/ListProductSlider/card9.jpg";
 import card10 from "../../../../asset/ListProductSlider/card10.jpg";
+import useNxtPre from "../../hook/useNxtPre";
 
 const ListProductSlider  = [
     {
@@ -104,34 +105,9 @@ const ListProductSlider  = [
     },
 ]
 const ProductBand = ()  => {
+    let { nextAndPre } = useNxtPre('.product-container','.nxt-btn','.pre-btn');
     useEffect(() => {
-        let productContainer = document.querySelectorAll('.product-container') as any | NodeListOf<Element>;
-        console.log("productContainer",productContainer);
-        let nxtBtns = document.querySelectorAll('.nxt-btn') as any | NodeListOf<Element>;
-        let preBtns = document.querySelectorAll('.pre-btn') as any | NodeListOf<Element>;
-        const productContainers:Array<any> = []; 
-        productContainers.push(...productContainer);
-        const nxtBtn:Array<any> = [];
-        const preBtn:Array<any> = [];
-        nxtBtn.push(...nxtBtns);
-        preBtn.push(...preBtns);
-        productContainers.forEach((item: any, i:number) => {
-            let containerDimensions = item.getBoundingClientRect();
-            console.log("containerDimensions", containerDimensions)
-            let containerWidth = containerDimensions.width;
-            console.log("containerWidth", containerWidth);
-
-            nxtBtn[i].addEventListener('click', () => {
-                item.scrollLeft += containerWidth;
-                console.log("item.scrollLeft", item.scrollLeft);
-
-            })
-
-            preBtn[i].addEventListener('click', () => {
-                item.scrollLeft -= containerWidth;
-                console.log("item.scrollLeft", item.scrollLeft);
-            })
-        })
+        nextAndPre();
     },[])
     return (
         <div className="whiteProductList__content">

@@ -10,6 +10,9 @@ import ImageProductDetail from "./ProductDetailImage";
 import ProductDetailsView from "./ProductDetailsView/ProductDetailsView";
 import { TabName } from "./constants";
 import BodyProductList from "./BodyProductList";
+import useQueryLocation from "../hook/useQueryLocation";
+import axios, {AxiosResponse} from "axios";
+import { enviroment } from "../../../enviroment/enviroment";
 
 const TabNames = [{
     Name: TabName.ProductDetails.ProductSimilar,
@@ -51,26 +54,27 @@ const dataDetail:Array<any> = [
     },
 ]
 const ProductDetail = () => {
-
-    const [detailComment,setDetailComment] = useState(false) as any | Boolean;
-    const [seeMore,setSeeMore] = useState(false) as any | Boolean;
+    const [isDetailComment,setIsDetailComment] = useState(false) as any | Boolean;
+    const [isSeeMore,setIsSeeMore] = useState(false) as any | Boolean;
     const [nameTitle, setNameTitle] = useState({} as Object);
+    const [item,setItem] = useState({}) as any | Object | undefined ;
+    const [option,setOption] = useState({}) as any | string;
     const clickShowContentComment = (event:  React.FormEvent<HTMLInputElement>): void  => {
         event.preventDefault();
-        setDetailComment(true)
+        setIsDetailComment(true)
     }
     const clickHideContentComment = (): void => {
-        setDetailComment(false)
+        setIsDetailComment(false)
     }
     const clickShowMore  = (event:  React.FormEvent<HTMLInputElement>): void => {
         event.preventDefault();
-        setSeeMore(!seeMore);    
+        setIsSeeMore(!isSeeMore);    
     }
     const HandleClick = (name: string,index: number): void => {
         borderProductdetail(true,index)
         setNameTitle(name)
     }
-    const borderProductdetail = (loadFirts:Boolean = false,index:any =  null): void => {
+    const borderProductdetail = (loadFirts:Boolean = false,index: number | null | any =  null): void => {
         let borderClick = document.getElementsByClassName('product__similar') as  HTMLCollectionOf<HTMLElement>;
         if(!loadFirts){
             borderClick[0].style.borderBottom = '4px solid #546ce8';
@@ -98,15 +102,31 @@ const ProductDetail = () => {
         }
         borderClick[index].style.borderBottom = '4px solid #546ce8';
         borderClick[index].style.transition = '0.5s';
-        borderClick[index].style.cursor = 'pointer';
+        borderClick[index].style.cursor = 'pointer';    
     }
+
+    let query = useQueryLocation();
+    let idProduct = query.get("idproduct");
+    async function fetchProduct() {
+        await axios.get(enviroment.localNode + `products/getdetail?id=${idProduct}`).then((res: any) => { 
+            setOption(res.data.data?.options[0]);
+            setItem(res.data.data)
+        })
+    }
+
     useEffect(()=> {
         borderProductdetail(false,null);
+        fetchProduct();
     },[])
     return (
         <section className="Container__ProductDetail">
          
-            <ProductDetailsView dataDetail={dataDetail}  ImageProductDetail={ImageProductDetail} />
+            <ProductDetailsView
+                dataDetail={dataDetail}  
+                ImageProductDetail={ImageProductDetail} 
+                item={item} 
+                option={option} 
+            />
 
             <div  className="whitenews">
                 <div className="whitenews__productdetail">
@@ -114,29 +134,14 @@ const ProductDetail = () => {
                         <h3>MÔ TẢ SẢN PHẨM</h3>
                     </div>
                     <div className="whitenews__productdetail--content">
-                        <p>Màn hình máy tính Samsung LF22T350FHEXXV 21.5 inch FHD
-                        Mở Rộng Góc Nhìn Hiệu Quả
-                        Thiết kế tràn viền 3 cạnh giúp mọi không gian làm việc trở nên gọn gàng nhưng vẫn đảm bảo khả năng truyền tải liền mạch mọi nội dung một cách hoàn hảo, cho phép tập trung vượt trội, ngay cả khi thiết lập đa màn hình cùng lúc.
-                        Sắc Màu Chân Thực 
-                        Với tấm nền IPS đem tới sắc màu sống động và rõ ràng đến từng chi tiết ở mọi góc nhìn. Hiển thị chính xác từng tông màu và sắc thái ở hầu hết mọi góc độ.
-                        Đồng Bộ Mọi Khung Hình 
-                        Màn hình được tích hợp công nghệ AMD Radeon FreeSync™ đồng bộ tốc độ quét của card đồ họa và màn hình, giảm thiểu tình trạng xé hình và lặp hình thường thấy, trải nghiệm giải trí với trải nghiệm không gián đoạn. Với các khung hình nhanh cũng được xử lý liền mạch và mượt mà.
-                        <span className={seeMore ? "read-more-text--show" : "read-more-text"}>
-                        Mượt Mà Trong Từng Khung Hình
-                        Với tần số quét 75Hz giúp hiển thị mọi chuyển động mượt mà giúp người dùng có thể thưởng thức từng khung hình mà không còn bị giựt hình hay hiệu ứng bóng mờ.
-
-                        
-
-                        Sức Mạnh Chơi Game 
-                        Tối ưu màu sắc và độ tương phản, cho khung cảnh rực rỡ và giúp bạn dễ dàng phát hiện kẻ địch đang ẩn nấp trong bóng tối. Chế độ Game Mode tùy chỉnh khung hình với mọi dòng game mang lại cho bạn những lợi thế vượt trội, bứt phá để dành chiến thắng.
-
-                            
-
+                        <p>
+                          {item.description}
+                        <span className={isSeeMore ? "read-more-text--show" : "read-more-text"}>
                         Chăm Sóc Toàn Diện Cho Đôi Mắt
                         Bạn sẽ luôn yên tâm đôi mắt của mình luôn được bảo vệ khi sử dụng trên chiếc màn hình này với công nghệ bảo vệ mắt tiên tiến giúp giảm thiểu tình trạng mỏi mắt khi dùng trong thời gian dài. Công nghệ Flicker Free loại bỏ tình trạng nhấp nháy khó chịu thường thấy trên màn hình, trong khi chế độ Eye Saver giảm thiểu tác hại của ánh sáng xanh.
                             </span></p>
                         <div className="productdetail__btn">
-                            <button className="read-more-btn" onClick={(event: any)=>clickShowMore(event)}>{seeMore ? "Rút Gọn..." : "Xem Thêm..." }</button>
+                            <button className="read-more-btn" onClick={(event: any)=>clickShowMore(event)}>{isSeeMore ? "Rút Gọn..." : "Xem Thêm..." }</button>
                         </div>
                     </div>
                 </div>
@@ -166,7 +171,7 @@ const ProductDetail = () => {
                         <div  className="whitenewscomment__content--text">
                             <textarea placeholder="Nội Dung" onClick={(event:any)=> clickShowContentComment(event)} ></textarea>
                         </div>
-                        {detailComment && <ModalComment clickHideContentComment={clickHideContentComment} />}
+                        {isDetailComment && <ModalComment clickHideContentComment={clickHideContentComment} />}
                     </div>
             </div>
             <div className="whiteProductList">

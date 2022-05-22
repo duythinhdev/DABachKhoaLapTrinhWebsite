@@ -102,6 +102,9 @@
                 &--name {
                     display: flex;
                     flex: 0.07;
+                    .linknameProduct {
+                        text-decoration: none;
+                    }
                 }
                 &--pricemotion {
                     display: flex;

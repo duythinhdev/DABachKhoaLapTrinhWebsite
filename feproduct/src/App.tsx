@@ -17,7 +17,7 @@ const App = () => {
     return (
         <div className="App">
             <Routing  />
-            {/* <div className={darkMode ? "app dark" : "app"}>
+            <div className={darkMode ? "app dark" : "app"}>
                 <BrowserRouter>
                     <Switch>
                         <Route path="/">
@@ -33,7 +33,7 @@ const App = () => {
                         </Route>
                     </Switch>
                 </BrowserRouter>
-            </div> */}
+            </div>
         </div>
     );
 }

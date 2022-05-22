@@ -128,7 +128,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                                     <span> {res._id}</span>
                                 </div>
                                 <div className='product--detail__Name'>
-                                       <Link to="/system/productdetail"  className="detailName__link"><span>{res.Product_name}</span></Link> 
+                                       <Link to={`/system/productdetail?idproduct=${res?._id}`}  className="detailName__link"><span>{res.Product_name}</span></Link> 
                                 </div>
                                 <div className='product--detail__pricePromotion'>
                                         <del>{res.options[0]?.price}</del>
@@ -146,9 +146,9 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                 </div>
                 {
                     response?.name === "TOP SẢN PHẨM BÁN CHẠY" ? <div className='box-center__seeMore'>
-                        <Link to={`/system/topproduct?idctproduct=${response?._id}`}  className="button__seemore" ><span>Xem tất cả sản phẩm</span></Link>
+                        <Link to={`/system/topproduct?idctproduct=${response?._id}&nameCtProduct=${response?.name}`}  className="button__seemore" ><span>Xem tất cả sản phẩm</span></Link>
                     </div> : 
-                        <Link to={`/system/topproduct?idctproduct=${response?._id}`}  className="button__seemore" ><a>Xem tất cả sản phẩm </a></Link>
+                        <Link to={`/system/topproduct?idctproduct=${response?._id}&nameCtProduct=${response?.name}`}  className="button__seemore" ><a>Xem tất cả sản phẩm </a></Link>
                 }
             </div>
         </div>

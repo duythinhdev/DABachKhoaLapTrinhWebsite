@@ -71,3 +71,13 @@ export {
     deleteUser
 }
 from "../action/userAdmin";
+
+export { getNewsUser, dataNewsUser }
+from "../action/newsUser.tsx"
+export {
+    cartUser,
+    removeCartUser,
+    removeDetailCartUser,
+    increaseProductCart
+}
+from "../action/cartUser.tsx"

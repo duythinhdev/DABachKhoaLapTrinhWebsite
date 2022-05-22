@@ -111,14 +111,14 @@ exports.getCategoryProduct = async function(req, res, next) {
     await CategoryProduct.find().populate({
             path: 'product',
             model: 'Product',
+            options: {
+                // sort: { createdAt: -1 },
+                limit: 12
+            },
             populate: {
                 path: 'options',
                 model: 'Option'
             },
-            // options: {
-            //     sort: { createdAt: -1 },
-            //     limit: 12
-            // }
         }).then((response) => {
             CategoryProduct.count({}, (err, counts) => {
                 if (err) {
@@ -237,17 +237,7 @@ exports.deleteCategoryProduct = async function(req, res, next) {
     })
 }
 exports.postRelationShipProduct = async(req, res, next) => {
-    const uploader = async(path) => await cloudinary.uploads(path, 'Products');
-    var urls;
-    if (req.method === "POST") {
-        const files = req.files;
-        for (const file of files) {
-            const { path } = file;
-            const newPath = await uploader(path);
-            urls = newPath;
-            fs.unlinkSync(path);
-        }
-    }
+
     // Product.images = urls;
     req.body.productImage = urls
     const { cproductId } = req.query;
@@ -262,4 +252,12 @@ exports.postRelationShipProduct = async(req, res, next) => {
     CategoryProducts.product.push(newProduct._id);
     await CategoryProducts.save();
     res.status(201).json({ data: newProduct });
+}
+exports.categoryProductDetail = (req, res, next) => {
+    var { id } = req.query
+    CategoryProduct.findById(id).then((response) => {
+        return res.status(200).json({
+            data: response
+        })
+    }).catch(err => res.status(404).json({ error: err }))
 }
