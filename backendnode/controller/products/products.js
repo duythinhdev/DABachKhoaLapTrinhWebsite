@@ -6,10 +6,11 @@ const cloudinary = require('../../utils/cloudiary')
 
 const PAGE_SIZE = 10;
 exports.postProduct = async(req, res, next) => {
+    const { Product_name, path, description } = req.body;
     const product = new Product({
-        Product_name: req.body.Product_name,
-        productImage: req.file.path,
-        description: req.body.description,
+        Product_name: Product_name,
+        productImage: path,
+        description: description,
     })
     let postProduct = product.save();
     await postProduct.then((productData) => {
@@ -32,7 +33,22 @@ exports.postProductofCategory = async(req, res, next) => {
 }
 exports.postProductofOption = async(req, res, next) => {
     const { productid } = req.query;
-    const newOption = new Option(req.body);
+    const {
+        specifications,
+        size,
+        type,
+        price,
+        quantity,
+        code,
+    } = req.body;
+    const newOption = new Option({
+        specifications: specifications,
+        size: size,
+        type: type,
+        price: price,
+        quantity: quantity,
+        code: code
+    });
     const Products = await Product.findById(productid);
     newOption.product = Products;
     await newOption.save();
@@ -92,30 +108,24 @@ exports.getProduct = async(req, res, next) => {
         })
 }
 exports.getProductDetail = (req, res, next) => {
-    var id = req.params.id
-    Product.findById(id).then((response) => {
-            return res.status(200).json({
-                data: response
-            })
+    var { id } = req.query
+    Product.findById(id).populate({
+        path: 'options',
+        model: 'Option',
+    }).then((response) => {
+        return res.status(200).json({
+            data: response
         })
-        .catch(err => {
-            return res.status(400).json({
-                error: err
-            })
-        })
+    }).catch(err => res.status(404).json({ error: err }))
 }
 exports.putProduct = async(req, res, next) => {
-    var Product_name = req.body.Product_name;
-    var productImage = req.file.path;
-    var description = req.body.description;
-    var id_categoryProduct = req.body.id_categoryProduct;
-    var id = req.query.id;
+    var { Product_name, productImage, description } = req.body;
+    var { id } = req.query;
     await Product.updateOne({ _id: id }, {
             $set: {
                 Product_name: Product_name,
                 productImage: productImage,
                 description: description,
-                id_categoryProduct: id_categoryProduct,
             }
         })
         .exec()

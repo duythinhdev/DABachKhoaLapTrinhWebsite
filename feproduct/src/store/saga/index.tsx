@@ -9,6 +9,13 @@ import {postReview,deleteReview,putReview} from "../saga/ReviewAdmin";
 import {postComment } from "../saga/CommentAdmin";
 import {deleteCategoryProduct, postCategoryProduct, putCategoryProduct} from "../saga/CategoryAdmin";
 import { postNews,putNews,deleteNews } from "../saga/NewsAdmin";
+import { getNewsUser } from "../saga/newsUser";
+
+export function* watchNewsUser(): Generator<StrictEffect>{ 
+    yield all([
+        takeEvery(actionTypes.NEWS_USER,getNewsUser),
+    ])
+}
 export function* watchLoginAdmin(): Generator<StrictEffect> {
     yield all([
         takeEvery(actionTypes.LOGIN_APP_ADMIN,loginApp),

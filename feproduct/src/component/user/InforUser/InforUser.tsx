@@ -1,12 +1,25 @@
 import React,{useEffect} from 'react';
 import "./InforUser.scss";
 import useColorTable from "../hook/useColorTable";
+import * as actions from "../../../store/action";
+import {useDispatch} from "react-redux";
+import { useHistory,Link } from 'react-router-dom';
+import {
+  useParams
+} from "react-router-dom";
+import InForUserChange from "../InforUser/InForUserChange/InForUserChange";
+import InForUserChangePassword from "../InforUser/InForUserChangePassword/InForUserChangePassword";
 
 export default function InforUser() {
     let { rowAlternateColors } =   useColorTable('dt');
     useEffect(() => {
         rowAlternateColors();
     },[])
+    let dispatch = useDispatch();
+    const logout = async () => {
+      let action = actions.logoutUser();
+      await dispatch(action);
+    }
   return (
     <div className="Cointainer-information">
         <div className="Wrapper">
@@ -45,7 +58,7 @@ export default function InforUser() {
                               <a>Cấu hình của tôi</a>
                             </dd>
                             <dd>
-                              <a>Logout</a>
+                              <Link   className="MenuItem__Link" to="/system/account" onClick={logout}> Logout </Link>
                             </dd>
                       </dl>
                     </td>

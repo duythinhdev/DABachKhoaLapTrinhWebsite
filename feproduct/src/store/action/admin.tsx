@@ -86,7 +86,9 @@ export const PostProduct = (title: any,status: boolean)  => {
         status: status
     }
 }
+
 export const discoloration = ( discolor:string) => {
+    console.log("discolor",discolor);
     return {
         type: action.STATUS_DISCOLORATION,
         discolor: discolor,

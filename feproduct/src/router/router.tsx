@@ -11,7 +11,8 @@ import { ContainerAdmin,
     ProductBrand,
     HomeAdmin,
     ListAdmin,
-    newAdmin
+    newAdmin,
+    InforUser
 } from "./index";
 
 export const Routes: Array<any> = [
@@ -31,10 +32,10 @@ export const Routes: Array<any> = [
         path: "/news",
         component: News
     },
-    {
-        path: "/home",
-        component: HomeAdmin,
-    },
+    // {
+    //     path: "/home",
+    //     component: HomeAdmin,
+    // },
     {
         path: "/users",
         component: ListAdmin,

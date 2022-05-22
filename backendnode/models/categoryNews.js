@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const categoryNewsSchema = mongoose.Schema({
     name: { type: String, required: true },
-    News: [{
+    news: [{
         type: Schema.Types.ObjectId,
         ref: 'news',
         required: false

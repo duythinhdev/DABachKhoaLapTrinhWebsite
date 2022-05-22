@@ -1,7 +1,13 @@
 const express = require('express');
 var router = express.Router();
 // const upload = require('../utils/multer');
-const { postCategoryNews, getNewOfCategoryNews, postNewofCategoryNews } = require("../controller/categoryNews/categoryNews")
+const {
+    postCategoryNews,
+    getNewOfCategoryNews,
+    postNewofCategoryNews,
+    putCategoryNews,
+    getNewsofCategoryNews
+} = require("../controller/categoryNews/categoryNews")
 const multer = require("multer");
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -28,7 +34,9 @@ const upload = multer({
 });
 
 router.route("/post").post(postCategoryNews);
+router.route("/get").get(getNewsofCategoryNews);
 router.route("/postofNews").post(upload.array("Image"), postNewofCategoryNews);
 router.route("/getofNews").get(getNewOfCategoryNews);
+router.route("/put").put(putCategoryNews);
 
 module.exports = router;

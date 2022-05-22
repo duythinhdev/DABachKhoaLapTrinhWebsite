@@ -12,15 +12,14 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import React,{useEffect, useState,useMemo} from "react";
 import styled from "styled-components";
 import { mobile,table } from "../response";
-import {useDispatch, useSelector} from "react-redux";
 import * as actions from "../../../store/action";
 import { useHistory,Link } from 'react-router-dom';
 import "./Navbar.scss";
-import { RootStateOrAny} from "react-redux";
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import CarRepairIcon from '@mui/icons-material/CarRepair';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import jwt_decode from "jwt-decode";
+import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 
 const category:Array<any> = [
     {
@@ -67,14 +66,8 @@ const category:Array<any> = [
 const Navbar = () => {
     let tokenLocalStorage = localStorage.getItem('accessToken') as any | null | undefined | string;
     let token  = JSON.parse(tokenLocalStorage);
-    let tokenLogin = useSelector((state: any) => state.login.tokenUser);
     let [linkNavBar,setLinkNavBar] = useState(false as boolean);
     let dispatch = useDispatch();
-    let history  = useHistory();
-    const logout = async () => {
-        let action = actions.logoutUser();
-        await dispatch(action);
-    }
     var decoded = "";
     const [inforToken,setInforToken] = useState({}) as Object | undefined | any ;
     useEffect(()=>{
@@ -85,12 +78,12 @@ const Navbar = () => {
             decoded =  "";
             setInforToken(decoded);
         }
-        console.log("inforToken",inforToken);
     },[])
     const clickNav  = () => {
         setLinkNavBar(!linkNavBar)
     }
-
+    let cartOfUser = useSelector((state: RootStateOrAny) => state.dataUser.cart);
+    // console.log("cartOfUser",cartOfUser);
     return (
         <div className="header">
             <div className="Wrapper">
@@ -135,7 +128,6 @@ const Navbar = () => {
                     <div className="MenuItem">
                         <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/system/account" ><AccountCircleOutlinedIcon /></Link></div>
                         { token ? <div className="MenuItem__span" >
-                                <Link   className="MenuItem__Link" to="/system/account" onClick={logout}> Đăng Xuất </Link>
                                 <Link  className="MenuItem__Link" to="/system/informationuser" > {inforToken?.email} </Link>
                         </div>
                          : 
@@ -146,7 +138,7 @@ const Navbar = () => {
                         }
                     </div>
                     <div className="MenuItem">
-                        <Badge badgeContent={50} color="primary">
+                        <Badge badgeContent={cartOfUser && cartOfUser.length } color="error">
                             <Link to="/system/cart" className="MenuItem__Link" > <ShoppingCartOutlined /></Link>
                         </Badge>
                     </div>

@@ -10,6 +10,7 @@ import userAdminReducer from "../store/redux/UserAdmin";
 import dataUserReducer from "../store/redux/dataUser";
 import { persistStore,persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import newsReducer from "../store/redux/newsUser"
 import { PersistGate } from "redux-persist/integration/react";
 
 import {
@@ -20,7 +21,8 @@ import {
     watchReviewAdmin,
     watchCommentAdmin
     ,watchCategoryAdmin,
-    watchNewsAdmin
+    watchNewsAdmin,
+    watchNewsUser
 } from "../store/saga/index";
 
 const sagaMiddleware: any = createSagaMiddleware();
@@ -41,7 +43,8 @@ const rootReducer = combineReducers({
     login: LoginReducer,
     userAdmin: userAdminReducer,
     option: optionMainReducer,
-    dataUser: dataUserReducer
+    dataUser: dataUserReducer,
+    newsUser: newsReducer
 });
 const persistReducers = persistReducer(persistConfig,rootReducer);
 
@@ -59,10 +62,11 @@ sagaMiddleware.run(watchReviewAdmin);
 sagaMiddleware.run(watchCommentAdmin);
 sagaMiddleware.run(watchCategoryAdmin);
 sagaMiddleware.run(watchNewsAdmin);
+sagaMiddleware.run(watchNewsUser);
 export const app = (
     <Provider store={store}>
-        {/* <PersistGate loading={null} persistor={persistor}  > */}
+        <PersistGate loading={null} persistor={persistor}  >
             <App/>
-        {/* </PersistGate> */}
+        </PersistGate>
     </Provider>
 );

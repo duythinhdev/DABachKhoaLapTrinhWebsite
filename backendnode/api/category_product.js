@@ -4,7 +4,7 @@ var {
     postCategoryProduct,
     postRelationShipProduct,
     getCategoryProduct,
-    getCategoryProductDetail,
+    categoryProductDetail,
     putCategoryProduct,
     deleteCategoryProduct,
     categoryOfProduct
@@ -13,7 +13,7 @@ const upload = require('../utils/multer');
 
 router.route("/post").post(postCategoryProduct);
 router.route("/get").get(getCategoryProduct);
-router.route("/detail").get(getCategoryProductDetail);
+router.route("/detail").get(categoryProductDetail);
 router.route("/put").put(putCategoryProduct);
 router.route("/delete").delete(deleteCategoryProduct);
 router.route("/of").get(categoryOfProduct);

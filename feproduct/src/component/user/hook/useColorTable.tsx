@@ -7,7 +7,7 @@ export default function useColorTable(attribute: string) {
             case 'dt':
                 var dt = document.getElementsByTagName(attribute) as HTMLCollectionOf<HTMLElement>;
 
-                for(let x = 0;x< dt.length;x++){
+                for(let x = 0;x < dt.length; x++){
                     dt[x].style.backgroundColor = '#546ce8';
                     dt[x].style.color = '#FFFFFF';
                 }

@@ -8,15 +8,23 @@ import CheckIcon from '@mui/icons-material/Check';
 import Promotion from "../../../../asset/t3-2022-trang-sp-500x654.jpg";
 import useSlideFetching from "../../SliderProduct/useSlideFetching";
 import useColorTable from "../../hook/useColorTable";
+import axios, {AxiosResponse} from "axios";
+import { enviroment } from "../../../../enviroment/enviroment";
+import useQueryLocation from "../../hook/useQueryLocation";
+import { useDispatch } from 'react-redux';
+import * as Action from "../../../../store/action/index";
 
 interface propsdata {
     dataDetail: Array<any>,
     ImageProductDetail:  Array<any>,
+    item: any,
+    option: any,
 }
-const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail}) => {
+const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail,item,option}) => {
     let { slideIndex,setSlideIndex,nextSlide,prevSlide } = useSlideFetching(ImageProductDetail.length);
     const [seeMore,setSeeMore] = useState(false) as any | Boolean;
-    const [showModalPD,setModalPD] = useState(false) as any | Boolean;
+    const [isShowModal,setIsShowModal] = useState(false) as any | Boolean;
+    let dispatch = useDispatch();
     const enableSeeMore = () => {
         setSeeMore(true)
     }
@@ -24,25 +32,28 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail})
         setSeeMore(false)
     }
     const showModalPd = () => {
-        setModalPD(true)
+        setIsShowModal(true)
     }
     const hideModalPd = () => {
-        setModalPD(false)
+        setIsShowModal(false)
     }
     let { rowAlternateColors } =   useColorTable('tr');
-    
     useEffect(() => {
         rowAlternateColors();
     },[])
+    const clickCart =  () => {
+        let action = Action.cartUser(item);
+        dispatch(action);
+    }
     return <div  className="bg__white">
     <div  className="productimage">
             <div  className="productimage__img">
-                { ImageProductDetail.map((res,index)=>{
+                { item.images?.map((res:any,index: number)=>{
                     return <div
                         key={index}
                         className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
-                        <img src={res} />;
+                        <img src={res.url} />;
                     </div>
                 })}
                 <button className="btn-slide btn-slide--next" onClick={nextSlide}>
@@ -58,7 +69,7 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail})
                          <p> Phóng to Hình sản phẩm </p>
                     </div>
                     <div className="productzoom__title--sum">
-                        <span>{slideIndex } / {ImageProductDetail.length}</span>
+                        <span>{slideIndex } / {item.images?.length}</span>
                     </div>
                     
                 </div>
@@ -110,18 +121,18 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail})
                 </table>
                 <a href="#" onClick={()=>showModalPd()}>Xem Thông Số Kỹ Thuật</a>
                 {
-                    showModalPD && <ModalProductDetail showModalPD={showModalPD} hideModalPd={hideModalPd}  />
+                    isShowModal && <ModalProductDetail showModalPD={isShowModal} hideModalPd={hideModalPd}  />
                 }
             </div>
     </div>
     <div  className="productinfo">
         <div  className="productinfo__title">
                 <div className="productinfo__title--name"> 
-                    <span>Màn hình máy tính Acer VG270 UM.HV0SS.001 27'' Full HD 75Hz Gaming</span>
+                    <b>{item.Product_name}</b>
                 </div>
                 <div className="productinfo__title--code"> 
                     <div className="info__code--name">
-                        <span>Mã SP: MOAC0047</span>
+                        <b>{option?.code}</b>
                     </div>
                     <div className="info__code--countstart">
                         <span>5 đánh giá</span>
@@ -135,22 +146,18 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail})
                 </div>
         </div>
         <div className="productinfo__detail">
-            {
-                dataDetail.map((res: any,index: number) =>{
-                        return <span key={index}>{ index > 3 && seeMore ?  res.detail :  res.detail}</span>
-                })
-            }
+              <b>{ option?.specifications?.replaceAll("-",'\n')}</b>
             <div>{seeMore ? <span onClick={() =>disableSeeMore()}>Thu Gọn</span> : <span onClick={() =>enableSeeMore()}> Xem Thêm</span>}</div>
         </div>
         <div className="productinfo__price">
                 <div className="productinfo__price--Listedprice">
                     <h5>Giá niêm yết:</h5>
-                    <span>23.990.000 đ</span>
+                    <b>  {option?.price?.toLocaleString('vi', {style : 'currency', currency : 'VND'})} </b>
 
                 </div>
                 <div className="productinfo__price--Promotionprice">
                     <h5>Giá khuyến mại:	</h5>
-                    <b>20.690.000 đ</b> <span>[Giá đã có VAT]</span>
+                    <b>{option?.price?.toLocaleString('vi', {style : 'currency', currency : 'VND'})} </b> <span>[Giá đã có VAT]</span>
                 </div>
         </div>
         <div className="productinfo__promotion">
@@ -170,11 +177,11 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail})
                 <h4>Bảo hành: 12 tháng, Đổi mới trong 15 ngày, Dịch vụ bảo hành tại nơi sử dụng của HP</h4>
         </div>
         <div className="productinfo__Buy">
-                <button><b>Đặt Mua Ngay</b> <span>Nhanh Chóng, Thuận Tiện</span></button>
+                <button onClick={clickCart} ><b>Đặt Mua Ngay</b> <span>Nhanh Chóng, Thuận Tiện</span></button>
         </div>
         <div className="productinfo__BuyCart">
              <button  className="productinfo__BuyCart--Installment" ><b>Mua Trả Góp</b> <span>Thủ tục đơn giản</span></button>
-             <button className="productinfo__BuyCart--forCard"><b>Cho Vào Giỏ</b> <span>Mua tiếp sản phẩm khác</span></button>
+             <button className="productinfo__BuyCart--forCard" onClick={clickCart} ><b>Cho Vào Giỏ</b> <span>Mua tiếp sản phẩm khác</span></button>
         </div>
         <div className="productinfo__AcceptPayment">
            <span>Chấp Nhận Thanh Toán</span>

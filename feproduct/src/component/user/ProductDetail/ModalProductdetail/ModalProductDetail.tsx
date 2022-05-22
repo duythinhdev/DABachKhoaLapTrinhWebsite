@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import useColorTable from "../../hook/useColorTable";
 
 const style: any = {
     position: 'absolute',
@@ -21,6 +22,10 @@ interface datapProductDetail {
     showModalPD: boolean
 }
 const  ModalProductDetail: React.FC<datapProductDetail> = ({hideModalPd,showModalPD})  => {
+  let { rowAlternateColors } =   useColorTable('tr');
+  useEffect(() => {
+    rowAlternateColors();
+  },[])
     return (
         <div>
         <Modal
@@ -30,12 +35,47 @@ const  ModalProductDetail: React.FC<datapProductDetail> = ({hideModalPd,showModa
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+          <table>
+              <tbody>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Tên sản phẩm </td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                        <tr>
+                            <td>Hãng sản xuất</td> 
+                            <td>Laptop Asus</td>
+                        </tr>
+                       
+                </tbody>
+            </table>
           </Box>
         </Modal>
       </div>

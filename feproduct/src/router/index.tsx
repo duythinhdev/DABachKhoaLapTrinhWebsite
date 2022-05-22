@@ -37,6 +37,8 @@ const newAdmin = React.lazy(() =>
 import ("../component/adminNew/new/New"));
 const ListAdmin : React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
 import ("../page/ListAdmin/ListAdmin"));
+const InforUser : React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
+import ("../component/user/InforUser/InforUser"));
 export {
     ContainerAdmin,
     LoginAmin,
@@ -56,5 +58,6 @@ export {
     ProductBrand,
     HomeAdmin,
     ListAdmin,
-    newAdmin
+    newAdmin,
+    InforUser
 }

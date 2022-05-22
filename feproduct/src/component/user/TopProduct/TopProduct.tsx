@@ -1,4 +1,4 @@
-import React,{useState, useEffect,lazy, Suspense} from 'react';
+import React,{useState, useEffect,lazy, Suspense,useCallback} from 'react';
 import "./TopProduct.scss";
 import useFetchingTopProduct from "../TopProduct/useFetchingData";
 import {
@@ -6,8 +6,9 @@ import {
   } from "react-router-dom";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../../enviroment/enviroment";
-import Spinner from "../../../component/spinner/spinner.jsx";
 import ReactPaginate from 'react-paginate';
+import useQueryLocation from "../hook/useQueryLocation";
+import { Link } from 'react-router-dom';
 const Product:Array<any> = [
     {
         code: "Mã SP : PCAP102",
@@ -242,38 +243,37 @@ const Product:Array<any> = [
         compare: "So sánh",
     },
 ]
-function useQuery() {
-    const { search } = useLocation();
-  
-    return React.useMemo(() => new URLSearchParams(search), [search]);
-}
 const TopProduct = () => {
-    let query = useQuery();
+    let query = useQueryLocation();
     let idctProduct = query.get("idctproduct");
-    let limit = 30;
-    let ctProduct = enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=1&pagesize=${limit}`;
+    let nameCtProducts = query.get("nameCtProduct");
+    console.log("nameCtProducts",nameCtProducts);
+    const LIMIT = 10;
+    let linkCtProduct = enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=1&pagesize=${LIMIT}`;
     // let { data,totalpage } = useFetchingTopProduct(ctProduct);
-    let [data,setData] = useState<Array<any>>([]);
+    let [items,setItems] = useState<Array<any>>([]);
     let [totalItems, setTotalItems] = useState<number | undefined | any >();
   
-    const fetchComments = async (currentPage: number) => {
-        const res = await fetch(
-            enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=${currentPage}&pagesize=${limit}`
-        );
-        const data = await res.json();
-        return data;
-      };
+    const fetchComments = useCallback(async (currentPage: number) => {
+        const res:any =  await axios.get(enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=${currentPage}&pagesize=${LIMIT}`)
+        return res.data.data
+        // const res = await fetch(
+        //     enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=${currentPage}&pagesize=${limit}`
+        // );
+        // const data = await res.json();
+        // return data;
+    }, []);
     useEffect(()=> {
         let fetchDataProduct = async () => {
-            await axios.get(ctProduct).then((res: any) => {
+            await axios.get(linkCtProduct).then((res: any) => {
               if(res.data.totalPage) {
-                setTotalItems(Math.ceil(res.data.totalPage / limit));
+                setTotalItems(Math.ceil(res.data.totalPage / LIMIT));
               }
-              setData(res.data.data)
+              setItems(res.data.data)
             });
          }
         fetchDataProduct();
-    },[limit])
+    },[LIMIT])
     const handlePageClick = async (data:any) => {
         console.log(data.selected);
 
@@ -281,13 +281,13 @@ const TopProduct = () => {
     
         const commentsFormServer = await fetchComments(currentPage);
     
-        setData(commentsFormServer);
+        setItems(commentsFormServer);
     };
     return (
             <div className='containter__TopProduct'>
                 <div className='name__TopProduct'>
-                    <a>Home  </a>
-                    <span>Sản Phẩm Bán Chạy</span>
+                    <a>Home  </a> 
+                    <span>{nameCtProducts}</span>
                 </div>
                 <div className='title__TopProduct'>
                     <div className='title__TopProduct--name'>
@@ -308,16 +308,19 @@ const TopProduct = () => {
                 </div>
                 <div className='content__TopProduct--container flex-box'>
                     {
-                        data?.map((res:any,index:number) => {
-                          return  <div className='product__item'>
+                      items?.map((res:any,index:number) => {
+                          return  <div className='product__item' key={index} >
                                     <div className='product__item--img'>
-                                    <img src={res?.images[0].url} />
+                                    <img src={res.images[0].url} />
                                     </div>
                                     <div className='product__item--code'>
-                                            {res?._id}
+                                            {res._id}
                                     </div>
                                     <div className='product__item--name'>
-                                            {res?.Product_name}
+                                          <Link className='linknameProduct'
+                                           to={`/system/productdetail?idproduct=${res?._id}`}> 
+                                                {res.Product_name}
+                                           </Link>  
                                     </div>
                                     <div className='product__item--pricemotion'>
                                             {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
