@@ -8,8 +8,8 @@ import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const  ProductBought = ()  => {
-    let cartOfUser = useSelector((state:RootStateOrAny) => state.dataUser.cart);
-    console.log("cartOfUser",cartOfUser);
+    let { cart,totalMoney } = useSelector((state:RootStateOrAny) => state.dataUser);
+    // console.log("cartOfUser",cartOfUser);
     let dispatch = useDispatch();
     const removeCart = () => {
         let actions =  Actions.removeCartUser();
@@ -23,14 +23,14 @@ const  ProductBought = ()  => {
         let actions =  Actions.increaseProductCart(id,calculation);
         dispatch(actions);
     }
-    // useEffect(()=> {
-    //     let actions =  Actions.resetList();
-    //     dispatch(actions);
-    // },[])
+    useEffect(()=> {
+        let actions =  Actions.resetList();
+        dispatch(actions);
+    },[])
     return (
        <div className="ContainerCart">
            {
-           cartOfUser?.length === 0 ? <h1>Có 0 sản phẩm trong giỏ hàng</h1> : <div className="itemyoucart">
+           cart?.length === 0 ? <h1>Có 0 sản phẩm trong giỏ hàng</h1> : <div className="itemyoucart">
              <div className="itemyoucart__title">
                 <h1>Giỏ hàng của bạn</h1>
                 <span>Liên hệ nhân viên trước khi chuyển tiền mua hàng.</span>
@@ -39,7 +39,7 @@ const  ProductBought = ()  => {
              <div className="itemyoucart__removecart">
                 <button onClick={removeCart}  className="btn-cart-red">Xóa Khỏi giỏ hàng</button>
              </div>
-             {cartOfUser?.map((res:any,index:number)=> {
+             {cart?.map((res:any,index:number)=> {
                  return <div className="itemyoucart__detail" key={index}>
                             <div className="itemyoucart__detail--img">
                                 <img src={ res?.images && res?.images[0]?.url} />
@@ -55,9 +55,9 @@ const  ProductBought = ()  => {
                                 </div>
                             </div>
                             <div className="itemyoucart__detail--price">
-                                <del className="price__reduction">{res?.options && res?.options[0]?.price}</del>
-                                <span className="price__real">{res?.options && res?.options[0]?.price}</span>
-                                <span className="price__sum">Tổng: {res?.totalAmount}</span>
+                                <del className="price__reduction">{res?.options && res?.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</del>
+                                <span className="price__real">{res?.options && res?.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</span>
+                                <span className="price__sum">Tổng: {res?.totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</span>
                                 <div className="price__count">
                                     <a className="price__minus" onClick={() => {increaseDetailCart(index,"minus")}}>-</a>
                                     <input className="price__value" value={res?.quantityCart}  />
@@ -66,13 +66,31 @@ const  ProductBought = ()  => {
                             </div>
                         </div>
              })}
+              <div className="itemyoucart__total">
+                <div className="itemyoucart__total--promotion">
+                    <div className="name_promotion">
+                        <span>Mã giảm giả / Quà tặng</span>
+                    </div>
+                    <div className="write__promotion">
+                        <input placeholder="Nhập mã giảm giá" />
+                        <button>Áp dụng</button>
+                    </div>
+                </div>
+                <div className="itemyoucart__total--totalMoney">
+                    <span>Phí vận chuyển: 0 đ</span>
+                    <span>Phí thu hộ: 0 đ</span>
+                    <span className="name_totalMoney">Tổng cộng: {totalMoney.toLocaleString('vi', {style : 'currency', currency : 'VND'})} </span>
+                    <span>Giảm giá: 0 đ</span>
+                    <span className="name_totalMoney">Thanh toán: {totalMoney.toLocaleString('vi', {style : 'currency', currency : 'VND'})} </span>
+                    <span><b>In báo giá</b>  <b>Tải file excel</b></span>
+                </div>
+             </div>
              <div className="itemyoucart__button">
                  <button className="btn-cart-red">Đặt Hàng</button>
                  <button className="btn-cart-orange">Mua Trả Góp</button>
              </div>
-           </div>
+             </div>
            }
-
            <div className="itemorder">
 
            </div>

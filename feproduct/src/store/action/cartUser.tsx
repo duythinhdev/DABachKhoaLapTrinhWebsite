@@ -30,6 +30,6 @@ export const increaseProductCart = (id:number,calculation:string) => {
 }
 export const resetList = () => {
     return {
-        type: action.RESET_CART_LIST,
+        type: action.LOAD_TOTAL_CART,
     }
 }
