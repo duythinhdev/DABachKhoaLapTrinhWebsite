@@ -78,6 +78,7 @@ export {
     cartUser,
     removeCartUser,
     removeDetailCartUser,
-    increaseProductCart
+    increaseProductCart,
+    resetList
 }
 from "../action/cartUser.tsx"

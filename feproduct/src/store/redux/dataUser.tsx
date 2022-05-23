@@ -15,10 +15,12 @@ const initialState: tsInitialState = {
 }
 interface actionCart {
     data: any,
-    id: any
+    id: any,
+    calculation:string
 }
 const cartUser = (action: actionCart, state: tsInitialState) => {
     action.data.quantityCart = 1;
+    action.data.totalAmount = action.data.options[0].price;
     return updateObject(state, { cart: [...state.cart, action.data]})
 }
 const removeCartuser = (action: actionCart, state: tsInitialState) => {
@@ -34,21 +36,29 @@ const removeIndexCartuser = (action: actionCart, state: tsInitialState) => {
             newsData.push(state.cart[i]);
         }
     }
-    console.log("oldData",newsData);
+    // console.log("oldData",newsData);
     return updateObject(state,{ cart: newsData})
 }
-const increaseProductCart = (action: actionCart, state: tsInitialState) => {
+const increaseProductCart =  (action: actionCart, state: tsInitialState) => {
     let newsData = [] as Array<any>;
     console.log("action.id",action.id);
+    let totalMoney = 0;
     for(let i = 0 ;i < state.cart.length ; i++)
     {
-        console.log("state.cart[i]",state.cart[i]);
-        if(i === action.id){
-            state.cart[i].quantityCart += 1;
-            console.log("state.cart[i].quantityCart", state.cart[i].quantityCart);
-            state.cart[i].options[0].price = state.cart[i].options[0].price *  state.cart[i].quantityCart;
-            console.log("state.cart[i].quantityCart", state.cart[i].options[0].price);
+        console.log("ifor",i);
+        if( i === action.id){
+            console.log("i",i);
+            if( action.calculation === "plus"){
+                state.cart[i].quantityCart += 1;
+                let updateTotalAmount = state.cart[i].options[0].price * state.cart[i].quantityCart;
+                state.cart[i].totalAmount = updateTotalAmount;
+            } else {
+                state.cart[i].quantityCart -= 1;
+                let updateTotalAmount = state.cart[i].options[0].price * state.cart[i].quantityCart;
+                state.cart[i].totalAmount = updateTotalAmount;
+            }
         }
+        // totalMoney += state.cart[i].totalAmount;
         newsData.push(state.cart[i]);
     }
     console.log("newsData",newsData)
@@ -64,6 +74,10 @@ const dataUserReducer = (state = initialState, action: any) => {
             return removeIndexCartuser(action,state);
         case actionTypes.INCREASE_DETAIL_CART_USER:
             return increaseProductCart(action,state);
+        case actionTypes.RESET_CART_LIST:
+            return {
+                  cart: [...state.cart, []],
+            };
         default:
             return state;
     }
