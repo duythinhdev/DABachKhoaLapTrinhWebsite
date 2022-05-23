@@ -5,13 +5,15 @@ import * as actionTypes from "../action/actiontypes";
 interface tsInitialState {
     status: string,
     cart: Array<any>,
-    quantityCart: number
+    quantityCart: number,
+    totalMoney: number
 }
 
 const initialState: tsInitialState = {
     status: '',
     cart: [],
-    quantityCart: 1
+    quantityCart: 1,
+    totalMoney: 0
 }
 interface actionCart {
     data: any,
@@ -21,33 +23,29 @@ interface actionCart {
 const cartUser = (action: actionCart, state: tsInitialState) => {
     action.data.quantityCart = 1;
     action.data.totalAmount = action.data.options[0].price;
-    return updateObject(state, { cart: [...state.cart, action.data]})
+    return updateObject(state, { cart: [...state.cart, action.data] })
 }
 const removeCartuser = (action: actionCart, state: tsInitialState) => {
     return updateObject(state, { cart: []})
 }
 const removeIndexCartuser = (action: actionCart, state: tsInitialState) => {
     let newsData = [] as Array<any>;
-    console.log("index",action.id);
+    let totalMoneys = 0;
     for(let i = 0 ;i < state.cart.length ; i++)
     {
-        console.log("i",i)
         if(i !== action.id){
             newsData.push(state.cart[i]);
+            totalMoneys += state.cart[i].totalAmount;
         }
     }
-    // console.log("oldData",newsData);
-    return updateObject(state,{ cart: newsData})
+    return updateObject(state, { cart: newsData,totalMoney: totalMoneys})
 }
 const increaseProductCart =  (action: actionCart, state: tsInitialState) => {
     let newsData = [] as Array<any>;
-    console.log("action.id",action.id);
-    let totalMoney = 0;
+    let totalMoneys = 0;
     for(let i = 0 ;i < state.cart.length ; i++)
     {
-        console.log("ifor",i);
         if( i === action.id){
-            console.log("i",i);
             if( action.calculation === "plus"){
                 state.cart[i].quantityCart += 1;
                 let updateTotalAmount = state.cart[i].options[0].price * state.cart[i].quantityCart;
@@ -58,11 +56,11 @@ const increaseProductCart =  (action: actionCart, state: tsInitialState) => {
                 state.cart[i].totalAmount = updateTotalAmount;
             }
         }
-        // totalMoney += state.cart[i].totalAmount;
+        totalMoneys += state.cart[i].totalAmount;
         newsData.push(state.cart[i]);
     }
     console.log("newsData",newsData)
-    return updateObject(state, { cart: newsData})
+    return updateObject(state, { cart: newsData,totalMoney:  totalMoneys})
 }
 const dataUserReducer = (state = initialState, action: any) => {
     switch (action.type) {
@@ -74,9 +72,13 @@ const dataUserReducer = (state = initialState, action: any) => {
             return removeIndexCartuser(action,state);
         case actionTypes.INCREASE_DETAIL_CART_USER:
             return increaseProductCart(action,state);
-        case actionTypes.RESET_CART_LIST:
+        case actionTypes.LOAD_TOTAL_CART:
+            let totalMoneys = 0;
+            for(let i = 0 ; i < state.cart.length;i++){
+                totalMoneys +=  state.cart[i].options[0].price;
+            }
             return {
-                  cart: [...state.cart, []],
+                 ...state,totalMoney: totalMoneys
             };
         default:
             return state;
