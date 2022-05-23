@@ -21,9 +21,15 @@ export const removeDetailCartUser = (id:number) => {
     }
 }
 
-export const increaseProductCart = (id:number) => {
+export const increaseProductCart = (id:number,calculation:string) => {
     return {
         type: action.INCREASE_DETAIL_CART_USER,
-        id: id
+        id: id,
+        calculation:calculation
+    }
+}
+export const resetList = () => {
+    return {
+        type: action.RESET_CART_LIST,
     }
 }
