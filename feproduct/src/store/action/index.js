@@ -75,10 +75,10 @@ from "../action/userAdmin";
 export { getNewsUser, dataNewsUser }
 from "../action/newsUser.tsx"
 export {
-    cartUser,
-    removeCartUser,
+    addCartUser,
+    removeAllCartUser,
     removeDetailCartUser,
-    increaseProductCart,
-    resetList
+    increaseMinusCart,
+    loadTotalMoney
 }
 from "../action/cartUser.tsx"
