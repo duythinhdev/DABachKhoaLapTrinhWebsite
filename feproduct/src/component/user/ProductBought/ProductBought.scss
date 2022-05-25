@@ -60,6 +60,7 @@
             border-top: 1px solid #ddd;
             /* flex: 18; */
             // background: blue;
+            padding: 10px;
             margin-top: 15px;
             &--img {
                 display: flex;
@@ -75,6 +76,7 @@
                 }
             }
             &--name {
+                padding: 3px;
                 display: flex;
                 flex: 1.7;
                 // background-color: #61dafb;
@@ -201,8 +203,76 @@
         }
     }
     .itemorder {
-        background-color: #edeef2;
         width: 790px;
-        height: 80vh;
+        margin: auto auto 20px auto;
+        background: #fff;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        &__inforCustomer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        &__input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            input {
+                margin-top: 10px;
+                height: 38px;
+                outline: none;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+            }
+            select {
+                margin-top: 10px;
+                height: 38px;
+                outline: none;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+            }
+            textarea {
+                margin-top: 10px;
+                outline: none;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+            }
+        }
+        &__exportBill {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            span {
+                width: 20%;
+            }
+            input {
+                width: 80%;
+                margin-top: 10px;
+                height: 38px;
+                outline: none;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+            }
+        }
+        &__SendOrder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            width: 100%;
+            button {
+                width: 230px;
+                height: 50px;
+                outline: none;
+                color: #FFFFFF;
+                background: #546CE8;
+                cursor: pointer;
+                border-radius: 5px;
+                border: none;
+            }
+        }
     }
 }

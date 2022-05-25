@@ -1,14 +1,14 @@
 import * as action from "./actiontypes";
 
 
-export const cartUser = (data: any) => {
+export const addCartUser = (data: any) => {
     return {
-        type: action.CART_USER,
+        type: action.ADD_CART_USER,
         data: data
     }
 }
 
-export const removeCartUser = () => {
+export const removeAllCartUser = () => {
     return {
         type: action.REMOVE_CART_USER,
     }
@@ -21,15 +21,16 @@ export const removeDetailCartUser = (id:number) => {
     }
 }
 
-export const increaseProductCart = (id:number,calculation:string) => {
+export const increaseMinusCart = (id:number,calculation:string) => {
     return {
         type: action.INCREASE_DETAIL_CART_USER,
         id: id,
         calculation:calculation
     }
 }
-export const resetList = () => {
+export const loadTotalMoney = (_id: any = null) => {
     return {
         type: action.LOAD_TOTAL_CART,
+        _id: _id,
     }
 }

@@ -42,8 +42,10 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail,i
         rowAlternateColors();
     },[])
     const clickCart =  () => {
-        let action = Action.cartUser(item);
+        let action = Action.addCartUser(item);
+        let actionCheckid = Action.loadTotalMoney(item._id);
         dispatch(action);
+        dispatch(actionCheckid);
     }
     return <div  className="bg__white">
     <div  className="productimage">
