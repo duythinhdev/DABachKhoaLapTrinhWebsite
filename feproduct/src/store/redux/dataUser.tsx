@@ -5,7 +5,7 @@ import cssVars from '@mui/system/cssVars';
 
 interface tsInitialState {
     status: string,
-    cart: Array<any>,
+    cart: Array<product>,
     quantityCart: number,
     totalMoney: number
 }
@@ -16,16 +16,11 @@ const initialState: tsInitialState = {
     quantityCart: 0,
     totalMoney: 0
 }
-interface actionCart {
-    data: any,
-    id: any,
-    calculation:string
-}
-const addItemsCartUser = (action: actionCart, state: tsInitialState) => {
+const addItemsCartUser = (action: actionType, state: tsInitialState) => {
     state.quantityCart = 1;
     action.data.quantityCart =  state.quantityCart;
     action.data.totalAmount = action.data.options[0].price;
-    let checkIdExists = [] as Array<any>;
+    let checkIdExists = [] as Array<product>;
     var totalMoneys = 0;
     var idConditionCart;
     let alreadyExists = false;
@@ -48,11 +43,11 @@ const addItemsCartUser = (action: actionCart, state: tsInitialState) => {
         ,totalMoney: totalMoneys
     })
 }
-const removeAllCartUser = (action: actionCart, state: tsInitialState) => {
+const removeAllCartUser = (action: actionType, state: tsInitialState) => {
     return updateObject(state, { cart: [] ,totalMoney: 0 })
 }
-const removeItemsDetailCartUser = (action: actionCart, state: tsInitialState) => {
-    let newsData = [] as Array<any>;
+const removeItemsDetailCartUser = (action: actionType, state: tsInitialState) => {
+    let newsData = [] as Array<product>;
     let totalMoneys = 0;
     for(let i = 0 ;i < state.cart.length ; i++)
     {
@@ -63,8 +58,8 @@ const removeItemsDetailCartUser = (action: actionCart, state: tsInitialState) =>
     }
     return updateObject(state, { cart: newsData,totalMoney: totalMoneys})
 }
-const increaseMinusCartUser =  (action: actionCart, state: tsInitialState) => {
-    let newsData = [] as Array<any>;
+const increaseMinusCartUser =  (action: actionType, state: tsInitialState) => {
+    let newsData = [] as Array<product>;
     let totalMoneys = 0;
     for(let i = 0 ;i < state.cart.length ; i++)
     {
@@ -91,7 +86,36 @@ const increaseMinusCartUser =  (action: actionCart, state: tsInitialState) => {
     console.log("newsData",newsData)
     return updateObject(state, { cart: newsData,totalMoney:  totalMoneys})
 }
-const dataUserReducer = (state = initialState, action: any) => {
+export type  images = {
+    _id: string,
+    public_id: string,
+    url:string
+}
+export type options = {
+    _id:string,
+    type: string,
+    size: string,
+    code: string,
+    price: number,
+    quantity: number,
+    specifications: string,
+}
+export  type product = {
+    _id: string,
+    Product_name: string,
+    images: Array<images>,
+    description: string,
+    options: Array<options>,
+    totalAmount: number,
+    quantityCart: number,
+}
+interface actionType {
+    type: string,
+    data: product,
+    id: number,
+    calculation:string
+}
+const dataUserReducer = (state = initialState, action: actionType) => {
     switch (action.type) {
         case actionTypes.ADD_CART_USER:
             return addItemsCartUser(action,state);

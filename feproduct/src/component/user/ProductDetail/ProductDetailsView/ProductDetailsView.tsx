@@ -15,28 +15,39 @@ import { useDispatch } from 'react-redux';
 import * as Action from "../../../../store/action/index";
 
 interface propsdata {
-    dataDetail: Array<any>,
-    item: any,
-    option: any,
+    item: product,
+    option: options,
 }
-const ProductDetailsView:React.FC<propsdata> = ({dataDetail,item,option}) => {
-    let { slideIndex,setSlideIndex,nextSlide,prevSlide } = useSlideFetching(item.images?.length);
-    const [seeMore,setSeeMore] = useState(false) as any | Boolean;
-    const [isShowModal,setIsShowModal] = useState(false) as any | Boolean;
-    let dispatch = useDispatch();
-    const enableSeeMore = () => {
-        setSeeMore(true)
-    }
-    const disableSeeMore = () => {
-        setSeeMore(false)
-    }
-    const showModalPd = () => {
-        setIsShowModal(true)
-    }
-    const hideModalPd = () => {
-        setIsShowModal(false)
-    }
+export type options = {
+    _id:string,
+    type: string,
+    size: string,
+    code: string,
+    price: number,
+    quantity: number,
+    specifications: string,
+}
+export  type product = {
+    _id: string,
+    Product_name: string,
+    images: Array<images>,
+    description: string,
+    options: Array<options>,
+    totalAmount: number,
+    quantityCart: number,
+}
+export type  images = {
+    _id: string,
+    public_id: string,
+    url:string
+}
+const ProductDetailsView:React.FC<propsdata> = ({item,option}) => {
+    let totalNumberImage  = item.images?.length as number;
+    let { slideIndex,nextSlide,prevSlide, 
+        seeMore,isShowModal, 
+        enableSeeMore, disableSeeMore,showModalPd, hideModalPd } = useSlideFetching(totalNumberImage);
     let { rowAlternateColors } =   useColorTable('tr');
+    let dispatch = useDispatch();
     useEffect(() => {
         rowAlternateColors();
     },[])
@@ -47,9 +58,7 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,item,option}) => {
     return <div  className="bg__white">
     <div  className="productimage">
             <div  className="productimage__img">
-                { item.images?.map((res:any,index: number)=>{
-                    console.log("slideIndex",slideIndex);
-                    console.log("index",index);
+                { item.images?.map((res:images,index: number)=>{
                     return <div
                         key={index}
                         className={slideIndex === index + 1 ? "slide active-anim" : "slide"}

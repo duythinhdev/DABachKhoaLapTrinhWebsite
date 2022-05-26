@@ -3,20 +3,43 @@ import {updateObject} from "../share/utility";
 import * as actionTypes from "../action/actiontypes";
 
 export interface tsInitialState {
-    listNews:  Array<any>,
+    listNews:  Array<tscategoryNews>,
 }
 
 const initialState: tsInitialState = {
     listNews: [],
 }
-interface news {
-    data: Array<any>,
+export type  images = {
+    _id: string,
+    public_id: string,
+    url:string
 }
-const dataNews = (state:tsInitialState,action:news) => {
+export type News = {
+    _id: string,
+    title: string,
+    is_show: Boolean,
+    content: string,
+    category_News: string,
+    createdAt: string,
+    images: Array<images>
+}
+export type tscategoryNews = {
+    _id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    news: Array<News>
+    type: string
+}
+type tsAction = {
+    data: Array<tscategoryNews>,
+    type: string
+}
+const dataNews = (state:tsInitialState,action:tsAction) => {
     // console.log("actionnews",action.data);
     return updateObject(state,{listNews: action.data})
 }
-const newsReducer = (state = initialState,action:any) => {
+const newsReducer = (state = initialState,action:tsAction) => {
     switch (action.type)
     {
         case actionTypes.DATA_NEWS_USER:

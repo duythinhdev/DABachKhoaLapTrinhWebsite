@@ -30,8 +30,29 @@ const ArrayNewFeed:Array<any> = [
         content: "Cùng mình đến với những mẫu chuột gaming giá rẻ vô cùng ấn tượng quaTOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu” ngay thôi nào!"
     },
 ]
+export type  images = {
+    _id: string,
+    public_id: string,
+    url:string
+}
+export type News = {
+    _id: string,
+    title: string,
+    is_show: Boolean,
+    content: string,
+    category_News: string,
+    createdAt: string,
+    images: Array<images>
+}
+type tscategoryNews = {
+    _id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    news: Array<News>
+}
 const  NewsFeed = () => {
-    let getNews  = useSelector((state: RootStateOrAny) =>  state.newsUser.listNews);
+    let { listNews }  = useSelector((state: RootStateOrAny) =>  state.newsUser);
     let dispatch = useDispatch();
     useEffect(()=> {
         let actions = Actions.getNewsUser(); 
@@ -39,13 +60,13 @@ const  NewsFeed = () => {
     },[])
     return (
         <div className="ContainerNewsFeed">
-            {getNews && getNews.map((res:any,index:number)=> {
+            {listNews && listNews.map((res: tscategoryNews,index: number)=> {
                 return  <div className="item-container" key={index}>
                 <div className="title-news">
                     <p>{res.name}</p>
                 </div>    
                 {
-                    res.news.map((res:any,index:number)=>{
+                    res.news.map((res: News,index:number)=>{
                         return  <div className="content-news" key={index}>
                         <div className="content-news__img">
                             <img src={res.images[0].url} />
@@ -64,52 +85,6 @@ const  NewsFeed = () => {
                 }     
             </div>
             })}
-            {/* <div className="item-container">
-                <div className="title-news">
-                    <p>TIN NỔI BẬT TRONG NGÀY</p>
-                </div> 
-                {
-                    ArrayNewFeed.map((res:any,index:number)=>{
-                        return  <div className="content-news" key={index}>
-                        <div className="content-news__img">
-                            <img src={res.img} />
-                        </div>
-                        <div className="content-news__Posts">
-                            <div className="content-news__Posts--title">
-                                <p>{res.title}</p>
-                                <span>{res.time}</span>
-                            </div>     
-                            <div className="content-news__Posts--content">
-                              <p>{res.content}</p>
-                            </div>       
-                        </div>      
-                    </div>             
-                    })
-                }  
-            </div>
-            <div className="item-container">
-                <div className="title-news">
-                    <p>TIN KHUYẾN MẠI MỚI</p>
-                </div>    
-                {
-                    ArrayNewFeed.map((res:any,index:number)=>{
-                        return  <div className="content-news" key={index}>
-                        <div className="content-news__img">
-                            <img src={res.img} />
-                        </div>
-                        <div className="content-news__Posts">
-                            <div className="content-news__Posts--title">
-                                <p>{res.title}</p>
-                                <span>{res.time}</span>
-                            </div>     
-                            <div className="content-news__Posts--content">
-                              <p>{res.content}</p>
-                            </div>       
-                        </div>      
-                    </div>             
-                    })
-                }     
-            </div> */}
         </div>
     );
 }

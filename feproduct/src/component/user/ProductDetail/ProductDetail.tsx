@@ -108,7 +108,7 @@ const ProductDetail = () => {
     let query = useQueryLocation();
     let idProduct = query.get("idproduct");
     async function fetchProduct() {
-        await axios.get(enviroment.localNode + `products/getdetail?id=${idProduct}`).then((res: any) => { 
+        await axios.get(enviroment.localNode + `products/getdetail?id=${idProduct}`).then((res:any) => { 
             setOption(res.data.data?.options[0]);
             setItem(res.data.data)
         })
@@ -122,7 +122,6 @@ const ProductDetail = () => {
         <section className="Container__ProductDetail">
          
             <ProductDetailsView
-                dataDetail={dataDetail}  
                 item={item} 
                 option={option} 
             />
@@ -140,7 +139,7 @@ const ProductDetail = () => {
                         Bạn sẽ luôn yên tâm đôi mắt của mình luôn được bảo vệ khi sử dụng trên chiếc màn hình này với công nghệ bảo vệ mắt tiên tiến giúp giảm thiểu tình trạng mỏi mắt khi dùng trong thời gian dài. Công nghệ Flicker Free loại bỏ tình trạng nhấp nháy khó chịu thường thấy trên màn hình, trong khi chế độ Eye Saver giảm thiểu tác hại của ánh sáng xanh.
                             </span></p>
                         <div className="productdetail__btn">
-                            <button className="read-more-btn" onClick={(event: any)=>clickShowMore(event)}>{isSeeMore ? "Rút Gọn..." : "Xem Thêm..." }</button>
+                            <button className="read-more-btn" onClick={(event: any )=>clickShowMore(event)}>{isSeeMore ? "Rút Gọn..." : "Xem Thêm..." }</button>
                         </div>
                     </div>
                 </div>
