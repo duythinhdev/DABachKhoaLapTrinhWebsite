@@ -88,18 +88,18 @@ exports.login = (req, res, next) => {
         });
 }
 exports.forgot = async(req, res, next) => {
-    var content = '';
-    content += `
+        var content = '';
+        content += `
         <div style="padding: 10px; background-color: #003375">
             <div style="padding: 10px; background-color: white;">
-                <h4 style="color: #0085ff">Gửi mail với nodemailer và express</h4>
-                <span style="color: black">Đây là mail test</span>
+                <h4 style="color: #0085ff">${`password của user đã được reset`}</h4>
+                <span style="color: black">${123}</span>
             </div>
         </div>
     `;
     let options = {
         email: req.body.email,
-        subject: 'Test Nodemailer',
+        subject: 'Quên mật khẩu',
         message: content,
     }
     await sendEmail(options, req, res);

@@ -10,7 +10,7 @@ export default (Slider: number) => {
         } else if (slideIndex === Slider) {
           setSlideIndex(1);
         }
-        console.log("slideIndex", slideIndex);
+        console.log("nextSlide", slideIndex);
       };
     
       const prevSlide = () => {
@@ -19,7 +19,7 @@ export default (Slider: number) => {
         } else if (slideIndex === 1) {
           setSlideIndex(Slider);
         }
-        console.log("slideIndex", slideIndex);
+        console.log("prevSlide", slideIndex);
       };
   
     return { slideIndex,setSlideIndex,nextSlide,prevSlide };

@@ -237,7 +237,7 @@ exports.deleteCategoryProduct = async function(req, res, next) {
     })
 }
 exports.postRelationShipProduct = async(req, res, next) => {
-    const uploader = async(path) => await cloudinary.uploads(path, 'News');
+    const uploader = async(path) => await cloudinary.uploads(path, 'Products');
     var urls;
     if (req.method === "POST") {
         const files = req.files;

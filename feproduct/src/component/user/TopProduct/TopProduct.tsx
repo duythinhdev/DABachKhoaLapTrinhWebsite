@@ -286,7 +286,7 @@ const TopProduct = () => {
     return (
             <div className='containter__TopProduct'>
                 <div className='name__TopProduct'>
-                    <a>Home  </a> 
+                    <a>Home  </a> {nameCtProducts ? ">" : ''}
                     <span>{nameCtProducts}</span>
                 </div>
                 <div className='title__TopProduct'>

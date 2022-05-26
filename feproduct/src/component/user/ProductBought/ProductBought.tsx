@@ -50,7 +50,7 @@ const  ProductBought = ()  => {
                             </div>
                             <div className="itemyoucart__detail--name">
                                 <div className="Product">
-                                    <span className="Product__name">{res.Product_name}</span>
+                                    <span ><Link to={`/system/productdetail?idproduct=${res?._id}`} className="Product__name" >{res.Product_name}</Link></span>
                                     <span className="Product__id">{res?.options && res?.options[0]?.code}</span>
                                     <span className="Product__Insurance">Bảo hành: 24 Tháng</span>
                                 </div>
@@ -92,67 +92,70 @@ const  ProductBought = ()  => {
              </div>
              </div>
            }
-           <div className="itemorder">
-                <div className="itemorder__inforCustomer">
-                    <div>
-                        <h1>Đặt Hàng</h1>
-                    </div>
-                    <div>
-                        <h3>1.Thông tin khách hàng</h3>
-                    </div>
-                    <div>
-                       <input type="checkbox" /> Anh 
-                       <input type="checkbox" />Chị
-                    </div>
-                    <div className="itemorder__input">
-                       <input  />
-                       <input />
-                       <input />
-                       <select></select>
-                       <textarea></textarea>
-                       <textarea></textarea>
-                    </div>
-                </div>
-                <div className="itemorder__inforCustomer">
-                    <div>
-                        <h3>2.Hình thức thanh toán</h3>
-                    </div>
-                    <div>
-                       <input type="checkbox" /> COD 
-                       <input type="checkbox" /> Chuyển Khoản
-                    </div>
-                </div>
-                <div className="itemorder__inforCustomer">
-                    <div>
-                        <h3>3.Xuất hóa đơn công ty</h3>
-                    </div>
-                    <div className="itemorder__input">
-                        <div className="itemorder__exportBill">
-                            <span>Công ty /tổ chức</span>
-                            <input  />
-                        </div>
-                        <div className="itemorder__exportBill">
-                            <span>Địa chỉ:</span>
-                            <input  />
-                        </div>
-                        <div className="itemorder__exportBill">
-                            <span>Mã số thuế</span>
-                            <input  />
-                        </div>
-                    </div>
-                </div>
-                <div className="itemorder__inforCustomer">
-                    <div>
-                        <h3>4.Hình thức vận chuyển</h3>
-                    </div>
-                    <div>
-                       <input type="checkbox" /> giao hàng bình thường 
-                    </div>
-                    <div className="itemorder__SendOrder">
-                        <button>Gửi đơn hàng</button>
-                    </div>
-                </div>
-           </div>
+           {
+               cart?.length === 0 ? <h1>Có 0 sản phẩm trong giỏ hàng</h1> :    
+            <form className="itemorder">
+               <div className="itemorder__inforCustomer">
+                   <div>
+                       <h1>Đặt Hàng</h1>
+                   </div>
+                   <div>
+                       <h3>1.Thông tin khách hàng</h3>
+                   </div>
+                   <div>
+                      <input type="checkbox" /> Anh 
+                      <input type="checkbox" />Chị
+                   </div>
+                   <div className="itemorder__input">
+                      <input  />
+                      <input />
+                      <input />
+                      <select></select>
+                      <textarea></textarea>
+                      <textarea></textarea>
+                   </div>
+               </div>
+               <div className="itemorder__inforCustomer">
+                   <div>
+                       <h3>2.Hình thức thanh toán</h3>
+                   </div>
+                   <div>
+                      <input type="checkbox" /> COD 
+                      <input type="checkbox" /> Chuyển Khoản
+                   </div>
+               </div>
+               <div className="itemorder__inforCustomer">
+                   <div>
+                       <h3>3.Xuất hóa đơn công ty</h3>
+                   </div>
+                   <div className="itemorder__input">
+                       <div className="itemorder__exportBill">
+                           <span>Công ty /tổ chức</span>
+                           <input  />
+                       </div>
+                       <div className="itemorder__exportBill">
+                           <span>Địa chỉ:</span>
+                           <input  />
+                       </div>
+                       <div className="itemorder__exportBill">
+                           <span>Mã số thuế</span>
+                           <input  />
+                       </div>
+                   </div>
+               </div>
+               <div className="itemorder__inforCustomer">
+                   <div>
+                       <h3>4.Hình thức vận chuyển</h3>
+                   </div>
+                   <div>
+                      <input type="checkbox" /> giao hàng bình thường 
+                   </div>
+                   <div className="itemorder__SendOrder">
+                       <button>Gửi đơn hàng</button>
+                   </div>
+               </div>
+            </form>
+           }
        </div>
     );
 }

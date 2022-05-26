@@ -123,7 +123,6 @@ const ProductDetail = () => {
          
             <ProductDetailsView
                 dataDetail={dataDetail}  
-                ImageProductDetail={ImageProductDetail} 
                 item={item} 
                 option={option} 
             />
