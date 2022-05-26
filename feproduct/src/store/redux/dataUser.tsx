@@ -25,27 +25,26 @@ const addItemsCartUser = (action: actionCart, state: tsInitialState) => {
     state.quantityCart = 1;
     action.data.quantityCart =  state.quantityCart;
     action.data.totalAmount = action.data.options[0].price;
-    let arrayCheckId = [] as Array<any>;
+    let checkIdExists = [] as Array<any>;
     var totalMoneys = 0;
-    var idCart;
+    var idConditionCart;
     let alreadyExists = false;
     if(state.cart.length > 0){
         for(let i = 0 ; i < state.cart.length;i++){
-            idCart = state.cart[i]._id;
-            if(idCart === action.data._id){
+            idConditionCart = state.cart[i]._id;
+            if(idConditionCart === action.data._id){
                 alreadyExists = true;
                 state.cart[i].quantityCart++;
                 state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityCart;
                 totalMoneys += state.cart[i].totalAmount;
             }
-            arrayCheckId.push(state.cart[i]);
+            checkIdExists.push(state.cart[i]);
         }
     }
     if (!alreadyExists) {
         state.cart.push({ ...action.data});
     }
-    console.log("ArrayCheckId",arrayCheckId);
-    return updateObject(state, { cart: idCart === action.data._id ?  [...arrayCheckId ] : [...state.cart]
+    return updateObject(state, { cart: idConditionCart === action.data._id ?  [...checkIdExists ] : [...state.cart]
         ,totalMoney: totalMoneys
     })
 }

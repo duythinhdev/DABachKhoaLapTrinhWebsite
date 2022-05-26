@@ -28,9 +28,8 @@ export const increaseMinusCart = (id:number,calculation:string) => {
         calculation:calculation
     }
 }
-export const loadTotalMoney = (_id: any = null) => {
+export const loadTotalMoney = () => {
     return {
         type: action.LOAD_TOTAL_CART,
-        _id: _id,
     }
 }

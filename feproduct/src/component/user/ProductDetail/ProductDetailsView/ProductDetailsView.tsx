@@ -16,12 +16,11 @@ import * as Action from "../../../../store/action/index";
 
 interface propsdata {
     dataDetail: Array<any>,
-    ImageProductDetail:  Array<any>,
     item: any,
     option: any,
 }
-const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail,item,option}) => {
-    let { slideIndex,setSlideIndex,nextSlide,prevSlide } = useSlideFetching(ImageProductDetail.length);
+const ProductDetailsView:React.FC<propsdata> = ({dataDetail,item,option}) => {
+    let { slideIndex,setSlideIndex,nextSlide,prevSlide } = useSlideFetching(item.images?.length);
     const [seeMore,setSeeMore] = useState(false) as any | Boolean;
     const [isShowModal,setIsShowModal] = useState(false) as any | Boolean;
     let dispatch = useDispatch();
@@ -43,14 +42,14 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail,i
     },[])
     const clickCart =  () => {
         let action = Action.addCartUser(item);
-        let actionCheckid = Action.loadTotalMoney(item._id);
         dispatch(action);
-        dispatch(actionCheckid);
     }
     return <div  className="bg__white">
     <div  className="productimage">
             <div  className="productimage__img">
                 { item.images?.map((res:any,index: number)=>{
+                    console.log("slideIndex",slideIndex);
+                    console.log("index",index);
                     return <div
                         key={index}
                         className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
@@ -71,7 +70,7 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail,i
                          <p> Phóng to Hình sản phẩm </p>
                     </div>
                     <div className="productzoom__title--sum">
-                        <span>{slideIndex } / {item.images?.length}</span>
+                        <span>{slideIndex} / {item.images?.length}</span>
                     </div>
                     
                 </div>
@@ -148,7 +147,7 @@ const ProductDetailsView:React.FC<propsdata> = ({dataDetail,ImageProductDetail,i
                 </div>
         </div>
         <div className="productinfo__detail">
-              <b>{ option?.specifications?.replaceAll("-",'\n')}</b>
+              <b>{ option?.specifications?.replaceAll(" ",'\n')}</b>
             <div>{seeMore ? <span onClick={() =>disableSeeMore()}>Thu Gọn</span> : <span onClick={() =>enableSeeMore()}> Xem Thêm</span>}</div>
         </div>
         <div className="productinfo__price">
