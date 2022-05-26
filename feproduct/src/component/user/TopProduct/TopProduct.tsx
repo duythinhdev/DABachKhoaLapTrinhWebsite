@@ -9,240 +9,33 @@ import { enviroment } from "../../../enviroment/enviroment";
 import ReactPaginate from 'react-paginate';
 import useQueryLocation from "../hook/useQueryLocation";
 import { Link } from 'react-router-dom';
-const Product:Array<any> = [
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },   
-     {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-    {
-        code: "Mã SP : PCAP102",
-        name:"PC Gaming-Máy tính chơi game PCAP PRO",
-        pricePromotion: "34.499.000 đ",
-        price:"32.749.000 đ",
-        promotion: "1 khuyến mại",
-        compare: "So sánh",
-    },
-]
+export type  images = {
+    _id: string,
+    public_id: string,
+    url:string
+}
+export type options = {
+    _id:string,
+    type: string,
+    size: string,
+    code: string,
+    price: number,
+    quantity: number,
+    specifications: string,
+}
+type product = {
+    _id: string,
+    Product_name: string,
+    images: Array<images>,
+    description: string,
+    options: Array<options>,
+    totalAmount: number,
+    quantityCart: number,
+}
+interface fetchComments {
+    data: Array<product>,
+    totalPage: number
+}
 const TopProduct = () => {
     let query = useQueryLocation();
     let idctProduct = query.get("idctproduct");
@@ -255,17 +48,12 @@ const TopProduct = () => {
     let [totalItems, setTotalItems] = useState<number | undefined | any >();
   
     const fetchComments = useCallback(async (currentPage: number) => {
-        const res:any =  await axios.get(enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=${currentPage}&pagesize=${LIMIT}`)
+        const res =  await axios.get<fetchComments>(enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=${currentPage}&pagesize=${LIMIT}`)
         return res.data.data
-        // const res = await fetch(
-        //     enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=${currentPage}&pagesize=${limit}`
-        // );
-        // const data = await res.json();
-        // return data;
     }, []);
     useEffect(()=> {
         let fetchDataProduct = async () => {
-            await axios.get(linkCtProduct).then((res: any) => {
+            await axios.get<fetchComments>(linkCtProduct).then((res) => {
               if(res.data.totalPage) {
                 setTotalItems(Math.ceil(res.data.totalPage / LIMIT));
               }
@@ -274,10 +62,10 @@ const TopProduct = () => {
          }
         fetchDataProduct();
     },[LIMIT])
-    const handlePageClick = async (data:any) => {
-        console.log(data.selected);
+    const handlePageClick = async (selectedItem: {selected: number} ) => {
+        // console.log(data);
 
-        let currentPage = data.selected + 1;
+        let currentPage = selectedItem.selected + 1;
     
         const commentsFormServer = await fetchComments(currentPage);
     
@@ -308,7 +96,7 @@ const TopProduct = () => {
                 </div>
                 <div className='content__TopProduct--container flex-box'>
                     {
-                      items?.map((res:any,index:number) => {
+                      items?.map((res: product,index:number) => {
                           return  <div className='product__item' key={index} >
                                     <div className='product__item--img'>
                                     <img src={res.images[0].url} />

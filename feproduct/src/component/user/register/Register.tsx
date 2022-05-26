@@ -16,16 +16,26 @@ import * as Yup from 'yup'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RootStateOrAny} from "react-redux";
 
+type state = {
+    fullName:  string,
+    confirmPwd: string,
+    email:string,
+    password: string,
+    phoneNumber:  string,
+    gender:  string,
+    address:  string,
+    city:  string
+}
 const Register = () => {
-    const [value, setValue] = useState({
-        fullName: '' as string,
-        confirmPwd: '' as string,
-        email: '' as string,
-        password: '' as string,
-        phoneNumber: '' as string,
-        gender: '' as  string,
-        address: '' as string,
-        city: '' as string
+    const [value, setValue] = useState<state>({
+        fullName: '',
+        confirmPwd: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+        gender: '',
+        address: '',
+        city: '',
     });
     const formSchema = Yup.object().shape({
         password: Yup.string()
@@ -42,8 +52,7 @@ const Register = () => {
         phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
       })
     let dispatch = useDispatch();
-    let titleSignUp = useSelector((state: RootStateOrAny) => state.login.titleSignup);
-    let statusSignUp = useSelector((state: RootStateOrAny) => state.login.StatusSignup);
+    let {titleSignup,StatusSignup}= useSelector((state: RootStateOrAny) => state.login);
     // const {register, formState: {errors}, handleSubmit,watch} = useForm<FormInputs>({
     //     criteriaMode: "all"
     // })
@@ -53,7 +62,7 @@ const Register = () => {
     const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
-    const notify = () => toast(titleSignUp);
+    const notify = () => toast(titleSignup);
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const {fullName,password,phoneNumber,address,gender,city,email } = value;
@@ -216,7 +225,7 @@ const Register = () => {
                     </form>
                 </div>
                 <>
-                    {statusSignUp && <ToastContainer/>}
+                    {StatusSignup && <ToastContainer/>}
                 </>
             </div>
     );

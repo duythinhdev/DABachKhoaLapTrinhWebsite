@@ -61,7 +61,7 @@ const LoginReducer = (state = initialState,action:any) => {
         case actionTypes.AUTH_SUCCESS_USER:
             return  authSuccessUser(state,action);
         case actionTypes.SET_AUTH_REDIRECT_PATH:
-        return setAuthRedirectPath(state,action)
+            return setAuthRedirectPath(state,action)
         case actionTypes.IS_AUTH_SUCCESS:
             return isAuth(state,action)
         default :
