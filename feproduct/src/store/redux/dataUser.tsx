@@ -1,14 +1,8 @@
 import React from 'react';
 import {updateObject} from "../share/utility";
 import * as actionTypes from "../action/actiontypes";
-import cssVars from '@mui/system/cssVars';
+import { tsInitialState,actionTypeCart,Product } from "../../types/productType"
 
-interface tsInitialState {
-    status: string,
-    cart: Array<product>,
-    quantityCart: number,
-    totalMoney: number
-}
 
 const initialState: tsInitialState = {
     status: '',
@@ -16,11 +10,11 @@ const initialState: tsInitialState = {
     quantityCart: 0,
     totalMoney: 0
 }
-const addItemsCartUser = (action: actionType, state: tsInitialState) => {
+const addItemsCartUser = (action: actionTypeCart, state: tsInitialState) => {
     state.quantityCart = 1;
     action.data.quantityCart =  state.quantityCart;
     action.data.totalAmount = action.data.options[0].price;
-    let checkIdExists = [] as Array<product>;
+    let checkIdExists = [] as Array<Product>;
     var totalMoneys = 0;
     var idConditionCart;
     let alreadyExists = false;
@@ -43,11 +37,11 @@ const addItemsCartUser = (action: actionType, state: tsInitialState) => {
         ,totalMoney: totalMoneys
     })
 }
-const removeAllCartUser = (action: actionType, state: tsInitialState) => {
+const removeAllCartUser = (action: actionTypeCart, state: tsInitialState) => {
     return updateObject(state, { cart: [] ,totalMoney: 0 })
 }
-const removeItemsDetailCartUser = (action: actionType, state: tsInitialState) => {
-    let newsData = [] as Array<product>;
+const removeItemsDetailCartUser = (action: actionTypeCart, state: tsInitialState) => {
+    let newsData = [] as Array<Product>;
     let totalMoneys = 0;
     for(let i = 0 ;i < state.cart.length ; i++)
     {
@@ -58,8 +52,8 @@ const removeItemsDetailCartUser = (action: actionType, state: tsInitialState) =>
     }
     return updateObject(state, { cart: newsData,totalMoney: totalMoneys})
 }
-const increaseMinusCartUser =  (action: actionType, state: tsInitialState) => {
-    let newsData = [] as Array<product>;
+const increaseMinusCartUser =  (action: actionTypeCart, state: tsInitialState) => {
+    let newsData = [] as Array<Product>;
     let totalMoneys = 0;
     for(let i = 0 ;i < state.cart.length ; i++)
     {
@@ -86,36 +80,7 @@ const increaseMinusCartUser =  (action: actionType, state: tsInitialState) => {
     console.log("newsData",newsData)
     return updateObject(state, { cart: newsData,totalMoney:  totalMoneys})
 }
-export type  images = {
-    _id: string,
-    public_id: string,
-    url:string
-}
-export type options = {
-    _id:string,
-    type: string,
-    size: string,
-    code: string,
-    price: number,
-    quantity: number,
-    specifications: string,
-}
-export  type product = {
-    _id: string,
-    Product_name: string,
-    images: Array<images>,
-    description: string,
-    options: Array<options>,
-    totalAmount: number,
-    quantityCart: number,
-}
-interface actionType {
-    type: string,
-    data: product,
-    id: number,
-    calculation:string
-}
-const dataUserReducer = (state = initialState, action: actionType) => {
+const dataUserReducer = (state = initialState, action: actionTypeCart) => {
     switch (action.type) {
         case actionTypes.ADD_CART_USER:
             return addItemsCartUser(action,state);

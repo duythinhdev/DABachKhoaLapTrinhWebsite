@@ -24,35 +24,6 @@ const TabNames = [{
     Name: TabName.ProductDetails.ProductInvolve,
 },
 ]
-const dataDetail:Array<any> = [
-    {
-        detail: "Acer VG240Y UM.QV0SS.001 – Đen"
-    },
-    {
-        detail: "- Kích thước: 23.8 inch"
-    },
-    {
-        detail: " - Tấm nền: IPS"
-    },
-    {
-        detail: "- Độ phân giải: Full HD (1920x1080)"
-    },
-    {
-        detail: "- Tốc độ làm mới: 75Hz"
-    },
-    {
-        detail: "- Kích thước: 23.8 inch"
-    },
-    {
-        detail: "- Thời gian đáp ứng: 1ms"
-    },
-    {
-        detail: " - Cổng kết nối: VGA, HDMI"
-    },
-    {
-        detail: "- Phụ kiện: Cáp nguồn, VGA, HDMI"
-    },
-]
 const ProductDetail = () => {
     const [isDetailComment,setIsDetailComment] = useState(false) as any | Boolean;
     const [isSeeMore,setIsSeeMore] = useState(false) as any | Boolean;

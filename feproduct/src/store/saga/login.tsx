@@ -2,25 +2,7 @@ import {put, call,delay } from "redux-saga/effects";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
-
-interface  signUps { 
-    type: "SIGNUPS_APP_USER",
-    fullName?:string,
-    email?:string,
-    password?:string,
-    phone?:string,
-    address?:string,
-    city?:string,
-    gender?:string
-    status: number
-}
-interface login {
-    type: "LOGIN_APP_USER",
-    email:string
-    password: string,
-    status: number,
-    data: any,
-}
+import { signUps,login } from "../../types/loginSagaType";
 export function* logoutSaga(action:any) {
     yield call([localStorage, 'removeItem'], 'tokenAdmin');
     yield call([localStorage, 'removeItem'], 'expirationDate');

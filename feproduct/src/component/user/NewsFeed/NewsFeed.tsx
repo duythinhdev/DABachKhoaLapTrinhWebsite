@@ -4,6 +4,7 @@ import ImageNewsFeed from "../../../asset/NewsFeed/120_8730_top5chuotgaminggiare
 import * as Actions from "../../../store/action/index";
 import {useSelector, useDispatch} from 'react-redux';
 import { RootStateOrAny} from "react-redux";
+import { News,tscategoryNews} from "../../../types/newsType";
 const ArrayNewFeed:Array<any> = [
     {
         img: ImageNewsFeed,
@@ -30,27 +31,7 @@ const ArrayNewFeed:Array<any> = [
         content: "Cùng mình đến với những mẫu chuột gaming giá rẻ vô cùng ấn tượng quaTOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu” ngay thôi nào!"
     },
 ]
-export type  images = {
-    _id: string,
-    public_id: string,
-    url:string
-}
-export type News = {
-    _id: string,
-    title: string,
-    is_show: Boolean,
-    content: string,
-    category_News: string,
-    createdAt: string,
-    images: Array<images>
-}
-type tscategoryNews = {
-    _id: string,
-    name: string,
-    createdAt: string,
-    updatedAt: string,
-    news: Array<News>
-}
+
 const  NewsFeed = () => {
     let { listNews }  = useSelector((state: RootStateOrAny) =>  state.newsUser);
     let dispatch = useDispatch();

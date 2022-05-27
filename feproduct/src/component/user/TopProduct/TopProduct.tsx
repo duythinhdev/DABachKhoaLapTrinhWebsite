@@ -9,33 +9,8 @@ import { enviroment } from "../../../enviroment/enviroment";
 import ReactPaginate from 'react-paginate';
 import useQueryLocation from "../hook/useQueryLocation";
 import { Link } from 'react-router-dom';
-export type  images = {
-    _id: string,
-    public_id: string,
-    url:string
-}
-export type options = {
-    _id:string,
-    type: string,
-    size: string,
-    code: string,
-    price: number,
-    quantity: number,
-    specifications: string,
-}
-type product = {
-    _id: string,
-    Product_name: string,
-    images: Array<images>,
-    description: string,
-    options: Array<options>,
-    totalAmount: number,
-    quantityCart: number,
-}
-interface fetchComments {
-    data: Array<product>,
-    totalPage: number
-}
+import { Product,fetchComments } from "../../../types/productType";
+
 const TopProduct = () => {
     let query = useQueryLocation();
     let idctProduct = query.get("idctproduct");
@@ -96,7 +71,7 @@ const TopProduct = () => {
                 </div>
                 <div className='content__TopProduct--container flex-box'>
                     {
-                      items?.map((res: product,index:number) => {
+                      items?.map((res: Product,index:number) => {
                           return  <div className='product__item' key={index} >
                                     <div className='product__item--img'>
                                     <img src={res.images[0].url} />
