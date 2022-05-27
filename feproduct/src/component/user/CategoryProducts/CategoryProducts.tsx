@@ -5,43 +5,13 @@ import { Link } from 'react-router-dom';
 import TopProduct from "../../../asset/TopProduct/250_34178_large_7cafaa8dedb3d130.jpg";
 import { enviroment } from "../../../enviroment/enviroment";
 import axios, {AxiosResponse} from "axios";
+import { tsCategoryProduct,Product } from "../../../types/productType";
 
-
-export type  images = {
-    _id: string,
-    public_id: string,
-    url:string
-}
-export type options = {
-    _id:string,
-    type: string,
-    size: string,
-    code: string,
-    price: number,
-    quantity: number,
-    specifications: string,
-}
-export type product = {
-    _id: string,
-    Product_name: string,
-    images: Array<images>,
-    description: string,
-    options: Array<options>,
-    totalAmount: number,
-    quantityCart: number,
-}
-type tsCategoryProduct = {
-    updatedAt: string,
-    createdAt: string,
-    name: string,
-    _id: string,
-    product: Array<product>
-} 
 interface props {
     indexs: number,
     response: tsCategoryProduct
 }
-const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
+const CategoryProducts: React.FC<props>  = React.memo(({ indexs,response }) =>  {
     const [hoverDetail,setHoverDetail] =  useState(false as boolean);
     const [isProductDetail,setIsProductDetail] = useState(1 as number);
     const moveDetail = async (index: number)   => {
@@ -63,7 +33,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({indexs,response}) =>  {
                 <div className='box-center__content'>
                     <div className='box-center__content--product'>
                         {
-                            response?.product.map((res: product,index:number)=> {
+                            response?.product.map((res: Product,index:number)=> {
                               return  <div className='product--detail' >
                                     <div className='product--detail__img' onMouseMove={()=>moveDetail(index)} onMouseLeave={()=>moveDetailOver()} >
                                         <img src={res?.images[0].url}/>

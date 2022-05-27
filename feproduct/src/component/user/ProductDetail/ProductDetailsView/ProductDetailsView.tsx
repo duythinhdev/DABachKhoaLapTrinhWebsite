@@ -13,33 +13,10 @@ import { enviroment } from "../../../../enviroment/enviroment";
 import useQueryLocation from "../../hook/useQueryLocation";
 import { useDispatch } from 'react-redux';
 import * as Action from "../../../../store/action/index";
-
+import { Product,Options,Images} from "../../../../types/productType";
 interface propsdata {
-    item: product,
-    option: options,
-}
-export type options = {
-    _id:string,
-    type: string,
-    size: string,
-    code: string,
-    price: number,
-    quantity: number,
-    specifications: string,
-}
-export  type product = {
-    _id: string,
-    Product_name: string,
-    images: Array<images>,
-    description: string,
-    options: Array<options>,
-    totalAmount: number,
-    quantityCart: number,
-}
-export type  images = {
-    _id: string,
-    public_id: string,
-    url:string
+    item: Product,
+    option: Options,
 }
 const ProductDetailsView:React.FC<propsdata> = ({item,option}) => {
     let totalNumberImage  = item.images?.length as number;
@@ -58,7 +35,7 @@ const ProductDetailsView:React.FC<propsdata> = ({item,option}) => {
     return <div  className="bg__white">
     <div  className="productimage">
             <div  className="productimage__img">
-                { item.images?.map((res:images,index: number)=>{
+                { item.images?.map((res:Images,index: number)=>{
                     return <div
                         key={index}
                         className={slideIndex === index + 1 ? "slide active-anim" : "slide"}

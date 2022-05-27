@@ -38,7 +38,7 @@ const TotalInterface = () =>  {
           case 'cart':
               return  <Cart />;
           case 'informationuser':
-                return  <InforUser />;
+              return  <InforUser />;
       }
     }
   useEffect(()=> {

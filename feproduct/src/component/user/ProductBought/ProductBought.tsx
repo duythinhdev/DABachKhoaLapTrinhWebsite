@@ -7,30 +7,8 @@ import * as Actions from "../../../store/action/index";
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
+import { Product } from "../../../types/productType";
 
-export type  images = {
-    _id: string,
-    public_id: string,
-    url:string
-}
-export type options = {
-    _id:string,
-    type: string,
-    size: string,
-    code: string,
-    price: number,
-    quantity: number,
-    specifications: string,
-}
-type product = {
-    _id: string,
-    Product_name: string,
-    images: Array<images>,
-    description: string,
-    options: Array<options>,
-    totalAmount: number,
-    quantityCart: number,
-}
 const  ProductBought = ()  => {
     let { cart,totalMoney } = useSelector((state:RootStateOrAny) => state.dataUser);
     // console.log("cartOfUser",cartOfUser);
@@ -63,7 +41,7 @@ const  ProductBought = ()  => {
              <div className="itemyoucart__removecart">
                 <button onClick={removeAllCart}  className="btn-cart-red">Xóa Khỏi giỏ hàng</button>
              </div>
-             {cart?.map((res: product,index: number)=> {
+             {cart?.map((res: Product,index: number)=> {
                  return <div className="itemyoucart__detail" key={index}>
                             <div className="itemyoucart__detail--img">
                                 <img src={ res?.images && res?.images[0]?.url} />

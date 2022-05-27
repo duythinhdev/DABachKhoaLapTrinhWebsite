@@ -1,29 +1,7 @@
 import * as action from "./actiontypes";
+import { Product,actionTypeCart } from "../../types/productType";
 
-export type  images = {
-    _id: string,
-    public_id: string,
-    url:string
-}
-export type options = {
-    _id:string,
-    type: string,
-    size: string,
-    code: string,
-    price: number,
-    quantity: number,
-    specifications: string,
-}
-export  type product = {
-    _id: string,
-    Product_name: string,
-    images: Array<images>,
-    description: string,
-    options: Array<options>,
-    totalAmount: number,
-    quantityCart: number,
-}
-export const addCartUser = (data: product) => {
+export const addCartUser = (data: Product) => {
     return {
         type: action.ADD_CART_USER,
         data: data
@@ -36,14 +14,14 @@ export const removeAllCartUser = () => {
     }
 }
 
-export const removeDetailCartUser = (id:number) => {
+export const removeDetailCartUser = (id: actionTypeCart) => {
     return {
         type: action.REMOVE_DETAIL_CART_USER,
         id: id
     }
 }
 
-export const increaseMinusCart = (id:number,calculation:string) => {
+export const increaseMinusCart = (id: actionTypeCart, calculation: actionTypeCart) => {
     return {
         type: action.INCREASE_DETAIL_CART_USER,
         id: id,
