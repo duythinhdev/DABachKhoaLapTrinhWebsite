@@ -8,6 +8,8 @@ const optionRoutes = require('./api/option');
 const categoryProductRoutes = require('./api/category_product');
 const newsRoutes = require('./api/news');
 const CategoryNewsRoutes = require('./api/categoryNews');
+const OrderRoutes = require('./api/order');
+const OrderOptionRoutes = require('./api/order_option');
 const cors = require('cors');
 const flash = require('express-flash');
 const session = require('express-session');
@@ -45,6 +47,8 @@ class Routers {
         this.app.use(`${this.apiVersion}/news`, newsRoutes)
         this.app.use(`${this.apiVersion}/slider`, sliderRoutes)
         this.app.use(`${this.apiVersion}/ctnews`, CategoryNewsRoutes)
+        this.app.use(`${this.apiVersion}/order`, OrderRoutes)
+        this.app.use(`${this.apiVersion}/orderoption`, OrderOptionRoutes)
     }
     connectMongoose() {
         this.mongoose.set('useNewUrlParser', true);

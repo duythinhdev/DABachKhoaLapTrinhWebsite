@@ -3,6 +3,7 @@ const User = require("../../models/user");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../../utils/sendEmail');
+require('dotenv').config();
 
 exports.signup = (req, res, next) => {
     console.log("req.body", req.body);
@@ -67,11 +68,15 @@ exports.login = (req, res, next) => {
                     const token = jwt.sign({
                         email: user[0].email,
                         userId: user[0]._id,
+                        role: user[0].role,
                     }, process.env.SECRET_KEY, {
-                        expiresIn: "7d"
+                        expiresIn: "1d"
                     })
+                    console.log("user[0]._doc", user[0]._doc);
+                    const { password, ...other } = user[0]._doc;
                     return res.status(200).json({
                         message: 'Auth success',
+                        ...other,
                         accessToken: token,
                     })
                 }
@@ -86,6 +91,17 @@ exports.login = (req, res, next) => {
                 error: err
             })
         });
+}
+exports.deleteUser = async(req, res, next) => {
+    const { id } = req.params;
+    await User.remove({ _id: id }).exec().then(response => {
+        res.status(200).json({
+            message: response,
+        })
+    }).catch(err => {
+        res.status(500).json({ error: err })
+        console.log(err);
+    })
 }
 exports.forgot = async(req, res, next) => {
         var content = '';

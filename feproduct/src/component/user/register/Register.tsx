@@ -15,19 +15,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RootStateOrAny} from "react-redux";
+import { reGister } from "../../../types/hookForm";
 
-type state = {
-    fullName:  string,
-    confirmPwd: string,
-    email:string,
-    password: string,
-    phoneNumber:  string,
-    gender:  string,
-    address:  string,
-    city:  string
-}
 const Register = () => {
-    const [value, setValue] = useState<state>({
+    const [value, setValue] = useState<reGister>({
         fullName: '',
         confirmPwd: '',
         email: '',

@@ -5,32 +5,6 @@ import * as Actions from "../../../store/action/index";
 import {useSelector, useDispatch} from 'react-redux';
 import { RootStateOrAny} from "react-redux";
 import { News,tscategoryNews} from "../../../types/newsType";
-const ArrayNewFeed:Array<any> = [
-    {
-        img: ImageNewsFeed,
-        title: "TOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu",
-        time: "Time 24:22 25/3/2022",
-        content: "Cùng mình đến với những mẫu chuột gaming giá rẻ vô cùng ấn tượng quaTOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu” ngay thôi nào!"
-    },
-    {
-        img: ImageNewsFeed,
-        title: "TOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu",
-        time: "Time 24:22 25/3/2022",
-        content: "Cùng mình đến với những mẫu chuột gaming giá rẻ vô cùng ấn tượng quaTOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu” ngay thôi nào!"
-    },
-    {
-        img: ImageNewsFeed,
-        title: "TOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu",
-        time: "Time 24:22 25/3/2022",
-        content: "Cùng mình đến với những mẫu chuột gaming giá rẻ vô cùng ấn tượng quaTOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu” ngay thôi nào!"
-    },
-    {
-        img: ImageNewsFeed,
-        title: "TOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu",
-        time: "Time 24:22 25/3/2022",
-        content: "Cùng mình đến với những mẫu chuột gaming giá rẻ vô cùng ấn tượng quaTOP 5 Chuột Gaming Giá Rẻ Tốt Nhất 100% Đáng Sở Hữu” ngay thôi nào!"
-    },
-]
 
 const  NewsFeed = () => {
     let { listNews }  = useSelector((state: RootStateOrAny) =>  state.newsUser);
