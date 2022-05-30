@@ -7,35 +7,31 @@ import { tsInitialState,actionTypeCart,Product } from "../../types/productType"
 const initialState: tsInitialState = {
     status: '',
     cart: [],
-    quantityCart: 0,
+    quantityItems: 0,
     totalMoney: 0
 }
 const addItemsCartUser = (action: actionTypeCart, state: tsInitialState) => {
-    state.quantityCart = 1;
-    action.data.quantityCart =  state.quantityCart;
+    state.quantityItems = 1;
+    action.data.quantityItems =  state.quantityItems;
     action.data.totalAmount = action.data.options[0].price;
     let checkIdExists = [] as Array<Product>;
     var totalMoneys = 0;
     var idConditionCart;
-    let alreadyExists = false;
-    if(state.cart.length > 0){
-        for(let i = 0 ; i < state.cart.length;i++){
-            idConditionCart = state.cart[i]._id;
-            if(idConditionCart === action.data._id){
-                alreadyExists = true;
-                state.cart[i].quantityCart++;
-                state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityCart;
-                totalMoneys += state.cart[i].totalAmount;
-            }
-            checkIdExists.push(state.cart[i]);
+    let isItemExist = false;
+    for(let i = 0 ; i < state.cart.length;i++){
+        idConditionCart = state.cart[i]._id;
+        if(idConditionCart === action.data._id){
+            isItemExist = true;
+            state.cart[i].quantityItems++;
+            state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityItems;
+            totalMoneys += state.cart[i].totalAmount;
         }
     }
-    if (!alreadyExists) {
+    console.log("state.cart",state.cart);
+    if (!isItemExist) {
         state.cart.push({ ...action.data});
     }
-    return updateObject(state, { cart: idConditionCart === action.data._id ?  [...checkIdExists ] : [...state.cart]
-        ,totalMoney: totalMoneys
-    })
+    return updateObject(state, { cart:[...state.cart],totalMoney: totalMoneys})
 }
 const removeAllCartUser = (action: actionTypeCart, state: tsInitialState) => {
     return updateObject(state, { cart: [] ,totalMoney: 0 })
@@ -59,19 +55,19 @@ const increaseMinusCartUser =  (action: actionTypeCart, state: tsInitialState) =
     {
         if(i === action.id){
             if( action.calculation === "plus"){
-                state.cart[i].quantityCart++;
-                state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityCart;
-                if(state.cart[i].quantityCart === 0){
-                    state.cart[i].quantityCart++;
+                state.cart[i].quantityItems++;
+                state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityItems;
+                if(state.cart[i].quantityItems === 0){
+                    state.cart[i].quantityItems++;
                 }
-                state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityCart;
+                state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityItems;
             } else {
-                state.cart[i].quantityCart--;
-                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityCart;
-                if(state.cart[i].quantityCart === 0){
-                    state.cart[i].quantityCart++;
+                state.cart[i].quantityItems--;
+                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
+                if(state.cart[i].quantityItems === 0){
+                    state.cart[i].quantityItems++;
                 }
-                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityCart;
+                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
             }
         }
         totalMoneys += state.cart[i].totalAmount;

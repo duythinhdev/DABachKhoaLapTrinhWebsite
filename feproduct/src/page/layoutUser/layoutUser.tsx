@@ -12,8 +12,8 @@ import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
 import useFetchingData from "../../component/user/TopProduct/useFetchingData";
 import { tsCategoryProduct } from "../../types/productType";
 
-const LayoutUser = () => {
-    let ctProduct = enviroment.localNode + "ctproduct/get";
+const LayoutUser = React.memo(() => {
+    let ctProduct: string = enviroment.localNode + "ctproduct/get";
     let { data } = useFetchingData(ctProduct);
     return (
         <div className="ContainerApp">
@@ -30,6 +30,6 @@ const LayoutUser = () => {
             <Footer />
         </div >
     );
-}
+})
 
-export default React.memo(LayoutUser);
+export default LayoutUser;

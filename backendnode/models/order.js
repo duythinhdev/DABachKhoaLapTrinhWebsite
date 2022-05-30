@@ -4,8 +4,12 @@ const Schema = mongoose.Schema;
 const orderSchema = mongoose.Schema({
         address: { type: String, required: false },
         phone: { type: String, required: false },
+        email: { type: String, required: false },
         full_name: { type: String, required: false },
-        user_id: { type: String, required: false },
+        user_id: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
         total: { type: Number, required: false },
         status: { type: Number, required: false },
     }, { timestamps: { createdAt: true, updatedAt: true } }

@@ -2,36 +2,30 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom
 import {useDispatch, useSelector} from "react-redux";
 import React, {lazy, Suspense} from "react";
 import Spinner from "../component/spinner/spinner.jsx";
-import { ContainerAdmin,
-    LoginAmin,
-    login,
-    register,
+import {
+    TotalInterface,
     layoutUser,
-    News,
-    ProductBrand,
-    HomeAdmin,
     ListAdmin,
     newAdmin,
-    InforUser
 } from "./index";
 
 export const Routes: Array<any> = [
-    {
-        path: "/loginadmin",
-        component: LoginAmin,
-    },
+    // {
+    //     path: "/loginadmin",
+    //     component: LoginAmin,
+    // },
     {
         path: "/user",
         component: layoutUser,
     },
     {
         path: "/system/:id",
-        component: login
+        component: TotalInterface
     },
-    {
-        path: "/news",
-        component: News
-    },
+    // {
+    //     path: "/news",
+    //     component: News
+    // },
     // {
     //     path: "/home",
     //     component: HomeAdmin,

@@ -19,7 +19,7 @@ export type Product = {
     description: string,
     options: Array<Options>,
     totalAmount: number,
-    quantityCart: number,
+    quantityItems: number,
 }
 export interface actionTypeCart {
     type: string,
@@ -30,7 +30,7 @@ export interface actionTypeCart {
 export interface tsInitialState {
     status: string,
     cart: Product[],
-    quantityCart: number,
+    quantityItems: number,
     totalMoney: number
 }
 export type tsCategoryProduct = {
@@ -41,6 +41,6 @@ export type tsCategoryProduct = {
     product: Array<Product>
 } 
 export interface fetchComments {
-    data: Product[],
-    totalPage: number
+    readonly  data: Product[],
+    readonly  totalPage: number
 }

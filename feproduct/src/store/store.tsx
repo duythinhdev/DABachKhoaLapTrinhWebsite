@@ -16,13 +16,14 @@ import { PersistGate } from "redux-persist/integration/react";
 import {
     watchLoginAdmin,
     watchProductAdmin,
-    watchUserAdmin,
+    // watchUserAdmin,
     watchOptionAdmin,
-    watchReviewAdmin,
-    watchCommentAdmin
-    ,watchCategoryAdmin,
-    watchNewsAdmin,
-    watchNewsUser
+    // watchReviewAdmin,
+    // watchCommentAdmin,
+    // ,watchCategoryAdmin,
+    // watchNewsAdmin,
+    watchNewsUser,
+    watchOrderUser
 } from "../store/saga/index";
 
 const sagaMiddleware: any = createSagaMiddleware();
@@ -56,13 +57,9 @@ const persistor = persistStore(store);
 
 sagaMiddleware.run(watchLoginAdmin);
 sagaMiddleware.run(watchProductAdmin);
-sagaMiddleware.run(watchUserAdmin);
 sagaMiddleware.run(watchOptionAdmin);
-sagaMiddleware.run(watchReviewAdmin);
-sagaMiddleware.run(watchCommentAdmin);
-sagaMiddleware.run(watchCategoryAdmin);
-sagaMiddleware.run(watchNewsAdmin);
 sagaMiddleware.run(watchNewsUser);
+sagaMiddleware.run(watchOrderUser);
 export const app = (
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}  >

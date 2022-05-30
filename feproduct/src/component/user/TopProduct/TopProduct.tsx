@@ -10,6 +10,9 @@ import ReactPaginate from 'react-paginate';
 import useQueryLocation from "../hook/useQueryLocation";
 import { Link } from 'react-router-dom';
 import { Product,fetchComments } from "../../../types/productType";
+import useHoverProductDetail from "../hook/useHoverProductDetail";
+import  HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDetailProduct";
+
 
 const TopProduct = () => {
     let query = useQueryLocation();
@@ -19,7 +22,7 @@ const TopProduct = () => {
     const LIMIT = 10;
     let linkCtProduct = enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=1&pagesize=${LIMIT}`;
     // let { data,totalpage } = useFetchingTopProduct(ctProduct);
-    let [items,setItems] = useState<Array<any>>([]);
+    let [items,setItems] = useState<Array<Product>>([]);
     let [totalItems, setTotalItems] = useState<number | undefined | any >();
   
     const fetchComments = useCallback(async (currentPage: number) => {
@@ -46,6 +49,8 @@ const TopProduct = () => {
     
         setItems(commentsFormServer);
     };
+    let [ conditionIndex,setConditionIndex] = useState(0) as number | undefined | any;
+    let { isHoverDetail,indexProductDetail,moveDetail,moveDetailOver } = useHoverProductDetail();
     return (
             <div className='containter__TopProduct'>
                 <div className='name__TopProduct'>
@@ -72,9 +77,10 @@ const TopProduct = () => {
                 <div className='content__TopProduct--container flex-box'>
                     {
                       items?.map((res: Product,index:number) => {
+                        // setConditionIndex(index);
                           return  <div className='product__item' key={index} >
                                     <div className='product__item--img'>
-                                    <img src={res.images[0].url} />
+                                        <img src={res.images[0].url} onMouseOver={()=>moveDetail(index)} onMouseLeave={()=>moveDetailOver()} />
                                     </div>
                                     <div className='product__item--code'>
                                             {res._id}
@@ -97,6 +103,9 @@ const TopProduct = () => {
                                     <div className='product__item--compare'>
                                             <span>So Sanh</span>
                                     </div>
+                                    {
+                                        isHoverDetail && indexProductDetail === index ? <HoverDetailProduct response={res} isCtProduct={false} /> : ''
+                                    }
                                 </div>
                         })
                     }

@@ -2,12 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const orderOptionSchema = mongoose.Schema({
-        address: { type: String, required: false },
-        phone: { type: String, required: false },
-        full_name: { type: String, required: false },
-        user_id: { type: String, required: false },
+        order_id: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Order',
+            required: false
+        }],
+        option_id: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Option',
+            required: false
+        }],
         total: { type: Number, required: false },
-        status: { type: Number, required: false },
+        quantity: { type: Number, required: false },
     }, { timestamps: { createdAt: true, updatedAt: true } }
 
 )
