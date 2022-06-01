@@ -82,7 +82,8 @@ const Navbar = () => {
     const clickNav  = () => {
         setLinkNavBar(!linkNavBar)
     }
-    let cartOfUser = useSelector((state: RootStateOrAny) => state.dataUser.cart);
+    let {cart} = useSelector((state: RootStateOrAny) => state.dataUser);
+    let {currentUser} = useSelector((state: RootStateOrAny) => state.login);
     // console.log("cartOfUser",cartOfUser);
     return (
         <div className="header">
@@ -127,8 +128,8 @@ const Navbar = () => {
                     </div>
                     <div className="MenuItem">
                         <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/system/account" ><AccountCircleOutlinedIcon /></Link></div>
-                        { token ? <div className="MenuItem__span" >
-                                <Link  className="MenuItem__Link" to="/system/informationuser" > {inforToken?.email} </Link>
+                        { currentUser?.accessToken ? <div className="MenuItem__span" >
+                                <Link  className="MenuItem__Link" to="/system/informationuser" > {currentUser?.email} </Link>
                         </div>
                          : 
                             <div  className="MenuItem__span">
@@ -138,7 +139,7 @@ const Navbar = () => {
                         }
                     </div>
                     <div className="MenuItem">
-                        <Badge badgeContent={cartOfUser && cartOfUser.length } color="error">
+                        <Badge badgeContent={cart && cart.length } color="error">
                             <Link to="/system/cart" className="MenuItem__Link" > <ShoppingCartOutlined /></Link>
                         </Badge>
                     </div>

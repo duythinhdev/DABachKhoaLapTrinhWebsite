@@ -49,11 +49,10 @@ export const authSuccess = (token: any,isLogin:boolean) => {
         isLogin: isLogin
     }
 }
-export const authSuccessUser = (tokenUser: any,isLoginUser:boolean) => {
-    console.log("tokenUser",tokenUser,isLoginUser);
+export const authSuccessUser = (currentUser: Object,isLoginUser:boolean) => {
     return {
         type: actionTypes.AUTH_SUCCESS_USER,
-        tokenUser: tokenUser,
+        currentUser: currentUser,
         isLoginUser: isLoginUser
     }
 }

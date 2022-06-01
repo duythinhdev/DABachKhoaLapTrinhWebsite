@@ -68,13 +68,11 @@ export function* signUpUser(actions: signUps)
 }
 export function* logoutUserSaga() {
     yield call([localStorage, 'removeItem'], 'accessToken');
-    yield put(Actions.authSuccessUser(null,false));
+    yield put(Actions.authSuccessUser({},false));
     yield put(Actions.logoutSucceed())
 }
 export function* loginUser(actions: login) {
     const { email, password } = actions;
-    console.log("email",email);
-    console.log("password",password);
     let body = {
         email: email,
         password: password
@@ -88,10 +86,10 @@ export function* loginUser(actions: login) {
             case 200: 
                 yield put(Actions.statusSignup("Đăng Nhập thành Công",true))
                 yield localStorage.setItem("accessToken",JSON.stringify(response.data.accessToken));
-                yield put(Actions.authSuccessUser(response.data.token,true));
+                yield put(Actions.authSuccessUser(response.data,true));
             break;
             case 108: 
-                yield put(Actions.authSuccessUser(null,false));
+                yield put(Actions.authSuccessUser({},false));
              break;
         }
     }

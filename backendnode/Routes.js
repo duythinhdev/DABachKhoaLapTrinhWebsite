@@ -15,6 +15,7 @@ const flash = require('express-flash');
 const session = require('express-session');
 require('dotenv').config();
 const sliderRoutes = require('./api/slider');
+const cookieParser = require("cookie-parser");
 
 class Routers {
     app;
@@ -36,6 +37,7 @@ class Routers {
                 saveUninitialized: true
             })
         );
+        this.app.use(cookieParser());
         this.app.use(flash());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(`${this.apiVersion}/user`, userRoutes);

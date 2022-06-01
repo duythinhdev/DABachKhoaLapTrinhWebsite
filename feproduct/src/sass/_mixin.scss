@@ -23,6 +23,18 @@
         }
         ; //900px
     }
+    @if $breakpoint==surface {
+        @media (max-width: 540px) {
+            @content
+        }
+        ; //900px
+    }
+    @if $breakpoint==XR {
+        @media (max-width: 414px) {
+            @content
+        }
+        ; //900px
+    }
     @if $breakpoint==phone {
         @media (max-width: 380px) {
             @content

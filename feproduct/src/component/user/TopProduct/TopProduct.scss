@@ -76,6 +76,10 @@
             flex-direction: row;
             .product__item {
                 width: calc(100% /6.78);
+                @include respond(Desktop-All) {
+                    width: calc(100% /5);
+                    height: 700px;
+                }
                 @include respond(laptop) {
                     width: calc(100% /5);
                 }

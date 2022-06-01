@@ -10,6 +10,7 @@ export interface tsInitialState {
     authRedirectPath: string,
     tokenUser: any,
     isLoginUser: boolean,
+    currentUser: Object;
 }
 
 const initialState: tsInitialState = {
@@ -20,6 +21,7 @@ const initialState: tsInitialState = {
     authRedirectPath: '/admin',
     tokenUser: null,
     isLoginUser: false,
+    currentUser: {}
 }
 interface authSuccess {
     tokenUser: string,
@@ -38,15 +40,13 @@ const authLogout = (state:any, action:any) => {
 const authSuccess = (state:any, action:any) => {
     return updateObject( state, {token: action.token , isLoginAdmin: action.isLogin })
 }
-const authSuccessUser = (state: any, action: authSuccess) => {
-    return updateObject( state, {tokenUser: action.tokenUser , isLoginUser: action.isLoginUser })
+interface ActionLogin{
+    currentUser: object,
+    isLoginUser: boolean
 }
-const isAuth = (state:any, action:any) => {
-    return updateObject( state, { isLoginAdmin: action.isToken })
-}
-const setAuthRedirectPath  = (action:any, state:any) => {
-    return updateObject(state , {authRedirectPath: action.path})
-}
+const authSuccessUser = (state: tsInitialState, action: ActionLogin) => {
+    return updateObject( state, {currentUser: action.currentUser , isLoginUser: action.isLoginUser })
+} 
 const LoginReducer = (state = initialState,action:any) => {
     switch (action.type)
     {
@@ -60,10 +60,6 @@ const LoginReducer = (state = initialState,action:any) => {
             return  authSuccess(state,action);
         case actionTypes.AUTH_SUCCESS_USER:
             return  authSuccessUser(state,action);
-        case actionTypes.SET_AUTH_REDIRECT_PATH:
-            return setAuthRedirectPath(state,action)
-        case actionTypes.IS_AUTH_SUCCESS:
-            return isAuth(state,action)
         default :
             return state;
     }

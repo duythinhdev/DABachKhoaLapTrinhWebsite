@@ -2,7 +2,8 @@ const Product = require("../../models/product");
 const CategoryProduct = require("../../models/category");
 const Option = require("../../models/option");
 const fs = require('fs');
-const cloudinary = require('../../utils/cloudiary')
+const cloudinary = require('../../utils/cloudiary');
+const ApiFeatures = require("../../utils/apifeatures");
 
 const PAGE_SIZE = 10;
 exports.postProduct = async(req, res, next) => {
@@ -57,7 +58,7 @@ exports.postProductofOption = async(req, res, next) => {
     res.status(201).json({ data: newOption });
 }
 exports.getProduct = async(req, res, next) => {
-    var page = req.query.page;
+    var { page } = req.query;
     if (page) {
         page = parseInt(page);
         if (page < 1) {
@@ -170,5 +171,19 @@ exports.postClouldiary = async(req, res, next) => {
         res.status(405).json({
             "err": 'Image Not Uploaded Successfully',
         })
+    }
+}
+exports.filterProduct = async(req, res, next) => {
+    const { product_name } = req.query;
+    const apiFeature = new ApiFeatures(Product.find(), product_name)
+        .search()
+
+    let products = await apiFeature.query;
+    try {
+        res.status(200).json({
+            data: products
+        });
+    } catch (err) {
+        res.status(500).json({ error: err });
     }
 }
