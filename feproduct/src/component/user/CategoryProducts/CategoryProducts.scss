@@ -32,6 +32,9 @@
                 color: #fff;
                 h4 {
                     font-size: 1rem;
+                    @include respond(laptop) {
+                        font-size: 14px;
+                    }
                 }
             }
         }
@@ -42,7 +45,6 @@
             flex-direction: column;
             &--product {
                 flex-wrap: wrap;
-                display: flex;
                 // flex: 0.5;
                 display: flex;
                 flex-direction: row;
@@ -53,10 +55,14 @@
                     flex: 0.17;
                     flex-direction: column;
                     position: relative;
-                    // @include respond(laptop) {
-                    //     flex: 0.2;
-                    //     width: calc(100% / 5.8);
-                    // }
+                    @include respond(laptop) {
+                        flex: 0.2;
+                        width: calc(100% / 5.8);
+                    }
+                    @include respond(ipad-pro) {
+                        flex: 0.2;
+                        width: calc(100% / 4.8);
+                    }
                     &__img {
                         display: flex;
                         flex: 0.6;
@@ -82,14 +88,14 @@
                             font-weight: bold;
                             text-decoration: none;
                             @include respond(laptop) {
-                                font-size: 13px;
+                                font-size: 10px;
                             }
                             &:hover {
                                 color: $generalBackground;
                                 font-size: 15px;
                                 font-weight: bold;
                                 @include respond(laptop) {
-                                    font-size: 13px;
+                                    font-size: 10px;
                                 }
                             }
                         }
@@ -102,6 +108,9 @@
                         display: flex;
                         flex: 0.1;
                         font-size: 18px;
+                        @include respond(laptop) {
+                            font-size: 14px;
+                        }
                         color: #ce0707;
                         font-weight: 500;
                     }

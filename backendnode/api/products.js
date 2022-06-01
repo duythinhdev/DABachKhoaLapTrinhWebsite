@@ -8,13 +8,15 @@ const {
     putProduct,
     deleteProduct,
     postProduct,
-    postClouldiary
+    postClouldiary,
+    filterProduct
 } = require("../controller/products/products");
 const uploads = require("../utils/multer");
 
 router.route("/posts/:productId").post(postProductofCategory);
 router.route("/postofoption").post(postProductofOption);
 router.route("/get").get(getProduct);
+router.route("/filter").get(filterProduct);
 router.route("/getdetail").get(getProductDetail);
 router.route("/put").put(uploads.single('productImage'), putProduct);
 router.route("/delete").delete(deleteProduct);

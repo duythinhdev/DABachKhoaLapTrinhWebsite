@@ -12,7 +12,7 @@ import { mobile,table } from "../response";
 
 const Container = styled.div`
   display: flex;
-  ${table({ width: "167%" })}
+  ${table({ width: "100%" })}
   ${mobile({ width: "100%",position: "relative",flexDirection: "column" })}
 `;
 

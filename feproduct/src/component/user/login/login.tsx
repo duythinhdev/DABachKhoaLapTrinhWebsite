@@ -4,13 +4,12 @@ import {mobile,table} from "../response";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import * as actions from "../../../store/action";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import {toast, ToastContainer} from "react-toastify";
 import Spinner from "../../spinner/spinner.jsx";
 import {useHistory, Redirect} from "react-router-dom";
 import "./Login.scss";
 import "../../../page/LayoutUser/LayoutUser.scss";
-import { RootStateOrAny} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -30,8 +29,8 @@ const LoginUser = () => {
         email:  Yup.string().email().required('Email Cần Phải nhập'),
       })
     let dispatch = useDispatch();
-    let titleSignUp = useSelector((state: any) => state.login.titleSignup);
-    let statusSignUp = useSelector((state: any) => state.login.StatusSignup);
+    let titleSignUp = useSelector((state: RootStateOrAny) => state.login.titleSignup);
+    let statusSignUp = useSelector((state: RootStateOrAny) => state.login.StatusSignup);
     const  [PasswordInputType,ToggleIcon] = usePasswordToggle() as  any | undefined;
     const [value, setValue] = useState({
         email: '',
