@@ -49,11 +49,12 @@ export const authSuccess = (token: any,isLogin:boolean) => {
         isLogin: isLogin
     }
 }
-export const authSuccessUser = (currentUser: Object,isLoginUser:boolean) => {
+export const authSuccessUser = (currentUser: Object,isLoginUser:boolean,titleLogin: string) => {
     return {
         type: actionTypes.AUTH_SUCCESS_USER,
         currentUser: currentUser,
-        isLoginUser: isLoginUser
+        isLoginUser: isLoginUser,
+        titleLogin: titleLogin
     }
 }
 export const isTokenauth = (istoken:boolean) => {
@@ -89,3 +90,16 @@ export const setAuthRedirectPath = (path:string) => {
         path: path
     }
   }
+export const forgotPassword = (email:string) => {
+    return {
+        type: actionTypes.FORGOT_USER,
+        email: email,
+    }
+}
+export const forgotPasswordStatus = (status:Boolean,title:string) => {
+    return {
+        type: actionTypes.FORGOT_USER_STATUS,
+        status: status,
+        title: title
+    }
+}

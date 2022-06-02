@@ -1,15 +1,15 @@
-import React, {BaseSyntheticEvent, useState} from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 import styled from "styled-components";
-import {mobile,table} from "../response";
-import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
+import { mobile,table } from "../response";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import * as actions from "../../../store/action";
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
-import {toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Spinner from "../../spinner/spinner.jsx";
-import {useHistory, Redirect} from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import "./Login.scss";
-import "../../../page/LayoutUser/LayoutUser.scss";
+import "../../../page/LayoutUser/LayoutUser.scss"; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -29,9 +29,10 @@ const LoginUser = () => {
         email:  Yup.string().email().required('Email Cần Phải nhập'),
       })
     let dispatch = useDispatch();
-    let titleSignUp = useSelector((state: RootStateOrAny) => state.login.titleSignup);
-    let statusSignUp = useSelector((state: RootStateOrAny) => state.login.StatusSignup);
-    const  [PasswordInputType,ToggleIcon] = usePasswordToggle() as  any | undefined;
+    let { titleLogin,isLoginUser } = useSelector((state: any) => state.login);   
+    console.log("componentisLoginUser",isLoginUser);
+    console.log("componenttitleLogin",titleLogin);
+    const [PasswordInputType,ToggleIcon] = usePasswordToggle() as  any | undefined;
     const [value, setValue] = useState({
         email: '',
         password: '',
@@ -45,13 +46,15 @@ const LoginUser = () => {
     const changeValue = (event: React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
-    const notify = (titlePost: string) => toast(titlePost);
+    const notify = (titleLogin: string) => {
+        console.log("titleLogin",titleLogin)
+        toast(titleLogin);
+    } 
     let redirect = null;
-    let isLoginUser = useSelector((state: RootStateOrAny) => state.login.isLoginUser);
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
         let action = actions.loginAppUser(value.email,value.password);
         await dispatch(action);
-        await notify(titleSignUp);
+        await notify(titleLogin);
     }
     if(isLoginUser)
     {
@@ -119,7 +122,7 @@ const LoginUser = () => {
    
             </div>
             {redirect}
-            {statusSignUp && <ToastContainer/>}
+            {isLoginUser && <ToastContainer />}
         </div>
     );
 };

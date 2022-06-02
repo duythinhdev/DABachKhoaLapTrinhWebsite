@@ -27,7 +27,9 @@ export {
     setAuthRedirectPath,
     isTokenauth,
     authSuccessUser,
-    logoutUser
+    logoutUser,
+    forgotPassword,
+    forgotPasswordStatus
 }
 from "../action/login";
 

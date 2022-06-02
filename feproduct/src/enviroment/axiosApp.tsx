@@ -1,6 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {enviroment} from "../enviroment/enviroment";
-
+import * as action from "../store/action/index";
 import jwt_decode from "jwt-decode";
 
 const refreshToken = async () => {
@@ -26,7 +26,7 @@ export const createAxios = (user:any, dispatch:any, stateSuccess:any) => {
           ...user,
           accessToken: data.accessToken,
         };
-        dispatch(stateSuccess(refreshUser));
+        dispatch(action.authSuccessUser(refreshUser,true,"refresh token success"));
         config.headers["Authorization"] = "Bearer " + data.accessToken;
       }
       return config;
