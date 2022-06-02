@@ -29,3 +29,12 @@ export interface login {
     status: number,
     data: loginSuccess,
 }
+export type forgot = {
+    type: "FORGOT_USER",
+    email: string,
+}
+export type typeStatus = {
+    type: "FORGOT_USER_STATUS",
+    info: string;
+    error: string
+}

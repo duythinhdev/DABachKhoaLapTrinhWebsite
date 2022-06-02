@@ -134,7 +134,9 @@ const authController = {
                             user.save();
                         })
                     }
-                })
+                }).catch(err => res.status(404).json({
+                    error: err
+                }));
                 content += `
         <div style="padding: 10px; background-color: #003375">
             <div style="padding: 10px; background-color: white;">
@@ -217,6 +219,5 @@ const authController = {
         console.log("refreshTokens", refreshTokens);
         res.status(200).json("Logged out successfully !");
     }
-
 }
 module.exports = authController;

@@ -21,17 +21,21 @@ const sendEmail = async(options, req, res) => {
         from: process.env.SMPT_MAIL,
         to: options.email,
         subject: options.subject,
-        html: options.message //Nội dung html mình đã tạo trên kia :))
+        html: options.message
     }
     transporter.sendMail(mainOptions, function(err, info) {
         if (err) {
             console.log(err);
             req.flash('mess', 'Lỗi gửi mail: ' + err); //Gửi thông báo đến người dùng
-            res.redirect('/');
+            res.status(404).json({
+                error: err
+            });
         } else {
             console.log('Message sent: ' + info.response);
             req.flash('mess', 'Một email đã được gửi đến tài khoản của bạn'); //Gửi thông báo đến người dùng
-            res.redirect('/');
+            res.status(200).json({
+                info: info.response
+            });
         }
     });
 };

@@ -18,7 +18,6 @@ const TopProduct = () => {
     let query = useQueryLocation();
     let idctProduct = query.get("idctproduct");
     let nameCtProducts = query.get("nameCtProduct");
-    console.log("nameCtProducts",nameCtProducts);
     const LIMIT = 10;
     let linkCtProduct = enviroment.localNode + `ctproduct/of?categoryProductId=${idctProduct}&pagenumber=1&pagesize=${LIMIT}`;
     // let { data,totalpage } = useFetchingTopProduct(ctProduct);
@@ -49,7 +48,6 @@ const TopProduct = () => {
     
         setItems(commentsFormServer);
     };
-    let [ conditionIndex,setConditionIndex] = useState(0) as number | undefined | any;
     let { isHoverDetail,indexProductDetail,moveDetail,moveDetailOver } = useHoverProductDetail();
     return (
             <div className='containter__TopProduct'>

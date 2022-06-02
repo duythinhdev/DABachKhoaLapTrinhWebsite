@@ -3,25 +3,19 @@ import {updateObject} from "../share/utility";
 import * as actionTypes from "../action/actiontypes";
 
 export interface tsInitialState {
-    isLoginAdmin: boolean,
-    titleSignup: string,
-    StatusSignup: boolean,
-    token: any,
-    authRedirectPath: string,
-    tokenUser: any,
     isLoginUser: boolean,
     currentUser: Object;
+    statusForgot:  boolean;
+    titleforgot: string,
+    titleLogin: string
 }
 
 const initialState: tsInitialState = {
-    isLoginAdmin: false,
-    titleSignup: '',
-    StatusSignup: false,
-    token: null,
-    authRedirectPath: '/admin',
-    tokenUser: null,
     isLoginUser: false,
-    currentUser: {}
+    statusForgot:  false,
+    currentUser: {},
+    titleforgot: "",
+    titleLogin: ""
 }
 interface authSuccess {
     tokenUser: string,
@@ -42,12 +36,22 @@ const authSuccess = (state:any, action:any) => {
 }
 interface ActionLogin{
     currentUser: object,
-    isLoginUser: boolean
+    isLoginUser: boolean,
+    status: boolean,
+    type: string,
+    title: string,
+    titleLogin: string  
 }
 const authSuccessUser = (state: tsInitialState, action: ActionLogin) => {
-    return updateObject( state, {currentUser: action.currentUser , isLoginUser: action.isLoginUser })
-} 
-const LoginReducer = (state = initialState,action:any) => {
+    let {isLoginUser, titleLogin, currentUser} = action;
+    return updateObject( state, {currentUser: currentUser ,
+         isLoginUser: isLoginUser,
+         titleLogin:  titleLogin })
+}
+const statusForgot = (state: tsInitialState, action: ActionLogin) => {
+    return updateObject( state, {statusForgot: action.status, titleforgot: action.title })
+}
+const LoginReducer = (state = initialState,action:ActionLogin) => {
     switch (action.type)
     {
         case actionTypes.IS_LOGIN_APP_ADMIN:
@@ -60,6 +64,8 @@ const LoginReducer = (state = initialState,action:any) => {
             return  authSuccess(state,action);
         case actionTypes.AUTH_SUCCESS_USER:
             return  authSuccessUser(state,action);
+        case actionTypes.FORGOT_USER_STATUS:
+            return  statusForgot(state,action);
         default :
             return state;
     }

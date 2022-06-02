@@ -1,8 +1,10 @@
-import {put, call,delay } from "redux-saga/effects";
+import {put, call,delay,select } from "redux-saga/effects";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
-import { signUps,login } from "../../types/loginSagaType";
+import { signUps,login,forgot,typeStatus } from "../../types/loginSagaType";
+import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
+import {createAxios}  from "../../enviroment/axiosApp";
 export function* logoutSaga(action:any) {
     yield call([localStorage, 'removeItem'], 'tokenAdmin');
     yield call([localStorage, 'removeItem'], 'expirationDate');
@@ -53,7 +55,7 @@ export function* signUpUser(actions: signUps)
         switch(response.status)
         {
             case 201: 
-                yield put(Actions.statusSignup("Chúc Mừng Bạn Đã Đăng ký thành Viên Thành Công",true))
+                yield put(Actions.authSuccessUser({},true,"đăng ký thành viên thành công"))
             break;
             // case 409:
             //     yield put(Actions.statusSignup("Bạn Đã Đăng ký trùng Email",true))
@@ -66,9 +68,23 @@ export function* signUpUser(actions: signUps)
         yield put(Actions.statusSignup("Bạn Đã Đăng ký thành Viên Thất Bại "  + e,true))
     }
 }
+export const getLogin = (state:RootStateOrAny) => state.login;
+export type Login = {
+    currentUser: object,
+    isLoginUser: boolean,
+    status: boolean,
+    type: string,
+    title: string,
+    titleLogin: string  
+}
 export function* logoutUserSaga() {
-    yield call([localStorage, 'removeItem'], 'accessToken');
-    yield put(Actions.authSuccessUser({},false));
+    // yield call([localStorage, 'removeItem'], 'accessToken');
+    let login:Login = yield select(getLogin)
+    let urlLogout = 'user/forgot';
+    yield  axios.post(enviroment.localNode + urlLogout).then((res: any)=> {
+        
+    });
+    yield put(Actions.authSuccessUser({},false,"user logout "));
     yield put(Actions.logoutSucceed())
 }
 export function* loginUser(actions: login) {
@@ -80,21 +96,31 @@ export function* loginUser(actions: login) {
     let urlLogin = 'user/login';
     try {
         const response: login =  yield  axios.post(enviroment.localNode + urlLogin, body);
-        console.log("response",response)
         switch(response.status)
         {
             case 200: 
-                yield put(Actions.statusSignup("Đăng Nhập thành Công",true))
-                yield localStorage.setItem("accessToken",JSON.stringify(response.data.accessToken));
-                yield put(Actions.authSuccessUser(response.data,true));
+                // yield localStorage.setItem("accessToken",JSON.stringify(response.data.accessToken));
+                yield put(Actions.authSuccessUser(response.data,true,"login Thành công"));
             break;
             case 108: 
-                yield put(Actions.authSuccessUser({},false));
+                yield put(Actions.authSuccessUser({},false,"login Thất bại "));
              break;
         }
     }
     catch (e) {
-        yield put(Actions.statusSignup("Đăng Nhập thất bại"  + e,true))
-        yield localStorage.clear();
+        yield put(Actions.authSuccessUser({},false,"login Thất bại "));
+        // yield localStorage.clear();
     }
+}
+export function* forgotPasswordUser(actions: forgot) {
+    const { email } = actions;
+    let body = {
+        email: email
+    }
+    let urlLogin = 'user/forgot';
+    yield  axios.post(enviroment.localNode + urlLogin, body).then((res: any)=> {
+        if(res.info){
+             put(Actions.forgotPasswordStatus(true,"forgot Thành Công"));
+        }
+    }).catch(error =>  put(Actions.forgotPasswordStatus(false,"forgot thất bại")));
 }

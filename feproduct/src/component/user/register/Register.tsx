@@ -43,7 +43,7 @@ const Register = () => {
         phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
       })
     let dispatch = useDispatch();
-    let {titleSignup,StatusSignup}= useSelector((state: RootStateOrAny) => state.login);
+    let {titleLogin,isLoginUser} = useSelector((state: RootStateOrAny) => state.login);   
     // const {register, formState: {errors}, handleSubmit,watch} = useForm<FormInputs>({
     //     criteriaMode: "all"
     // })
@@ -53,7 +53,7 @@ const Register = () => {
     const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
-    const notify = () => toast(titleSignup);
+    const notify = () => toast(titleLogin);
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const {fullName,password,phoneNumber,address,gender,city,email } = value;
@@ -216,7 +216,7 @@ const Register = () => {
                     </form>
                 </div>
                 <>
-                    {StatusSignup && <ToastContainer/>}
+                    {isLoginUser && <ToastContainer/>}
                 </>
             </div>
     );
