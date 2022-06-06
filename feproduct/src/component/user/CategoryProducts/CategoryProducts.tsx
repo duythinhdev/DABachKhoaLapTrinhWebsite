@@ -34,7 +34,7 @@ const CategoryProducts: React.FC<props>  = React.memo(({ indexs,response }) =>  
                                             <img src={res?.images[0].url} onMouseOver={()=>moveDetail(index)} onMouseLeave={()=>moveDetailOver()} />
                                         </div>
                                         <div className='product--detail__Code'>
-                                            <span> {res.options[0]?.code}</span>
+                                            <b> {res.options[0]?.code}</b>
                                         </div>
                                         <div className='product--detail__Name'>
                                             <Link to={`/system/productdetail?idproduct=${res?._id}`}  className="detailName__link"><span>{res.Product_name}</span></Link> 

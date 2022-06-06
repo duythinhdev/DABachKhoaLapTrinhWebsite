@@ -5,6 +5,8 @@ import * as Actions from "../action/index";
 import { signUps,login,forgot,typeStatus } from "../../types/loginSagaType";
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import {createAxios}  from "../../enviroment/axiosApp";
+import * as selectors from './selector';
+
 export function* logoutSaga(action:any) {
     yield call([localStorage, 'removeItem'], 'tokenAdmin');
     yield call([localStorage, 'removeItem'], 'expirationDate');
@@ -68,24 +70,39 @@ export function* signUpUser(actions: signUps)
         yield put(Actions.statusSignup("Bạn Đã Đăng ký thành Viên Thất Bại "  + e,true))
     }
 }
-export const getLogin = (state:RootStateOrAny) => state.login;
 export type Login = {
     currentUser: object,
     isLoginUser: boolean,
-    status: boolean,
+    status: number,
     type: string,
     title: string,
-    titleLogin: string  
+    titleLogin: string ,
+    accessToken: string
 }
 export function* logoutUserSaga() {
     // yield call([localStorage, 'removeItem'], 'accessToken');
-    let login:Login = yield select(getLogin)
-    let urlLogout = 'user/forgot';
-    yield  axios.post(enviroment.localNode + urlLogout).then((res: any)=> {
-        
+    let login: Login = yield select(selectors.getLogin)
+    let urlLogout = 'user/logout';
+    let axiosJWT  = createAxios(login,null,Actions.authSuccessUser);
+    const response: Login  = yield axiosJWT.post(enviroment.localNode + urlLogout,  { headers: {
+        Authorization: `Bearer ${login.accessToken}`,
+        }   
     });
-    yield put(Actions.authSuccessUser({},false,"user logout "));
-    yield put(Actions.logoutSucceed())
+    switch(response.status)
+    {
+        case 200: 
+            // yield localStorage.setItem("accessToken",JSON.stringify(response.data.accessToken));
+            yield put(Actions.authSuccessUser({},true,"user logout "))
+        break;
+        case 401: 
+        yield put(Actions.authSuccessUser({},true,"xác thực token thất bại"));
+        break;
+        case 500: 
+            yield put(Actions.authSuccessUser({},false,"logout Thất bại "));
+         break;
+    }
+    // yield put(Actions.authSuccessUser({},false,"user logout "));
+    // yield put(Actions.logoutSucceed())
 }
 export function* loginUser(actions: login) {
     const { email, password } = actions;

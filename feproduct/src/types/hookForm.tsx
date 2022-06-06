@@ -20,3 +20,8 @@ export type ProductCart = {
     addressCompany: string,
     bank: string
 }
+export type changePassword = {
+    passwordOld: string,
+    confirmPwd: string,
+    passwordNew: string,
+}

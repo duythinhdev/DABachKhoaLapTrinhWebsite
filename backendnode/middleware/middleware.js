@@ -2,19 +2,20 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization;
+    console.log("accessToken", token);
+    const refreshToken = req.cookies.refreshToken;
     if (token) {
-        jwt.verify(token, process.env.ACCESS_KEY, (err, user) => {
+        const accessToken = token.split(" ")[1];
+        jwt.verify(accessToken, process.env.ACCESS_KEY, (err, user) => {
             if (err) {
-                res.status(403).json("Token is not valid")
+                res.status(403).json("Token is not valid!");
             }
             req.userData = user;
             next();
         });
     } else {
-        return res.status(401).json({
-            message: 'You are not  authenticated'
-        })
+        res.status(401).json("You're not authenticated");
     }
 }
 const verifyTokenAndUserAuthorization = (req, res, next) => {
@@ -35,6 +36,7 @@ const verifyTokenAndUserAuthorization = (req, res, next) => {
 };
 
 const verifyTokenAndAdmin = (req, res, next) => {
+    const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, process.env.ACCESS_KEY, (err, user) => {
         if (req.user.role === "admin") {
             next();
