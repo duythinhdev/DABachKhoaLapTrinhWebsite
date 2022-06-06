@@ -72,7 +72,7 @@ const TopProduct = () => {
                 <div className='content__TopProduct--title'>
                 
                 </div>
-                <div className='content__TopProduct--container flex-box'>
+                <div className='content__TopProduct--container'>
                     {
                       items?.map((res: Product,index:number) => {
                         // setConditionIndex(index);

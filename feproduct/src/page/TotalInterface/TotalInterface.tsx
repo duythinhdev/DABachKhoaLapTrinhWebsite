@@ -18,29 +18,13 @@ import InforUser from "../../component/user/InforUser/InforUser";
 import {
   useParams
 } from "react-router-dom";
+import useSwitchComponent from "../../component/user/hook/useSwitchComponent";
 interface ParamTypes {
   id: string | undefined
 }
 const TotalInterface = () =>  {
   let { id } = useParams<ParamTypes>();
-  const renderSwitch = () => {
-      switch(id) {
-          case 'account':
-              return  <Login />;
-          case 'forgot':
-              return  <Forgot />;
-          case 'register':
-              return  <Register />;
-          case 'topproduct':
-              return  <TopProduct />;
-          case 'productdetail':
-              return  <ProductDetail />;
-          case 'cart':
-              return  <Cart />;
-          case 'informationuser':
-              return  <InforUser />;
-      }
-    }
+  let { renderSwitch } = useSwitchComponent(id);
   useEffect(()=> {
       renderSwitch();
   },[id])

@@ -7,6 +7,7 @@ import {
     layoutUser,
     ListAdmin,
     newAdmin,
+    InforUser
 } from "./index";
 
 export const Routes: Array<any> = [
@@ -21,6 +22,10 @@ export const Routes: Array<any> = [
     {
         path: "/system/:id",
         component: TotalInterface
+    },
+    {
+        path: "/informationuser/:id",
+        component: InforUser
     },
     // {
     //     path: "/news",

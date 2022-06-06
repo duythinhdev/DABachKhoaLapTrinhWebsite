@@ -129,7 +129,7 @@ const Navbar = () => {
                     <div className="MenuItem">
                         <div className="MenuItem__Icon"><Link  className="MenuItem__Link" to="/system/account" ><AccountCircleOutlinedIcon /></Link></div>
                         { currentUser?.accessToken ? <div className="MenuItem__span" >
-                                <Link  className="MenuItem__Link" to="/system/informationuser" > {currentUser?.email} </Link>
+                                <Link  className="MenuItem__Link" to="/informationuser/list" > {currentUser?.email} </Link>
                         </div>
                          : 
                             <div  className="MenuItem__span">

@@ -14,20 +14,26 @@ const refreshToken = async () => {
   }
 };
 
-export const createAxios = (user:any, dispatch:any, stateSuccess:any) => {
-  const newInstance = axios.create();
+export const createAxios = (user:any, dispatch:any = null, stateSuccess:any) => {
+  let header =   {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  } 
+  const newInstance = axios.create(header);   
   newInstance.interceptors.request.use(
     async (config: any) => {
       let date = new Date();
       const decodedToken:any = jwt_decode(user?.accessToken);
       if (decodedToken.exp < date.getTime() / 1000) {
         const data:any = await refreshToken();
+        console.log("data",data);
         const refreshUser = {
           ...user,
           accessToken: data.accessToken,
         };
-        dispatch(action.authSuccessUser(refreshUser,true,"refresh token success"));
-        config.headers["Authorization"] = "Bearer " + data.accessToken;
+        dispatch(stateSuccess(data,true,"refresh token success"));
+        config.headers["Authorization"] = `Bearer ${data.accessToken}`
       }
       return config;
     },

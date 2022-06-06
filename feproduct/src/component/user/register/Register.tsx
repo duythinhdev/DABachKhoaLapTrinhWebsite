@@ -79,7 +79,7 @@ const Register = () => {
                                         className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                         onChange={(event) => changeValue(event)}
                                 />
-                                 <div className="invalid-feedback">{errors.email?.message}</div>
+                                <div className="invalid-feedback">{errors.email?.message}</div>
                                 <b style={{color: "#ff0000" }}>*</b>
                             </div>
                         </div>
