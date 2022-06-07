@@ -8,12 +8,9 @@ import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
 import { Product } from "../../../types/productType";
-import { yupResolver } from '@hookform/resolvers/yup'
-import {useForm} from "react-hook-form";
-import * as Yup from 'yup'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import * as actions from "../../../store/action/index"; 
 import { reGister,ProductCart } from "../../../types/hookForm";
+import { toast, ToastContainer } from "react-toastify";
+import useReactHookForm from "../hook/useReactHookForm"
 let city = [
     {
         id: 1,
@@ -57,8 +54,9 @@ let city = [
     },
 ]
 const  ProductBought = ()  => {
-    let { cart,totalMoney } = useSelector((state:RootStateOrAny) => state.dataUser);
-
+    let { cart,totalMoney } = useSelector((state: RootStateOrAny) => state.dataUser);
+    let { currentUser } = useSelector((state: RootStateOrAny) => state.login);
+    let { register,errors,handleSubmit } = useReactHookForm("cart")
     let dispatch = useDispatch();
     const removeAllCart = () => {
         let actions =  Actions.removeAllCartUser();
@@ -88,27 +86,16 @@ const  ProductBought = ()  => {
         addressCompany: "",
         bank: ""
     });
-      const formSchema = Yup.object().shape({
-        fullName: Yup.string().required('Họ Và Tên Cần Phải nhập'),
-        email:  Yup.string().email().required('Email Cần Phải nhập'),
-        gender:  Yup.string().required('Chọn Gender Cần Phải nhập'),
-        bank:  Yup.string(),
-        city:  Yup.string().required('Thành phố Cần Phải nhập'),
-        address:  Yup.string().required('Địa chỉ Cần Phải nhập'),
-        Note:  Yup.string().required('Ghi Chú Cần Phải nhập'),
-        phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
-      })
-      const formOptions = { resolver: yupResolver(formSchema) };
-      const { register, handleSubmit, formState } = useForm(formOptions);
-      const { errors } = formState
     const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
+    const notify = (titleLogin: string) => {
+        toast(titleLogin);
+    } 
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const {fullName,phoneNumber,address,gender,city,email } = value;
-        // let action = actions.signup(fullName,email, phoneNumber, address,city,gender);
-        // await dispatch(action);
+        await notify("Người dùng cần phải login mới đặt hàng được");
     }
     return (
        <div className="ContainerCart">
@@ -282,9 +269,10 @@ const  ProductBought = ()  => {
                       <input type="checkbox" /> giao hàng bình thường 
                    </div>
                    <div className="itemorder__SendOrder">
-                       <button>Gửi đơn hàng</button>
+                       <button onClick={handleSubmit((data: any,event:any) => clickValue(data,event))}>Gửi đơn hàng</button>
                    </div>
                </div>
+               <ToastContainer />
             </form>
            }
        </div>
