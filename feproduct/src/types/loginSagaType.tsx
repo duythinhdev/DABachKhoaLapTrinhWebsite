@@ -38,3 +38,8 @@ export type typeStatus = {
     info: string;
     error: string
 }
+export type changePassword = {
+    type: "CHANGE_PASSWORD_USER",
+    passwordOld: string,
+    passwordNew: string
+}

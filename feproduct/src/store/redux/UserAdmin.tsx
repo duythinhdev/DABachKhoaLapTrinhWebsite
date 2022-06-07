@@ -15,8 +15,6 @@ const setIsNavAdminUser = (action: any, state: any) => {
 }
 const userAdminReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case actionTypes.IS_NAV_ADMIN_BODY_USER:
-            return setIsNavAdminUser(action, state);
         default :
             return state;
     }

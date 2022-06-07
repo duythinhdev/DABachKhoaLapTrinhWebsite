@@ -49,12 +49,11 @@ export const authSuccess = (token: any,isLogin:boolean) => {
         isLogin: isLogin
     }
 }
-export const authSuccessUser = (currentUser: Object,isLoginUser:boolean,titleLogin: string) => {
+export const authUser = (currentUser: Object,isLoginUser: boolean,titleLogin: string) => {
     return {
         type: actionTypes.AUTH_SUCCESS_USER,
         currentUser: currentUser,
         isLoginUser: isLoginUser,
-        titleLogin: titleLogin
     }
 }
 export const isTokenauth = (istoken:boolean) => {
@@ -78,6 +77,15 @@ export  const logoutUser = () => {
         type:actionTypes.AUTH_INITITATE_LOGOUT_USER
     }
 }
+export  const logoutStatusUser = (isLoadToast: Boolean, titleLogout: string) => {
+    console.log("actions", isLoadToast,titleLogout);
+    return {
+        type:actionTypes.STATUS_LOGOUT_USER,
+        isLoadToast: isLoadToast,
+        titleLogout: titleLogout
+    }
+}
+
 export const checkAuthTimeOut = (expirationTime:any) => {
     return {
         type:action.AUTH_CHECK_TIMEOUT,
@@ -101,5 +109,19 @@ export const forgotPasswordStatus = (status:Boolean,title:string) => {
         type: actionTypes.FORGOT_USER_STATUS,
         status: status,
         title: title
+    }
+}
+export const changePasswordUser = (passwordOld:string,passwordNew:string) => {
+    return {
+        type: actionTypes.CHANGE_PASSWORD_USER,
+        passwordOld: passwordOld,
+        passwordNew: passwordNew
+    }
+}
+export const changePasswordStatus = (isChangePassword: Boolean,nameChangePassword: string) => {
+    return {
+        type: actionTypes.STATUS_PASSWORD_CHANGE_USER,
+        isChangePassword: isChangePassword,
+        nameChangePassword: nameChangePassword
     }
 }

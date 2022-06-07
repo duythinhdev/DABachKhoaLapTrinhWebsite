@@ -2,7 +2,7 @@ import {put, call,delay,select } from "redux-saga/effects";
 import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
-import { signUps,login,forgot,typeStatus } from "../../types/loginSagaType";
+import { signUps,login,forgot,typeStatus,changePassword } from "../../types/loginSagaType";
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import {createAxios}  from "../../enviroment/axiosApp";
 import * as selectors from './selector';
@@ -57,7 +57,7 @@ export function* signUpUser(actions: signUps)
         switch(response.status)
         {
             case 201: 
-                yield put(Actions.authSuccessUser({},true,"đăng ký thành viên thành công"))
+                yield put(Actions.authUser({},true,"đăng ký thành viên thành công"))
             break;
             // case 409:
             //     yield put(Actions.statusSignup("Bạn Đã Đăng ký trùng Email",true))
@@ -83,22 +83,22 @@ export function* logoutUserSaga() {
     // yield call([localStorage, 'removeItem'], 'accessToken');
     let login: Login = yield select(selectors.getLogin)
     let urlLogout = 'user/logout';
-    let axiosJWT  = createAxios(login,null,Actions.authSuccessUser);
-    const response: Login  = yield axiosJWT.post(enviroment.localNode + urlLogout,  { headers: {
-        Authorization: `Bearer ${login.accessToken}`,
-        }   
-    });
+    let axiosJWT  = createAxios(login,null,Actions.authUser);
+    const response: Login  = yield axiosJWT.post(enviroment.localNode + urlLogout);
+    console.log("response",response);
     switch(response.status)
     {
         case 200: 
             // yield localStorage.setItem("accessToken",JSON.stringify(response.data.accessToken));
-            yield put(Actions.authSuccessUser({},true,"user logout "))
+            yield put(Actions.authUser({},false,""))
+            yield put(Actions.logoutStatusUser(true,"user logout"))
         break;
         case 401: 
-        yield put(Actions.authSuccessUser({},true,"xác thực token thất bại"));
+            yield put(Actions.logoutStatusUser(true,"xác thực token thất bại"))
+            yield put(Actions.authUser({},false,""));
         break;
         case 500: 
-            yield put(Actions.authSuccessUser({},false,"logout Thất bại "));
+        yield put(Actions.logoutStatusUser(false,"logout thất bại"))
          break;
     }
     // yield put(Actions.authSuccessUser({},false,"user logout "));
@@ -117,15 +117,15 @@ export function* loginUser(actions: login) {
         {
             case 200: 
                 // yield localStorage.setItem("accessToken",JSON.stringify(response.data.accessToken));
-                yield put(Actions.authSuccessUser(response.data,true,"login Thành công"));
+                yield put(Actions.authUser(response.data,true,"login Thành công"));
             break;
             case 108: 
-                yield put(Actions.authSuccessUser({},false,"login Thất bại "));
+                yield put(Actions.authUser({},false,"login Thất bại "));
              break;
         }
     }
     catch (e) {
-        yield put(Actions.authSuccessUser({},false,"login Thất bại "));
+        yield put(Actions.authUser({},false,"login Thất bại "));
         // yield localStorage.clear();
     }
 }
@@ -140,4 +140,30 @@ export function* forgotPasswordUser(actions: forgot) {
              put(Actions.forgotPasswordStatus(true,"forgot Thành Công"));
         }
     }).catch(error =>  put(Actions.forgotPasswordStatus(false,"forgot thất bại")));
+}
+export function* changePasswordUser(actions: changePassword){
+    let { passwordOld,passwordNew } = actions;
+    let body = {
+        passwordOld: passwordOld,
+        passwordNews: passwordNew,
+    }
+    let login: Login = yield select(selectors.getLogin)
+    let urlChange = 'user/change';
+    let axiosJWT  = createAxios(login,null,Actions.authUser);
+    const response: Login  = yield axiosJWT.post(enviroment.localNode + urlChange,body);
+    console.log("response",response);
+    switch(response.status)
+    {
+        case 200: 
+            // yield localStorage.setItem("accessToken",JSON.stringify(response.data.accessToken));
+            yield put(Actions.changePasswordStatus(true,"thay đổi password thành công "))
+            yield put(Actions.authUser({},false,""))
+        break;
+        case 401: 
+            yield put(Actions.changePasswordStatus(true,"xác thực token thất bại"));
+        break;
+        case 500: 
+            yield put(Actions.changePasswordStatus(true,"thay đổi password thất bại"));
+        break;
+    }
 }

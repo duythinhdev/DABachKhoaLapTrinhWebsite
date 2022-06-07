@@ -25,3 +25,7 @@ export type changePassword = {
     confirmPwd: string,
     passwordNew: string,
 }
+export interface FormInputsLogin {
+    password: string;
+    email: string
+}
