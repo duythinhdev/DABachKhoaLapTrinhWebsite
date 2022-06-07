@@ -1,47 +1,32 @@
 import React, { BaseSyntheticEvent, useState,useEffect } from "react";
-import styled from "styled-components";
-import { mobile,table } from "../response";
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import * as actions from "../../../store/action";
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import { toast, ToastContainer } from "react-toastify";
 import Spinner from "../../spinner/spinner.jsx";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./Login.scss";
 import "../../../page/LayoutUser/LayoutUser.scss"; 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 import usePasswordToggle  from "./usePasswordToggle";
-import { FormInputsLogin } from "../../../types/hookForm"
+import { FormInputsLogin } from "../../../types/hookForm";
+import useReactHookForm from "../hook/useReactHookForm"
+
 const LoginUser = () => {
-    const formSchema = Yup.object().shape({
-        password: Yup.string()
-          .required('Mật Khẩu Cần Phải nhập')
-          .min(6, 'Mật khẩu phải dài hơn 6 ký tự'),
-        email:  Yup.string().email().required('Email Cần Phải nhập'),
-      })
     let dispatch = useDispatch();
     let history = useHistory();
+    let { register,errors,handleSubmit } = useReactHookForm("login")
     let { titleLogin,isLoginUser } = useSelector((state: RootStateOrAny) => state.login); 
     const [PasswordInputType,ToggleIcon] = usePasswordToggle() as  any | undefined;
     const [value, setValue] = useState<FormInputsLogin>({
         email: '',
         password: '',
     });
-    // const {register, formState: {errors}, handleSubmit} = useForm<FormInputs>({
-    //     criteriaMode: "all"
-    // });
-    const formOptions = { resolver: yupResolver(formSchema) };
-    const { register, handleSubmit, formState } = useForm(formOptions);
-    const { errors } = formState
     const changeValue = (event: React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
     const notify = (titleLogin: string) => {
+
         toast(titleLogin);
     } 
     let redirect = null;

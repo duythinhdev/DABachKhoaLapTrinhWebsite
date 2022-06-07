@@ -2,7 +2,7 @@
 import React,{useState, useEffect} from 'react';
 import Slider from "../../../images";
 
-export default (Slider: number) => {
+export default function useSlideFetching(Slider: number) {
     const [slideIndex, setSlideIndex] = useState(1) as any | number ;
     const [seeMore,setSeeMore] = useState(false) as any | Boolean;
     const [isShowModal,setIsShowModal] = useState(false) as any | Boolean;

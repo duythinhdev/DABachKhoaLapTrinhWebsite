@@ -1,21 +1,16 @@
 import React, {BaseSyntheticEvent, useState,useEffect} from "react";
 import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import "./Register.scss";
-import Navbar from "../Navbar/Navbar";
-import Announcement from "../Announcement/Announcement";
-import Newsletter from "../Newletter/Newletter";
-import NewsFeeds from "../NewsFeed/NewsFeed";
-import Footer from "../footer/footer";
 import * as actions from "../../../store/action/index";
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RootStateOrAny} from "react-redux";
 import { reGister } from "../../../types/hookForm";
+import useReactHookForm from "../hook/useReactHookForm"
 
 const Register = () => {
     const [value, setValue] = useState<reGister>({
@@ -28,28 +23,9 @@ const Register = () => {
         address: '',
         city: '',
     });
-    const formSchema = Yup.object().shape({
-        password: Yup.string()
-          .required('Mật Khẩu Cần Phải nhập')
-          .min(6, 'Mật khẩu phải dài hơn 6 ký tự'),
-        confirmPwd: Yup.string()
-          .required('Nhập lại Mật Khẩu Cần Phải nhập')
-          .oneOf([Yup.ref('password')], 'Mật khẩu Không trùng'),
-        fullName: Yup.string().required('Họ Và Tên Cần Phải nhập'),
-        email:  Yup.string().email().required('Email Cần Phải nhập'),
-        gender:  Yup.string(),
-        city:  Yup.string().required('Thành phố Cần Phải nhập'),
-        address:  Yup.string().required('Địa chỉ Cần Phải nhập'),
-        phoneNumber: Yup.string().required('Số điện thoại Cần Phải nhập'),
-      })
+    let { register,errors,handleSubmit } = useReactHookForm("register")
     let dispatch = useDispatch();
     let {titleLogin,isLoginUser} = useSelector((state: RootStateOrAny) => state.login);   
-    // const {register, formState: {errors}, handleSubmit,watch} = useForm<FormInputs>({
-    //     criteriaMode: "all"
-    // })
-    const formOptions = { resolver: yupResolver(formSchema) };
-    const { register, handleSubmit, formState } = useForm(formOptions);
-    const { errors } = formState
     const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }

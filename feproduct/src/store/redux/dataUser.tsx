@@ -59,14 +59,13 @@ const increaseMinusCartUser =  (action: actionTypeCart, state: tsInitialState) =
                     state.cart[i].quantityItems++;
                 }
                 state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityItems;
-            } else {
-                state.cart[i].quantityItems--;
-                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
-                if(state.cart[i].quantityItems === 0){
-                    state.cart[i].quantityItems++;
-                }
-                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
+            } 
+            state.cart[i].quantityItems--;
+            state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
+            if(state.cart[i].quantityItems === 0){
+                state.cart[i].quantityItems++;
             }
+            state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
         }
         totalMoneys += state.cart[i].totalAmount;
         newsData.push(state.cart[i]);
@@ -87,8 +86,7 @@ const dataUserReducer = (state = initialState, action: actionTypeCart) => {
         case actionTypes.LOAD_TOTAL_CART:
             let totalMoneys = 0;
             for(let i = 0 ; i < state.cart.length;i++){
-                if(state.cart[i]?.options)
-                {
+                if(state.cart[i]?.options){
                     totalMoneys +=  state.cart[i]?.totalAmount
                 }
             }
