@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { changePassword } from "../../../../types/hookForm";
 import {useForm} from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
+import * as Actions from "../../../../store/action/index";
 
 export default function InForUserChangePassword() {
     const [value, setValue] = useState<changePassword>({
@@ -13,6 +15,7 @@ export default function InForUserChangePassword() {
         confirmPwd: "",
         passwordNew: "",
     });
+    let dispatch = useDispatch();
     const formSchema = Yup.object().shape({
         passwordOld: Yup.string()
           .required('Mật Khẩu Cần Phải nhập')
@@ -22,15 +25,21 @@ export default function InForUserChangePassword() {
         confirmPwd: Yup.string().required('Họ Và Tên Cần Phải nhập')
         .oneOf([Yup.ref('passwordNew')], 'Mật khẩu Không trùng'),
       })
+    let { isChangePassword,nameChangePassword } = useSelector((state: RootStateOrAny) => state.login); 
     const formOptions = { resolver: yupResolver(formSchema) };
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
     const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
     }
+    const notify = (nameChangePassword: string) => {
+        toast(nameChangePassword);
+    } 
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-    
+        event.preventDefault()
+        let action = Actions.changePasswordUser(value.passwordOld,value.passwordNew)
+        await dispatch(action);
+        await notify(nameChangePassword);
     }
     return (
         <div className="flex flex-col">
@@ -81,6 +90,7 @@ export default function InForUserChangePassword() {
                     
                 </table>
                 <button  onClick={handleSubmit((data: any,event: any) => clickValue(data,event))}>Thay Đổi</button>
+                {isChangePassword && <ToastContainer/>}
         </div>
     )
 }

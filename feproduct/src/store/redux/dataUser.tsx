@@ -14,7 +14,6 @@ const addItemsCartUser = (action: actionTypeCart, state: tsInitialState) => {
     state.quantityItems = 1;
     action.data.quantityItems =  state.quantityItems;
     action.data.totalAmount = action.data.options[0].price;
-    let checkIdExists = [] as Array<Product>;
     var totalMoneys = 0;
     var idConditionCart;
     let isItemExist = false;
@@ -27,7 +26,6 @@ const addItemsCartUser = (action: actionTypeCart, state: tsInitialState) => {
             totalMoneys += state.cart[i].totalAmount;
         }
     }
-    console.log("state.cart",state.cart);
     if (!isItemExist) {
         state.cart.push({ ...action.data});
     }

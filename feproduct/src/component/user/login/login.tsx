@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, useState,useEffect } from "react";
 import styled from "styled-components";
 import { mobile,table } from "../response";
 import { useForm } from "react-hook-form";
@@ -16,11 +16,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 import usePasswordToggle  from "./usePasswordToggle";
-
-interface FormInputs {
-    passwords: string;
-    email: string
-}
+import { FormInputsLogin } from "../../../types/hookForm"
 const LoginUser = () => {
     const formSchema = Yup.object().shape({
         password: Yup.string()
@@ -29,14 +25,13 @@ const LoginUser = () => {
         email:  Yup.string().email().required('Email Cần Phải nhập'),
       })
     let dispatch = useDispatch();
-    let { titleLogin,isLoginUser } = useSelector((state: any) => state.login);   
-    console.log("componentisLoginUser",isLoginUser);
-    console.log("componenttitleLogin",titleLogin);
+    let history = useHistory();
+    let { titleLogin,isLoginUser } = useSelector((state: RootStateOrAny) => state.login); 
     const [PasswordInputType,ToggleIcon] = usePasswordToggle() as  any | undefined;
-    const [value, setValue] = useState({
+    const [value, setValue] = useState<FormInputsLogin>({
         email: '',
         password: '',
-    }) as any | string;
+    });
     // const {register, formState: {errors}, handleSubmit} = useForm<FormInputs>({
     //     criteriaMode: "all"
     // });
@@ -47,7 +42,6 @@ const LoginUser = () => {
         setValue({...value, [event.target.name]: event.target.value});
     }
     const notify = (titleLogin: string) => {
-        console.log("titleLogin",titleLogin)
         toast(titleLogin);
     } 
     let redirect = null;
@@ -56,10 +50,11 @@ const LoginUser = () => {
         await dispatch(action);
         await notify(titleLogin);
     }
-    if(isLoginUser)
-    {
-        redirect = <Redirect  to="/user" />
-    }
+    useEffect(()=>{
+      if(isLoginUser){
+            redirect = history.push("/user");
+      }
+    },[isLoginUser])
     return (
         <div className="Container-Login">
             <div  className="title">

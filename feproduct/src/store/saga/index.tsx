@@ -1,6 +1,7 @@
 import { takeEvery, all, takeLatest,StrictEffect } from "redux-saga/effects";
 import  * as actionTypes from '../action/actiontypes';
-import {loginApp, loginUser, signUpUser, logoutSaga, logoutUserSaga,forgotPasswordUser} from "./login";
+import {loginApp, loginUser, signUpUser, logoutSaga,
+     logoutUserSaga,forgotPasswordUser,changePasswordUser} from "./login";
 import {postProduct,getDetailProduct,putProduct} from "./main";
 import { postUser,putUser,deleteUser } from "../saga/userAdmin";
 import {postOption, putOption} from "../saga/optionAdmin";
@@ -30,6 +31,7 @@ export function* watchLoginAdmin(): Generator<StrictEffect> {
         takeEvery(actionTypes.AUTH_INITITATE_LOGOUT,logoutSaga),
         takeEvery(actionTypes.AUTH_INITITATE_LOGOUT_USER,logoutUserSaga),
         takeEvery(actionTypes.FORGOT_USER,forgotPasswordUser),
+        takeEvery(actionTypes.CHANGE_PASSWORD_USER,changePasswordUser),
     ])
 }
 

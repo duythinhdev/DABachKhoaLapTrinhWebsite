@@ -1,13 +1,4 @@
 export {
-    navIsAdminUser,
-    navIsAdminProduct,
-    navIsAdminReview,
-    navIsAdminOption,
-    navIsAdminOptionOrder,
-    navIsAdminOrder,
-    navIsAdminComment,
-    navIsAdminCategory,
-    navIsAdminNews,
     isMenuAdmin,
     dataProduct,
     PostProduct,
@@ -26,10 +17,13 @@ export {
     checkAuthTimeOut,
     setAuthRedirectPath,
     isTokenauth,
-    authSuccessUser,
+    authUser,
     logoutUser,
     forgotPassword,
-    forgotPasswordStatus
+    forgotPasswordStatus,
+    changePasswordUser,
+    logoutStatusUser,
+    changePasswordStatus
 }
 from "../action/login";
 

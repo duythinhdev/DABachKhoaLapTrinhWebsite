@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
-
+import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 export default function InForUserChange() {
+    let { currentUser } = useSelector((state: RootStateOrAny) => state.login); 
     return (<div>
                 <div><h1>Thông tin cá nhân</h1></div>
                 <table  style={{border: "1px solid #000000",borderCollapse: "collapse", width:"100%" }} >
@@ -9,7 +10,7 @@ export default function InForUserChange() {
                             Họ tên
                         </td>
                         <td>
-                            Đỗ Duy Thịnh
+                           {currentUser?.full_name}
                         </td>
                     </tr>
                     <tr className="p-3">
@@ -17,7 +18,7 @@ export default function InForUserChange() {
                             Địa chỉ email
                         </td>
                         <td>
-                            thinh.dockc@hcmut.edu.vn
+                            {currentUser?.email}
                         </td>
                     </tr>
                     <tr className="p-3">
@@ -25,7 +26,7 @@ export default function InForUserChange() {
                             Địa chỉ nhà
                         </td>
                         <td>
-                            Đỗ Duy Thịnh
+                            {currentUser?.address}
                         </td>
                     </tr>
                     <tr className="p-3">
@@ -33,7 +34,7 @@ export default function InForUserChange() {
                             Tỉnh/TP
                         </td>
                         <td>
-                            Đỗ Duy Thịnh
+                            {currentUser?.city}
                         </td>
                     </tr>
                     <tr className="p-3">
@@ -41,7 +42,7 @@ export default function InForUserChange() {
                             Số điện thoại
                         </td>
                         <td>
-                            Đỗ Duy Thịnh
+                            {currentUser?.phone_number}
                         </td>
                     </tr>
                     <tr className="p-3">
@@ -49,7 +50,7 @@ export default function InForUserChange() {
                             Số di động
                         </td>
                         <td>
-                            Đỗ Duy Thịnh
+                            {currentUser?.permission === 0 ? "admin": "user"}
                         </td>
                     </tr>
                     
