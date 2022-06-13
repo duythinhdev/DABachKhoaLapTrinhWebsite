@@ -1,5 +1,6 @@
 import React, {Suspense, useEffect} from 'react';
-import "./App.scss"
+import "./App.scss";
+import './index.css';
 import Routing from "./router/router";
 import { useSelector } from "react-redux"
 import { BrowserRouter, Route, Switch  } from "react-router-dom";

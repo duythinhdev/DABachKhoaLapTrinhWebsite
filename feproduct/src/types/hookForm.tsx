@@ -18,7 +18,8 @@ export type ProductCart = {
     Note: string,
     company: string,
     addressCompany: string,
-    bank: string
+    bank: string,
+    isLoadToast: Boolean
 }
 export type changePassword = {
     passwordOld: string,

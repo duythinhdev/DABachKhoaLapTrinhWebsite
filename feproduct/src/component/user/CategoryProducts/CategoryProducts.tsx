@@ -2,9 +2,6 @@ import React,{useState, useEffect, useMemo} from 'react';
 import "./CategoryProducts.scss";
 import  HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDetailProduct";
 import { Link } from 'react-router-dom';
-import TopProduct from "../../../asset/TopProduct/250_34178_large_7cafaa8dedb3d130.jpg";
-import { enviroment } from "../../../enviroment/enviroment";
-import axios, {AxiosResponse} from "axios";
 import { tsCategoryProduct,Product } from "../../../types/productType";
 import useHoverProductDetail from "../hook/useHoverProductDetail";
 

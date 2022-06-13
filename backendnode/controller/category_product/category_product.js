@@ -64,49 +64,6 @@ exports.postCategoryProduct = function(req, res, next) {
     })
 }
 exports.getCategoryProduct = async function(req, res, next) {
-    // var { page, pagesize } = req.query;
-    // if (page) {
-    //     page = parseInt(page);
-    //     pagesize = parseInt(pagesize);
-    //     if (page < 1) {
-    //         page = 1;
-    //     }
-    //     var skipOption = (page - 1) * pagesize;
-    //     var totalPage;
-    //     await CategoryProduct.count({}, (err, counts) => {
-    //         totalPage = counts;
-    //     })
-    //     await CategoryProduct.find({}).populate({
-    //             path: 'product',
-    //             model: 'Product',
-    //             options: {
-    //                 // sort: { _id: -1 },
-    //                 skip: skipOption,
-    //                 limit: pageSize
-    //             },
-    //             populate: {
-    //                 path: 'options',
-    //                 model: 'Option'
-    //             }
-    //         })
-    //         .skip(skipOption)
-    //         .limit(pagesize).then((response) => {
-    //             console.log("response", response)
-    //             return res.status(200).json({
-    //                 pageNumber: page,
-    //                 pagesize: pagesize,
-    //                 data: response
-    //             })
-    //         }).catch(err => {
-    //             return res.status(404).json({
-    //                 error: err
-    //             })
-    //         })
-    //     return;
-    // }
-    // var { pagesize } = req.query;
-
-    // pagesize = parseInt(pagesize);
 
     await CategoryProduct.find().populate({
             path: 'product',
@@ -139,39 +96,6 @@ exports.getCategoryProduct = async function(req, res, next) {
                 error: err
             })
         })
-        // const { categoryProductId, pagesize, pagenumber } = req.query;
-        // await Product.find({ id_categoryProduct: categoryProductId }).populate({
-        //         path: 'product',
-        //         model: 'Product',
-        //         populate: {
-        //             path: 'options',
-        //             model: 'Option'
-        //         },
-        //         // options: {
-        //         //     sort: { createdAt: -1 },
-        //         //     limit: 12
-        //         // }
-        //     }).then((response) => {
-        //         console.log("response", response)
-        //         CategoryProduct.count({}, (err, counts) => {
-        //             if (err) {
-        //                 return res.status(404).json({
-        //                     error: err
-        //                 })
-
-    //             } else {
-    //                 return res.status(200).json({
-    //                     totalPage: counts,
-    //                     data: response,
-    //                 })
-    //             }
-    //         })
-    //     })
-    //     .catch(err => {
-    //         return res.status(404).json({
-    //             error: err
-    //         })
-    //     })
 }
 exports.getCategoryProductDetail = function(req, res, next) {
     const name = req.query.name

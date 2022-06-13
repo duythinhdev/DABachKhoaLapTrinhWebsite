@@ -55,7 +55,7 @@ let city = [
 ]
 const  ProductBought = ()  => {
     let { cart,totalMoney } = useSelector((state: RootStateOrAny) => state.dataUser);
-    let { currentUser } = useSelector((state: RootStateOrAny) => state.login);
+    let { currentUser } = useSelector((state: any) => state.login);
     let { register,errors,handleSubmit } = useReactHookForm("cart")
     let dispatch = useDispatch();
     const removeAllCart = () => {
@@ -84,7 +84,8 @@ const  ProductBought = ()  => {
         Note: "",
         company: "",
         addressCompany: "",
-        bank: ""
+        bank: "",
+        isLoadToast: false
     });
     const changeValue = (event:  React.ChangeEvent<{ name: string, value: unknown}>) => {
         setValue({...value, [event.target.name]: event.target.value});
@@ -94,8 +95,16 @@ const  ProductBought = ()  => {
     } 
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const {fullName,phoneNumber,address,gender,city,email } = value;
-        await notify("Người dùng cần phải login mới đặt hàng được");
+        console.log("issload toast");
+        if(currentUser === ""){
+            await setValue({...value,isLoadToast: true});
+            await notify("Người dùng cần phải login mới đặt hàng được");
+            console.log("issload toast",value.isLoadToast);
+        }else {
+            const {fullName,phoneNumber,address,gender,city,email } = value;
+            let actions =  Actions.postOrder(fullName,phoneNumber,address,gender,city,email,cart,totalMoney);
+            await dispatch(actions);
+        }
     }
     return (
        <div className="ContainerCart">
@@ -272,7 +281,7 @@ const  ProductBought = ()  => {
                        <button onClick={handleSubmit((data: any,event:any) => clickValue(data,event))}>Gửi đơn hàng</button>
                    </div>
                </div>
-               <ToastContainer />
+               {value.isLoadToast && <ToastContainer />}
             </form>
            }
        </div>

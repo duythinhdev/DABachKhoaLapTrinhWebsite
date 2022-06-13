@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({
     email: {
@@ -14,6 +15,11 @@ const userSchema = mongoose.Schema({
     phone_number: { type: String, required: false },
     city: { type: String, required: false },
     gender: { type: Boolean, required: false },
+    order: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Order',
+        required: false
+    }],
     role: {
         type: String,
         default: "user",

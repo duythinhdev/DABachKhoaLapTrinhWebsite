@@ -3,7 +3,6 @@ import axios, {AxiosResponse} from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
 import { signUps,login,forgot,typeStatus,changePassword } from "../../types/loginSagaType";
-import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import {createAxios}  from "../../enviroment/axiosApp";
 import * as selectors from './selector';
 
@@ -70,21 +69,12 @@ export function* signUpUser(actions: signUps)
         yield put(Actions.statusSignup("Bạn Đã Đăng ký thành Viên Thất Bại "  + e,true))
     }
 }
-export type Login = {
-    currentUser: object,
-    isLoginUser: boolean,
-    status: number,
-    type: string,
-    title: string,
-    titleLogin: string ,
-    accessToken: string
-}
 export function* logoutUserSaga() {
     // yield call([localStorage, 'removeItem'], 'accessToken');
-    let login: Login = yield select(selectors.getLogin)
+    let login: login = yield select(selectors.getLogin)
     let urlLogout = 'user/logout';
     let axiosJWT  = createAxios(login,null,Actions.authUser);
-    const response: Login  = yield axiosJWT.post(enviroment.localNode + urlLogout);
+    const response: login  = yield axiosJWT.post(enviroment.localNode + urlLogout);
     console.log("response",response);
     switch(response.status)
     {
@@ -147,10 +137,10 @@ export function* changePasswordUser(actions: changePassword){
         passwordOld: passwordOld,
         passwordNews: passwordNew,
     }
-    let login: Login = yield select(selectors.getLogin)
+    let login: login = yield select(selectors.getLogin)
     let urlChange = 'user/change';
     let axiosJWT  = createAxios(login,null,Actions.authUser);
-    const response: Login  = yield axiosJWT.post(enviroment.localNode + urlChange,body);
+    const response: login  = yield axiosJWT.post(enviroment.localNode + urlChange,body);
     console.log("response",response);
     switch(response.status)
     {

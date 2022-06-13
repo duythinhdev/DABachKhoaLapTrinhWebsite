@@ -1,14 +1,22 @@
 module.exports = {
-    content: ["./src/**/*.{html,js}"],
+    content: [
+        "./src/**/*.{js,jsx,ts,tsx}",
+    ],
     theme: {
         extend: {
-            fontFamily: {
-                Roboto: ['"Roboto"']
-            },
-            colors: {
-                primary: '#16405B'
+            spacing: {
+                "big": "48rem"
             }
         },
+        screens: {
+            sm: "480px",
+            md: "768px",
+            lg: "1024px",
+            xl: "1280px",
+        },
+        fontFamily: {
+            nunito: ['Nunito', 'sans-serif']
+        }
     },
     plugins: [],
 }
