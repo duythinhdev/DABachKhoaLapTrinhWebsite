@@ -22,7 +22,7 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import ImageDiscountA from "../../../asset/sliderUser/01_Mar1dad4b99b92a3a8025dce33eaa689a25.png";
 import ImageDiscountB from "../../../asset/sliderUser/01_Marc37767f7c68aa9a5447627450f01fb90.png";
-import useSlideFetching from "./useSlideFetching";
+import useSlideFetching from "../hook/useSlideFetching";
 
 
 const data = [

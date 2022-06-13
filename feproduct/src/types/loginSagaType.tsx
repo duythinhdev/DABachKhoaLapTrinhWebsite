@@ -28,6 +28,11 @@ export interface login {
     password: string,
     status: number,
     data: loginSuccess,
+    currentUser: object,
+    isLoginUser: boolean,
+    title: string,
+    titleLogin: string ,
+    accessToken: string
 }
 export type forgot = {
     type: "FORGOT_USER",

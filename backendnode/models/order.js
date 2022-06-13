@@ -6,12 +6,14 @@ const orderSchema = mongoose.Schema({
         phone: { type: String, required: false },
         email: { type: String, required: false },
         full_name: { type: String, required: false },
-        user_id: {
+        user: {
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
         total: { type: Number, required: false },
         status: { type: Number, required: false },
+        orders: [{ type: Object }]
+
     }, { timestamps: { createdAt: true, updatedAt: true } }
 
 )

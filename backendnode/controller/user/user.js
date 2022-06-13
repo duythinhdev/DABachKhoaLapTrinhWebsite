@@ -49,7 +49,6 @@ const authController = {
             })
         },
         generateAccessToken: (user) => {
-            console.log("generateAccessToken", user);
             return jwt.sign({
                 email: user.email,
                 userId: user._id,

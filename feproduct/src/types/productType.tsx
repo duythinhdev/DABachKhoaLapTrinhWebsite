@@ -44,3 +44,13 @@ export interface fetchComments {
     readonly  data: Product[],
     readonly  totalPage: number
 }
+export interface actionsInforPostOrder  {
+    fullName:string,
+    phoneNumber:string,
+    address:string,
+    gender:string,
+    city:string,
+    email:string,
+    cart: Product[],
+    totalMoney: number
+}

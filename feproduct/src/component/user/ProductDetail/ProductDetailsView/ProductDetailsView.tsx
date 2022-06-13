@@ -6,7 +6,7 @@ import ImageProductDetail from "../ProductDetailImage";
 import Payment from "../../../../asset/Capture123.png";
 import CheckIcon from '@mui/icons-material/Check';
 import Promotion from "../../../../asset/t3-2022-trang-sp-500x654.jpg";
-import useSlideFetching from "../../SliderProduct/useSlideFetching";
+import useSlideFetching from "../../hook/useSlideFetching";
 import useColorTable from "../../hook/useColorTable";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../../../enviroment/enviroment";

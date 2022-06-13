@@ -59,13 +59,15 @@ const increaseMinusCartUser =  (action: actionTypeCart, state: tsInitialState) =
                     state.cart[i].quantityItems++;
                 }
                 state.cart[i].totalAmount = state.cart[i].options[0].price * state.cart[i].quantityItems;
-            } 
-            state.cart[i].quantityItems--;
-            state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
-            if(state.cart[i].quantityItems === 0){
-                state.cart[i].quantityItems++;
             }
-            state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
+            else {
+                state.cart[i].quantityItems--;
+                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
+                if(state.cart[i].quantityItems === 0){
+                    state.cart[i].quantityItems++;
+                }
+                state.cart[i].totalAmount =  state.cart[i].options[0].price * state.cart[i].quantityItems;
+            }
         }
         totalMoneys += state.cart[i].totalAmount;
         newsData.push(state.cart[i]);

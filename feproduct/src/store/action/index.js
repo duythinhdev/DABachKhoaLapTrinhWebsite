@@ -77,4 +77,8 @@ export {
     increaseMinusCart,
     loadTotalMoney
 }
-from "../action/cartUser.tsx"
+from "../action/cartUser.tsx";
+export {
+    postOrder
+}
+from "../action/order.tsx";

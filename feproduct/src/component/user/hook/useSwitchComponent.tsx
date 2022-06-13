@@ -8,6 +8,7 @@ import Register from "../../../component/user/Register/Register";
 import TopProduct from "../../../component/user/TopProduct/TopProduct";
 import ProductDetail from "../../../component/user/ProductDetail/ProductDetail";
 import Cart from "../../../component/user/ProductBought/ProductBought";
+import NewsDetail from "../../../component/user/NewsDetail/NewsDetail";
 
 export default function useSwitchComponent(id: string | undefined) {
     const renderSwitch = () => {
@@ -30,6 +31,8 @@ export default function useSwitchComponent(id: string | undefined) {
               return  <ProductDetail />;
             case 'cart':
               return  <Cart />;
+            case 'newsdetail':
+                return  <NewsDetail />;
         }
       }
     return { renderSwitch }
