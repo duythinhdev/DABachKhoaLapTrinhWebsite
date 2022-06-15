@@ -1,4 +1,4 @@
-import React, {BaseSyntheticEvent, useState,useEffect} from "react";
+import React, {BaseSyntheticEvent, useState,useEffect,useCallback} from "react";
 import styled from "styled-components";
 import {mobile, laptop,table} from "../response";
 import "./ProductBought.scss";
@@ -10,7 +10,10 @@ import { Link } from "react-router-dom";
 import { Product } from "../../../types/productType";
 import { reGister,ProductCart } from "../../../types/hookForm";
 import { toast, ToastContainer } from "react-toastify";
-import useReactHookForm from "../hook/useReactHookForm"
+import useReactHookForm from "../hook/useReactHookForm";
+import ListProductBought from "../ProductBought/ListProductBought/ListProductBought";
+import FormCartBought from "../ProductBought/formCartBought/FormCartBought";
+
 let city = [
     {
         id: 1,
@@ -53,16 +56,17 @@ let city = [
         name: "Đà Nẵng"
     },
 ]
-const  ProductBought = ()  => {
+
+const  ProductBought = () => {
     let { cart,totalMoney } = useSelector((state: RootStateOrAny) => state.dataUser);
-    let { currentUser } = useSelector((state: any) => state.login);
+    let { currentUser } = useSelector((state: RootStateOrAny) => state.login);
     let { register,errors,handleSubmit } = useReactHookForm("cart")
     let dispatch = useDispatch();
     const removeAllCart = () => {
         let actions =  Actions.removeAllCartUser();
         dispatch(actions);
     }
-    const removeDetailCart = (id: number) => {
+    const removeDetailCart =  (id: number) => {
         let actions =  Actions.removeDetailCartUser(id);
         dispatch(actions);
     }
@@ -73,7 +77,7 @@ const  ProductBought = ()  => {
     useEffect(()=> {
         let actions =  Actions.loadTotalMoney();
         dispatch(actions);
-    },[])
+    },[totalMoney])
     const [value, setValue] = useState<ProductCart>({
         fullName: '',
         email: '',
@@ -107,7 +111,7 @@ const  ProductBought = ()  => {
         }
     }
     return (
-       <div className="ContainerCart">
+       <div className="ContainerCart p-12">
            {
            cart?.length === 0 ? <h1>Có 0 sản phẩm trong giỏ hàng</h1> : <div className="itemyoucart">
              <div className="itemyoucart__title">
@@ -119,31 +123,10 @@ const  ProductBought = ()  => {
                 <button onClick={removeAllCart}  className="btn-cart-red">Xóa Khỏi giỏ hàng</button>
              </div>
              {cart?.map((res: Product,index: number)=> {
-                 return <div className="itemyoucart__detail" key={index}>
-                            <div className="itemyoucart__detail--img">
-                                <img src={ res?.images && res?.images[0]?.url} />
-                                <div>
-                                    <DeleteIcon className="icon__delete" onClick={() => {removeDetailCart(index)}} />
-                                </div>
-                            </div>
-                            <div className="itemyoucart__detail--name">
-                                <div className="Product">
-                                    <span ><Link to={`/system/productdetail?idproduct=${res?._id}`} className="Product__name" >{res.Product_name}</Link></span>
-                                    <span className="Product__id">{res?.options && res?.options[0]?.code}</span>
-                                    <span className="Product__Insurance">Bảo hành: 24 Tháng</span>
-                                </div>
-                            </div>
-                            <div className="itemyoucart__detail--price">
-                                <del className="price__reduction">{res?.options && res?.options[0]?.price}</del>
-                                <span className="price__real">{res?.options && res?.options[0]?.price}</span>
-                                <span className="price__sum">Tổng: {res?.totalAmount}</span>
-                                <div className="price__count">
-                                    <a className="price__minus" onClick={() => {increaseMinusDetailCart(index,"minus")}}>-</a>
-                                    <input className="price__value" value={res?.quantityItems}  />
-                                    <a className="price__add" onClick={() => {increaseMinusDetailCart(index,"plus")}}>+</a>
-                                </div>
-                            </div>
-                        </div>
+                 return <ListProductBought res={res} 
+                                           index={index} 
+                                           increaseMinusDetailCart={(index: number,calculation: string) => increaseMinusDetailCart(index,calculation)} 
+                                           removeDetailCart={(index: number) =>removeDetailCart(index)} />
              })}
               <div className="itemyoucart__total">
                 <div className="itemyoucart__total--promotion">
@@ -172,117 +155,10 @@ const  ProductBought = ()  => {
            }
            {
             cart?.length === 0 ? <h1>Có 0 sản phẩm trong giỏ hàng</h1> :    
-            <form className="itemorder" onSubmit={handleSubmit((data: any,event:any) => clickValue(data,event))}>
-               <div className="itemorder__inforCustomer">
-                   <div>
-                       <h1>Đặt Hàng</h1>
-                   </div>
-                   <div>
-                       <h3>1.Thông tin khách hàng</h3>
-                   </div>
-                   <div>
-                      <input type="radio" 
-                                value="Male" 
-                                {...register('gender')}  id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
-                                name="gender"
-                                onChange={(event) => changeValue(event)}
-                      /> Anh 
-                      <div className="invalid-feedback">{errors.gender?.message}</div>
-                      <input type="radio"
-                                 value="FeMale" 
-                                 {...register('gender')}  id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
-                                 name="gender"
-                                 onChange={(event) => changeValue(event)}
-
-                      />Chị
-                        <div className="invalid-feedback">{errors.gender?.message}</div>
-                   </div>
-                   <div className="itemorder__input">
-                      <input placeholder="Họ Và tên" 
-                                       {...register('fullName')}
-                                       name="fullName"
-                                       className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
-                                       onChange={(event) => changeValue(event)}
-                                />
-                      <div className="invalid-feedback">{errors.fullName ?.message}</div>
-                      <input  placeholder="email" type="email"
-                                        {...register('email')}
-                                        name="email"
-                                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                                        onChange={(event) => changeValue(event)}
-                                />
-                      <div className="invalid-feedback">{errors.email?.message}</div>
-                      <input placeholder="Số Điện Thoại"    
-                                        {...register('phoneNumber')}
-                                        name="phoneNumber"
-                                        className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
-                                        onChange={(event) => changeValue(event)}
-                                />
-                      <div className="invalid-feedback">{errors.phoneNumber?.message}</div>
-                      <select>
-                        {
-                            city.map((res,index)=>{
-                               return <option>{res.name}</option>
-                            })
-                        }
-                      </select>
-                      <textarea placeholder="Địa Chỉ"
-                                         {...register('address')}
-                                         name="address"
-                                         className={`form-control ${errors.address ? 'is-invalid' : ''}`}
-                                         onChange={(event) => changeValue(event)}
-                      ></textarea>
-                      <div className="invalid-feedback">{errors.address?.message}</div>
-                      <textarea placeholder="Ghi Chú"
-                                          {...register('Note')}
-                                          name="Note"
-                                          className={`form-control ${errors.Note ? 'is-invalid' : ''}`}
-                                          onChange={(event) => changeValue(event)}
-                      ></textarea>
-                      <div className="invalid-feedback">{errors.Note?.message}</div>
-                   </div>
-               </div>
-               <div className="itemorder__inforCustomer">
-                   <div>
-                       <h3>2.Hình thức thanh toán</h3>
-                   </div>
-                   <div>
-                      <input type="radio" /> COD 
-                      <input type="radio" /> Chuyển Khoản
-                   </div>
-               </div>
-               <div className="itemorder__inforCustomer">
-                   <div>
-                       <h3>3.Xuất hóa đơn công ty</h3>
-                   </div>
-                   <div className="itemorder__input">
-                       <div className="itemorder__exportBill">
-                           <span>Công ty /tổ chức</span>
-                           <input  />
-                       </div>
-                       <div className="itemorder__exportBill">
-                           <span>Địa chỉ:</span>
-                           <input  />
-                       </div>
-                       <div className="itemorder__exportBill">
-                           <span>Mã số thuế</span>
-                           <input  />
-                       </div>
-                   </div>
-               </div>
-               <div className="itemorder__inforCustomer">
-                   <div>
-                       <h3>4.Hình thức vận chuyển</h3>
-                   </div>
-                   <div>
-                      <input type="checkbox" /> giao hàng bình thường 
-                   </div>
-                   <div className="itemorder__SendOrder">
-                       <button onClick={handleSubmit((data: any,event:any) => clickValue(data,event))}>Gửi đơn hàng</button>
-                   </div>
-               </div>
-               {value.isLoadToast && <ToastContainer />}
-            </form>
+                <FormCartBought changeValue={(event:  React.ChangeEvent<{ name: string, value: unknown}>)=>changeValue(event)} 
+                                clickValue={(data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) =>clickValue(data,event)}
+                                isLoadToast={value.isLoadToast}
+                />
            }
        </div>
     );
