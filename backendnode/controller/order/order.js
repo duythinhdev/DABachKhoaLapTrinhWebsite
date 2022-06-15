@@ -26,7 +26,7 @@ exports.postOrder = async(req, res, next) => {
     }
 }
 exports.getOrderOfUser = async function(req, res, next) {
-    const { orderId, pagesize, pagenumber } = req.query;
+    const { userId, pagesize, pagenumber } = req.query;
     if (pagenumber < 1) {
         pagenumber = 1;
     }
