@@ -54,3 +54,11 @@ export interface actionsInforPostOrder  {
     cart: Product[],
     totalMoney: number
 }
+export interface propsListCategoryProduct {
+    moveDetail: (index: number)=> void
+    moveDetailOver: () => void,
+    res:Product,
+    index:number,
+    indexProductDetail: number,
+    isHoverDetail: Boolean
+}

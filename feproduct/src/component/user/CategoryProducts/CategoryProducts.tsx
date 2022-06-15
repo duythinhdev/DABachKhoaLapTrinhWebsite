@@ -4,13 +4,13 @@ import  HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDet
 import { Link } from 'react-router-dom';
 import { tsCategoryProduct,Product } from "../../../types/productType";
 import useHoverProductDetail from "../hook/useHoverProductDetail";
+import ListCategoryProducts from "../CategoryProducts/ListCategoryProducts/ListCategoryProducts";
 
 interface props {
     indexs: number,
     response: tsCategoryProduct
 }
 const CategoryProducts: React.FC<props>  = React.memo(({ indexs,response }) =>  {
-    let [ conditionIndex,setConditionIndex] = useState(0) as number | undefined | any;
     let { isHoverDetail,indexProductDetail,moveDetail,moveDetailOver } = useHoverProductDetail();
     return (
         <div className='p-container' key={indexs}>
@@ -24,28 +24,15 @@ const CategoryProducts: React.FC<props>  = React.memo(({ indexs,response }) =>  
                 <div className='box-center__content'>
                     <div className='box-center__content--product'>
                         {
-                            response?.product.map((res: Product,index:number)=> {
+                            response?.product.map((res: Product,index: number)=> {
                             //   setConditionIndex(index);
-                              return  <div className='product--detail' >
-                                        <div className='product--detail__img' >
-                                            <img src={res?.images[0].url} onMouseOver={()=>moveDetail(index)} onMouseLeave={()=>moveDetailOver()} />
-                                        </div>
-                                        <div className='product--detail__Code'>
-                                            <b> {res.options[0]?.code}</b>
-                                        </div>
-                                        <div className='product--detail__Name'>
-                                            <Link to={`/system/productdetail?idproduct=${res?._id}`}  className="detailName__link"><span>{res.Product_name}</span></Link> 
-                                        </div>
-                                        <div className='product--detail__pricePromotion'>
-                                                <del>{res.options[0]?.price}</del>
-                                        </div>
-                                        <div className='product--detail__price'>
-                                                {res.options[0]?.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})} 
-                                        </div>
-                                        {
-                                            isHoverDetail && indexProductDetail === index ? <HoverDetailProduct response={res} isCtProduct={true} /> : ''
-                                        }
-                                      </div>
+                              return <ListCategoryProducts  moveDetail={(index: number)=>moveDetail(index)}
+                                                            moveDetailOver={moveDetailOver} 
+                                                            isHoverDetail={isHoverDetail} 
+                                                            indexProductDetail={indexProductDetail}
+                                                            index={index}
+                                                            res={res}
+                                                            />
                             })
                         }
 
