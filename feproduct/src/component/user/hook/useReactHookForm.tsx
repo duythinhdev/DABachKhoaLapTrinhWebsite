@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { reGister,FormInputsLogin,ProductCart,changePassword } from "../../../types/hookForm";
 
-export default function useReactHookForm(status: string) {
+export default function useReactHookForm(status: string | null = null) {
     var formSchema: any;
     switch(status){
         case "login":

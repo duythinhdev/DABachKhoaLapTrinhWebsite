@@ -52,7 +52,9 @@ export interface actionsInforPostOrder  {
     city:string,
     email:string,
     cart: Product[],
-    totalMoney: number
+    totalMoney: number,
+    Note: string
+
 }
 export interface propsListCategoryProduct {
     moveDetail: (index: number)=> void
