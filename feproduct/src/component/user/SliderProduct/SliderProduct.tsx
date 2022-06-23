@@ -111,7 +111,7 @@ const CategoryProduct = ()  => {
             setSlideIndex(Math.round(Math.random() * Slider.length));
           }, 2000);
           return () => clearInterval(setIntervalCount);
-      },[])
+      })
     return (
         <div className='header-menu-holder'>
             <div className='header-menu-holder__space1'>

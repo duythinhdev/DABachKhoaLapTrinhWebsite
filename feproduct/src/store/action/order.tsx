@@ -1,7 +1,7 @@
 import * as action from '../action/actiontypes';
 import * as actionTypes from "./actiontypes";
 import {actionsInforPostOrder} from "../../types/productType";
-export const postOrder = ({fullName,phoneNumber,address,gender,city,email,cart,totalMoney}: actionsInforPostOrder) => {
+export const postOrder = ({fullName,phoneNumber,address,gender,city,email,cart,totalMoney,Note}: actionsInforPostOrder) => {
     return {
         type: actionTypes.POST_ORDER_CART,
         fullName:fullName,
@@ -11,6 +11,7 @@ export const postOrder = ({fullName,phoneNumber,address,gender,city,email,cart,t
         city: city,
         email: email,
         cart: cart,
-        totalMoney: totalMoney
+        totalMoney: totalMoney,
+        Note: Note
     }
 }

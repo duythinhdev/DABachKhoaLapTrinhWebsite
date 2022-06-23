@@ -1,7 +1,8 @@
 import React,{BaseSyntheticEvent,useMemo} from 'react';
 import useReactHookForm from "../../hook/useReactHookForm";
 import { toast, ToastContainer } from "react-toastify";
-import { propsFormCartBougth } from "../../../../types/cartTypes";
+import { propsFormCartBougth,html } from "../../../../types/cartTypes";
+import Input from "../../Input/Input";
 let city = [
     {
         id: 1,
@@ -45,8 +46,58 @@ let city = [
     },
 ]
 const  ListProductBought:React.FC<propsFormCartBougth> = React.memo(({changeValue,clickValue,isLoadToast}) => {
-    let { register,errors,handleSubmit } = useReactHookForm("cart")
-    return    <form className="itemorder" onSubmit={handleSubmit((data: any,event:any) => clickValue(data,event))}>
+    let { register,errors,handleSubmit } = useReactHookForm("cart");
+    let formCheck = [
+        {
+            type: "radio",
+            value: "Male",
+            name: "gender",
+            text: "Anh",
+            error: errors.gender
+        },
+        {
+            type: "radio",
+            value: "FeMale",
+            name: "gender",
+            text: "chị",
+            error: errors.gender
+        }
+    ]
+    let formInput: Array<html> = [
+        {
+            type: "text",
+            name: "fullName",
+            placeholder: "Họ Và tên",
+            error: errors.fullName
+        },
+        {
+            type: "email",
+            name: "email",
+            placeholder: "email",
+            error: errors.email
+        },
+        {
+            type: "text",
+            name: "phoneNumber",
+            placeholder: "Số điện thoại",
+            error: errors.phoneNumber
+        }
+    ]
+    let formTextarea: Array<html> = [
+        {
+            type: "text",
+            name: "Note",
+            placeholder: "Ghi chú",
+            error:  errors.Note
+        },
+        {
+            type: "text",
+            name: "address",
+            placeholder: "Địa chỉ",
+            error: errors.address
+        }
+    ]
+    return  <form className="itemorder" onSubmit={handleSubmit((data:any,event:any) => clickValue(data,event))}>
        <div className="itemorder__inforCustomer">
            <div>
                <h1>Đặt Hàng</h1>
@@ -55,65 +106,18 @@ const  ListProductBought:React.FC<propsFormCartBougth> = React.memo(({changeValu
                <h3>1.Thông tin khách hàng</h3>
            </div>
            <div>
-              <input type="radio" 
-                        value="Male" 
-                        {...register('gender')}  id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
-                        name="gender"
-                        onChange={(event) => changeValue(event)}
-              /> Anh 
-              <div className="invalid-feedback">{errors.gender?.message}</div>
-              <input type="radio"
-                         value="FeMale" 
-                         {...register('gender')}  id="gender" className={`form-check-input ${errors.gender ? 'is-invalid' : ''}`}
-                         name="gender"
-                         onChange={(event) => changeValue(event)}
-
-              />Chị
-                <div className="invalid-feedback">{errors.gender?.message}</div>
+                <Input formData={formCheck} changeValue={changeValue} typeHtml={"checkbox"} register={register} />
            </div>
            <div className="itemorder__input">
-              <input placeholder="Họ Và tên" 
-                               {...register('fullName')}
-                               name="fullName"
-                               className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
-                               onChange={(event) => changeValue(event)}
-                        />
-              <div className="invalid-feedback">{errors.fullName ?.message}</div>
-              <input  placeholder="email" type="email"
-                                {...register('email')}
-                                name="email"
-                                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                                onChange={(event) => changeValue(event)}
-                        />
-              <div className="invalid-feedback">{errors.email?.message}</div>
-              <input placeholder="Số Điện Thoại"    
-                                {...register('phoneNumber')}
-                                name="phoneNumber"
-                                className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
-                                onChange={(event) => changeValue(event)}
-                        />
-              <div className="invalid-feedback">{errors.phoneNumber?.message}</div>
-              <select>
-                {
-                    city.map((res,index)=>{
-                       return <option>{res.name}</option>
-                    })
-                }
-              </select>
-              <textarea placeholder="Địa Chỉ"
-                                 {...register('address')}
-                                 name="address"
-                                 className={`form-control ${errors.address ? 'is-invalid' : ''}`}
-                                 onChange={(event) => changeValue(event)}
-              ></textarea>
-              <div className="invalid-feedback">{errors.address?.message}</div>
-              <textarea placeholder="Ghi Chú"
-                                  {...register('Note')}
-                                  name="Note"
-                                  className={`form-control ${errors.Note ? 'is-invalid' : ''}`}
-                                  onChange={(event) => changeValue(event)}
-              ></textarea>
-              <div className="invalid-feedback">{errors.Note?.message}</div>
+                <Input formData={formInput} changeValue={changeValue} typeHtml={"input"}  register={register} />
+                <select>
+                    {
+                        city.map((res,index)=>{
+                        return <option key={index}>{res.name}</option>
+                        })
+                    }
+                </select>
+                <Input formData={formTextarea} changeValue={changeValue} typeHtml={"textarea"} register={register} />
            </div>
        </div>
        <div className="itemorder__inforCustomer">
@@ -152,7 +156,7 @@ const  ListProductBought:React.FC<propsFormCartBougth> = React.memo(({changeValu
               <input type="checkbox" /> giao hàng bình thường 
            </div>
            <div className="itemorder__SendOrder">
-               <button onClick={handleSubmit((data: any,event:any) => clickValue(data,event))}>Gửi đơn hàng</button>
+               <button onClick={handleSubmit((data:any,event:any) => clickValue(data,event))}>Gửi đơn hàng</button>
            </div>
        </div>
        {isLoadToast && <ToastContainer />}

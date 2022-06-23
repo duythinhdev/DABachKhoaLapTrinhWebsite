@@ -1,18 +1,13 @@
 import React, {BaseSyntheticEvent, useState,useEffect,useCallback} from "react";
-import styled from "styled-components";
-import {mobile, laptop,table} from "../response";
 import "./ProductBought.scss";
-import Cart from "../../../asset/Cart/120_34491_corsair_t3_rush_charcoal__1_.jpg";
 import * as Actions from "../../../store/action/index"; 
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from "react-router-dom";
 import { Product } from "../../../types/productType";
 import { reGister,ProductCart } from "../../../types/hookForm";
 import { toast, ToastContainer } from "react-toastify";
-import useReactHookForm from "../hook/useReactHookForm";
 import ListProductBought from "../ProductBought/ListProductBought/ListProductBought";
 import FormCartBought from "../ProductBought/formCartBought/FormCartBought";
+import useReactHookForm from "../hook/useReactHookForm";
 
 let city = [
     {
@@ -60,7 +55,6 @@ let city = [
 const  ProductBought = () => {
     let { cart,totalMoney } = useSelector((state: RootStateOrAny) => state.dataUser);
     let { currentUser } = useSelector((state: RootStateOrAny) => state.login);
-    let { register,errors,handleSubmit } = useReactHookForm("cart")
     let dispatch = useDispatch();
     const removeAllCart = () => {
         let actions =  Actions.removeAllCartUser();
@@ -99,17 +93,14 @@ const  ProductBought = () => {
     } 
     const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("issload toast");
-        if(currentUser === ""){
-            await setValue({...value,isLoadToast: true});
-            await notify("Người dùng cần phải login mới đặt hàng được");
-            console.log("issload toast",value.isLoadToast);
-        }else {
-            const {fullName,phoneNumber,address,gender,city,email } = value;
-            let actions =  Actions.postOrder(fullName,phoneNumber,address,gender,city,email,cart,totalMoney);
-            await dispatch(actions);
-        }
+        const { fullName,phoneNumber,address,gender,city,email,Note } = value;
+        console.log("value",value.fullName,value.phoneNumber,value.address,value.gender,value.city,value.email,);
+        await setValue({...value,isLoadToast: true});
+        await notify("Người dùng cần phải login mới đặt hàng được");
+        let actions =  Actions.postOrder(fullName,phoneNumber,address,gender,city,email,cart,totalMoney,Note);
+        await dispatch(actions);
     }
+    let { register,errors,handleSubmit } = useReactHookForm("cart")
     return (
        <div className="ContainerCart p-12">
            {
@@ -154,9 +145,10 @@ const  ProductBought = () => {
              </div>
            }
            {
+            
             cart?.length === 0 ? <h1>Có 0 sản phẩm trong giỏ hàng</h1> :    
                 <FormCartBought changeValue={(event:  React.ChangeEvent<{ name: string, value: unknown}>)=>changeValue(event)} 
-                                clickValue={(data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) =>clickValue(data,event)}
+                                clickValue={(data:any,event:any) => clickValue(data,event)}
                                 isLoadToast={value.isLoadToast}
                 />
            }
