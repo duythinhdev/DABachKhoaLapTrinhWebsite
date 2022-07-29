@@ -7,7 +7,7 @@ import {
     layoutUser,
     ListAdmin,
     newAdmin,
-    InforUser
+    InforUser,
 } from "./index";
 
 export const Routes: Array<any> = [

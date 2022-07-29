@@ -2,16 +2,12 @@ import React,{useEffect} from 'react';
 import "./InforUser.scss";
 import useColorTable from "../hook/useColorTable";
 import * as actions from "../../../store/action";
-
-import InForUserChange from "../InforUser/InForUserChange/InForUserChange";
-import InForUserChangePassword from "../InforUser/InForUserChangePassword/InForUserChangePassword";
 import Announcement from "../../../component/user/Announcement/Announcement";
 import Newsletter from "../../../component/user/Newletter/Newletter";
 import NewsFeeds from "../../../component/user/NewsFeed/NewsFeed";
 import Footer from "../../../component/user/footer/footer";
 import Navbar from "../../../component/user/Navbar/Navbar";
 import "../../../page/LayoutUser/LayoutUser.scss";
-import ListProductBouth from "../InforUser/ListProductBougth/ListProductBouth";
 import useSwitchComponent from "../../../component/user/hook/useSwitchComponent";
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import { useHistory,Link,useParams  } from "react-router-dom";

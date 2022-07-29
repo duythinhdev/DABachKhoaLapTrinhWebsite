@@ -8,13 +8,6 @@ import "../LayoutUser/LayoutUser.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 // import usePasswordToggle  from "./usePasswordToggle";
-import Login from "../../component/user/Login/Login";
-import Forgot from "../../component/user/Forgot/ForgotPassword";
-import Register from "../../component/user/Register/Register";
-import TopProduct from "../../component/user/TopProduct/TopProduct";
-import ProductDetail from "../../component/user/ProductDetail/ProductDetail";
-import Cart from "../../component/user/ProductBought/ProductBought";
-import InforUser from "../../component/user/InforUser/InforUser";
 import {
   useParams
 } from "react-router-dom";

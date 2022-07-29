@@ -1,7 +1,7 @@
 import React, { lazy, Suspense,MemoExoticComponent } from "react";
 const TotalInterface: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
 import ("../page/TotalInterface/TotalInterface"));
-const register: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
+const Register: React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =>
 import ("../component/user/Register/Register"));
 const layoutUser: React.LazyExoticComponent<MemoExoticComponent<() => JSX.Element>> = React.lazy(() =>
 import ("../page/LayoutUser/LayoutUser"));
@@ -19,9 +19,8 @@ const InforUser : React.LazyExoticComponent<() => JSX.Element> = React.lazy(() =
 import ("../component/user/InforUser/InforUser"));
 export {
     TotalInterface,
-    register,
+    Register,
     layoutUser,
-    // layoutBought,
     AllTopProduct,
     ProductBrand,
     HomeAdmin,

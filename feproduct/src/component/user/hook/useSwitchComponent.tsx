@@ -2,7 +2,7 @@ import React from 'react'
 import InForUserChange from "../InforUser/InForUserChange/InForUserChange";
 import InForUserChangePassword from "../InforUser/InForUserChangePassword/InForUserChangePassword";
 import ListProductBouth from "../InforUser/ListProductBougth/ListProductBouth";
-import Login from "../../../component/user/Login/Login";
+import Login from "../Login/Login";
 import Forgot from "../../../component/user/Forgot/ForgotPassword";
 import Register from "../../../component/user/Register/Register";
 import TopProduct from "../../../component/user/TopProduct/TopProduct";
