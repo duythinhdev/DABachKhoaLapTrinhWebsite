@@ -16,7 +16,7 @@ const session = require('express-session');
 require('dotenv').config();
 const sliderRoutes = require('./api/slider');
 const cookieParser = require("cookie-parser");
-
+const ProvincesRouter = require("./api/provinces");
 class Routers {
     app;
     apiVersion;
@@ -46,11 +46,12 @@ class Routers {
         this.app.use(`${this.apiVersion}/products`, productRoutes);
         this.app.use(`${this.apiVersion}/option`, optionRoutes);
         this.app.use(`${this.apiVersion}/ctproduct`, categoryProductRoutes);
-        this.app.use(`${this.apiVersion}/news`, newsRoutes)
-        this.app.use(`${this.apiVersion}/slider`, sliderRoutes)
-        this.app.use(`${this.apiVersion}/ctnews`, CategoryNewsRoutes)
-        this.app.use(`${this.apiVersion}/order`, OrderRoutes)
-        this.app.use(`${this.apiVersion}/orderoption`, OrderOptionRoutes)
+        this.app.use(`${this.apiVersion}/news`, newsRoutes);
+        this.app.use(`${this.apiVersion}/slider`, sliderRoutes);
+        this.app.use(`${this.apiVersion}/ctnews`, CategoryNewsRoutes);
+        this.app.use(`${this.apiVersion}/order`, OrderRoutes);
+        this.app.use(`${this.apiVersion}/orderoption`, OrderOptionRoutes);
+        this.app.use(`${this.apiVersion}/location`, ProvincesRouter);
     }
     connectMongoose() {
         this.mongoose.set('useNewUrlParser', true);

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import 'bootstrap/scss/bootstrap.scss';
 </script>
 
 <template>
-  <RouterView />
+    <div>
+        <h1>123123</h1>
+    </div>
 </template>
 
 <style scoped>

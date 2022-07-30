@@ -6,7 +6,7 @@ const provincesSchema = mongoose.Schema({
     provinces_name: { type: String, required: false },
     districts: [{
         type: Schema.Types.ObjectId,
-        ref: 'districts',
+        ref: 'Districts',
         required: false
     }]
 }, { timestamps: { createdAt: true, updatedAt: true } }
