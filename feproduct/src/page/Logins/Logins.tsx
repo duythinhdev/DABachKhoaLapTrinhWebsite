@@ -9,9 +9,9 @@ import "../LayoutUser/LayoutUser.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 // import usePasswordToggle  from "./usePasswordToggle";
-import Login from "../../component/user/Login/Login";
+import Login from "../../component/user/login/login";
 import Forgot from "../../component/user/Forgot/ForgotPassword";
-import Register from "../../component/user/Register/Register";
+import Register from "../../component/user/register/Register";
 import {
     BrowserRouter as Router,
     Switch,

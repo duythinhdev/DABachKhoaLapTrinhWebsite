@@ -7,7 +7,7 @@ import Newsletter from "../../../component/user/Newletter/Newletter";
 import NewsFeeds from "../../../component/user/NewsFeed/NewsFeed";
 import Footer from "../../../component/user/footer/footer";
 import Navbar from "../../../component/user/Navbar/Navbar";
-import "../../../page/LayoutUser/LayoutUser.scss";
+import "../../../page/layoutUser/layoutUser.scss";
 import useSwitchComponent from "../../../component/user/hook/useSwitchComponent";
 import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
 import { useHistory,Link,useParams  } from "react-router-dom";

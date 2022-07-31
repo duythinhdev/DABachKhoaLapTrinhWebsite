@@ -4,7 +4,7 @@ import Announcement from "../../component/user/Announcement/Announcement";
 import Newsletter from "../../component/user/Newletter/Newletter";
 import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
 import Footer from "../../component/user/footer/footer";
-import "../LayoutUser/LayoutUser.scss";
+import "../layoutUser/layoutUser.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 // import usePasswordToggle  from "./usePasswordToggle";

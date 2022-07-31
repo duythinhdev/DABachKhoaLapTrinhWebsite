@@ -1,17 +1,12 @@
 @import "../../../../src/sass/_variable";
 @import "../../../../src/sass/_mixin";
 .Container-Login {
-    width: 100%;
-    // height: 40vh;
-    background: #edeef2;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     margin-top: 140px;
     @include respond(laptop) {
         margin-top: 200px;
-        // height: 60vh;
+    }
+    @include respond(surface) {
+        margin-top: 200px;
     }
     .title {
         display: flex;
@@ -24,8 +19,6 @@
     .Wrapper {
         display: flex;
         flex-direction: column;
-        width: 88%;
-        /* width: auto; */
         flex: 0.7;
         &__login {
             display: flex;
@@ -136,7 +129,6 @@
                 }
                 .Form__login--forgot {
                     display: flex;
-                    flex: 0.2;
                     // background-color: #000000;
                     button {
                         border: none;
@@ -180,29 +172,4 @@
             }
         }
     }
-    // .Title {
-    //     font-size: 24px;
-    //     font-weight: 300;
-    // }
-    // .Input {
-    //     flex: 1;
-    //     min-width: 10%;
-    //     margin: 10px 0;
-    //     padding: 10px;
-    // }
-    // .Button {
-    //     width: 10%;
-    //     border: none;
-    //     padding: 15px 20px;
-    //     background-color: teal;
-    //     color: white;
-    //     cursor: pointer;
-    //     margin-bottom: 10px;
-    // }
-    // .Link {
-    //     margin: 5px 0px;
-    //     font-size: 12px;
-    //     text-decoration: underline;
-    //     cursor: pointer;
-    // }
 }

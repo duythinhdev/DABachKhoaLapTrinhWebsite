@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import "./LayoutUser.scss";
+import "./layoutUser.scss";
 import Navbar from "../../component/user/Navbar/Navbar";
 import Announcement from "../../component/user/Announcement/Announcement";
 import Newsletter from "../../component/user/Newletter/Newletter";
