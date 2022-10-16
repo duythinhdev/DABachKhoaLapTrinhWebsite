@@ -3,7 +3,6 @@ require('dotenv').config();
 
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization;
-    // console.log("accessToken", token);
     const refreshToken = req.cookies.refreshToken;
     if (token) {
         const accessToken = token.split(" ")[1];

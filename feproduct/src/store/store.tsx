@@ -60,6 +60,7 @@ sagaMiddleware.run(watchProductAdmin);
 sagaMiddleware.run(watchOptionAdmin);
 sagaMiddleware.run(watchNewsUser);
 sagaMiddleware.run(watchOrderUser);
+
 export const app = (
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}  >

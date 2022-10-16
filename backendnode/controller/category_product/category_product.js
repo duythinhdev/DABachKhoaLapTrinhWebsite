@@ -121,34 +121,7 @@ exports.putCategoryProduct = async(req, res, next) => {
         const result = await CategoryProduct.findByIdAndUpdate(categoryID, newCategory)
 
         return res.status(200).json({ success: true })
-    }
-    // exports.putCategoryProduct = async function(req, res, next) {
-    //     var type = req.body.type;
-    //     var size = req.body.size;
-    //     var price = req.body.price;
-    //     var quantity = req.body.quantity;
-    //     var product_id = req.body.product_id;
-    //     var id = req.query.id;
-    //     await CategoryProduct.updateOne({ _id: id }, {
-    //             $set: {
-    //                 type: type,
-    //                 size: size,
-    //                 price: price,
-    //                 quantity: quantity,
-    //                 product_id: product_id,
-    //             }
-    //         })
-    //         .exec()
-    //         .then(result => {
-    //             res.status(200).json({
-    //                 message: "update table Option success",
-    //             })
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             res.status(500).json({ error: err })
-    //         });
-    // }
+}
 exports.deleteCategoryProduct = async function(req, res, next) {
     const id = req.query.id;
     await CategoryProduct.remove({ _id: id }).exec().then(response => {

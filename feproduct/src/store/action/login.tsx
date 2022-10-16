@@ -1,6 +1,6 @@
 import * as action from '../action/actiontypes';
 import * as actionTypes from "./actiontypes";
-
+import {typelogin, typeSignup } from "../../types/TypeActionLogin";
 
 export const loginAppAdmin = (username:string,password:string) => {
     return {
@@ -9,21 +9,14 @@ export const loginAppAdmin = (username:string,password:string) => {
         password: password
     }
 }
-export const loginAppUser = (email:string,password:string) => {
+export const loginAppUser = ({email,password}: typelogin) => {
     return {
         type: actionTypes.LOGIN_APP_USER,
         email: email,
         password: password
     }
 }
-export const signup = (
-    fullName:string,
-    email:string,
-    password:string,
-    phone:string,
-    address:string,
-    city:string,
-    gender:string) => {
+export const signup = ({fullName,email,password,phone,address,city,gender}: typeSignup) => {
     return {
         type: actionTypes.SIGNUPS_APP_USER,
         email: email,

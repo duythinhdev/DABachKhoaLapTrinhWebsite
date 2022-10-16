@@ -1,17 +1,15 @@
 @import "../../../../src/sass/variable";
 @import "../../../../src/sass/mixin";
 .p-container {
-    width: 100%;
+    width: $width-public;
     background-color: $backgroundApp;
-    display: flex;
     margin-top: 20px;
-    flex-direction: center;
-    justify-content: center;
+    @include flex-box-center();
     .box-center {
         @include respond(laptop) {
             width: 93%;
         }
-        background-color: $white;
+        background-color: $color-white;
         width: 88%;
         height: 100vh;
         display: flex;
@@ -27,7 +25,7 @@
                 @include respond(laptop) {
                     flex: 0.19;
                 }
-                background: $generalBackground;
+                background: $color-public;
                 clip-path: polygon(0 0, 100% 0%, 74% 100%, 0% 100%);
                 color: #fff;
                 h4 {
@@ -40,14 +38,11 @@
         }
         &__content {
             flex: 0.93;
-            // background-color: blue;
-            display: flex;
-            flex-direction: column;
+            @include flex-box-column();
             &--product {
+                @include flex-box-row();
                 flex-wrap: wrap;
                 // flex: 0.5;
-                display: flex;
-                flex-direction: row;
                 .product--detail {
                     width: calc(100% /6.78);
                     // background-color: burlywood;
@@ -83,7 +78,7 @@
                         flex: 0.1;
                         .detailName__link {
                             display: flex;
-                            color: black;
+                            color: $color-black;
                             font-size: 15px;
                             font-weight: bold;
                             text-decoration: none;
@@ -91,7 +86,7 @@
                                 font-size: 10px;
                             }
                             &:hover {
-                                color: $generalBackground;
+                                color: $color-public;
                                 font-size: 15px;
                                 font-weight: bold;
                                 @include respond(laptop) {
@@ -111,7 +106,7 @@
                         @include respond(laptop) {
                             font-size: 14px;
                         }
-                        color: #ce0707;
+                        color: $color-red;
                         font-weight: 500;
                     }
                 }
@@ -120,18 +115,16 @@
         &__seeMore {
             flex: 0.1;
             // background-color: aquamarine;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include flex-box-center();
             .button__seemore {
                 width: 230px;
-                color: $generalBackground;
-                border: 1px solid $generalBackground;
+                color: $color-public;
+                border: 1px solid $color-public;
                 text-transform: uppercase;
                 padding: 6px;
                 text-decoration: none;
                 &:hover {
-                    background-color: $generalBackground;
+                    background-color: $color-public;
                     color: #FFFFFF;
                 }
             }

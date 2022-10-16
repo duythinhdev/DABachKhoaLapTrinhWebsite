@@ -1,44 +1,113 @@
+$layout-breakpoint-Desktop-All: 993px;
+$layout-breakpoint-desktop-default: 1920px;
+$layout-breakpoint-laptop: 1366px;
+$layout-breakpoint-ipad-pro: 1024px;
+$layout-breakpoint-tablet: 768px;
+$layout-breakpoint-surface: 540px;
+$layout-breakpoint-xr: 414px;
+$layout-breakpoint-iphone4: 380px;
+$layout-breakpoint-galaxyfold: 280px;
 @mixin respond($breakpoint) {
-    @if $breakpoint==Desktop-All {
-        @media (min-width: 993px) {
+    @if $breakpoint == Desktop-All {
+        @media (min-width: $layout-breakpoint-Desktop-All) {
             @content
         }
-        ; //1800px
+        ; //993px
     }
-    @if $breakpoint==laptop {
-        @media (max-width: 1366px) {
+    @if $breakpoint == desktop-default {
+        @media (max-width: $layout-breakpoint-desktop-default) {
+            @content
+        };// 1920px
+    }
+    @if $breakpoint == laptop {
+        @media (max-width: $layout-breakpoint-laptop) {
             @content
         }
-        ; //1800px
+        ; //1366px
     }
-    @if $breakpoint==ipad-pro {
-        @media (max-width: 1024px) {
+    @if $breakpoint == ipad-pro {
+        @media (max-width: $layout-breakpoint-ipad-pro) {
             @content
         }
-        ; //1200px
+        ; //1024px
     }
-    @if $breakpoint==tablet {
-        @media (max-width: 768px) {
+    @if $breakpoint == tablet {
+        @media (max-width: $layout-breakpoint-tablet) {
             @content
         }
-        ; //900px
+        ; //768px
     }
-    @if $breakpoint==surface {
-        @media (max-width: 540px) {
+    @if $breakpoint == surface {
+        @media (max-width: $layout-breakpoint-surface) {
             @content
         }
-        ; //900px
+        ; //540px
     }
-    @if $breakpoint==XR {
-        @media (max-width: 414px) {
+    @if $breakpoint == XR {
+        @media (max-width: $layout-breakpoint-xr) {
             @content
         }
-        ; //900px
+        ; //414px
     }
-    @if $breakpoint==phone {
-        @media (max-width: 380px) {
+    @if $breakpoint == phone {
+        @media (max-width: $layout-breakpoint-iphone4) {
             @content
         }
-        ; //600px
+        ; //380px
     }
+    @if $breakpoint == galaxyfold {
+        @media (max-width: $layout-breakpoint-galaxyfold) {
+            @content
+        }
+        ; //280px
+    }
+}
+@mixin flex-box-column() {
+    display: flex;
+    flex-direction: column;
+}
+@mixin flex-box-row() {
+    display: flex;
+    flex-direction: row;
+}
+@mixin flex-box-center() {
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+}
+@mixin flex-box-column-center() {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+@mixin flex-box-row-center() {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+@mixin margin($px) {
+    margin: $px;
+}
+@mixin margin-top($px) {
+    margin-top: $px;
+}
+@mixin margin-bottom($px) {
+    margin-bottom: $px;
+}
+@mixin margin-left($px){
+    margin-left: $px;
+}
+@mixin margin-right($px) {
+    margin-right: $px;
+}
+@mixin padding($px) {
+    padding: $px;
+}
+@mixin padding-left($px){
+    padding-left: $px;
+}
+@mixin font-size($px) {
+    font-size: $px;
 }

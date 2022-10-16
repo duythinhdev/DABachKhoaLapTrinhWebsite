@@ -36,7 +36,6 @@ const statusForgot = (state: tsInitialState, action: ActionLogin) => {
 }
 const statusLogout = (state: tsInitialState, action: ActionLogin) => {
     let {titleLogout,isLoadToast} = action;
-    console.log("titleLogout",titleLogout,isLoadToast);
     return updateObject( state, {isLoadToast: isLoadToast, titleLogout: titleLogout })
 }
 const statusChangePassword = (state: tsInitialState, action: ActionLogin) => {

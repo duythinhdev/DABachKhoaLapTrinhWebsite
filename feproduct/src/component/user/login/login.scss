@@ -1,7 +1,7 @@
 @import "../../../../src/sass/_variable";
 @import "../../../../src/sass/_mixin";
 .Container-Login {
-    margin-top: 140px;
+    @include margin-top(140px);
     @include respond(laptop) {
         margin-top: 200px;
     }
@@ -9,49 +9,45 @@
         margin-top: 200px;
     }
     .title {
-        display: flex;
-        flex-direction: column;
+        @include flex-box-column();
         width: 80%;
         // background: black;
         /* width: auto; */
         flex: 0.12 1;
     }
     .Wrapper {
-        display: flex;
-        flex-direction: column;
+        @include flex-box-column();
         flex: 0.7;
+        @include respond(tablet){
+            width: 75px;
+        }
+        @include respond(phone){
+            width: 75px;
+        }
         &__login {
-            display: flex;
+            @include flex-box-center();
             flex: 0.15 1;
-            background: #546ce8;
+            background: $color-public;
             padding: 0 20px;
-            width: 7%;
+            width: 12%;
             @include respond(laptop) {
                 padding: 0 70px;
                 width: 100px;
             }
             border-radius: 0 15px 0px 0;
-            justify-content: center;
-            align-items: center;
             span {
-                color: #FFFFFF;
+                color: $color-white;
                 font-size: 18px;
                 text-transform: uppercase;
                 white-space: nowrap;
             }
         }
-        @media screen and(max-width: 768px) {
-            width: 75px;
-        }
-        @media screen and(max-width: 380px) {
-            width: 75px;
-        }
         &__Form {
             display: flex;
             flex-direction: column;
-            border-top: 2px solid #546ce8;
+            border-top: 2px solid $color-public;
             // flex: 0.7 1;
-            background: white;
+            background: $color-white;
             flex-direction: row;
             @include respond(Desktop-All) {
                 height: 300px;
@@ -61,8 +57,7 @@
             }
             &--login {
                 // background: #546ce8;
-                display: flex;
-                flex-direction: column;
+                @include flex-box-column();
                 flex: 0.55;
                 .Form__login--title {
                     display: flex;
@@ -73,7 +68,7 @@
                 .Form__login--email {
                     display: flex;
                     flex: 0.2;
-                    // background-color: #FFFFFF;
+                    // background-color: $color-white;
                     align-items: center;
                     span {
                         margin: 10px;
@@ -99,8 +94,7 @@
                     }
                 }
                 .Form__login--password {
-                    display: flex;
-                    flex-direction: row;
+                    @include flex-box-row();
                     flex: 0.2;
                     // background-color: #edeef2;
                     align-items: center;
@@ -117,8 +111,8 @@
                             top: 5px;
                         }
                         input {
-                            margin-left: 50px;
-                            font-size: 19px;
+                            @include margin-left(50px);
+                            @include font-size(19px);
                             outline: none;
                             width: 300px !important;
                         }
@@ -135,8 +129,8 @@
                         outline: none;
                         border-radius: 4px;
                         height: 40px;
-                        margin-top: 10px;
-                        margin-left: 135px;
+                        @include margin-left(135px);
+                        @include margin-top(10px);
                     }
                     span {
                         margin-left: 20px;
@@ -145,9 +139,9 @@
             }
             &--signUp {
                 display: flex;
-                flex: 0.45;
                 flex-direction: column;
                 justify-content: flex-start;
+                flex: 0.45;
                 .Form__signUp--member {
                     display: flex;
                     flex: 0.2;
