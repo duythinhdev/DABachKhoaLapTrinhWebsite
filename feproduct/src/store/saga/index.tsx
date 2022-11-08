@@ -3,15 +3,11 @@ import  * as actionTypes from '../action/actiontypes';
 import {loginApp, loginUser, signUpUser, logoutSaga,
      logoutUserSaga,forgotPasswordUser,changePasswordUser} from "./login";
 import {postProduct,getDetailProduct,putProduct} from "./main";
-import { postUser,putUser,deleteUser } from "../saga/userAdmin";
 import {postOption, putOption} from "../saga/optionAdmin";
-import {getOption} from "../action/optionAdmin";
-import {postReview,deleteReview,putReview} from "../saga/ReviewAdmin";
-import {postComment } from "../saga/CommentAdmin";
-import {deleteCategoryProduct, postCategoryProduct, putCategoryProduct} from "../saga/CategoryAdmin";
-import { postNews,putNews,deleteNews } from "../saga/NewsAdmin";
 import { postOrder } from "../saga/order";
 import { getNewsUser } from "../saga/newsUser";
+import { detailProduct } from "../saga/productdetail";
+import  * as Actions from '../action/productdetail';
 
 export function* watchOrderUser(): Generator<StrictEffect>{ 
     yield all([
@@ -48,3 +44,12 @@ export function* watchOptionAdmin(): Generator<StrictEffect>{
         takeEvery(actionTypes.PUT_DATA_OPTION_ADMIN,putOption),
     ])
 }
+
+
+export function* watchDetailProduct(): Generator<StrictEffect>{
+    yield all([
+        takeEvery(Actions.GET_DETAIL_PRODUCT,detailProduct),
+    ])
+}
+
+

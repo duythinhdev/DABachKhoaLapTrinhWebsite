@@ -75,6 +75,12 @@ $layout-breakpoint-galaxyfold: 280px;
     flex-direction: center;
     justify-content: center;
 }
+@mixin flex-box-start(){
+    display: -webkit-flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+}
 @mixin flex-box-column-center() {
     display: flex;
     flex-direction: column;

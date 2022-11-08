@@ -3,11 +3,11 @@ export interface typelogin {
     password?: string;
 }
 export type typeSignup  = {
-    fullName?: string;
-    email?: string;
-    password?: string;
-    phone?: string;
-    address?: string;
-    city?: string;
-    gender?: string;
+    fullName?: string | undefined;
+    email?: string | undefined;
+    password?: string | undefined;
+    phone?: string | undefined;
+    address?: string | undefined;
+    city?: string | undefined;
+    gender?: string | undefined;
 }

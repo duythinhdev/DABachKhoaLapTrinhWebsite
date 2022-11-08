@@ -30,10 +30,10 @@ const Register = () => {
         setValue({...value, [event.target.name]: event.target.value});
     }
     const notify = () => toast(titleLogin);
-    const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined,event: React.FormEvent<HTMLFormElement>) => {
+    const clickValue = async (data:any | undefined,event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const {fullName,password,phoneNumber,address,gender,city,email } = value;
-        let action = actions.signup(fullName,email, password, phoneNumber, address,city,gender);
+        const {fullName,password,phone,address,gender,city,email } = data;
+        let action = actions.signup({fullName,email, password, phone, address,city,gender});
         await dispatch(action);
         await notify();
     }
@@ -165,8 +165,8 @@ const Register = () => {
                             </div>
                             <div className="Form__input">
                                 <input 
-                                     {...register('phoneNumber')}
-                                     name="phoneNumber"
+                                     {...register('phone')}
+                                     name="phone"
                                      className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
                                      onChange={(event) => changeValue(event)}
                                 />

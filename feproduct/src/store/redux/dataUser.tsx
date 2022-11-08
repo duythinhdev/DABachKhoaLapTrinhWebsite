@@ -29,7 +29,7 @@ const addItemsCartUser = (action: actionTypeCart, state: tsInitialState) => {
     if (!isItemExist) {
         state.cart.push({ ...action.data});
     }
-    return updateObject(state, { cart:[...state.cart],totalMoney: totalMoneys})
+    return updateObject(state, { cart: [...state.cart],totalMoney: totalMoneys})
 }
 const removeAllCartUser = (action: actionTypeCart, state: tsInitialState) => {
     return updateObject(state, { cart: [] ,totalMoney: 0 })
@@ -72,7 +72,6 @@ const increaseMinusCartUser =  (action: actionTypeCart, state: tsInitialState) =
         totalMoneys += state.cart[i].totalAmount;
         newsData.push(state.cart[i]);
     }
-    console.log("newsData",newsData)
     return updateObject(state, { cart: newsData,totalMoney:  totalMoneys})
 }
 const dataUserReducer = (state = initialState, action: actionTypeCart) => {

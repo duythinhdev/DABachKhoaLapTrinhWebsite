@@ -40,7 +40,7 @@ const authController = {
                                     console.log(err)
                                     res.status(500).json({
                                         error: err
-                                    })
+                                    }) 
                                 });
                         }
                     })
@@ -153,8 +153,7 @@ const authController = {
     changePassword: (req, res, next) => {
         const { passwordOld, passwordNews } = req.body;
         User.findOne({ _id: req.userData.userId }).exec().then(user => {
-            console.log("user",user);
-            bcrypt.compare(req.body.passwordOld, user.password, (err, result) => {
+            bcrypt.compare(passwordOld, user.password, (err, result) => {
                 if(err){
                     return res.status(403).json({
                         error: "password no same database"

@@ -17,6 +17,7 @@ require('dotenv').config();
 const sliderRoutes = require('./api/slider');
 const cookieParser = require("cookie-parser");
 const ProvincesRouter = require("./api/provinces");
+
 class Routers {
     app;
     apiVersion;

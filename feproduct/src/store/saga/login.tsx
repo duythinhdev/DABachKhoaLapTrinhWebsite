@@ -141,7 +141,6 @@ export function* changePasswordUser(actions: changePassword){
     let urlChange = 'user/change';
     let axiosJWT  = createAxios(login,null,Actions.authUser);
     const response: login  = yield axiosJWT.post(enviroment.localNode + urlChange,body);
-    console.log("response",response);
     switch(response.status)
     {
         case 200: 

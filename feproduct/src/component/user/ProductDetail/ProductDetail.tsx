@@ -13,88 +13,81 @@ import BodyProductList from "./BodyProductList";
 import useQueryLocation from "../hook/useQueryLocation";
 import axios, {AxiosResponse} from "axios";
 import { enviroment } from "../../../enviroment/enviroment";
+import { Options} from "../../../types/productType";
+import { useDispatch, useSelector,RootStateOrAny  } from 'react-redux';
+import * as Actions from "../../../store/action/productdetail";
+import { getDetail, getOptionProductDetail } from "../../../store/selector/productDetailSelector";
 
-const TabNames = [{
-    Name: TabName.ProductDetails.ProductSimilar,
-},
-{
-    Name: TabName.ProductDetails.ProductBrand,
-},
-{
-    Name: TabName.ProductDetails.ProductInvolve,
-},
-]
+
+type nameTitle = {
+    id: number,
+    Name: string;
+}
+const TabNames: Array<nameTitle> = [
+    {id: 0,Name: TabName.ProductDetails.ProductSimilar},
+    {id: 1,Name: TabName.ProductDetails.ProductBrand},
+    {id: 2,Name: TabName.ProductDetails.ProductInvolve},
+];
+interface TypeState  {
+    isComment?: boolean | undefined;
+    isSeeMore?: boolean | undefined;
+    id: number | undefined;
+}
+
 const ProductDetail = () => {
-    const [isDetailComment,setIsDetailComment] = useState(false) as any | Boolean;
-    const [isSeeMore,setIsSeeMore] = useState(false) as any | Boolean;
-    const [nameTitle, setNameTitle] = useState({} as Object);
+    const query = useQueryLocation();
+    const idProduct: string | null = query.get("idproduct");
+    const dispatch = useDispatch();
+    const detail  = useSelector(getDetail);
+    const options  = useSelector(getOptionProductDetail);
+    console.log("detail",detail);
+    console.log("options",options);
+
+    const [nameTitle, setNameTitle] = useState<nameTitle>() as any;
     const [item,setItem] = useState({}) as any | Object | undefined ;
-    const [option,setOption] = useState({}) as any | string;
+    const [option,setOption] = useState<Options | any>();
+
+    const [state,setState] = useState<TypeState>({
+        isComment: false,
+        isSeeMore: false,
+        id: 0,
+    });
+
     const clickShowContentComment = (event:  React.FormEvent<HTMLInputElement>): void  => {
         event.preventDefault();
-        setIsDetailComment(true)
+        setState((pre) => ({...pre,isComment: true }));
     }
     const clickHideContentComment = (): void => {
-        setIsDetailComment(false)
+        setState((pre) => ({...pre,isComment: false }));
     }
     const clickShowMore  = (event:  React.FormEvent<HTMLInputElement>): void => {
         event.preventDefault();
-        setIsSeeMore(!isSeeMore);    
+        setState((pre) => ({...pre,isSeeMore: !state?.isSeeMore }));   
     }
-    const HandleClick = (name: string,index: number): void => {
-        borderProductdetail(true,index)
-        setNameTitle(name)
+    const HandleClick = (res: any,index: number): void => {
+        setState((pre) => ({...pre,id: res?.id }));
+        setNameTitle(res?.Name)
     }
-    const borderProductdetail = (loadFirts:Boolean = false,index: number | null | any =  null): void => {
-        let borderClick = document.getElementsByClassName('product__similar') as  HTMLCollectionOf<HTMLElement>;
-        if(!loadFirts){
-            borderClick[0].style.borderBottom = '4px solid #546ce8';
-            borderClick[0].style.color = '#546ce8';
-            borderClick[0].style.cursor = 'pointer';
-        }
-        else {
-            for(let i = 0 ; i < borderClick.length; i++)
-            {
-                borderClick[i].style.borderBottom = '';
-                borderClick[i].style.color = '';
-            }
-            borderClick[index].style.borderBottom = '4px solid #546ce8';
-            borderClick[index].style.color = '#546ce8';
-            borderClick[index].style.cursor = 'pointer';
-        }
-    }
-    const mouseTransition = (index: number) => {
-        let borderClick = document.getElementsByClassName('product__similar') as  HTMLCollectionOf<HTMLElement>;
-        for(let i = 0 ; i < borderClick.length; i++)
-        {
-            borderClick[i].style.borderBottom = '';
-            borderClick[i].style.color = '';
-            borderClick[i].style.transition = '';
-        }
-        borderClick[index].style.borderBottom = '4px solid #546ce8';
-        borderClick[index].style.transition = '0.5s';
-        borderClick[index].style.cursor = 'pointer';    
-    }
-
-    let query = useQueryLocation();
-    let idProduct = query.get("idproduct");
     async function fetchProduct() {
-        await axios.get(enviroment.localNode + `products/getdetail?id=${idProduct}`).then((res:any) => { 
+        await axios.get(enviroment.localNode + `products/getdetail?id=${idProduct}`).then((res:any) => {
             setOption(res.data.data?.options[0]);
             setItem(res.data.data)
         })
     }
 
     useEffect(()=> {
-        borderProductdetail(false,null);
-        fetchProduct();
-    },[])
+        setNameTitle(TabName.ProductDetails.ProductSimilar);
+    },[TabNames])
+    useEffect(() => {
+        // fetchProduct();
+        dispatch(Actions.detailProduct(idProduct));
+    },[idProduct])
+
     return (
         <section className="Container__ProductDetail">
-         
             <ProductDetailsView
-                item={item} 
-                option={option} 
+                item={detail} 
+                option={options} 
             />
 
             <div  className="whitenews">
@@ -105,12 +98,12 @@ const ProductDetail = () => {
                     <div className="whitenews__productdetail--content">
                         <p>
                           {item.description}
-                        <span className={isSeeMore ? "read-more-text--show" : "read-more-text"}>
+                        <span className={state.isSeeMore ? "read-more-text--show" : "read-more-text"}>
                         Chăm Sóc Toàn Diện Cho Đôi Mắt
                         Bạn sẽ luôn yên tâm đôi mắt của mình luôn được bảo vệ khi sử dụng trên chiếc màn hình này với công nghệ bảo vệ mắt tiên tiến giúp giảm thiểu tình trạng mỏi mắt khi dùng trong thời gian dài. Công nghệ Flicker Free loại bỏ tình trạng nhấp nháy khó chịu thường thấy trên màn hình, trong khi chế độ Eye Saver giảm thiểu tác hại của ánh sáng xanh.
                             </span></p>
                         <div className="productdetail__btn">
-                            <button className="read-more-btn" onClick={(event: any )=>clickShowMore(event)}>{isSeeMore ? "Rút Gọn..." : "Xem Thêm..." }</button>
+                            <button className="read-more-btn" onClick={(event: any )=>clickShowMore(event)}>{state.isSeeMore ? "Rút Gọn..." : "Xem Thêm..." }</button>
                         </div>
                     </div>
                 </div>
@@ -140,14 +133,24 @@ const ProductDetail = () => {
                         <div  className="whitenewscomment__content--text">
                             <textarea placeholder="Nội Dung" onClick={(event:any)=> clickShowContentComment(event)} ></textarea>
                         </div>
-                        {isDetailComment && <ModalComment clickHideContentComment={clickHideContentComment} />}
+                        {state.isComment && <ModalComment clickHideContentComment={clickHideContentComment} />}
                     </div>
             </div>
             <div className="whiteProductList">
                     <div className="whiteProductList__title">
                         {
-                            TabNames.map((item: any, index: number) => {
-                                return <h3 className="product__similar" key={index} onMouseOver={()=>mouseTransition(index)} onClick={() => HandleClick(item.Name,index)}>{item.Name}</h3>
+                            TabNames?.map((item: any, index: number) => {
+                                return <h3 className="product__similar"
+                                                style={{ 
+                                                    borderBottom:  state.id === item?.id ? "4px solid #546ce8" : "",
+                                                    color: state.id === item?.id ? "#546ce8" : "", 
+                                                    cursor: state.id === item?.id ? "pointer" : ""  
+                                                    }}
+                                                key={index} 
+                                                // onMouseOver={()=>mouseTransition(index)} 
+                                                onClick={() => HandleClick(item,index)}>
+                                                {item?.Name}
+                                        </h3>
                             })
                         }
                     </div>

@@ -1,7 +1,7 @@
 export const TabName = {
     ProductDetails: {
-        ProductSimilar: "SẢN PHẨM TƯƠNG TỰ",
-        ProductBrand: "SẢN PHẨM CÙNG HÃNG",
-        ProductInvolve: "SẢN PHẨM LIÊN QUAN",
+        ProductSimilar: "Sản phẩm tương tự",
+        ProductBrand: "Sản phẩm cùng hãng",
+        ProductInvolve: "Sản phẩm liên quan",
     },
 }

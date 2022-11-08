@@ -45,8 +45,9 @@ export const createAxios = (user:any, dispatch:any = null, stateSuccess:any) => 
   );
   return newInstance;
 };
-// const fetchClient = () => {
-//     const defaultOptions:any = {
+
+// const createAxios = () => {
+//     const defaultOptions:any = { 
 //         baseURL: enviroment.local,
 //         headers: {
 //             'Content-Type': 'application/json',
@@ -59,8 +60,7 @@ export const createAxios = (user:any, dispatch:any = null, stateSuccess:any) => 
 //     // Set the AUTH token for any request
 //     instance.interceptors.request.use(function (config: any | undefined) {
 //         const token =  JSON.parse(localStorage.getItem('tokenUser') as any | string)
-//         if(token)
-//         {
+//         if(token){
 //             config.headers.Authorization =  token ? `Bearer ${token}` : '';
 //             return config;
 //         }
@@ -69,4 +69,4 @@ export const createAxios = (user:any, dispatch:any = null, stateSuccess:any) => 
 //     return instance;
 // };
 
-// export default fetchClient();
+// export default createAxios;

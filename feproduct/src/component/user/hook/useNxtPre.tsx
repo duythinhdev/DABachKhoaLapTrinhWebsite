@@ -14,9 +14,7 @@ export default function useNxtPre(container: any | string,next:any | string,pre:
         preBtn.push(...preBtns);
         productContainers.forEach((item: any, i:number) => {
             let containerDimensions = item.getBoundingClientRect();
-            console.log("containerDimensions", containerDimensions)
             let containerWidth = containerDimensions.width;
-            console.log("containerWidth", containerWidth);
     
             nxtBtn[i].addEventListener('click', () => {
                 item.scrollLeft += containerWidth;
