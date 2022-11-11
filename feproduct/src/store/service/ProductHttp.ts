@@ -2,10 +2,10 @@
 import {HttpRequest} from "../../store/share/Request";
 
 export const ApiRoutes = {
-    DETAIL: "products/getdetail",
+    LIST: "ctproduct/get",
 };
 
-export class ProductDetailHttp {
+export class ProductHttp {
     request: any;
     endPoint: any;
 
@@ -14,7 +14,7 @@ export class ProductDetailHttp {
         this.endPoint = endPoint;
     }
 
-    detail = (id: string) => {
-        return this.request.get(`${ApiRoutes.DETAIL}?id=${id}`);
+    list = () => {
+        return this.request.get(ApiRoutes.LIST);
     };
 }

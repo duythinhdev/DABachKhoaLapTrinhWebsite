@@ -1,0 +1,102 @@
+@import "../../../../src/sass/_variable";
+@import "../../../../src/sass/_mixin";
+.wrapper-login {
+  @include margin-top(140px);
+  @include respond(laptop) {
+    margin-top: 200px;
+  }
+  @include respond(surface) {
+    margin-top: 200px;
+  }
+  .item-bg {
+    background-color: $color-white;
+    padding: 3rem;
+    border-radius: 8px;
+    width: 450px;
+    .item-title {
+      text-align: center;
+      color: $color-title-login;
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+      line-height: 28px;
+      margin-top: 10px;
+      margin-bottom: 25px;
+      font-weight: bold;
+    }
+    .item-form {
+      display: flex;
+      flex-direction: column;
+      &__username {
+        max-width: 450px;
+        margin-top: 20px;
+        input {
+          width: 100%;
+          height: 35px;
+          border: 2px solid $backgroundApp;
+          border-radius: 4px;
+          padding: 0.3rem;
+          &:focus {
+            border: 2px solid $color-sky;
+            box-shadow: 0 0 3px $color-shadow-login;
+            outline-offset: 0px;
+            outline: none;
+          }
+        }
+      }
+      &__btn {
+        max-width: 450px;
+        margin-top: 20px;
+        button {
+          width: 100%;
+          height: 35px;
+          background-color: $color-tree;
+          color: $color-white;
+          border-radius: 4px;
+          border: none;
+          &:focus {
+            border: 2px solid $color-black;
+            box-shadow: 0 0 3px $color-shadow-login;
+            outline-offset: 0px;
+            outline: none;
+          }
+        }
+      }
+      &__btn-google {
+        max-width: 450px;
+        margin-top: 20px;
+        button {
+          width: 100%;
+          height: 35px;
+          background-color: $color-white;
+          color: $color-title-login;
+          border-radius: 4px;
+          border: 2px solid $color-title-login;
+          &:focus {
+            border: 2px solid $color-black;
+            box-shadow: 0 0 3px $color-shadow-login;
+            outline-offset: 0px;
+            outline: none;
+          }
+        }
+      }
+      &__btn-facebook {
+        max-width: 450px;
+        margin-top: 20px;
+        button {
+          width: 100%;
+          height: 35px;
+          background-color: $color-white;
+          color: $color-title-login;
+          border-radius: 4px;
+          border: 2px solid $color-title-login;
+          &:focus {
+            border: 2px solid $color-black;
+            box-shadow: 0 0 3px $color-shadow-login;
+            outline-offset: 0px;
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+}

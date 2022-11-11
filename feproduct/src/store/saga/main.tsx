@@ -36,7 +36,7 @@ export function* getDetailProduct(actions: any){
     try {
         const response:Promise<any> =  yield axios.get(enviroment.local + urlLogin);
         yield put(Actions.PostProduct("post success",true))
-        yield put(Actions.detailproduct(response));
+        // yield put(Actions.detailproduct(response));
     }
     catch (error) {
         put(Actions.PostProduct("post fail",false))

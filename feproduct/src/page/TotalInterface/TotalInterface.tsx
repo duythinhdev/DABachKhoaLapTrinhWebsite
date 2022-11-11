@@ -9,27 +9,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 // import usePasswordToggle  from "./usePasswordToggle";
 import {
-  useParams
+    useParams
 } from "react-router-dom";
 import useSwitchComponent from "../../component/user/hook/useSwitchComponent";
+
 interface ParamTypes {
-  id: string | undefined
+    id: string | undefined
 }
-const TotalInterface = () =>  {
-  let { id } = useParams<ParamTypes>();
-  let { renderSwitch } = useSwitchComponent(id);
-  useEffect(()=> {
-      renderSwitch();
-  },[id])
-  return (
-      <div className="ContainerApp">
-          <Announcement />
-          <Navbar />
-          {renderSwitch()}
-          <Newsletter />
-          <NewsFeeds />
-          <Footer />
-      </div>
-  );
+
+const TotalInterface = () => {
+    let {id} = useParams<ParamTypes>();
+    let {renderSwitch} = useSwitchComponent(id);
+    useEffect(() => {
+        renderSwitch();
+    }, [id])
+    return (
+        <div className="ContainerApp">
+            <Announcement/>
+            <Navbar/>
+            {renderSwitch()}
+            <Newsletter/>
+            <NewsFeeds/>
+            <Footer/>
+        </div>
+    );
 }
 export default TotalInterface;

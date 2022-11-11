@@ -7,7 +7,9 @@ import {postOption, putOption} from "../saga/optionAdmin";
 import { postOrder } from "../saga/order";
 import { getNewsUser } from "../saga/newsUser";
 import { detailProduct } from "../saga/productdetail";
+import { product } from "../saga/product";
 import  * as Actions from '../action/productdetail';
+import  * as ActionsProduct from '../action/product';
 
 export function* watchOrderUser(): Generator<StrictEffect>{ 
     yield all([
@@ -51,5 +53,11 @@ export function* watchDetailProduct(): Generator<StrictEffect>{
         takeEvery(Actions.GET_DETAIL_PRODUCT,detailProduct),
     ])
 }
+export function* watchProduct(): Generator<StrictEffect>{
+    yield all([
+        takeEvery(ActionsProduct.GET_PRODUCT,product),
+    ])
+}
+
 
 

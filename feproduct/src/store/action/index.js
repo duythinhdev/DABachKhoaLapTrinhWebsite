@@ -40,25 +40,6 @@ export {
     deleteNews
 }
 from "../action/newsAdmin";
-export {
-    postReview,
-    deleteReview,
-    updateReview
-}
-from "../action/reviewAdmin";
-export {
-    postComment,
-
-}
-from "../action/commentAdmin";
-export {
-    postCategory,
-    putCategory,
-    deleteCategory,
-    detailproduct,
-    getDetailProduct
-}
-from "../action/categoryproduct";
 
 
 export {

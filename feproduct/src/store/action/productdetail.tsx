@@ -13,10 +13,10 @@ const detailProduct = (id: string | null) => {
         id: id
     }
 }
-const detailProductSuccess = (data: string,option: Object) => {
+const detailProductSuccess = (data: any, option: any) => {
     return {
         type: GET_DETAIL_PRODUCT_SUCCESS,
-        data: data,
+        detail: data,
         option: option,
     }
 }

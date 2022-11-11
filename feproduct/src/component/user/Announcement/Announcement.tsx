@@ -1,7 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import { Link } from 'react-router-dom';
-import { mobile,table } from "../response";
+import {Link} from 'react-router-dom';
 import "./Announcement.scss";
 
 function Announcement() {
@@ -10,16 +8,18 @@ function Announcement() {
             <div className="AnnouncementFlash">
 
             </div>
-            <div className="Announcement"> 
+            <div className="Announcement">
                 <span>Super Deal! Free Shipping on Orders Over $50</span>
-            </div> 
+            </div>
             <div className="AnnouncementTab">
-                <Link to="/user" className="link"  ><span className="span">Trang chủ</span></Link> &nbsp;
-                <Link to="/news"  className="link"><span  className="span">Tin tức</span></Link> &nbsp;
-                <Link to="/news"  className="link"><span  className="span">Slicder </span></Link> &nbsp;
-                <Link to="/system/productdetail"  className="link"><span  className="span">Product Detail </span></Link> &nbsp;
-                <Link to="/system/cart"  className="link"><span  className="span">Giỏ Hàng</span></Link> &nbsp;
-                <Link to="/system/topproduct"  className="link"><span  className="span">Top Sản Phẩm</span></Link> &nbsp;
+                <Link to="/user" className="link"><span className="span">Trang chủ</span></Link> &nbsp;
+                <Link to="/news" className="link"><span className="span">Tin tức</span></Link> &nbsp;
+                <Link to="/news" className="link"><span className="span">Slicder </span></Link> &nbsp;
+                <Link to="/system/productdetail" className="link"><span
+                    className="span">Product Detail </span></Link> &nbsp;
+                <Link to="/system/cart" className="link"><span className="span">Giỏ Hàng</span></Link> &nbsp;
+                <Link to="/system/topproduct" className="link"><span
+                    className="span">Top Sản Phẩm</span></Link> &nbsp;
             </div>
         </div>
     );
