@@ -1,0 +1,38 @@
+@import "../../../../src/sass/_variable";
+@import "../../../../src/sass/_mixin";
+.ant-modal {
+  max-width: calc(100vw - 30px);
+}
+.ant-modal-body {
+  padding: 15px;
+  line-height: 2;
+  word-wrap: break-word;
+}
+.ant-modal-content {
+  border-radius: 8px;
+}
+.ant-modal-root {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  margin: 0px 5px 0px 16px;
+}
+.ant-modal-wrap {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.ant-modal-footer {
+  display: none;
+}
+.wrapper-register {
+  position: absolute;
+  width: 100%;
+  box-shadow: none;
+  //height: 100vh;
+  background-color: $color-white;
+  display: flex;
+  justify-content: center;
+  padding: 0px 16px 0px 16px;
+  height: max-content;
+}

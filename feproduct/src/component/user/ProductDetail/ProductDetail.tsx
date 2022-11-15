@@ -15,7 +15,7 @@ import {Options} from "../../../types/productType";
 import {useDispatch, useSelector, RootStateOrAny} from 'react-redux';
 import * as Actions from "../../../store/action/productdetail";
 import {getDetail, getOptionProductDetail} from "../../../store/selector/productDetailSelector";
-import { Unsubscribe } from "redux";
+import {Unsubscribe} from "redux";
 import {RootStore} from "../../../store/store";
 
 
@@ -41,6 +41,7 @@ const ProductDetail = () => {
     const dispatch = useDispatch();
     const detail = useSelector(getDetail);
     const options = useSelector(getOptionProductDetail);
+
     // console.log("detail", detail);
     // console.log("options", options);
 
@@ -78,13 +79,11 @@ const ProductDetail = () => {
     }, [idProduct])
     useEffect(() => {
         const storeSub$: Unsubscribe = RootStore.subscribe(() => {
-            const { type, payload } = RootStore.getState().lastAction;
+            const {type, payload} = RootStore.getState().lastAction;
             switch (type) {
                 case Actions.GET_DETAIL_PRODUCT_SUCCESS:
-                    console.log("12312312");
                     break;
                 case Actions.GET_DETAIL_PRODUCT_FAIL:
-                    console.log("failed");
                     break;
             }
         });

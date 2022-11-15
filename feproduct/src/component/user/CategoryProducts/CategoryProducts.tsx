@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React from 'react';
 import "./CategoryProducts.scss";
-import HoverDetailProduct from "../CategoryProducts/HoverDetailProduct/HoverDetailProduct";
 import {Link} from 'react-router-dom';
 import {tsCategoryProduct, Product} from "../../../types/productType";
 import useHoverProductDetail from "../hook/useHoverProductDetail";

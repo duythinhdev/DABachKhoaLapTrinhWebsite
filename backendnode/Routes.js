@@ -10,6 +10,7 @@ const newsRoutes = require('./api/news');
 const CategoryNewsRoutes = require('./api/categoryNews');
 const OrderRoutes = require('./api/order');
 const OrderOptionRoutes = require('./api/order_option');
+const UsersRoutes = require("./api/users");
 const cors = require('cors');
 const flash = require('express-flash');
 const session = require('express-session');
@@ -42,6 +43,7 @@ class Routers {
         this.app.use(flash());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(`${this.apiVersion}/user`, userRoutes);
+        this.app.use(`${this.apiVersion}/users`, UsersRoutes);
         this.app.use(`${this.apiVersion}/main`, mainRoutes);
         this.app.use(`${this.apiVersion}/mainDetail`, mainDetailRoutes);
         this.app.use(`${this.apiVersion}/products`, productRoutes);

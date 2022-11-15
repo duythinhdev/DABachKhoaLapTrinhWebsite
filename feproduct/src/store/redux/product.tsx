@@ -33,7 +33,6 @@ const productReducer = (state = initialState, action: any) => {
         case actionProduct.GET_PRODUCT:
             return product(action, state);
         case actionProduct.GET_PRODUCT_SUCCESS:
-            console.log("action",action.list)
             return productSuccess(action, state);
         case actionProduct.GET_PRODUCT_FAIL:
             return productFailed(action, state);

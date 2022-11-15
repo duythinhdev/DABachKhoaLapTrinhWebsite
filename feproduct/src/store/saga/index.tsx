@@ -8,8 +8,12 @@ import { postOrder } from "../saga/order";
 import { getNewsUser } from "../saga/newsUser";
 import { detailProduct } from "../saga/productdetail";
 import { product } from "../saga/product";
+import { login } from "../saga/logins";
+import { getAllProvinces } from "../saga/Provinces";
 import  * as Actions from '../action/productdetail';
 import  * as ActionsProduct from '../action/product';
+import  * as ActionLogin from "../action/logins";
+import  * as ActionProvinces from "../action/provinces";
 
 export function* watchOrderUser(): Generator<StrictEffect>{ 
     yield all([
@@ -58,6 +62,17 @@ export function* watchProduct(): Generator<StrictEffect>{
         takeEvery(ActionsProduct.GET_PRODUCT,product),
     ])
 }
+export function* watchLogins(): Generator<StrictEffect>{
+    yield all([
+        takeEvery(ActionLogin.LOGIN,login),
+    ])
+}
+export function* watchProvinces(): Generator<StrictEffect>{
+    yield all([
+        takeEvery(ActionProvinces.GET_ALL_LOCATION,getAllProvinces),
+    ])
+}
+
 
 
 
