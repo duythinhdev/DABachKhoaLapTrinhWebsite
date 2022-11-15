@@ -1,12 +1,12 @@
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
-import { useDispatch, useSelector} from "react-redux";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { useSelector} from "react-redux";
 import { RootStateOrAny} from "react-redux";
 
 import Home from "../page/homeAdmin/Home";
 import list from "../page/ListAdmin/ListAdmin";
 import Single from "../page/SingleAdmin/Single";
 import New from "../component/adminNew/new/New";
-import { productInputs, userInputs } from "../formSource";
+import { userInputs } from "../formSource";
 
 const RoutingAdmin = () => {
     const darkMode = useSelector((state: RootStateOrAny) => { return  state.main.darkMode });

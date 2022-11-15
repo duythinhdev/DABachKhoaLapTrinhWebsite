@@ -11,7 +11,6 @@ import {
     useParams
 } from "react-router-dom";
 import useSwitchComponent from "../../component/user/hook/useSwitchComponent";
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface ParamTypes {
     id: string | undefined

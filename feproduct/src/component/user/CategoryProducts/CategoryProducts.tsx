@@ -44,7 +44,7 @@ const CategoryProducts: React.FC<props> = React.memo(({indexs, response}) => {
                                   className="button__seemore"><span>Xem tất cả sản phẩm</span></Link>
                         </div> :
                         <Link to={`/system/topproduct?idctproduct=${response?._id}&nameCtProduct=${response?.name}`}
-                              className="button__seemore"><a>Xem tất cả sản phẩm </a></Link>
+                              className="button__seemore"><span>Xem tất cả sản phẩm </span></Link>
                 }
             </div>
         </div>

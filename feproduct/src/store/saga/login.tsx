@@ -1,8 +1,8 @@
-import {put, call,delay,select } from "redux-saga/effects";
-import axios, {AxiosResponse} from "axios";
+import {put, call,select } from "redux-saga/effects";
+import axios from "axios";
 import {enviroment} from "../../enviroment/enviroment";
 import * as Actions from "../action/index";
-import { signUps,login,forgot,typeStatus,changePassword } from "../../types/loginSagaType";
+import { signUps,login,forgot,changePassword } from "../../types/loginSagaType";
 import {createAxios}  from "../../enviroment/axiosApp";
 import * as selectors from './selector';
 
@@ -25,9 +25,7 @@ export function* loginApp(actions: any) : any {
         {
             yield put(Actions.authSuccess(response.data.response.data.token,true));
             yield localStorage.setItem("tokenAdmin",JSON.stringify(response.data.response.data.token));
-            yield alert("success");
         } else if(response.data.response.status === 108) {
-            alert("fail");
             yield put(Actions.authSuccess(null,false));
         }
     }

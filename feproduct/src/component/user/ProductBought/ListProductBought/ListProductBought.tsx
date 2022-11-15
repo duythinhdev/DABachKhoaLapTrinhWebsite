@@ -1,24 +1,23 @@
-import React,{useMemo,useCallback} from 'react';
-import { Product } from "../../../../types/productType";
+import React,{useCallback} from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
 import { propsListProductBought } from "../../../../types/cartTypes";
 
 const  ListProductBought:React.FC<propsListProductBought> = React.memo(({res, index, increaseMinusDetailCart, removeDetailCart}) => {
-    const removedetail = useCallback((index)=>{
+    const removeDetail = (index: any)=>{
         removeDetailCart(index)
-    },[index])
-    const increasedetailCart =  useCallback((index)=>{
+    }
+    const increaseDetailCart =  (index: any)=>{
         increaseMinusDetailCart(index,"plus")
-    },[index])
-    const minusdetailCart =  useCallback((index)=>{
+    }
+    const minusDetailCart =  (index: any)=>{
         increaseMinusDetailCart(index,"minus")
-    },[index])
+    }
     return <div className="itemyoucart__detail" key={index}>
                 <div className="itemyoucart__detail--img">
                     <img src={ res?.images && res?.images[0]?.url} /> 
                     <div>
-                        <DeleteIcon className="icon__delete" onClick={() => {removedetail(index)}} />
+                        <DeleteIcon className="icon__delete" onClick={() => {removeDetail(index)}} />
                     </div>
                 </div>
                 <div className="itemyoucart__detail--name">
@@ -33,9 +32,9 @@ const  ListProductBought:React.FC<propsListProductBought> = React.memo(({res, in
                     <span className="price__real">{res?.options && res?.options[0]?.price}</span>
                     <span className="price__sum">Tổng: {res?.totalAmount}</span>
                     <div className="price__count">
-                        <a className="price__minus" onClick={() => {minusdetailCart(index)}}>-</a>
+                        <a className="price__minus" onClick={() => {minusDetailCart(index)}}>-</a>
                         <input className="price__value" value={res?.quantityItems}  />
-                        <a className="price__add" onClick={() => {increasedetailCart(index)}}>+</a>
+                        <a className="price__add" onClick={() => {increaseDetailCart(index)}}>+</a>
                     </div>
                 </div>
          </div>

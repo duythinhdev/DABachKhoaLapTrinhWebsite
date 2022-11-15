@@ -1,5 +1,6 @@
 $layout-breakpoint-Desktop-All: 993px;
 $layout-breakpoint-desktop-default: 1920px;
+$layout-breakpoint-desktop-low: 1820px;
 $layout-breakpoint-laptop: 1366px;
 $layout-breakpoint-ipad-pro: 1024px;
 $layout-breakpoint-tablet: 768px;
@@ -17,6 +18,11 @@ $layout-breakpoint-galaxyfold: 280px;
     @media (max-width: $layout-breakpoint-desktop-default) {
       @content
     }; // 1920px
+  }
+  @if $breakpoint == desktop-low {
+    @media (max-width: $layout-breakpoint-desktop-low) {
+      @content
+    }; // 1820px
   }
   @if $breakpoint == laptop {
     @media (max-width: $layout-breakpoint-laptop) {

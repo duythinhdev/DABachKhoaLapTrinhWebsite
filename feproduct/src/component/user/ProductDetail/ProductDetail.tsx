@@ -1,18 +1,16 @@
 import React from 'react';
 import "../ProductDetail/ProductDetail.scss";
-// import { motion } from  'framer-motion/dist/framer-motion'
-import {useRef, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 
 import image from "../../../asset/newsoffer/120_7828_dell_ultrasharp_u2422h_thumb4.jpg";
 import NoAvatar from "../../../asset/newsoffer/noavatar.jpg";
 import ModalComment from "./ModalComment/ModalComment";
-// import ImageProductDetail from "./ProductDetailImage";
 import ProductDetailsView from "./ProductDetailsView/ProductDetailsView";
 import {TabName} from "./constants";
 import BodyProductList from "./BodyProductList";
 import useQueryLocation from "../hook/useQueryLocation";
 import {Options} from "../../../types/productType";
-import {useDispatch, useSelector, RootStateOrAny} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as Actions from "../../../store/action/productdetail";
 import {getDetail, getOptionProductDetail} from "../../../store/selector/productDetailSelector";
 import {Unsubscribe} from "redux";
@@ -42,12 +40,8 @@ const ProductDetail = () => {
     const detail = useSelector(getDetail);
     const options = useSelector(getOptionProductDetail);
 
-    // console.log("detail", detail);
-    // console.log("options", options);
-
     const [nameTitle, setNameTitle] = useState<nameTitle>() as any;
     const [item, setItem] = useState({}) as any | Object | undefined;
-    const [option, setOption] = useState<Options | any>();
 
     const [state, setState] = useState<TypeState>({
         isComment: false,
@@ -123,7 +117,7 @@ const ProductDetail = () => {
                     </div>
                     <div className="whitenews__involve--content">
                         <div className="involve__img">
-                            <img src={image}/>
+                            <img src={image} alt="img" />
                         </div>
                         <div className="involve__content">
                             <span>Dell Ultrasharp U2422H Nhìn Em Là Anh Quất Liền</span>

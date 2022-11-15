@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function useNxtPre(container: any | string,next:any | string,pre:any | string) {
     function nextAndPre() {
         let productContainer = document.querySelectorAll(container) as any | NodeListOf<Element>;

@@ -1,5 +1,4 @@
 import React from 'react'
-import useReactHookForm from "../hook/useReactHookForm";
 import { html,propsInput } from "../../../types/cartTypes";
 export default function Input ({formData,changeValue,typeHtml = null,register}: propsInput) {
   switch(typeHtml){

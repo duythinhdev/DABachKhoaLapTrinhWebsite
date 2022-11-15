@@ -1,12 +1,12 @@
 import React from 'react';
 import HoverDetailProduct from "../../CategoryProducts/HoverDetailProduct/HoverDetailProduct";
-import {Product, propsListCategoryProduct} from "../../../../types/productType";
+import {propsListCategoryProduct} from "../../../../types/productType";
 import {Link} from 'react-router-dom';
 
 const ListCategoryProducts: React.FC<propsListCategoryProduct> = React.memo(({res, isHoverDetail, indexProductDetail, index, moveDetail, moveDetailOver}) => {
     return <div className='product--detail'>
         <div className='product--detail__img'>
-            <img src={res?.images[0].url} onMouseOver={() => moveDetail(index)} onMouseLeave={() => moveDetailOver()}/>
+            <img src={res?.images[0].url} onMouseOver={() => moveDetail(index)} onMouseLeave={() => moveDetailOver()} alt="product detail" />
         </div>
         <div className='product--detail__Code'>
             <b> {res.options[0]?.code}</b>

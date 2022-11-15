@@ -1,4 +1,4 @@
-import React,{BaseSyntheticEvent,useMemo} from 'react';
+import React from 'react';
 import useReactHookForm from "../../hook/useReactHookForm";
 import { toast, ToastContainer } from "react-toastify";
 import { propsFormCartBougth,html } from "../../../../types/cartTypes";

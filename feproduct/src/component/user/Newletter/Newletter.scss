@@ -2,20 +2,17 @@
 @import "../../../../src/sass/mixin";
 .ContainerNewletter {
     height: 40vh;
-    background-color: #3d52bf;
-    display: flex;
-    align-items: center;
+    background-color: $color-menu;
+    @include flex-box-column-center();
     margin-top: 100px;
-    justify-content: center;
-    flex-direction: column;
     @include respond(laptop) {
         height: 60vh;
     }
-    @media screen and (max-width: 768px) {
+    @include respond(tablet) {
         height: 60vh;
         width: 100%;
     }
-    @media screen and (max-width: 380px) {
+    @include respond(phone) {
         height: 60vh;
         width: 100%;
         position: relative;
@@ -23,7 +20,7 @@
     .Title {
         font-size: 70px;
         margin-bottom: 20px;
-        color: #FFFFFF;
+        color: $color-white;
         @include respond(laptop) {
             font-size: 30px;
         }
@@ -32,19 +29,18 @@
         font-size: 24px;
         font-weight: 300;
         margin-bottom: 20px;
-        color: #FFFFFF;
-        @media screen and (max-width: 380px) {
+        color: $color-white;
+        @include respond(phone) {
             text-align: center;
         }
     }
     .InputContainer {
         width: 100%;
         height: 40px;
-        background-color: white;
+        background-color: $color-white;
         display: flex;
-        //justify-content: space-between;
         border: 1px solid lightgray;
-        @media screen and (max-width: 380px) {
+        @include respond(phone) {
             width: 80%;
         }
     }
@@ -59,6 +55,6 @@
         flex: 1;
         border: none;
         background-color: teal;
-        color: white;
+        color: $color-white;
     }
 }

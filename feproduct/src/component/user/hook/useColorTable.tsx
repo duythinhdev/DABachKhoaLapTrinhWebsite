@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function useColorTable(attribute: string) {
     function rowAlternateColors() {
         switch(attribute)

@@ -1,4 +1,3 @@
-import React from 'react';
 import {updateObject} from "../share/utility";
 import * as  ActionLogin from "../action/logins";
 type actionLogins = {

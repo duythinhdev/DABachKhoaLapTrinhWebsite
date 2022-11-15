@@ -9,7 +9,6 @@ const service: any = new ProvincesHttp(API_MAIN);
 export function* getAllProvinces(): any {
     const response = yield call(service.list);
     const result = yield configResponses(response);
-    console.log("result",result);
     try {
         yield put(Actions.getLocationSuccess(result));
     }

@@ -2,7 +2,7 @@
 @import "../../../../src/sass/mixin";
 
 .ContainerAnnouncement {
-  height: 30px;
+  height: 35px;
   background-color: $color-menu;
   color: $color-white;
   display: flex;
@@ -13,35 +13,37 @@
   width: $width-public;
   position: fixed;
   z-index: 8;
-  @include respond(laptop) {
-
+  @include respond(desktop-low) {
+    width: $width-public;
+    height: 30px;
   }
-  @include respond(ipad-pro) {
+  @include respond(laptop) {
+    width: $width-public;
+    height: 30px;
+  }
+  @include respond(surface) {
     width: $width-public;
     height: 50px;
-  }
-  @include respond(tablet) {
-    width: $width-public;
   }
   @include respond(phone) {
     width: $width-public;
-    height: 50px;
     position: relative;
     top: 20px;
+    height: 50px;
   }
   .AnnouncementFlash {
     display: flex;
-    flex: 0.4;
+    //flex: 0.4;
     @include respond(ipad-pro) {
       display: flex;
-      flex: 0.1;
+      //flex: 0.1;
     }
   }
 
   .Announcement {
     display: flex;
     justify-content: flex-end;
-    flex: 1;
+    //flex: 1;
 
     span {
       width: $width-public;

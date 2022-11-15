@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import apisauce, { ApiResponse } from 'apisauce';
 import { get, isEmpty, snakeCase } from 'lodash';
+import {LocalStorageService} from "./localStorage.service";
 
 export class ResponseError extends Error {
   public response: Response;
@@ -69,6 +70,7 @@ export class HttpRequest {
   localService: any;
 
   constructor(APIEndpoint: any) {
+    this.localService = new LocalStorageService();
     this.request = apisauce.create({
       baseURL: APIEndpoint,
       headers: {
@@ -78,6 +80,16 @@ export class HttpRequest {
       },
       timeout: 25000,
     });
+    const token = this.localService.getItem('_token');
+    if (token) {
+      const subStringToken = token.substring(
+          1,
+          Object.entries(token).length - 1,
+      );
+      this.request.setHeaders({
+        Authorization: subStringToken,
+      });
+    }
   }
 }
 

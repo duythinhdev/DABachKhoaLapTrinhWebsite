@@ -1,16 +1,12 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect} from 'react';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ModalProductDetail from "../ModalProductdetail/ModalProductDetail";
-import ImageProductDetail from "../ProductDetailImage";
 import Payment from "../../../../asset/Capture123.png";
 import CheckIcon from '@mui/icons-material/Check';
 import Promotion from "../../../../asset/t3-2022-trang-sp-500x654.jpg";
 import useSlideFetching from "../../hook/useSlideFetching";
 import useColorTable from "../../hook/useColorTable";
-import axios, {AxiosResponse} from "axios";
-import { enviroment } from "../../../../enviroment/enviroment";
-import useQueryLocation from "../../hook/useQueryLocation";
 import { useDispatch } from 'react-redux';
 import * as Action from "../../../../store/action/index";
 import { Product,Options,Images} from "../../../../types/productType";
@@ -192,7 +188,7 @@ const ProductDetailsView:React.FC<propsdata> = ({item,option}) => {
             </ul>
         </div>
         <div className="product__showroom--three">
-              <img src={Promotion} />
+              <img src={Promotion} alt="Promotion" />
         </div>
     </div>
 </div>

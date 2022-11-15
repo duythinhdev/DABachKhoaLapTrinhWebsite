@@ -1,4 +1,4 @@
-import React,{useEffect,useState,BaseSyntheticEvent} from 'react';
+import React,{useState,BaseSyntheticEvent} from 'react';
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { changePassword } from "../../../../types/hookForm";

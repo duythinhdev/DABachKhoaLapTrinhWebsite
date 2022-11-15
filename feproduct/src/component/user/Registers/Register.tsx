@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import "./styles.scss";
-import {useForm,Controller} from "react-hook-form";
+import {useForm, Controller} from "react-hook-form";
 import {Modal} from 'antd';
 import 'antd/dist/antd.css';
 import {useDispatch, useSelector} from "react-redux";
@@ -10,44 +10,39 @@ import {provinces} from '../../../store/selector/provincesSelector';
 import {Select} from 'antd';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import DateFnsUtils from '@date-io/date-fns';
-import viLocale from 'date-fns/locale/vi';
 import moment from "moment";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import {StyledRadio} from "../StyleRadio/StyleRadio";
-// import {
-//     KeyboardDatePicker,
-//     MuiPickersUtilsProvider,
-// } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import TextField from '@mui/material/TextField';
 
 
 interface props {
     openModal?: boolean;
     handleClose?: () => void;
 }
-const DEFAULT_FORMAT_DATE = 'dd/MM/yyyy';
-const GENDER_MALE = "0"
-const GENDER_FEMALE = "1"
+
+const GENDER_MALE = "1"
+const GENDER_FEMALE = "0"
 
 const {Option} = Select;
 const Register: React.FC<props> = ({openModal, handleClose}) => {
-    let {handleSubmit, register, getValues, setValue,watch, control } = useForm();
+    let {handleSubmit, register, getValues, setValue, watch, control} = useForm();
     let dispatch = useDispatch();
     let list = useSelector(provinces);
 
     const [province, setProvince] = useState([]);
     const [district, setDistrict] = useState([]);
     const [ward, setWard] = useState([]);
-    const [state,setState] = useState({
+    const [state, setState] = useState({
         selectIcProvinces: false,
         selectIcDistrict: false,
         selectIcWard: false
     });
-    const [values,setValues] = useState({
+    const [values, setValues] = useState({
         provinces: "",
         districts: "",
         wards: ""
@@ -59,18 +54,18 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
     }, [stableDispatch])
     useEffect(() => {
         setProvince(list);
-    },[province])
-    useEffect(() => {
-
-    },[])
+    }, [province])
 
     const handleChangeProvinces = (selected: any) => {
-        setValues({...values, provinces: selected })
-        const provinces: any | never = province?.find((p: any) => { return p?.provinces_code === values?.provinces })
+        const provinces: any | never = province?.find((p: any) => {
+            return p?.provinces_code === selected
+        })
         setDistrict(provinces?.districts)
     }
     const handleChangeDistrict = (selected: any) => {
-        const districts: any | never = district?.find((d: any) => { return d?.district_code === selected})
+        const districts: any | never = district?.find((d: any) => {
+            return d?.district_code === selected
+        })
         setWard(districts?.wards)
     }
 
@@ -87,43 +82,36 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                     <h3> Đăng ký tiki</h3>
                 </div>
                 <form>
-                    <div style={{ marginTop: "15px" }}>
-                        <input />
+                    <div style={{marginTop: "15px"}}>
+                        <input/>
                     </div>
-                    <div style={{ marginTop: "15px" }}>
-                        <input />
+                    <div style={{marginTop: "15px"}}>
+                        <input/>
                     </div>
-                    {/*<LocalizationProvider utils={DateFnsUtils} locale={viLocale}>*/}
-                    {/*    <Controller*/}
-                    {/*        control={control}*/}
-                    {/*        name="birthDay"*/}
-                    {/*        rules={{ required: true }}*/}
-                    {/*        render={({ onChange , value}) => (*/}
-                    {/*            <KeyboardDatePicker*/}
-                    {/*                autoOk*/}
-                    {/*                fullWidth*/}
-                    {/*                size="small"*/}
-                    {/*                variant="inline"*/}
-                    {/*                inputVariant="outlined"*/}
-                    {/*                format={DEFAULT_FORMAT_DATE}*/}
-                    {/*                minDate={moment().add(-100, 'years')}*/}
-                    {/*                maxDate={moment().add(5, 'years')}*/}
-                    {/*                placeholder="Chọn ngày tháng"*/}
-                    {/*                // value={filter?.date}*/}
-                    {/*                onChange={(date: any, dateStr: any) => {*/}
-                    {/*                    // handleChangeDate(date);*/}
-                    {/*                    moment(date).isValid() && onChange(date?.toISOString());*/}
-                    {/*                }}*/}
-                    {/*                style={{ fontSize: '13.5px' }}*/}
-                    {/*                // helperText={''}*/}
-                    {/*                minDateMessage={'Ngày không hợp lệ'}*/}
-                    {/*                maxDateMessage={'Ngày không hợp lệ'}*/}
-                    {/*                invalidDateMessage={'Ngày không hợp lệ'}*/}
-                    {/*            />*/}
-                    {/*        )}*/}
-                    {/*    />*/}
-                    {/*</LocalizationProvider>*/}
-                    <div style={{ marginTop: "15px" }}>
+                    <div style={{marginTop: "15px"}}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Controller
+                                control={control}
+                                name="birthDay"
+                                rules={{required: true}}
+                                render={({field: {onChange, value}}) => (
+                                    <DateTimePicker
+                                        label="Năm sinh"
+                                        value={value}
+                                        renderInput={(props) => <TextField {...props} />}
+                                        minDate={moment().add(-100, 'years')}
+                                        maxDate={moment().add(5, 'years')}
+                                        // format={DEFAULT_FORMAT_DATE}
+                                        // placeholder="Chọn ngày tháng"
+                                        onChange={(date: any, dateStr: any) => {
+                                            moment(date).isValid() && onChange(date?.toISOString());
+                                        }}
+                                    />
+                                )}
+                            />
+                        </LocalizationProvider>
+                    </div>
+                    <div style={{marginTop: "15px"}}>
                         <Select
                             className="container-dropdown"
                             suffixIcon={
@@ -146,14 +134,14 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                         >
                             {province?.map((res: any, index: number) => {
                                 return (
-                                    <Option value={res?.provinces_code} key={index} >
+                                    <Option value={res?.provinces_code} key={index}>
                                         {res.provinces_name}
                                     </Option>
                                 );
                             })}
                         </Select>
                     </div>
-                    <div style={{ marginTop: "15px" }}>
+                    <div style={{marginTop: "15px"}}>
                         <Select
                             className="container-dropdown"
                             suffixIcon={
@@ -176,14 +164,14 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                         >
                             {district?.map((res: any, index: number) => {
                                 return (
-                                    <Option value={res?.district_code} key={index} >
+                                    <Option value={res?.district_code} key={index}>
                                         {res?.district_name}
                                     </Option>
                                 );
                             })}
                         </Select>
                     </div>
-                    <div style={{ marginTop: "15px" }}>
+                    <div style={{marginTop: "15px"}}>
                         <Select
                             className="container-dropdown"
                             suffixIcon={
@@ -206,7 +194,7 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                         >
                             {ward?.map((res: any, index: number) => {
                                 return (
-                                    <Option value={res?.ward_code} key={index} >
+                                    <Option value={res?.ward_code} key={index}>
                                         {res?.ward_name}
                                     </Option>
                                 );
@@ -220,7 +208,7 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                         //     informationUser?.gender_code === 1 ? '1' : '0'
                         // }
                         // key={informationUser?.gender_code}
-                        render={({  field: {onChange,value}  }) => (
+                        render={({field: {onChange, value}}) => (
                             <RadioGroup
                                 className={'wrapper-profile__radioBtn'}
                                 onChange={(e, value) => {
@@ -231,7 +219,7 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                             >
                                 <FormControlLabel
                                     value="1"
-                                    control={<StyledRadio color="primary" />}
+                                    control={<StyledRadio color="primary"/>}
                                     label="Nam"
                                     checked={
                                         value === GENDER_MALE
@@ -239,7 +227,7 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                                 />
                                 <FormControlLabel
                                     value="0"
-                                    control={<StyledRadio color="primary" />}
+                                    control={<StyledRadio color="primary"/>}
                                     label="Nữ"
                                     checked={
                                         value === GENDER_FEMALE
@@ -248,8 +236,8 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
                             </RadioGroup>
                         )}
                     />
-                    <div style={{ marginTop: "15px" }}>
-                        <input />
+                    <div style={{marginTop: "15px"}}>
+                        <input/>
                     </div>
                 </form>
             </div>

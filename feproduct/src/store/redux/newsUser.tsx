@@ -1,4 +1,3 @@
-import React from 'react';
 import {updateObject} from "../share/utility";
 import * as actionTypes from "../action/actiontypes";
 import { tsInitialState,tsActionNews } from "../../types/newsType"

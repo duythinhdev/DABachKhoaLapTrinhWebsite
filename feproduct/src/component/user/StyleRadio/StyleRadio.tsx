@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Radio, { RadioProps } from '@mui/material/Radio';
 
 const useStyles: any = makeStyles({

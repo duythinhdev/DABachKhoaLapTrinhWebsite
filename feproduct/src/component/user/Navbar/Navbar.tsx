@@ -7,19 +7,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CheckIcon from '@mui/icons-material/Check';
 import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
-// import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-// import DirectionsCarTwoToneIcon from '@mui/icons-material/DirectionsCarTwoTone';
-import React, {useEffect, useState, useMemo} from "react";
-import styled from "styled-components";
-import {mobile, table} from "../response";
-import * as actions from "../../../store/action";
-import {useHistory, Link} from 'react-router-dom';
+import React from "react";
+import {Link} from 'react-router-dom';
 import "./Navbar.scss";
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import CarRepairIcon from '@mui/icons-material/CarRepair';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import jwt_decode from "jwt-decode";
-import {useSelector, RootStateOrAny, useDispatch} from 'react-redux';
+import {useSelector, RootStateOrAny} from 'react-redux';
 
 const category: Array<any> = [
     {
@@ -64,27 +58,8 @@ const category: Array<any> = [
 ]
 
 const Navbar = () => {
-    let tokenLocalStorage = localStorage.getItem('accessToken') as any | null | undefined | string;
-    let token = JSON.parse(tokenLocalStorage);
-    let [linkNavBar, setLinkNavBar] = useState(false as boolean);
-    let dispatch = useDispatch();
-    var decoded = "";
-    const [inforToken, setInforToken] = useState({}) as Object | undefined | any;
-    useEffect(() => {
-        if (token) {
-            decoded = jwt_decode(token);
-            setInforToken(decoded);
-        } else {
-            decoded = "";
-            setInforToken(decoded);
-        }
-    }, [])
-    const clickNav = () => {
-        setLinkNavBar(!linkNavBar)
-    }
     let {cart} = useSelector((state: RootStateOrAny) => state.dataUser);
     let {currentUser} = useSelector((state: RootStateOrAny) => state.login);
-    // console.log("cartOfUser",cartOfUser);
     return (
         <div className="header">
             <div className="Wrapper">
@@ -159,37 +134,37 @@ const Navbar = () => {
                     <div className="children-sub">
                         <div className="children-sub__1">
                             <CheckIcon/>
-                            <a href=""> Sản Phẩm đã xem </a>
+                            <a href="/user"> Sản Phẩm đã xem </a>
                         </div>
                     </div>
                     <div className="children-sub">
                         <div className="children-sub__1">
                             <PointOfSaleIcon/>
-                            <a href=""> Flash sale </a>
+                            <a href="/user"> Flash sale </a>
                         </div>
                     </div>
                     <div className="children-sub">
                         <div className="children-sub__1">
                             <PhoneForwardedIcon/>
-                            <a href=""> Tư vấn bán hàng </a>
+                            <a href="/user"> Tư vấn bán hàng </a>
                         </div>
                     </div>
                     <div className="children-sub">
                         <div className="children-sub__1">
                             <CardMembershipIcon/>
-                            <a href=""> Hàng chính hãng </a>
+                            <a href="/user"> Hàng chính hãng </a>
                         </div>
                     </div>
                     <div className="children-sub">
                         <div className="children-sub__1">
                             <CardGiftcardIcon/>
-                            <a href=""> Đổi trả miễn phí </a>
+                            <a href="/user"> Đổi trả miễn phí </a>
                         </div>
                     </div>
                     <div className="children-sub">
                         <div className="children-sub__1">
                             <CarRepairIcon/>
-                            <a href="">Miễn phí vẫn chuyển</a>
+                            <a href="/user">Miễn phí vẫn chuyển</a>
                         </div>
                     </div>
 

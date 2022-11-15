@@ -6,8 +6,6 @@ import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlin
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-// import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
 import { useDispatch } from 'react-redux';
 import  * as action  from "../../../store/action/index";
 

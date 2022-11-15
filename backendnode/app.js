@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require('mongoose');
 require('dotenv').config();
 const app = express();
-const Routes = require('./Routes');
+const factory = require('./Routes');
 
 class kernel {
     app = {};
@@ -18,18 +18,19 @@ class kernel {
     }
 
     allowHeader() {
-        const router = new Routes(this.app, null, null);
+        const router = new factory(this.app, null, null);
         router.allowOriginHeader();
     }
     runApiApp() {
-        const router = new Routes(this.app, this.apiVersion, null);
-        router.runApi();
+        const router = new factory(this.app, this.apiVersion, null);
+        router.runPackage();
+        router.runRouter();
     }
     runDB() {
-        const router = new Routes(null, null, this.mongoose);
+        const router = new factory(null, null, this.mongoose);
         router.connectMongoose();
     }
 }
-mongoose.Promise = global.Promise;
 const kernels = new kernel();
+mongoose.Promise = global.Promise;
 module.exports = kernels.app;

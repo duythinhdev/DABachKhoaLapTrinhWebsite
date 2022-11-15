@@ -1,9 +1,8 @@
-import { takeEvery, all, takeLatest,StrictEffect } from "redux-saga/effects";
+import { takeEvery, all,StrictEffect } from "redux-saga/effects";
 import  * as actionTypes from '../action/actiontypes';
 import {loginApp, loginUser, signUpUser, logoutSaga,
      logoutUserSaga,forgotPasswordUser,changePasswordUser} from "./login";
 import {postProduct,getDetailProduct,putProduct} from "./main";
-import {postOption, putOption} from "../saga/optionAdmin";
 import { postOrder } from "../saga/order";
 import { getNewsUser } from "../saga/newsUser";
 import { detailProduct } from "../saga/productdetail";
@@ -44,14 +43,6 @@ export function* watchProductAdmin(): Generator<StrictEffect> {
         takeEvery(actionTypes.GET_DETAIL_PRODUCT,getDetailProduct),
     ])
 }
-export function* watchOptionAdmin(): Generator<StrictEffect>{
-    yield all([
-        takeEvery(actionTypes.POST_DATA_OPTION_ADMIN,postOption),
-        takeEvery(actionTypes.PUT_DATA_OPTION_ADMIN,putOption),
-    ])
-}
-
-
 export function* watchDetailProduct(): Generator<StrictEffect>{
     yield all([
         takeEvery(Actions.GET_DETAIL_PRODUCT,detailProduct),

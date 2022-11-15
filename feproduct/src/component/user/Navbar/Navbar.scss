@@ -52,7 +52,7 @@
       .Logo {
         .Logo__Link {
           font-weight: bold;
-          color: $white;
+          color: $color-white;
           font-size: 30px;
           text-decoration: none;
           @include respond(ipad-pro) {
@@ -78,13 +78,13 @@
       text-align: center;
 
       .SearchContainer {
-        border: 0.5px solid $white;
+        border: 0.5px solid $color-white;
         display: flex;
         align-items: center;
         border-radius: 4px;
         margin-left: 25px;
         padding: 0px;
-        background: $white;
+        background: $color-white;
       }
 
       select {

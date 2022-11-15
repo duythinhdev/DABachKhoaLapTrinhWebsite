@@ -9,6 +9,7 @@ import {
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { mobile,table } from "../response";
+import  "./footer.scss";
 
 const Container = styled.div`
   display: flex;
@@ -87,15 +88,15 @@ const Payment = styled.img`
 
 const Footer = () => {
     return (
-        <Container>
-            <Left>
-                <Logo>TIKI.</Logo>
-                <Desc>
+        <div className="ContainerFooter row">
+            <div className="Left col-xs-12 col-md-12 col-lg-4 col-xl-4">
+                <h1 className="">TIKI.</h1>
+                <p className="Desc">
                     There are many variations of passages of Lorem Ipsum available, but
                     the majority have suffered alteration in some form, by injected
                     humour, or randomised words which don’t look even slightly believable.
-                </Desc>
-                <SocialContainer>
+                </p>
+                <div className="SocialContainer">
                     <SocialIcon color="3B5999">
                         <Facebook />
                     </SocialIcon>
@@ -108,9 +109,9 @@ const Footer = () => {
                     <SocialIcon color="E60023">
                         <Pinterest />
                     </SocialIcon>
-                </SocialContainer>
-            </Left>
-            <Center>
+                </div>
+            </div>
+            <div className="Center col-xs-12 col-md-12 col-lg-4 col-xl-4">
                 <Title>Useful Links</Title>
                 <List>
                     <ListItem>Home</ListItem>
@@ -124,8 +125,8 @@ const Footer = () => {
                     <ListItem>Wishlist</ListItem>
                     <ListItem>Terms</ListItem>
                 </List>
-            </Center>
-            <Right>
+            </div>
+            <div className="Right col-xs-12 col-md-12 col-lg-4 col-xl-4">
                 <Title>Contact</Title>
                 <ContactItem>
                     <Room style={{marginRight:"10px"}}/> 60,102 Cao Lo,Phuong 4,Quan 8,Tp.hcm,Viet Nam
@@ -137,8 +138,8 @@ const Footer = () => {
                     <MailOutline style={{marginRight:"10px"}} /> thinh.dockc@hcmut.edu.vn
                 </ContactItem>
                 <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
-            </Right>
-        </Container>
+            </div>
+        </div>
     );
 };
 

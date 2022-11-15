@@ -34,20 +34,7 @@ export {
     deleteOption,
 }
 from "../action/optionAdmin";
-export {
-    postNews,
-    updateNews,
-    deleteNews
-}
-from "../action/newsAdmin";
 
-
-export {
-    postUser,
-    putUser,
-    deleteUser
-}
-from "../action/userAdmin";
 
 export { getNewsUser, dataNewsUser }
 from "../action/newsUser.tsx"

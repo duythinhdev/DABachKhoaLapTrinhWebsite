@@ -1,4 +1,3 @@
-import React from 'react';
 import {updateObject} from "../share/utility";
 import * as actionTypes from "../action/actiontypes";
 import { tsInitialState,actionTypeCart,Product } from "../../types/productType"
@@ -74,7 +73,7 @@ const increaseMinusCartUser =  (action: actionTypeCart, state: tsInitialState) =
     }
     return updateObject(state, { cart: newsData,totalMoney:  totalMoneys})
 }
-const dataUserReducer = (state = initialState, action: actionTypeCart) => {
+const cartReducer = (state = initialState, action: actionTypeCart) => {
     switch (action.type) {
         case actionTypes.ADD_CART_USER:
             return addItemsCartUser(action,state);
@@ -98,4 +97,4 @@ const dataUserReducer = (state = initialState, action: actionTypeCart) => {
             return state;
     }
 }
-export default dataUserReducer;
+export default cartReducer;

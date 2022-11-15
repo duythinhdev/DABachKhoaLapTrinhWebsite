@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from "../../component/user/Navbar/Navbar";
 import Announcement from "../../component/user/Announcement/Announcement";
 import Footer from "../../component/user/footer/footer";
-import ProductBought from "../../component/user/ProductBought/ProductBought";
 import TopProduct from '../../component/user/TopProduct/TopProduct';
 import Newsletter from "../../component/user/Newletter/Newletter";
 // import "../LayoutUser/LayoutUser.scss

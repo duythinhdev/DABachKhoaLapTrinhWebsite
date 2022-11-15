@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import "./ListProductBouth.scss";
 
 export default function ListProductBouth() {

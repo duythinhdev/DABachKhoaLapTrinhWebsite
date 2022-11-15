@@ -5,8 +5,7 @@ import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import createSagaMiddleware from "redux-saga";
 import mainReducer from "../store/redux/body";
 import LoginReducer from "../store/redux/login";
-import userAdminReducer from "../store/redux/UserAdmin";
-import dataUserReducer from "../store/redux/dataUser";
+import cartReducer from "./redux/cart";
 import {persistStore, persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import newsReducer from "../store/redux/newsUser";
@@ -19,7 +18,6 @@ import locationReducer from "../store/redux/Provinces";
 import {
     watchLoginAdmin,
     watchProductAdmin,
-    watchOptionAdmin,
     watchNewsUser,
     watchOrderUser,
     watchDetailProduct,
@@ -48,8 +46,7 @@ export function lastAction(state = null, action: any) {
 const rootReducer = combineReducers({
     main: mainReducer,
     login: LoginReducer,
-    userAdmin: userAdminReducer,
-    dataUser: dataUserReducer,
+    dataUser: cartReducer,
     newsUser: newsReducer,
     productDetail: productDetailReducer,
     product: productReducer,
@@ -66,7 +63,6 @@ const persistor = persistStore(store);
 
 sagaMiddleware.run(watchLoginAdmin);
 sagaMiddleware.run(watchProductAdmin);
-sagaMiddleware.run(watchOptionAdmin);
 sagaMiddleware.run(watchNewsUser);
 sagaMiddleware.run(watchOrderUser);
 sagaMiddleware.run(watchDetailProduct);

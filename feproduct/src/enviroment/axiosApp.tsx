@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios from 'axios';
 import {enviroment} from "../enviroment/enviroment";
 import * as action from "../store/action/index";
 import jwt_decode from "jwt-decode";

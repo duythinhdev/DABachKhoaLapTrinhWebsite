@@ -19,7 +19,7 @@ const sliderRoutes = require('./api/slider');
 const cookieParser = require("cookie-parser");
 const ProvincesRouter = require("./api/provinces");
 
-class Routers {
+class factory {
     app;
     apiVersion;
     mongoose;
@@ -28,7 +28,7 @@ class Routers {
         this.apiVersion = apiVersion;
         this.mongoose = mongoose;
     }
-    runApi() {
+    runPackage() {
         this.app.use(morgan('dev'));
         this.app.use(cors())
         this.app.use(bodyParser.json());
@@ -42,6 +42,8 @@ class Routers {
         this.app.use(cookieParser());
         this.app.use(flash());
         this.app.use(bodyParser.urlencoded({ extended: true }));
+    }
+    runRouter() {
         this.app.use(`${this.apiVersion}/user`, userRoutes);
         this.app.use(`${this.apiVersion}/users`, UsersRoutes);
         this.app.use(`${this.apiVersion}/main`, mainRoutes);
@@ -77,4 +79,4 @@ class Routers {
     }
 }
 
-module.exports = Routers;
+module.exports = factory;

@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react';
-import { useSelector,RootStateOrAny,useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector,RootStateOrAny } from 'react-redux';
 export default function InForUserChange() {
     let { currentUser } = useSelector((state: RootStateOrAny) => state.login); 
     return (<div>

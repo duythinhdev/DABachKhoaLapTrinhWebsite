@@ -1,6 +1,5 @@
 
-import React,{useState, useEffect} from 'react';
-import Slider from "../../../images";
+import React,{useState} from 'react';
 
 export default function useSlideFetching(Slider: number) {
     const [slideIndex, setSlideIndex] = useState(1) as any | number ;

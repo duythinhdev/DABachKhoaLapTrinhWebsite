@@ -1,12 +1,14 @@
+@import "../../../../src/sass/_variable";
+@import "../../../../src/sass/_mixin";
 .ContainerFooter {
     display: flex;
-    @media screen and (max-width: 768px) {
-        width: 167%;
-    }
-    @media screen and (max-width: 380px) {
+    @include respond(tablet) {
         width: 100%;
-        position: relative;
-        flex-direction: column;
+    }
+    @include respond(phone) {
+        width: 100%;
+        //position: relative;
+        //flex-direction: column;
     }
     .Left {
         flex: 1;
@@ -21,11 +23,8 @@
         display: flex;
     }
     .Center {
-        flex: 1;
+        //flex: 1;
         padding: 20px;
-        @media screen and (max-width: 380px) {
-            display: none
-        }
     }
     .Title {
         margin-bottom: 30px;
@@ -44,8 +43,9 @@
     .Right {
         flex: 1;
         padding: 20px;
-        @media screen and (max-width: 380px) {
-            background-color: "#fff8f8";
+        @include respond(phone) {
+            background-color: #f8f8f8;
         }
     }
+
 }
