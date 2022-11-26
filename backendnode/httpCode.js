@@ -1,4 +1,4 @@
-export class httpCode {
+class httpCode {
     httpCode = {
         '100': 'Continue',
         '101': 'Switching Protocols',

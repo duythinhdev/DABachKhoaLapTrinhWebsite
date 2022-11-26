@@ -14,7 +14,10 @@ const userSchema = mongoose.Schema({
     address: { type: String, required: false },
     phone_number: { type: String, required: false },
     city: { type: String, required: false },
+    district: { type: String, required: false },
+    ward: { type: String, required: false },
     gender: { type: Boolean, required: false },
+    birthDay:  { type: Date, required: false },
     order: [{
         type: Schema.Types.ObjectId,
         ref: 'Order',
@@ -26,4 +29,4 @@ const userSchema = mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model("User", userSchema);

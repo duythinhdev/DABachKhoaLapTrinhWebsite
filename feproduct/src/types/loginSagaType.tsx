@@ -48,3 +48,21 @@ export type changePassword = {
     passwordOld: string,
     passwordNew: string
 }
+
+export interface actionRegister {
+    data: typeRegister
+}
+export interface typeRegister {
+    username?: string;
+    full_name?: string;
+    permission?: number;
+    is_active?: number;
+    address?: string;
+    gender?: number,
+    phone_number?: string;
+    provinces?:string;
+    ward?: string;
+    district?: string;
+    birthDay?: string;
+    password?: string;
+}

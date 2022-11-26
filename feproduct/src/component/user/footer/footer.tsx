@@ -8,31 +8,31 @@ import {
     Twitter,
 } from "@mui/icons-material";
 import styled from "styled-components";
-import { mobile,table } from "../response";
+// import { mobile,table } from "../response";
 import  "./footer.scss";
 
-const Container = styled.div`
-  display: flex;
-  ${table({ width: "100%" })}
-  ${mobile({ width: "100%",position: "relative",flexDirection: "column" })}
-`;
-
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-`;
-
-const Logo = styled.h1``;
-
-const Desc = styled.p`
-  margin: 20px 0px;
-`;
-
-const SocialContainer = styled.div`
-  display: flex;
-`;
+// const Container = styled.div`
+//   display: flex;
+//   ${table({ width: "100%" })}
+//   ${mobile({ width: "100%",position: "relative",flexDirection: "column" })}
+// `;
+//
+// const Left = styled.div`
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   padding: 20px;
+// `;
+//
+// const Logo = styled.h1``;
+//
+// const Desc = styled.p`
+//   margin: 20px 0px;
+// `;
+//
+// const SocialContainer = styled.div`
+//   display: flex;
+// `;
 
 const SocialIcon = styled.div`
   width: 40px;
@@ -46,11 +46,6 @@ const SocialIcon = styled.div`
   margin-right: 20px;
 `;
 
-const Center = styled.div`
-  flex: 1;
-  padding: 20px;
-  ${mobile({ display: "none" })}
-`;
 
 const Title = styled.h3`
   margin-bottom: 30px;
@@ -69,12 +64,6 @@ const ListItem = styled.li`
   margin-bottom: 10px;
 `;
 
-const Right = styled.div`
-  flex: 1;
-  padding: 20px;
-  ${mobile({ backgroundColor: "#fff8f8" })}
-
-`;
 
 const ContactItem = styled.div`
   margin-bottom: 20px;

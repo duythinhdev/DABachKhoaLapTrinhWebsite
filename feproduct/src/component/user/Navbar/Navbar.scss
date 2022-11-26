@@ -1,31 +1,31 @@
 @import "../../../../src/sass/variable";
 @import "../../../../src/sass/mixin";
 
-.header {
+.wrapper-navbar {
   background: $color-public;
-  height: 100px;
-  @include flex-box-column();
+  height: 160px;
   position: fixed;
-  width: 100%;
+  width: $width-public;
   z-index: 8;
   margin-top: 30px;
+  @include flex-box-column();
   @include respond(laptop) {
     height: 160px;
   }
   @include respond(ipad-pro) {
-    width: 100%;
+    width: $width-public;
     margin-top: 47px;
   }
   @include respond(tablet) {
-    height: 160px;
-    width: 100%;
+    height: 260px;
+    width: $width-public;
   }
   @include respond(phone) {
-    height: 10%;
-    width: 100%;
+    height: 255px;
+    width: $width-public;
   }
 
-  .Wrapper {
+  .component-navbar {
     padding: 10px 20px;
     @include flex-box-center();
     flex: 0.7;
@@ -89,7 +89,7 @@
 
       select {
         border: none;
-        width: 100%;
+        width: $width-public;
         height: 38px;
         padding-left: 3px;
         float: left;
@@ -104,7 +104,7 @@
           width: 100px;
         }
         @include respond(surface) {
-          width: 100%;
+          width: $width-public;
         }
         @include respond(XR) {
           width: 50%;
@@ -119,13 +119,16 @@
       .Input {
         border: none;
         outline: none;
-        width: 474.2px;
+        width: 24vw;
         cursor: pointer;
         @include respond(laptop) {
-          width: 400.2px;
+          width: 17vw;
         }
         @include respond(ipad-pro) {
-          width: 300px;
+          width: 150px;
+        }
+        @include respond(tablet) {
+          width: 100px;
         }
         @include respond(surface) {
           width: 100%;
@@ -140,10 +143,10 @@
 
       .Button {
         @include respond(Desktop-All) {
-          width: 110px;
+          width: 40%;
         }
         @include respond(ipad-pro) {
-          width: 100px;
+          width: 100%;
         }
         @include respond(XR) {
           width: 50%;
@@ -151,7 +154,7 @@
         @include respond(surface) {
           width: 100%;
         }
-        width: 100px;
+        width: $width-public;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
         height: 42px;
@@ -284,7 +287,7 @@
           font-size: 10px;
         }
         text-decoration: none;
-        color: $white;
+        color: $color-white;
       }
     }
 
@@ -313,7 +316,7 @@
         &__1 {
           display: flex;
           justify-content: flex-start;
-          color: $white;
+          color: $color-white;
 
           a {
             @include respond(ipad-pro) {
@@ -326,7 +329,7 @@
               font-size: 10px;
             }
             text-decoration: none;
-            color: $white;
+            color: $color-white;
           }
         }
       }

@@ -9,7 +9,6 @@ import ProductDetailsView from "./ProductDetailsView/ProductDetailsView";
 import {TabName} from "./constants";
 import BodyProductList from "./BodyProductList";
 import useQueryLocation from "../hook/useQueryLocation";
-import {Options} from "../../../types/productType";
 import {useDispatch, useSelector} from 'react-redux';
 import * as Actions from "../../../store/action/productdetail";
 import {getDetail, getOptionProductDetail} from "../../../store/selector/productDetailSelector";

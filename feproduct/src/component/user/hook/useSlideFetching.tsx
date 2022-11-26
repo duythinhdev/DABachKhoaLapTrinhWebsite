@@ -1,39 +1,37 @@
 
-import React,{useState} from 'react';
+import React,{useState,useCallback} from 'react';
 
 export default function useSlideFetching(Slider: number) {
     const [slideIndex, setSlideIndex] = useState(1) as any | number ;
     const [seeMore,setSeeMore] = useState(false) as any | Boolean;
     const [isShowModal,setIsShowModal] = useState(false) as any | Boolean;
-    const enableSeeMore = () => {
+    const enableSeeMore = useCallback(() => {
       setSeeMore(true)
-    }
-    const disableSeeMore = () => {
+    },[seeMore])
+    const disableSeeMore = useCallback(() => {
         setSeeMore(false)
-    }
-    const showModalPd = () => {
+    },[seeMore])
+    const showModalPd = useCallback(() => {
         setIsShowModal(true)
-    }
-    const hideModalPd = () => {
+    },[isShowModal])
+    const hideModalPd =  useCallback(() => {
         setIsShowModal(false)
-    }
-    const nextSlide = () => {
+    },[isShowModal])
+    const nextSlide = useCallback(() => {
         if (slideIndex !== Slider) {
           setSlideIndex(slideIndex + 1);
         } else if (slideIndex === Slider) {
           setSlideIndex(1);
         }
-        console.log("nextSlide", slideIndex);
-      };
+      },[slideIndex]);
     
-      const prevSlide = () => {
+      const prevSlide = useCallback(() => {
         if (slideIndex !== 1) {
           setSlideIndex(slideIndex - 1);
         } else if (slideIndex === 1) {
           setSlideIndex(Slider);
         }
-        console.log("prevSlide", slideIndex);
-      };
+      },[slideIndex]);
   
     return { 
       slideIndex,setSlideIndex,

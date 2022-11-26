@@ -26,7 +26,7 @@ const detailSuccess = (action: action, state: tsInitialState) => {
     return updateObject(state, { loading: false, list: action?.detail,option: action.option })
 }
 const detailFailed = (action: any, state: any) => {
-    return updateObject(state, { loading: false, list: {}, option: {} })
+    return updateObject(state, { loading: false, list: {}, option: {},errors: action.errors  })
 }
 const productDetailReducer = (state = initialState, action: any) => {
     switch (action.type) {

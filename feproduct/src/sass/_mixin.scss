@@ -7,7 +7,7 @@ $layout-breakpoint-tablet: 768px;
 $layout-breakpoint-surface: 540px;
 $layout-breakpoint-xr: 414px;
 $layout-breakpoint-iphone4: 380px;
-$layout-breakpoint-galaxyfold: 280px;
+$layout-breakpoint-galaxy-fold: 280px;
 @mixin respond($breakpoint) {
   @if $breakpoint == Desktop-All {
     @media (min-width: $layout-breakpoint-Desktop-All) {
@@ -55,7 +55,7 @@ $layout-breakpoint-galaxyfold: 280px;
     }; //380px
   }
   @if $breakpoint == galaxyfold {
-    @media (max-width: $layout-breakpoint-galaxyfold) {
+    @media (max-width: $layout-breakpoint-galaxy-fold) {
       @content
     }; //280px
   }

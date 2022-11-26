@@ -44,7 +44,7 @@ const LoginUser = () => {
             <Navbar />
             {renderSwitch()}
             <Newsletter />
-            <NewsFeeds />
+            {/*<NewsFeeds />*/}
             <Footer />
         </div>
     );

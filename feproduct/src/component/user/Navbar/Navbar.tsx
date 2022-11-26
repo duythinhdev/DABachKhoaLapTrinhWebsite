@@ -13,7 +13,8 @@ import "./Navbar.scss";
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import CarRepairIcon from '@mui/icons-material/CarRepair';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import {useSelector, RootStateOrAny} from 'react-redux';
+import {useSelector} from 'react-redux';
+import { cart } from "../../../store/selector/cartSelector";
 
 const category: Array<any> = [
     {
@@ -58,23 +59,23 @@ const category: Array<any> = [
 ]
 
 const Navbar = () => {
-    let {cart} = useSelector((state: RootStateOrAny) => state.dataUser);
-    let {currentUser} = useSelector((state: RootStateOrAny) => state.login);
+    const getCart = useSelector(cart);
+    // let {currentUser} = useSelector((state: RootStateOrAny) => state.login);
     return (
-        <div className="header">
-            <div className="Wrapper">
-                <div className="Left">
+        <div className="wrapper-navbar">
+            <div className="component-navbar row">
+                <div className="Left col-xs-12 col-md-6 col-lg-4">
                     <div className="Logo">
                         <Link className="Logo__Link" to="/user">TiKi
                         </Link>
                     </div>
                 </div>
-                <div className="Center">
+                <div className="Center col-xs-12 col-md-6  col-lg-4">
                     <form className="SearchContainer">
                         <select>
                             {
                                 category.map((res: any, index: number) => {
-                                    <option>2</option>
+                                    // <option>2</option>
                                     return <option key={index}>{res.name}</option>
                                 })
                             }
@@ -87,7 +88,7 @@ const Navbar = () => {
                         </div>
                     </form>
                 </div>
-                <div className="Right">
+                <div className="Right col-xs-12 col-md-12 col-lg-4">
                     <div className="MenuItem">
                         <div className="MenuItem__Icon"><LocalPhoneOutlinedIcon/></div>
                         <div className="MenuItem__span">
@@ -106,62 +107,62 @@ const Navbar = () => {
                         <div className="MenuItem__Icon"><Link className="MenuItem__Link"
                                                               to="/system/account"><AccountCircleOutlinedIcon/></Link>
                         </div>
-                        {currentUser?.accessToken ? <div className="MenuItem__span">
+                        {/* {currentUser?.accessToken ? <div className="MenuItem__span">
                                 <Link className="MenuItem__Link" to="/informationuser/list"> {currentUser?.email} </Link>
                             </div>
-                            :
+                            : */}
                             <div className="MenuItem__span">
                                 <Link className="MenuItem__Link" to="/system/account"><span>Đăng nhập </span></Link>
-                                <Link className="MenuItem__Link" to="/system/register"> <span>Đăng ký</span></Link>
+                                {/* <Link className="MenuItem__Link" to="/system/register"> <span>Đăng ký</span></Link> */}
                             </div>
-                        }
+                        {/* } */}
                     </div>
                     <div className="MenuItem">
-                        <Badge badgeContent={cart && cart.length} color="error">
+                        <Badge badgeContent={getCart && getCart.length} color="error">
                             <Link to="/system/cart" className="MenuItem__Link"> <ShoppingCartOutlined/></Link>
                         </Badge>
                     </div>
                 </div>
             </div>
-            <div className="Menu-children">
-                <div className="Menu-children__category">
+            <div className="Menu-children row ">
+                <div className="Menu-children__category col-xs-2 col-md-2 col-lg-3">
                     <MenuIcon/>
                     <a href="/user">
                         DANH MỤC SẢN PHẨM
                     </a>
                 </div>
-                <div className="Menu-children__sub">
-                    <div className="children-sub">
+                <div className="Menu-children__sub col-xs-10 col-md-10 col-lg-9 row">
+                    <div className="children-sub col-xs-4 col-md-4 col-lg-2">
                         <div className="children-sub__1">
                             <CheckIcon/>
                             <a href="/user"> Sản Phẩm đã xem </a>
                         </div>
                     </div>
-                    <div className="children-sub">
+                    <div className="children-sub col-xs-4 col-md-4 col-lg-2">
                         <div className="children-sub__1">
                             <PointOfSaleIcon/>
                             <a href="/user"> Flash sale </a>
                         </div>
                     </div>
-                    <div className="children-sub">
+                    <div className="children-sub col-xs-4 col-md-4 col-lg-2">
                         <div className="children-sub__1">
                             <PhoneForwardedIcon/>
                             <a href="/user"> Tư vấn bán hàng </a>
                         </div>
                     </div>
-                    <div className="children-sub">
+                    <div className="children-sub col-xs-4 col-md-4 col-lg-2">
                         <div className="children-sub__1">
                             <CardMembershipIcon/>
                             <a href="/user"> Hàng chính hãng </a>
                         </div>
                     </div>
-                    <div className="children-sub">
+                    <div className="children-sub col-xs-4 col-md-4 col-lg-2">
                         <div className="children-sub__1">
                             <CardGiftcardIcon/>
                             <a href="/user"> Đổi trả miễn phí </a>
                         </div>
                     </div>
-                    <div className="children-sub">
+                    <div className="children-sub col-xs-4 col-md-4 col-lg-2">
                         <div className="children-sub__1">
                             <CarRepairIcon/>
                             <a href="/user">Miễn phí vẫn chuyển</a>

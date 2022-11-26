@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import Navbar from "../../component/user/Navbar/Navbar";
 import Announcement from "../../component/user/Announcement/Announcement";
 import Newsletter from "../../component/user/Newletter/Newletter";
-import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
 import Footer from "../../component/user/footer/footer";
 import "../layoutUser/layoutUser.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,7 +27,7 @@ const TotalInterface = () => {
             <Navbar/>
             {renderSwitch()}
             <Newsletter/>
-            <NewsFeeds/>
+            {/*<NewsFeeds/>*/}
             <Footer/>
         </div>
     );

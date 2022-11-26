@@ -4,6 +4,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import { app } from "./store/store";
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
     app,

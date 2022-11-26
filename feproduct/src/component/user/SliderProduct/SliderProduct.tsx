@@ -91,7 +91,7 @@ const data = [
 
 ]
 
-
+const TIME_OUT_SLIDE = 4000;
 const CategoryProduct = () => {
     let {slideIndex, setSlideIndex, nextSlide, prevSlide} = useSlideFetching(Slider.length);
 
@@ -105,9 +105,10 @@ const CategoryProduct = () => {
                 setSlideIndex(1);
             }
             setSlideIndex(Math.round(Math.random() * Slider.length));
-        }, 2000);
+        }, TIME_OUT_SLIDE);
         return () => clearInterval(setIntervalCount);
-    })
+    },[slideIndex])
+
     return (
         <div className='header-menu-holder'>
             <div className='header-menu-holder__space1'>
@@ -116,7 +117,7 @@ const CategoryProduct = () => {
             <div className='header-menu-holder__category'>
                 {
                     data.map((res: any, index: number) => {
-                        return <div className='header-menu-category'>
+                        return <div className='header-menu-category' key={index}>
                             <div className='header-menu-category__img'>
                                 <img src={res.img} alt="1" />
                             </div>
@@ -135,7 +136,7 @@ const CategoryProduct = () => {
                             key={index}
                             className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                         >
-                            <img src={res} alt="3"/>;
+                            <img src={res} alt="slider"/>;
                         </div>
                     })
                 }
@@ -156,10 +157,10 @@ const CategoryProduct = () => {
             </div>
             <div className='header-menu-holder__discount'>
                 <div className="header-menu-holder__discount--A">
-                    <img src={ImageDiscountA}/>
+                    <img src={ImageDiscountA} alt="postCast1" />
                 </div>
                 <div className="header-menu-holder__discount--A">
-                    <img src={ImageDiscountB}/>
+                    <img src={ImageDiscountB} alt="postCast2" />
                 </div>
             </div>
             <div className='header-menu-holder__space2'>

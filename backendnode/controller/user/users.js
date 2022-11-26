@@ -1,13 +1,12 @@
-const mongoose = require("mongoose");
 const User = require("../../models/user");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const httpCode = require('../../httpCode');
 
 
 exports.signup = (req, res, next) => {
     User.find({ email: req.body.email }).exec().then(user => {
         if (user.length >= 1) {
-            console.log("user", user);
             return res.status(409).json({
                 message: 'Mail exists'
             })
@@ -19,24 +18,26 @@ exports.signup = (req, res, next) => {
                     })
                 } else {
                     const user = new User({
-                        email: req.body.email,
-                        full_name: req.body.full_name,
+                        email: req.body.userName,
+                        full_name: req.body.fullName,
                         permission: req.body.permission,
                         is_active: req.body.is_active,
                         address: req.body.address,
-                        gender: req.body.gender,
-                        phone_number: req.body.phone_number,
+                        gender: req.body.gender === 1 ? true : false,
+                        phone_number: req.body.phoneNumber,
                         city: req.body.city,
+                        ward: req.body.ward,
+                        district: req.body.district,
+                        birthDay: req.body.birthDay,
                         password: hash
                     });
                     user.save().then(result => {
                             res.status(201).json({
-                                message: "User created",
+                                message: "Đăng ký tài khoản thành công vui lòng đăng nhập",
                                 result: result
                             })
                         })
                         .catch(err => {
-                            console.log(err)
                             res.status(500).json({
                                 error: err
                             })

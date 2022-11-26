@@ -4,7 +4,7 @@
     background-color: $backgroundApp;
     padding: 0px 100px;
     box-sizing: border-box;
-    margin-top: 140px;
+    margin-top: 240px;
     @include flex-box-start();
     @include respond(laptop) {
         margin-top: 240px;
@@ -120,7 +120,7 @@
                     &--sum {
                         @include flex-box-center();
                         flex: 0.1;
-                        background-color: backgroundApp;
+                        background-color: $backgroundApp;
                     }
                 }
             }
@@ -239,7 +239,7 @@
                         padding: 6px 48px 6px 33px;
                         display: inline-block;
                         position: relative;
-                        background: $corlor-red-2;
+                        background: $color-red-2;
                         clip-path: polygon(100% 0, 88% 52%, 100% 100%, 0% 100%, 0 50%, 0% 0%);
                     }
                     ul {
@@ -430,7 +430,7 @@
             padding: 0px 0px 0px 30px;
             &--titleoffer {
                 display: flex;
-                border-bottom: 1px solid backgroundApp;
+                border-bottom: 1px solid $backgroundApp;
             }
             &--content {
                 @include flex-box-row();

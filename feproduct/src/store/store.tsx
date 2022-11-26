@@ -12,8 +12,8 @@ import newsReducer from "../store/redux/newsUser";
 import productDetailReducer from "../store/redux/productdetail";
 import productReducer from "./redux/product";
 import {PersistGate} from "redux-persist/integration/react";
-import loginsReducer from "../store/redux/logins";
-import locationReducer from "../store/redux/Provinces";
+import loginsReducer from "./redux/auth";
+import locationReducer from "./redux/provinces";
 
 import {
     watchLoginAdmin,

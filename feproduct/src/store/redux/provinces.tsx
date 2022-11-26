@@ -1,4 +1,4 @@
-import {updateObject} from "../share/utility";
+import { updateObject } from "../share/utility";
 import * as actions from "../action/provinces";
 
 interface tsInitialState {

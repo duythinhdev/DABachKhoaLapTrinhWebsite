@@ -2,10 +2,11 @@
 import {HttpRequest} from "../../store/share/Request";
 
 export const ApiRoutes = {
+    REGISTER: "users/signups",
     LOGIN: "users/login",
 };
 
-export class LoginHttp {
+export class AuthHttp {
     request: any;
     endPoint: any;
 
@@ -17,7 +18,7 @@ export class LoginHttp {
     login = (data: any) => {
         return this.request.post(ApiRoutes.LOGIN, data);
     };
-    register = () => {
-        return this.request.post();
+    register = (data: any) => {
+        return this.request.post(ApiRoutes.REGISTER,data);
     }
 }

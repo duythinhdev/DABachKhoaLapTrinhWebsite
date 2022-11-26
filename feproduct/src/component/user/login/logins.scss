@@ -1,12 +1,12 @@
 @import "../../../../src/sass/_variable";
 @import "../../../../src/sass/_mixin";
 .wrapper-login {
-  @include margin-top(140px);
+  @include margin-top(240px);
   @include respond(laptop) {
-    margin-top: 200px;
+    margin-top: 220px;
   }
   @include respond(surface) {
-    margin-top: 200px;
+    margin-top: 220px;
   }
   .item-bg {
     background-color: $color-white;

@@ -6,7 +6,6 @@ import Newsletter from "../../component/user/Newletter/Newletter";
 import Footer from "../../component/user/footer/footer";
 import SliderProduct from "../../component/user/SliderProduct/SliderProduct";
 import CategoryProducts from "../../component/user/CategoryProducts/CategoryProducts";
-import NewsFeeds from "../../component/user/NewsFeed/NewsFeed";
 import {tsCategoryProduct} from "../../types/productType";
 import {useDispatch, useSelector} from "react-redux";
 import * as Actions from "../../store/action/product";
@@ -22,10 +21,14 @@ const LayoutUser = React.memo(() => {
     const dispatch = useDispatch();
     const product = useSelector(getProduct);
     const loadings = useSelector(loading);
-    const stableDispatch = useCallback(dispatch, []);
-    useEffect(() => {
+
+    const fetchProduct = useCallback(() => {
         dispatch(Actions.product());
-    }, [stableDispatch])
+    }, [dispatch])
+
+    useEffect(() => {
+        fetchProduct();
+    }, [fetchProduct])
 
     return (
         <div className="ContainerApp">
@@ -42,7 +45,6 @@ const LayoutUser = React.memo(() => {
                     })
             }
             <Newsletter/>
-            <NewsFeeds/>
             <Footer/>
         </div>
     );

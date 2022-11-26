@@ -7,11 +7,11 @@ import { postOrder } from "../saga/order";
 import { getNewsUser } from "../saga/newsUser";
 import { detailProduct } from "../saga/productdetail";
 import { product } from "../saga/product";
-import { login } from "../saga/logins";
+import { login, register } from "./auth";
 import { getAllProvinces } from "../saga/Provinces";
 import  * as Actions from '../action/productdetail';
 import  * as ActionsProduct from '../action/product';
-import  * as ActionLogin from "../action/logins";
+import  * as ActionLogin from "../action/auth";
 import  * as ActionProvinces from "../action/provinces";
 
 export function* watchOrderUser(): Generator<StrictEffect>{ 
@@ -56,6 +56,7 @@ export function* watchProduct(): Generator<StrictEffect>{
 export function* watchLogins(): Generator<StrictEffect>{
     yield all([
         takeEvery(ActionLogin.LOGIN,login),
+        takeEvery(ActionLogin.REGISTER,register),
     ])
 }
 export function* watchProvinces(): Generator<StrictEffect>{

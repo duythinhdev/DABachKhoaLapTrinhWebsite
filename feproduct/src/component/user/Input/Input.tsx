@@ -39,7 +39,8 @@ export default function Input ({formData,changeValue,typeHtml = null,register}: 
                             return <>
                                     <input type={res.type}
                                             value={res.value} 
-                                            {...register(res.name)}  id={res.name} className={`form-check-input ${res.error ? 'is-invalid' : ''}`}
+                                            {...register(res.name)}
+                                            id={res.name} className={`form-check-input ${res.error ? 'is-invalid' : ''}`}
                                             name={res.name}
                                             onChange={(event) => changeValue(event)}
                                             /> {res.text} 

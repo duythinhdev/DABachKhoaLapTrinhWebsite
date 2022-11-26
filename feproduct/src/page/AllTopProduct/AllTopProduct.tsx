@@ -14,7 +14,7 @@ const AllTopProduct = () => {
             <Navbar />
             <TopProduct />
             <Newsletter />
-            <NewsFeeds />
+            {/*<NewsFeeds />*/}
             <Footer />
         </div>
     );

@@ -8,6 +8,8 @@ import {RootStore} from "../../../store/store";
 import {Unsubscribe} from 'redux';
 import {useForm} from "react-hook-form";
 import Register from "../Registers/Register";
+import * as ActionLogin from "../../../store/action/auth";
+import { ToastContainer, toast } from 'react-toastify';
 
 enum typeLogins {
     LOGIN_USERNAME_TYPE = 'LOGIN_USERNAME_TYPE',
@@ -86,6 +88,13 @@ const LoginUser = () => {
         const storeSub$: Unsubscribe = RootStore.subscribe(() => {
             const {type, payload} = RootStore.getState().lastAction;
             switch (type) {
+                // case ActionLogin.REGISTER_SUCCESS:
+                //     toast(payload);
+                //     break;
+                // case ActionLogin.REGISTER_FAIL:
+                //     console.log()
+                //     toast("Đăng ký tài khoản thất bại vui lòng đăng ký lại");
+                //     break;
             }
         });
         return () => {
@@ -136,6 +145,7 @@ const LoginUser = () => {
                               handleClose={() => {setState({...state, loadingRegister: false})}}
                     />
             }
+            {/*<ToastContainer />*/}
         </>
     );
 };

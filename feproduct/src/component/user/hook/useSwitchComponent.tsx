@@ -4,7 +4,6 @@ import InForUserChangePassword from "../InforUser/InForUserChangePassword/InForU
 import ListProductBouth from "../InforUser/ListProductBougth/ListProductBouth";
 import Login from "../login/login";
 import Forgot from "../../../component/user/Forgot/ForgotPassword";
-// import Register from "../register/Register";
 import TopProduct from "../../../component/user/TopProduct/TopProduct";
 import ProductDetail from "../../../component/user/ProductDetail/ProductDetail";
 import Cart from "../../../component/user/ProductBought/ProductBought";

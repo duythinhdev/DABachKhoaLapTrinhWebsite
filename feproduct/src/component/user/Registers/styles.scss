@@ -1,5 +1,6 @@
 @import "../../../../src/sass/_variable";
 @import "../../../../src/sass/_mixin";
+
 .ant-modal {
   max-width: calc(100vw - 30px);
 }
@@ -35,4 +36,35 @@
   justify-content: center;
   padding: 0px 16px 0px 16px;
   height: max-content;
+}
+.wrapper-register {
+  .title {
+    &__register{
+      color: $color-public;
+    }
+  }
+  .text-error {
+    color: $color-red-1;
+  }
+  .btn__register {
+    margin-top: 15px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    button {
+      background-color: $color-tree;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      width: 100px;
+      height: 40px;
+      color: $color-white;
+      &:focus {
+        border: 2px solid $color-sky;
+        box-shadow: 0 0 3px $color-shadow-login;
+        outline-offset: 0px;
+        outline: none;
+      }
+    }
+  }
 }
