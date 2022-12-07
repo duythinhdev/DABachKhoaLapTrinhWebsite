@@ -1,7 +1,7 @@
 const User = require("../../models/user");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const httpCode = require('../../httpCode');
+require('dotenv').config();
 
 
 exports.signup = (req, res, next) => {
@@ -49,35 +49,35 @@ exports.signup = (req, res, next) => {
     })
 }
 
+const MESSAGE_LOGIN_SUCCESS = 'Đăng nhập Thành công';
+const MESSAGE_LOGIN_FAILED = 'Đăng nhập thất bại';
+const MESSAGE_LOGIN_DONT_FIND_USER = 'Không tìm thấy người dùng';
+
 exports.login = (req, res, next) => {
     User.find({ email: req.body.email })
         .exec()
         .then(user => {
             if (user.length < 1) {
                 return res.status(404).json({
-                    message: 'Không tìm thấy người dùng'
+                    message: MESSAGE_LOGIN_DONT_FIND_USER
                 })
             }
             bcrypt.compare(req.body.password, user[0].password, (err, result) => {
                 if (err) {
                     return res.status(401).json({
-                        message: 'Đăng nhập thất bại'
+                        message: MESSAGE_LOGIN_FAILED
                     })
                 }
                 if (result) {
-                    const token = jwt.sign({
-                        email: user[0].email,
-                        userId: user[0]._id,
-                    }, process.env.SECRET_KEY, {
-                        expiresIn: "7d"
-                    })
+                    const token = generateAccessToken(user[0]);
                     return res.status(200).json({
-                        message: 'Đăng nhập Thành công',
+                        message: MESSAGE_LOGIN_SUCCESS,
                         token: token,
+                        information:  user[0]
                     })
                 }
                 res.status(401).json({
-                    message: 'Đăng nhập không thành công'
+                    message: MESSAGE_LOGIN_FAILED
                 })
             })
         })
@@ -88,3 +88,12 @@ exports.login = (req, res, next) => {
             })
         });
 }
+function generateAccessToken (user) {
+    return jwt.sign({
+        email: user.email,
+        userId: user._id,
+        role: user.role,
+    }, process.env.ACCESS_KEY, {
+        expiresIn: "7d"
+    })
+};

@@ -74,22 +74,22 @@ const Register: React.FC<props> = ({openModal, handleClose}) => {
         })
         setWard(districts?.wards)
     },[values?.districts])
-    // useEffect(() => {
-    //     const storeSub$: Unsubscribe = RootStore.subscribe(() => {
-    //         const {type, payload} = RootStore.getState().lastAction;
-    //         switch (type) {
-    //             case ActionLogin.REGISTER_SUCCESS:
-    //                 toast(payload);
-    //                 break;
-    //             case ActionLogin.REGISTER_FAIL:
-    //                 toast("Đăng ký tài khoản thất bại vui lòng đăng ký lại");
-    //                 break;
-    //         }
-    //     });
-    //     return () => {
-    //         storeSub$();
-    //     };
-    // }, []);
+    useEffect(() => {
+        const storeSub$: Unsubscribe = RootStore.subscribe(() => {
+            const {type, payload} = RootStore.getState().lastAction;
+            switch (type) {
+                case ActionLogin.REGISTER_SUCCESS:
+                    alert("Đăng ký thành công");
+                    break;
+                case ActionLogin.REGISTER_FAIL:
+                    alert("Đăng ký thất bại");
+                    break;
+            }
+        });
+        return () => {
+            storeSub$();
+        };
+    }, []);
 
     const handleChangeProvinces = (selected: any) => {
         setValues((pre) => ({...pre, provinces: selected }))

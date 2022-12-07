@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from "react-router-dom";
 import "./logins.scss";
 import "../../../page/layoutUser/layoutUser.scss";
@@ -9,7 +9,10 @@ import {Unsubscribe} from 'redux';
 import {useForm} from "react-hook-form";
 import Register from "../Registers/Register";
 import * as ActionLogin from "../../../store/action/auth";
-import { ToastContainer, toast } from 'react-toastify';
+import _ from "lodash";
+import { loginLoading } from "../../../store/selector/loginsSelector";
+import {Spinner} from "../../spinner/spinner";
+
 
 enum typeLogins {
     LOGIN_USERNAME_TYPE = 'LOGIN_USERNAME_TYPE',
@@ -24,24 +27,28 @@ const buttonName: Record<LoginTypeComponent, string> = {
     LOGIN_PASSWORD_TYPE: "Đăng nhập"
 }
 
+
+interface login {
+    userNames?: string | any ;
+    userName?: string | any ;
+    password: string;
+}
 const LoginUser = () => {
     let dispatch = useDispatch();
     let history = useHistory();
     let {handleSubmit, register, getValues, setValue} = useForm();
+    const Loading = useSelector(loginLoading);
 
     const [typeLogin, setTypeLogin] = useState(typeLogins.LOGIN_USERNAME_TYPE);
     const [userName, setUserName] = useState() as any;
     const [state, setState] = useState({
         loadingRegister: false
     });
+    const [isError,setIsError] = useState<boolean>(false);
+    const [message,setMessage] = useState<string>("");
 
     const handleSwitchUserName = () => {
         setTypeLogin(typeLogins.LOGIN_USERNAME_TYPE);
-    }
-    const handleSwitchLogin = () => {
-        if (typeLogin === typeLogins.LOGIN_USERNAME_TYPE) {
-            setTypeLogin(typeLogins.LOGIN_PASSWORD_TYPE);
-        }
     }
     const handleChangeUsername = (event: any) => {
         setUserName(event.target.value);
@@ -58,8 +65,7 @@ const LoginUser = () => {
                     />
                 </div>;
             case typeLogins.LOGIN_PASSWORD_TYPE:
-                return <>
-                    <div className="item-form__username">
+                return <><div className="item-form__username">
                         <input
                             {...register('userNames')}
                             name="userNames"
@@ -69,13 +75,26 @@ const LoginUser = () => {
                         />
                     </div>
                     <div className="item-form__username">
-                        <input {...register('password')} name="password" type='password' placeholder="Nhập password"/>
-                    </div>
-                </>;
+                        <input 
+                             {...register('password')} 
+                             name="password" 
+                             type='password' 
+                             placeholder="Nhập password"
+                        />
+                    </div></>;
+        }
+    }
+    const handleSwitchLogin = (userName: string) => {
+        if (typeLogin === typeLogins.LOGIN_USERNAME_TYPE && !_.isEmpty(userName)) {
+            setTypeLogin(typeLogins.LOGIN_PASSWORD_TYPE);
         }
     }
     const handleLogin = (data: any) => {
-        handleSwitchLogin();
+        let {userName,userNames,password} = data;
+        handleSwitchLogin(userName);
+        if(typeLogin === typeLogins.LOGIN_PASSWORD_TYPE){
+            dispatch(ActionLogin.login(userNames,password));
+        }
     }
     const handleShowRegister = () => {
         setState({...state, loadingRegister: true});
@@ -88,13 +107,15 @@ const LoginUser = () => {
         const storeSub$: Unsubscribe = RootStore.subscribe(() => {
             const {type, payload} = RootStore.getState().lastAction;
             switch (type) {
-                // case ActionLogin.REGISTER_SUCCESS:
-                //     toast(payload);
-                //     break;
-                // case ActionLogin.REGISTER_FAIL:
-                //     console.log()
-                //     toast("Đăng ký tài khoản thất bại vui lòng đăng ký lại");
-                //     break;
+                case ActionLogin.LOGIN_SUCCESS:
+                    console.log("payload",payload);
+                    // history.push("/user");
+                    break;
+                case ActionLogin.LOGIN_FAIL:
+                    console.log("payload",payload);
+                    // setIsError(true);
+                    // setMessage(payload);
+                    break;
             }
         });
         return () => {
@@ -104,10 +125,11 @@ const LoginUser = () => {
     useEffect(() => {
         setValue('userName', userName);
         setValue('userNames', userName);
-    }, [userName, typeLogin])
+    }, [userName, typeLogin]);
 
     return (
         <>
+                {isError && message}
             <div className="row wrapper-login">
                 <div className="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-center align-items-center">
                     <div className="item-bg">
@@ -117,20 +139,21 @@ const LoginUser = () => {
                         <form className="item-form"
                               onSubmit={handleSubmit(data => {
                                   handleLogin(data)
-                              })}
+                              },(errors)=> { console.log("errors",errors)})}
+                              id="formName"
                         >
                             {renderLogin()}
                             <div className="item-form__btn">
-                                <button type="submit">{buttonName[typeLogin]}</button>
+                                <><button type="submit"  form="formName">{buttonName[typeLogin]}</button></>
                             </div>
                             <div style={{marginTop: "10px"}}>
                                 <span>Hoặc</span>
                             </div>
                             <div className="item-form__btn-google">
-                                <button onClick={handleSwitchLogin}>Tiếp tục với google</button>
+                                <button>Tiếp tục với google</button>
                             </div>
                             <div className="item-form__btn-facebook">
-                                <button onClick={handleSwitchLogin}>Tiếp tục với Facebook</button>
+                                <button>Tiếp tục với Facebook</button>
                             </div>
                         </form>
                         <div className="item-form__btn">

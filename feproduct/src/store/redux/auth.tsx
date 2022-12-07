@@ -1,11 +1,11 @@
 import {updateObject} from "../share/utility";
-import * as  ActionLogin from "../action/auth";
+import * as  ActionAuth from "../action/auth";
 
 type actionLogins = {
     type: string;
     userName: string;
-    token: string;
     error: string;
+    token: string;
 }
 type tsInitialState =  {
     userName: string;
@@ -19,7 +19,8 @@ const initialState = {
     password: "",
     loading: false,
     error: "",
-    token: ""
+    token: "",
+    information: {}
 }
 const login = (state: tsInitialState,action: actionLogins) => {
     return updateObject(state,{loading: true})
@@ -28,7 +29,7 @@ const loginSuccess = (state: tsInitialState,action: actionLogins) => {
     return updateObject(state,{loading: false,token: action?.token })
 }
 const loginFailed = (state: tsInitialState,action: actionLogins) => {
-    return updateObject(state,{loading: false,error: action?.error})
+    return updateObject(state,{loading: false, error: action?.error, token: ""})
 }
 const register = (state: tsInitialState,action: actionLogins) => {
     return updateObject(state,{loading: true})
@@ -40,19 +41,18 @@ const registerFailed = (state: tsInitialState,action: actionLogins) => {
     return updateObject(state,{loading: false,error: action?.error})
 }
 const LoginsReducer = (state = initialState,action: actionLogins) => {
-    switch (action.type)
-    {
-        case ActionLogin.LOGIN:
+    switch (action.type){
+        case ActionAuth.LOGIN:
             return login(state,action);
-        case ActionLogin.LOGIN_SUCCESS:
+        case ActionAuth.LOGIN_SUCCESS:
             return loginSuccess(state,action);
-        case ActionLogin.LOGIN_FAIL:
+        case ActionAuth.LOGIN_FAIL:
             return loginFailed(state,action);
-        case ActionLogin.REGISTER:
+        case ActionAuth.REGISTER:
             return register(state,action);
-        case ActionLogin.REGISTER_SUCCESS:
+        case ActionAuth.REGISTER_SUCCESS:
             return registerSuccess(state,action);
-        case ActionLogin.REGISTER_FAIL:
+        case ActionAuth.REGISTER_FAIL:
             return registerFailed(state,action);
         default :
             return state;

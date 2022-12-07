@@ -1,6 +1,6 @@
 // @ts-ignore
-import {put, call} from "redux-saga/effects";
-import { configResponse } from "../../store/share/Request";
+import {put, call,StrictEffect, all,takeEvery, takeLatest } from "redux-saga/effects";
+import { configResponses } from "../../store/share/Request";
 import { AuthHttp } from "../service/AuthHttp";
 import * as actions from "../action/auth";
 // @ts-ignore
@@ -13,15 +13,15 @@ type login = {
     userName: string,
     password: string
 }
-export function* login(action: login): any {
+function* login(action: login): any {
     const body = {
-        userName: action.userName,
+        email: action.userName,
         password: action.password
     }
     const response = yield call(services.login,body);
-    const result = yield configResponse(response);
+    const result = yield configResponses(response);
     try {
-        yield put(actions.loginSuccess(result?.data.token));
+        yield put(actions.loginSuccess(result?.token));
     }
     catch (error: any) {
         yield put(actions.loginFailed(error));
@@ -29,7 +29,7 @@ export function* login(action: login): any {
 }
 
 
-export function* register(action: actionRegister): any {
+function* register(action: actionRegister): any {
     const body = {
         userName: action?.data.username,
         full_name: action?.data.full_name,
@@ -45,11 +45,17 @@ export function* register(action: actionRegister): any {
         password: action?.data.password
     }
     const response = yield call(services.register,body);
-    const result = yield configResponse(response);
+    const result = yield configResponses(response);
     try {
         yield put(actions.registerSuccess(result));
     }
     catch (error: any) {
         yield put(actions.registerFailed(error));
     }
+}
+export function* watchLogins(): Generator<StrictEffect>{
+    yield all([
+        takeLatest(actions.LOGIN,login),
+        takeLatest(actions.REGISTER,register),
+    ])
 }

@@ -22,6 +22,7 @@ const login = (userName: string, password: string) => {
     }
 }
 const loginSuccess = (token:any) => {
+    console.log("data",token);
     return {
         type: LOGIN_SUCCESS,
         token: token,

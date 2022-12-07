@@ -16,11 +16,11 @@ const ProductBought = () => {
         let actions = Actions.removeAllCartUser();
         dispatch(actions);
     }
-    const removeDetailCart = (id: number) => {
+    const handleRemoveDetail = (id: number) => {
         let actions = Actions.removeDetailCartUser(id);
         dispatch(actions);
     }
-    const increaseMinusDetailCart = (id: number, calculation: string) => {
+    const handleIncreaseMinusDetail = (id: number, calculation: string) => {
         let actions = Actions.increaseMinusCart(id, calculation);
         dispatch(actions);
     }
@@ -47,10 +47,9 @@ const ProductBought = () => {
     const notify = (titleLogin: string) => {
         toast(titleLogin);
     }
-    const clickValue = async (data: BaseSyntheticEvent<object, any, any> | undefined, event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (data: BaseSyntheticEvent<object, any, any> | undefined, event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const {fullName, phoneNumber, address, gender, city, email, Note} = value;
-        console.log("value", value.fullName, value.phoneNumber, value.address, value.gender, value.city, value.email,);
         await setValue({...value, isLoadToast: true});
         await notify("Người dùng cần phải login mới đặt hàng được");
         let actions = Actions.postOrder(fullName, phoneNumber, address, gender, city, email, cart, totalMoney, Note);
@@ -71,8 +70,8 @@ const ProductBought = () => {
                     {cart?.map((res: Product, index: number) => {
                         return <ListProductBought res={res}
                                                   index={index}
-                                                  increaseMinusDetailCart={(index: number, calculation: string) => increaseMinusDetailCart(index, calculation)}
-                                                  removeDetailCart={(index: number) => removeDetailCart(index)}/>
+                                                  increaseMinusDetailCart={(index: number, calculation: string) => handleIncreaseMinusDetail(index, calculation)}
+                                                  removeDetailCart={(index: number) => handleRemoveDetail(index)}/>
                     })}
                     <div className="itemyoucart__total">
                         <div className="itemyoucart__total--promotion">
@@ -112,7 +111,7 @@ const ProductBought = () => {
                 cart?.length === 0 ? <h1>Có 0 sản phẩm trong giỏ hàng</h1> :
                     <FormCartBought
                         changeValue={(event: React.ChangeEvent<{ name: string, value: unknown }>) => changeValue(event)}
-                        clickValue={(data: any, event: any) => clickValue(data, event)}
+                        clickValue={(data: any, event: any) => handleSubmit(data, event)}
                         isLoadToast={value.isLoadToast}
                     />
             }

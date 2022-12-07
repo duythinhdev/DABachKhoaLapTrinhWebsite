@@ -1,37 +1,37 @@
 
-import React,{useState,useCallback} from 'react';
-
+import {useState,useCallback} from 'react';
+// eslint-disable-next-line react-hooks/exhaustive-deps
 export default function useSlideFetching(Slider: number) {
     const [slideIndex, setSlideIndex] = useState(1) as any | number ;
     const [seeMore,setSeeMore] = useState(false) as any | Boolean;
     const [isShowModal,setIsShowModal] = useState(false) as any | Boolean;
-    const enableSeeMore = useCallback(() => {
-      setSeeMore(true)
-    },[seeMore])
-    const disableSeeMore = useCallback(() => {
+    const enableSeeMore = () => {
+      setSeeMore(true);
+    }
+    const disableSeeMore = () => {
         setSeeMore(false)
-    },[seeMore])
-    const showModalPd = useCallback(() => {
+    }
+    const showModalPd = () => {
         setIsShowModal(true)
-    },[isShowModal])
-    const hideModalPd =  useCallback(() => {
+    }
+    const hideModalPd =  () => {
         setIsShowModal(false)
-    },[isShowModal])
-    const nextSlide = useCallback(() => {
+    }
+    const nextSlide = () => {
         if (slideIndex !== Slider) {
           setSlideIndex(slideIndex + 1);
         } else if (slideIndex === Slider) {
           setSlideIndex(1);
         }
-      },[slideIndex]);
+      }
     
-      const prevSlide = useCallback(() => {
+      const prevSlide = () => {
         if (slideIndex !== 1) {
           setSlideIndex(slideIndex - 1);
         } else if (slideIndex === 1) {
           setSlideIndex(Slider);
         }
-      },[slideIndex]);
+      }
   
     return { 
       slideIndex,setSlideIndex,

@@ -22,9 +22,9 @@ import {
     watchOrderUser,
     watchDetailProduct,
     watchProduct,
-    watchLogins,
     watchProvinces
 } from "../store/saga/index";
+import {watchLogins} from "../store/saga/auth";
 
 const sagaMiddleware: any = createSagaMiddleware();
 declare global {

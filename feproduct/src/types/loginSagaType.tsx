@@ -58,7 +58,7 @@ export interface typeRegister {
     permission?: number;
     is_active?: number;
     address?: string;
-    gender?: number,
+    gender?: any,
     phone_number?: string;
     provinces?:string;
     ward?: string;
