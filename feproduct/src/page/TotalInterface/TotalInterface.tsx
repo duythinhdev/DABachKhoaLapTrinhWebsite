@@ -16,8 +16,8 @@ interface ParamTypes {
 }
 
 const TotalInterface = () => {
-    let {id} = useParams<ParamTypes>();
-    let {renderSwitch} = useSwitchComponent(id);
+    const {id} = useParams<ParamTypes>();
+    const {renderSwitch} = useSwitchComponent(id) as any;
     useEffect(() => {
         renderSwitch();
     }, [id])

@@ -21,7 +21,7 @@ export default function InforUser() {
 
     let {id} = useParams<ParamTypes>();
     let {rowAlternateColors} = useColorTable('dt');
-    let {renderSwitch} = useSwitchComponent(id);
+    let { renderSwitch } = useSwitchComponent(id) as any;
     let history = useHistory();
     let {isLoginUser, isLoadToast, titleLogout} = useSelector((state: RootStateOrAny) => state.login);
     let redirect = null;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import apisauce, { ApiResponse } from 'apisauce';
-import { get, isEmpty, snakeCase } from 'lodash';
+import { isEmpty, snakeCase } from 'lodash';
 import {LocalStorageService} from "./localStorage.service";
 
 export class ResponseError extends Error {
@@ -78,16 +78,13 @@ export class HttpRequest {
         'Access-Control-Allow-Origin': '***',
         Accept: '*/*',
       },
-      timeout: 25000,
+      timeout: 3600000,
     });
     const token = this.localService.getItem('_token');
+    console.log("token",token);
     if (token) {
-      const subStringToken = token.substring(
-          1,
-          Object.entries(token).length - 1,
-      );
       this.request.setHeaders({
-        Authorization: subStringToken,
+        authorization: token,
       });
     }
   }

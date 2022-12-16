@@ -1,11 +1,12 @@
 // @ts-ignore
-import {put, call,StrictEffect, all,takeEvery, takeLatest } from "redux-saga/effects";
+import {put, call,StrictEffect, all,fork, takeLatest } from "redux-saga/effects";
 import { configResponses } from "../../store/share/Request";
 import { AuthHttp } from "../service/AuthHttp";
 import * as actions from "../action/auth";
 // @ts-ignore
 import {enviroment} from "../../enviroment/enviroment";
 import {actionRegister} from "../../types/loginSagaType";
+import { LocalStorageService } from "../share/localStorage.service";
 
 const LINK_API: string = enviroment.localNode;
 const services: any = new AuthHttp(LINK_API);
@@ -18,9 +19,11 @@ function* login(action: login): any {
         email: action.userName,
         password: action.password
     }
-    const response = yield call(services.login,body);
-    const result = yield configResponses(response);
     try {
+        const response = yield call(services.login,body);
+        const result: any = yield configResponses(response);
+        const localService = new LocalStorageService();
+        yield localService.setItem({key: '_token',value: result?.token});
         yield put(actions.loginSuccess(result?.token));
     }
     catch (error: any) {
@@ -44,18 +47,46 @@ function* register(action: actionRegister): any {
         birthDay: action?.data.birthDay,
         password: action?.data.password
     }
-    const response = yield call(services.register,body);
-    const result = yield configResponses(response);
     try {
+        const response = yield call(services.register,body);
+        const result = yield configResponses(response);
         yield put(actions.registerSuccess(result));
     }
     catch (error: any) {
         yield put(actions.registerFailed(error));
     }
 }
+function* detailUser(): any {
+    try {
+        const response = yield call(services.detail);
+        const result = yield configResponses(response);
+        yield put(actions.getDetailUserSuccess(result));
+    }
+    catch (error: any) {
+        yield put(actions.getDetailUserFailed(error));
+    }
+}
+function* logout() {
+    yield call([localStorage, 'removeItem'], '_token');
+    yield put(actions.logoutUserSuccess())
+}
 export function* watchLogins(): Generator<StrictEffect>{
+    yield takeLatest(actions.LOGIN,login)
+}
+export function* watchRegister(): Generator<StrictEffect>{
+    yield takeLatest(actions.REGISTER,register)
+}
+export function* watchDetail(): Generator<StrictEffect>{
+    yield takeLatest(actions.DETAIL_USER,detailUser)
+}
+export function* watchLogout(): Generator<StrictEffect>{
+    yield takeLatest(actions.LOGOUT,logout)
+}
+export function* rootAuthSaga() {
     yield all([
-        takeLatest(actions.LOGIN,login),
-        takeLatest(actions.REGISTER,register),
-    ])
+        fork(watchLogins),
+        fork(watchRegister),
+        fork(watchDetail),
+        fork(watchLogout),
+    ]);
 }

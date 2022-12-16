@@ -20,7 +20,6 @@ const initialState = {
     loading: false,
     error: "",
     token: "",
-    information: {}
 }
 const login = (state: tsInitialState,action: actionLogins) => {
     return updateObject(state,{loading: true})
@@ -30,6 +29,9 @@ const loginSuccess = (state: tsInitialState,action: actionLogins) => {
 }
 const loginFailed = (state: tsInitialState,action: actionLogins) => {
     return updateObject(state,{loading: false, error: action?.error, token: ""})
+}
+const logoutSuccess = (state: tsInitialState,action: actionLogins) => {
+    return updateObject(state,{loading: false,token: ""})
 }
 const register = (state: tsInitialState,action: actionLogins) => {
     return updateObject(state,{loading: true})
@@ -54,6 +56,8 @@ const LoginsReducer = (state = initialState,action: actionLogins) => {
             return registerSuccess(state,action);
         case ActionAuth.REGISTER_FAIL:
             return registerFailed(state,action);
+        case ActionAuth.LOGOUT_SUCCESS:
+            return logoutSuccess(state,action);
         default :
             return state;
     }

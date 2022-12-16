@@ -108,13 +108,12 @@ const LoginUser = () => {
             const {type, payload} = RootStore.getState().lastAction;
             switch (type) {
                 case ActionLogin.LOGIN_SUCCESS:
-                    console.log("payload",payload);
-                    // history.push("/user");
+                    history.push("/user");
+                    dispatch(ActionLogin.getDetailUser());
                     break;
                 case ActionLogin.LOGIN_FAIL:
-                    console.log("payload",payload);
-                    // setIsError(true);
-                    // setMessage(payload);
+                    setIsError(true);
+                    setMessage("Bạn đăng nhập không thành công");
                     break;
             }
         });
@@ -129,10 +128,12 @@ const LoginUser = () => {
 
     return (
         <>
-                {isError && message}
             <div className="row wrapper-login">
                 <div className="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-center align-items-center">
                     <div className="item-bg">
+                        <div>
+                            {isError && <div>{message}</div>}
+                        </div>
                         <div className="item-title">
                             Đăng nhập vào Tiki
                         </div>

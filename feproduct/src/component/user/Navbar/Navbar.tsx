@@ -7,15 +7,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CheckIcon from '@mui/icons-material/Check';
 import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
-import React from "react";
 import {Link} from 'react-router-dom';
 import "./Navbar.scss";
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import CarRepairIcon from '@mui/icons-material/CarRepair';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { cart } from "../../../store/selector/cartSelector";
-
+import { information } from "../../../store/selector/userSelector";
+import * as  Actions from "../../../store/action/auth";
+ 
 const category: Array<any> = [
     {
         name: "Danh Mục sản Phẩm"
@@ -60,7 +61,12 @@ const category: Array<any> = [
 
 const Navbar = () => {
     const getCart = useSelector(cart);
+    const dispatch = useDispatch();
     // let {currentUser} = useSelector((state: RootStateOrAny) => state.login);
+    const detailUser = useSelector(information);
+    const handleLogoutUser = ()  => {
+        dispatch(Actions.logoutUser());
+    }
     return (
         <div className="wrapper-navbar">
             <div className="component-navbar row">
@@ -107,15 +113,16 @@ const Navbar = () => {
                         <div className="MenuItem__Icon"><Link className="MenuItem__Link"
                                                               to="/system/account"><AccountCircleOutlinedIcon/></Link>
                         </div>
-                        {/* {currentUser?.accessToken ? <div className="MenuItem__span">
-                                <Link className="MenuItem__Link" to="/informationuser/list"> {currentUser?.email} </Link>
+                        {detailUser?.data ? <div className="MenuItem__span">
+                                <Link className="MenuItem__Link" to="/informationuser/list"> {detailUser?.data?.email} </Link>
+                                <Link className="MenuItem__Link" to="/user" onClick={()=>handleLogoutUser()}> logout</Link>
                             </div>
-                            : */}
+                            :
                             <div className="MenuItem__span">
-                                <Link className="MenuItem__Link" to="/system/account"><span>Đăng nhập </span></Link>
+                                <Link className="MenuItem__Link" to="/system/account" ><span>Đăng nhập </span></Link>
                                 {/* <Link className="MenuItem__Link" to="/system/register"> <span>Đăng ký</span></Link> */}
                             </div>
-                        {/* } */}
+                        }
                     </div>
                     <div className="MenuItem">
                         <Badge badgeContent={getCart && getCart.length} color="error">

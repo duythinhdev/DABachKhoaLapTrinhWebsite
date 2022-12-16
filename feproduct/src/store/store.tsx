@@ -14,6 +14,7 @@ import productReducer from "./redux/product";
 import {PersistGate} from "redux-persist/integration/react";
 import loginsReducer from "./redux/auth";
 import locationReducer from "./redux/provinces";
+import userReducer from "./redux/user";
 
 import {
     watchLoginAdmin,
@@ -24,7 +25,7 @@ import {
     watchProduct,
     watchProvinces
 } from "../store/saga/index";
-import {watchLogins} from "../store/saga/auth";
+import {rootAuthSaga} from "../store/saga/auth";
 
 const sagaMiddleware: any = createSagaMiddleware();
 declare global {
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
     product: productReducer,
     logins: loginsReducer,
     locations: locationReducer,
+    user: userReducer,
     lastAction
 });
 const persistReducers = persistReducer(persistConfig, rootReducer);
@@ -67,7 +69,7 @@ sagaMiddleware.run(watchNewsUser);
 sagaMiddleware.run(watchOrderUser);
 sagaMiddleware.run(watchDetailProduct);
 sagaMiddleware.run(watchProduct);
-sagaMiddleware.run(watchLogins);
+sagaMiddleware.run(rootAuthSaga);
 sagaMiddleware.run(watchProvinces);
 
 export const RootStore: any = store;

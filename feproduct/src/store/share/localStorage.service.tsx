@@ -51,6 +51,7 @@ export class LocalStorageService {
 
     public getItem(key: string): string | null {
         const value: any = localStorage.getItem(key);
+        console.log("value",value);
         if (_.isEmpty(value) || value === 'undefined') return null;
         return JSON.parse(value);
     }

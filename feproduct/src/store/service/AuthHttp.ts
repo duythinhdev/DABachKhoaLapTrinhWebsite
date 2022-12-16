@@ -4,6 +4,7 @@ import {HttpRequest} from "../../store/share/Request";
 export const ApiRoutes = {
     REGISTER: "users/signups",
     LOGIN: "users/login",
+    DETAIL: "users/detail",
 };
 
 export class AuthHttp {
@@ -20,5 +21,8 @@ export class AuthHttp {
     };
     register = (data: any) => {
         return this.request.post(ApiRoutes.REGISTER,data);
+    }
+    detail = () => {
+        return this.request.get(ApiRoutes.DETAIL);
     }
 }
